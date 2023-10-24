@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -42,9 +44,6 @@ public class StockApiService {
 		bodyMap.put("appkey", appKey);
 		bodyMap.put("appsecret", appSecret);
 		
-		log.info("key : {}", appKey);
-		log.info("appsecret : {}", appSecret);
-		
 		AccessTokenInfo accessTokenInfo = webClient
 						.post()
 						.uri("/oauth2/tokenP")
@@ -53,7 +52,9 @@ public class StockApiService {
 						.bodyToMono(AccessTokenInfo.class)
 						.block();
 		
-		accessTokenRepository.save(accessTokenInfo);
+		if(accessTokenInfo != null) {
+			accessTokenRepository.save(accessTokenInfo);
+		}
 		return accessTokenInfo;
 	}
 	
@@ -80,32 +81,21 @@ public class StockApiService {
 	// 국내주식현재가격
 	public Mono<StockCurrentPrice> getDomesticStokCurrentPrice() {
 		// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
-		
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
 		String trId = "FHKST01010100"; // 실전 모의 투자 구분 
-
-		HttpHeadersToMap headersToMap = HttpHeadersToMap
-										.builder()
-										.authorization(auth)
-										.appkey(appKey)
-										.appsecret(appSecret)
-										.build();
-		LinkedMultiValueMap<String, String> headerMultiValueMap = headersToMap.toMultiValueMap();
-		headerMultiValueMap.add("tr-id", trId);
-//		Consumer<HttpHeaders> consumer = it -> it.addAll(headerMultiValueMap); // cousumer로 변경하기
-		String FID1 = "fid_cond_mrkt_div_code"; // 시장 분류 코드 (J : 주식, ETF, ETN)
-		String FID2 = "fid_input_iscd"; // 종목코드 (6자리) 005930
+		String fid1 = "fid_cond_mrkt_div_code"; // 시장 분류 코드 (J : 주식, ETF, ETN)
+		String fid2 = "fid_input_iscd"; // 종목코드 (6자리) 005930
 		String uri = "/uapi/domestic-stock/v1/quotations/inquire-price";
 		
 		WebClient webClient = buildWebClient(); // 순서를 uri 다음에 headers로 하자
-		Mono<StockCurrentPrice> data = webClient
+		return webClient
 				.get()
 				.uri(uribuilder -> uribuilder
 									.path(uri)
-									.queryParam(FID1, "J")
-									.queryParam(FID2, "005930") // 종목코드
+									.queryParam(fid1, "J")
+									.queryParam(fid2, "005930") // 종목코드
 									.build())
 				.header("authorization", auth)
 				.header("appkey", appKey)
@@ -113,35 +103,14 @@ public class StockApiService {
 				.header("tr_id", trId)
 				.retrieve()
 				.bodyToMono(StockCurrentPrice.class);
-		
-		return data;
-//		Mono<String> data = webClient
-//				.get()
-//				.uri(uribuilder -> uribuilder
-//									.path(uri)
-//									.queryParam(FID1, "J")
-//									.queryParam(FID2, "005930") // 종목코드
-//									.build())
-//				.accept(MediaType.APPLICATION_JSON)
-//				.headers(consumer)
-//				.retrieve()
-//				.bodyToMono(String.class)
-//				
-//				.onErrorResume(e -> {
-//					 // 로그 기록, 기본값 반환 등의 오류 처리
-//					return Mono.just("Error occurred: " + e.getMessage());
-//				});
-//		
-//		return data;
 	}
 	
 	// 웹클라이언트(http통신 생성)
 	private WebClient buildWebClient() {
-		WebClient webClient = WebClient
-									.builder()
-									.baseUrl("https://openapivts.koreainvestment.com:29443")
-									.defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-									.build();
-		return webClient;
+		return WebClient
+						.builder()
+						.baseUrl("https://openapivts.koreainvestment.com:29443")
+						.defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+						.build();
 	}
 }

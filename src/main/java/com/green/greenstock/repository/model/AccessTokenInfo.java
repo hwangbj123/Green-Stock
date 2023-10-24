@@ -1,5 +1,6 @@
 package com.green.greenstock.repository.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class AccessTokenInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int tokenId;
+	@Column(columnDefinition = "TEXT")
 	private String accessToken;
 	private String accessTokenTokenExpired;
 	private String tokenType;
