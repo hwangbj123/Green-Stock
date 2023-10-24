@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Ekka - Admin Dashboard HTML Template.">
 
-		<title>Ekka - Admin Dashboard HTML Template.</title>
+		<title>Green Stock</title>
 		
 		<!-- GOOGLE FONTS -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +25,7 @@
 	</head>
 	
 	<body class="sign-inup" id="body">
+	<%@include file="/WEB-INF/view/layout/header.jsp"%>
 		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
@@ -74,7 +75,7 @@
 				</div>
 			</div>
 		</div>
-	
+		<%@include file="/WEB-INF/view/layout/footer.jsp"%>
 		<!-- Javascript -->
 		<script src="/resources/plugins/jquery/jquery-3.5.1.min.js"></script>
 		<script src="/resources/js/bootstrap.bundle.min.js"></script>
