@@ -12,8 +12,8 @@
 </head>
 <body>
 	<div style="text-align:center">
-		<c:if test="${not empty user }">
-			<h1>${user} 님 환영합니다</h1>
+		<c:if test="${not empty userId}">
+			<h1>${userId} 님 환영합니다</h1>
 		</c:if>
 	</div>
 	<!-- 채팅방 목록 -->

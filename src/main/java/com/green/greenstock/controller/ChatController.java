@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,118 +22,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.green.greenstock.dto.ChatingRoom;
+import com.green.greenstock.dto.ChattingRoom;
+import com.green.greenstock.service.ChatService;
 
 
 @Controller
 public class ChatController {
+	
+	@Autowired
+	public ChatService chatService;
  
 	// 채팅방 목록
-	public static LinkedList<ChatingRoom> chatingRoomList = new LinkedList<>();
-	
-	
-	//	----------------------------------------------------
-	// 유틸 메서드
-	
-	// 방 번호로 방 찾기
-	public ChatingRoom findRoom(String roomNumber) {
-		ChatingRoom room = ChatingRoom.builder().roomNumber(roomNumber).build(); 
-		int index = chatingRoomList.indexOf(room);
-		
-		if(chatingRoomList.contains(room)) {
-			return chatingRoomList.get(index); 
-		}
-		return null;
-	}
-	
-	
-	// 쿠키에 추가
-	public void addCookie(String cookieName, String cookieValue) {
-		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
-		HttpServletResponse response = attr.getResponse();
-		
-		Cookie cookie = new Cookie(cookieName, cookieValue);
-		
-		int maxage = 60 * 60 * 24 * 7;
-		cookie.setMaxAge(maxage);
-		response.addCookie(cookie);
-	}
-	
-	
-	
-	// 방 번호, 닉네임 쿠키 삭제
-	public void deleteCookie( ) {
-		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
-		HttpServletResponse response = attr.getResponse();
-		
-		Cookie roomCookie = new Cookie("roomNumber", null);
-		Cookie nicknameCookie = new Cookie("nickname",null);
-		
-		roomCookie.setMaxAge(0);
-		nicknameCookie.setMaxAge(0);
-		
-		response.addCookie(nicknameCookie);
-		response.addCookie(roomCookie);
-	}
-	
-	
-	
-	// 쿠키에서 방번호, 닉네임 찾기
-	public Map<String, String> findCookie() {
-		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
-		HttpServletRequest request = attr.getRequest();
-		
-		Cookie[] cookies = request.getCookies();
-		String roomNumber = "";
-		String nickname= "";
-		
-		if(cookies == null) {
-			return null;
-		}
-		
-		if(cookies != null) {
-			for(int i=0;i<cookies.length;i++) {
-				if("roomNumber".equals(cookies[i].getName())) {
-					roomNumber = cookies[i].getValue();
-				}
-				if("nickname".equals(cookies[i].getName())) {
-					nickname = cookies[i].getValue();
-				}
-			}
-			
-			if(!"".equals(roomNumber) && !"".equals(nickname)) {
-				Map<String, String> map = new HashMap<>();
-				map.put("nickname", nickname);
-				map.put("roomNumber", roomNumber);
-				
-				return map;
-			}
-		}
-		
-		return null;
-	}
-	
-	// 닉네임 생성
-	public void createNickname(String nickname) {
-		addCookie("nickname", nickname);
-	}
-	
-	// 방 입장하기
-	public boolean enterChatingRoom(ChatingRoom chatingRoom, String nickname) {
-		createNickname(nickname);
-		
-		if(chatingRoom == null) {
-			deleteCookie();
-			return false;
-		} else {
-			LinkedList<String> users = chatingRoom.getUsers();
-			users.add(nickname);
-			
-			addCookie("roomNumber", chatingRoom.getRoomNumber());
-			return true;
-		}
-	}
-	
+	public static LinkedList<ChattingRoom> chatingRoomList = new LinkedList<>();
 	
 	//	----------------------------------------------------
 	
@@ -149,9 +50,9 @@ public class ChatController {
 		return "chatting/home";
 	}
 	@PostMapping("/home")
-	public String home(String user, HttpSession session, Model model) {
-		session.setAttribute("user", user);
-		System.out.println("user : "+user);
+	public String home(int userId, HttpSession session, Model model) {
+		session.setAttribute("user", userId);
+		System.out.println("user : "+userId);
 //		model.addAttribute("user",user);
 		return "chatting/home";
 	}
@@ -159,8 +60,8 @@ public class ChatController {
 	@GetMapping("/chat")
 	public String main(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("user");
-		session.setAttribute("user", user);
+		int userId = (int) session.getAttribute("user");
+		session.setAttribute("user", userId);
 		
 		return "chatting/chat";
 	}
@@ -169,28 +70,34 @@ public class ChatController {
 	// 채팅방 목록
 	@GetMapping("/chatingRoomList")
 	public ResponseEntity<?> chatingRoomList() {
-		return new ResponseEntity<LinkedList<ChatingRoom>>(chatingRoomList, HttpStatus.OK);
+		return new ResponseEntity<LinkedList<ChattingRoom>>(chatingRoomList, HttpStatus.OK);
 	}
 	
 	
 	// 방 만들기
 	@PostMapping("/chatingRoom")
-	public ResponseEntity<?> chatingRoom(String roomName, String nickname) {
+	public ResponseEntity<?> chatingRoom(String roomName, String nickname, HttpServletRequest request) {
 		
 		// 방을 만들고 채팅방목록에 추가
 		String roomNumber = UUID.randomUUID().toString();
-		ChatingRoom chatingRoom = ChatingRoom.builder()
+		ChattingRoom chattingRoom = ChattingRoom.builder()
 				.roomNumber(roomNumber)
 				.users(new LinkedList<>())
 				.roomName(roomName)
 				.build();
 		
-		chatingRoomList.add(chatingRoom);
+		String userId = (String) request.getAttribute("userId");
+		
+		System.out.println("create chattingRoom : "+chattingRoom);
+		
+		chatService.createChatRoom(chattingRoom);
+		
+		chatingRoomList.add(chattingRoom);
 		
 		// 방 입장하기
-		enterChatingRoom(chatingRoom, nickname);
+		chatService.enterChatingRoom(chattingRoom, nickname);
 		
-		return new ResponseEntity<>(chatingRoom, HttpStatus.OK);
+		return new ResponseEntity<>(chattingRoom, HttpStatus.OK);
 	}
 	
 	
@@ -199,13 +106,13 @@ public class ChatController {
 	public ResponseEntity<?> EnterChatingRoom(String roomNumber, String nickname){
 		
 		// 방 번호로 방 찾기
-		ChatingRoom chatingRoom = findRoom(roomNumber);
+		ChattingRoom chatingRoom = chatService.findRoom(roomNumber);
 		
 		if(chatingRoom == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
 			// 방 들어가기
-			enterChatingRoom(chatingRoom, nickname);
+			chatService.enterChatingRoom(chatingRoom, nickname);
 			
 			return new ResponseEntity<>(chatingRoom, HttpStatus.OK);
 		}
@@ -215,7 +122,7 @@ public class ChatController {
 	@PatchMapping("/chatingRoom-exit")
 	public ResponseEntity<?> ExitChatingRoom(){
 			
-		Map<String, String> map = findCookie();
+		Map<String, String> map = chatService.findCookie();
 			
 		if(map == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -226,14 +133,14 @@ public class ChatController {
 		String nickname = map.get("nickname");
 		
 		// 방목록에서 방번호에 맞는 유저목록 가져오기
-		ChatingRoom chatingRoom = findRoom(roomNumber);
+		ChattingRoom chatingRoom = chatService.findRoom(roomNumber);
 		List<String> users = chatingRoom.getUsers();
 		
 		// 닉네임 삭제
 		users.remove(nickname);
 		
 		// 쿠키에서 닉네임과 방번호 삭제
-		deleteCookie();
+		chatService.deleteCookie();
 		
 		// 유저가 한명도 없다면 방 삭제
 		if(users.size() == 0) {
@@ -248,7 +155,7 @@ public class ChatController {
 	@GetMapping("/chatingRoom")
 	public ResponseEntity<?> chatingRoom() {
 		// 쿠키에 닉네임과 방번호가 있다면 대화중이던 방이 있던것
-		Map<String, String> map = findCookie();
+		Map<String, String> map = chatService.findCookie();
 		
 		if(map == null) {
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -257,10 +164,10 @@ public class ChatController {
 		String roomNumber = map.get("roomNumber");
 		String nickname = map.get("nickname");
 		
-		ChatingRoom chatingRoom = findRoom(roomNumber);
+		ChattingRoom chatingRoom = chatService.findRoom(roomNumber);
 		
 		if(chatingRoom == null) {
-			deleteCookie(); 
+			chatService.deleteCookie(); 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
 			Map<String, Object> map2 = new HashMap<>();
