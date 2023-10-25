@@ -27,7 +27,10 @@ public class UserService {
 
 	public User findUserByUserName(User user) {
 		User principal = userRepository.findUserByUserName(user);
-		boolean isPwdMatched = passwordEncoder.matches(principal.getPassword(), user.getPassword());
+		System.out.println(principal.getPassword());
+		System.out.println(user.getPassword());
+		boolean isPwdMatched = passwordEncoder.matches(user.getPassword(), principal.getPassword());
+		System.out.println(isPwdMatched);
 		if(isPwdMatched==false) {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 			principal = null;
