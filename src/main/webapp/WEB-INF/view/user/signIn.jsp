@@ -26,7 +26,7 @@
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
-		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px">
+		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/sign_in_test.jpg');">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
 					<div class="card">
@@ -40,29 +40,22 @@
 						<div class="card-body p-5">
 							<h4 class="text-dark mb-5">Sign In</h4>
 							
-							<form action="/index.html">
+							<form action="/user/sign-in" method="post">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
-										<input type="email" class="form-control" id="email" placeholder="Username">
+										<input type="text" class="form-control" id="text" name="userName" placeholder="Username">
 									</div>
 									
 									<div class="form-group col-md-12 ">
-										<input type="password" class="form-control" id="password" placeholder="Password">
+										<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 									</div>
 									
 									<div class="col-md-12">
-										<div class="d-flex my-2 justify-content-between">
-											<div class="d-inline-block mr-3">
-												<div class="control control-checkbox">Remember me
-													<input type="checkbox" />
-													<div class="control-indicator"></div>
-												</div>
-											</div>
-											
+										<div class="d-flex my-2 justify-content-end">
 											<p><a class="text-blue" href="#">Forgot Password?</a></p>
 										</div>
 										
-										<button type="submit" class="btn btn-primary btn-block mb-4">Sign In</button>
+										<button type="submit" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;">Sign In</button>
 										
 										<p class="sign-upp">Don't have an account yet ?
 											<a class="text-blue" href="sign-up.html">Sign Up</a>
