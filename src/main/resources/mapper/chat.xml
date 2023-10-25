@@ -4,13 +4,35 @@
 
 <mapper namespace="com.green.greenstock.repository.interfaces.ChatRepository"> 
 
-	<insert id="createChatRoom">
-		insert into chatroom(room_number, room_name)
-		values(#{roomNumber}, #{roomName})
+	<insert id="createChattingRoom">
+		insert into chatting_room(
+		    room_number,
+		    room_name
+		) values(
+			#{roomNumber},
+		    #{roomName}
+		)
 	</insert>
 	
-	<select id="findChatRoomById" resultType="com.green.greenstock.repository.model.ChattingRoom">
-		select * from chatroom
-		where room_id=#{roomId}
+	<select id="findChattingRoomAll" resultType="com.green.greenstock.dto.ChattingRoom">
+		select *
+		from chatting_room c
+<!-- 		join subscribe s on c.room_id = s.room_id  -->
+	</select>
+	
+	<insert id="subscribe">
+		insert into subscribe(user_id, room_id)
+		values (#{userId}, #{roomId})
+	</insert>
+
+	<select id="subCheck" resultType="int">
+		select user_id
+			from subscribe
+			where room_id = #{roomId}
+			and user_id = #{userId}
+		union all
+			select 0 as coin
+			from dual
+		limit 1
 	</select>
 </mapper>
