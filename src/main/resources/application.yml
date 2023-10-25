@@ -21,6 +21,13 @@ spring:
       location: c:/workspace/upload/
       max-file-size: 50MB
       max-request-size: 50MB
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  config:
+    import: "optional:key.yml"
+    
       
 mybatis:
   mapper-locations:
