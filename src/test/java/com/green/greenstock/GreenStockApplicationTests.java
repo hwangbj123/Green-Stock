@@ -9,5 +9,4 @@ class GreenStockApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
