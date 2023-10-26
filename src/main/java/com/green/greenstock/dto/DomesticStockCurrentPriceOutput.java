@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import lombok.Data;
-/**
+/** 국내주식 현재가 response body 
  * https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
  */
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Output {
+public class DomesticStockCurrentPriceOutput {
 	
 	private String iscdStatClsCode; // 종목 상태 구분 코드. 00: 그외 51:관리종목	52:투자의견 53:투자경고 54:투자주의	55:신용가능 57:증거금100% 58:거래정지 59:단기과열 
 	private String rprsMrktKorName; // 대표 시장 한글 명 
