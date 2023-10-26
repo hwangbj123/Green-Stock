@@ -1137,11 +1137,23 @@
                 <div class="ec-pro-leftside ec-common-leftside col-lg-3 col-md-12">
                     <div class="ec-sidebar-wrap">
                         <!-- Sidebar Category Block -->
-<%--                            	<input type="button" onclick="window.open('/chat?roomId=${roomId}&userId=${principal.id}','_blank','width=450,height=600')" value="새 창"> --%>
-                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />
+<%--                           	<input type="button" onclick="window.open('/chat?roomId=${roomId}&userId=${principal.id}','_blank','width=450,height=600')" value="새 창"> --%>
+							<c:choose>
+	                        	<c:when test="${empty principal}">
+	                        		<button class="btn btn-primary" style="width: 100%; font-weight: bold;" onclick="location.href='/user/sign-in'">채팅 서비스를 이용하시려면 로그인이 필요합니다</button>
+	                        	</c:when>
+	                        	<c:when test="${subCheck eq principal.id}">
+		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />
+	                        	</c:when>
+	                        	<c:otherwise>
+	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="fetchFnc(${roomId},${principal.id})">채팅 서비스를 이용하시려면 해당 채널에 구독해야합니다</button>
+	                        	</c:otherwise>
+							</c:choose>
+<!-- 	                        	<div class="chattingDiv" style="display: none;"> -->
+<%-- 		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" /> --%>
+<!-- 	                        	</div> -->
                         <!-- Sidebar Category Block -->
                     </div>
-                        
                 </div>
                 <!-- Sidebar Area Start -->
             </div>
@@ -1995,6 +2007,21 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-
+	<script>
+		async function fetchFnc(roomId, userId){
+			var response = await fetch("/subCheck?roomId="+roomId+"&userId="+userId);
+			var subRes = await response.json();
+			if(subRes==0){
+				if(confirm("해당 채널에 구독 되어있지 않습니다. 구독하시겠습니까?")){
+					location.href="/subscribe?roomId="+roomId+"&userId="+userId;
+				}
+			}else{
+// 				alert("해당 채널에 구독 되어있습니다. userId : "+userId+", subCheck : "+subRes);
+// 				$("#subCheckBtn").css("display","none");
+// 				$(".chattingDiv").css("display","");
+// 				$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+			}
+		}
+   	</script> 
 </body>
 </html>

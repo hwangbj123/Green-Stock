@@ -47,6 +47,7 @@
 		margin: 5px;
 		padding: 5px;
 		background-color: rgb(246,224,17);
+		box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
 	}
 	.message-div .message-content{
 		width: 60%;

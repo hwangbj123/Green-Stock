@@ -2,6 +2,9 @@ package com.green.greenstock.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
+import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.ChattingService;
 
 @Controller
@@ -69,7 +73,7 @@ public class ChatController {
 	@GetMapping("/subscribe")
 	public String subscribe(int roomId, int userId) {
 		chattingService.subscribe(roomId, userId);
-		return "redirect:chatList";
+		return "redirect:product/"+roomId;
 	}
 	
     @MessageMapping("/chat/{roomId}")
@@ -84,8 +88,15 @@ public class ChatController {
     }
     
     @GetMapping("product/{roomId}")
-    public String product(@PathVariable("roomId") int roomId, Model model) {
+    public String product(@PathVariable("roomId") int roomId,HttpServletRequest request, Model model) {
     	model.addAttribute("roomId", roomId);
+    	HttpSession session =  request.getSession();
+    	User principal = (User) session.getAttribute("principal");
+
+    	String subCheck = chattingService.subCheck(roomId, principal.getId());
+    	model.addAttribute("subCheck", subCheck);
+    	System.out.println("subCheck : "+subCheck);
+    	
     	return "chatting/product";
     }
 
