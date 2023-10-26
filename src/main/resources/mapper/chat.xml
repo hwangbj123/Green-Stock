@@ -25,7 +25,7 @@
 		values (#{userId}, #{roomId})
 	</insert>
 
-	<select id="subCheck" resultType="int">
+	<select id="subCheck" resultType="String">
 		select user_id
 			from subscribe
 			where room_id = #{roomId}
@@ -34,5 +34,18 @@
 			select 0 as coin
 			from dual
 		limit 1
+	</select>
+	
+	<insert id="insertMessage" parameterType="com.green.greenstock.dto.ChatMessage">
+		insert into message ( user_id, room_id, content, date)
+		values ( #{userId}, #{roomId}, #{content}, #{date} )
+	</insert>
+	
+	<select id="selectMessageList" resultType="com.green.greenstock.dto.ChatMessage">
+		select * from message
+		where room_id = #{roomId}
+		and date > (select date from subscribe
+					where room_id = #{roomId}
+					and user_id = #{userId})
 	</select>
 </mapper>

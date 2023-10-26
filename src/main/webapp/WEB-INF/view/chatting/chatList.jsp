@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:if test="${not empty principal}">
+	${principal}<br>
+	${principal.userName} 님, 환영합니다
+</c:if>
 <h1>방 생성</h1>
 <form method="get" action="chatCreate">
 	방 넘버 : <input type="text" name="roomNumber"><br>
@@ -25,15 +29,15 @@
 	<c:if test="${list.userId eq '123'}">
 		<span style="background-color: yellow">구독 중</span>
 	</c:if>
-	<button onclick="subCheck(${list.roomId})">입장</button>
+	<button onclick="subCheck(${list.roomId}, '${principal.id}')">입장</button>
 	<br><br>
 </c:forEach>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-	function subCheck(roomId){
+	function subCheck(roomId, userId){
 		var roomId = roomId;
-		var userId = '123';
+		var userId = userId;
 		
 		console.log("roomId : "+roomId);
 		console.log("userId : "+userId);

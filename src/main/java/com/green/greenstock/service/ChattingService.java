@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.repository.interfaces.ChatRepository;
 
@@ -27,10 +28,18 @@ public class ChattingService {
 		return chatRepository.subscribe(roomId, userId);
 	}
 	
-	public int subCheck(int roomId, int userId) {
+	public String subCheck(int roomId, int userId) {
 		System.out.println("subCheck Service ");
-		int res = chatRepository.subCheck(roomId, userId);
+		String res = chatRepository.subCheck(roomId, userId);
 		System.out.println("userId : "+res);
 		return res;
+	}
+	
+	public int insertMessage(ChatMessage message) {
+		return chatRepository.insertMessage(message);
+	}
+
+	public List<ChatMessage> selectMessageList(int roomId, int userId) {
+		return chatRepository.selectMessageList(roomId, userId);
 	}
 }

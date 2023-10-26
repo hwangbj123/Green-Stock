@@ -50,14 +50,19 @@ public class ChatController {
 	public String chatMain(int roomId, int userId, Model model) {
 		model.addAttribute("roomId", roomId);
 		model.addAttribute("userId", userId);
+		
+		List<ChatMessage> list = chattingService.selectMessageList(roomId, userId);
+		model.addAttribute("list", list);
+//		System.out.println("list : "+list);
+		
 		return "chatting/chat";
 	}
 
 	@RequestMapping("/subCheck")
 	@ResponseBody
-	public int subCheck(int roomId, int userId) {
+	public String subCheck(int roomId, int userId) {
 		System.out.println("controller subCheck roomId = "+roomId);
-		int res = chattingService.subCheck(roomId, userId);
+		String res = chattingService.subCheck(roomId, userId);
 		return res;
 	}
 	
@@ -70,10 +75,18 @@ public class ChatController {
     @MessageMapping("/chat/{roomId}")
     @SendTo("/topic/{roomId}")
     public ChatMessage sendChatMessage(@DestinationVariable String roomId, ChatMessage message) {
-        // 채팅 메시지를 브로드캐스트하고 데이터베이스에 저장하는 부분을 추가하세요.
+
+    	chattingService.insertMessage(message);
+    	
     	System.out.println("roomId : "+roomId);
     	System.out.println("message : "+message);
         return message;
+    }
+    
+    @GetMapping("product/{roomId}")
+    public String product(@PathVariable("roomId") int roomId, Model model) {
+    	model.addAttribute("roomId", roomId);
+    	return "chatting/product";
     }
 
 }
