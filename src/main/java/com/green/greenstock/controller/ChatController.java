@@ -29,26 +29,26 @@ public class ChatController {
 	@Autowired
 	ChattingService chattingService;
 	
-	@GetMapping("/chatList")
-	public String chatList(Model model) {
-		List<ChattingRoom> chattingRooms = chattingService.findChattingRoomAll();
-		model.addAttribute("rooms", chattingRooms);
-		
-		return "chatting/chatList";
-	}
+//	@GetMapping("/chatList")
+//	public String chatList(Model model) {
+//		List<ChattingRoom> chattingRooms = chattingService.findChattingRoomAll();
+//		model.addAttribute("rooms", chattingRooms);
+//		
+//		return "chatting/chatList";
+//	}
 	
-	@GetMapping("/chatCreate")
-	public String chatCreate(String roomNumber, String roomName) {
-		System.out.println("roomNumber : "+roomNumber);
-		System.out.println("roomName : "+roomName);
-		
-		ChattingRoom chattingRoom = new ChattingRoom();
-		chattingRoom.setRoomNumber(roomNumber);
-		chattingRoom.setRoomName(roomName);
-		
-		chattingService.createChattingRoom(chattingRoom);
-		return "redirect:chatList";
-	}
+//	@GetMapping("/chatCreate")
+//	public String chatCreate(String roomNumber, String roomName) {
+//		System.out.println("roomNumber : "+roomNumber);
+//		System.out.println("roomName : "+roomName);
+//		
+//		ChattingRoom chattingRoom = new ChattingRoom();
+//		chattingRoom.setRoomNumber(roomNumber);
+//		chattingRoom.setRoomName(roomName);
+//		
+//		chattingService.createChattingRoom(chattingRoom);
+//		return "redirect:chatList";
+//	}
 
 	@GetMapping("/chat")
 	public String chatMain(int roomId, int userId, Model model) {
@@ -76,22 +76,15 @@ public class ChatController {
 		return "redirect:product/"+roomId;
 	}
 	
-    @MessageMapping("/chat/{roomId}")
-    @SendTo("/topic/{roomId}")
-    public ChatMessage sendChatMessage(@DestinationVariable String roomId, ChatMessage message) {
-
-    	chattingService.insertMessage(message);
-    	
-    	System.out.println("roomId : "+roomId);
-    	System.out.println("message : "+message);
-        return message;
-    }
-    
     @GetMapping("product/{roomId}")
     public String product(@PathVariable("roomId") int roomId,HttpServletRequest request, Model model) {
-    	model.addAttribute("roomId", roomId);
+    	
     	HttpSession session =  request.getSession();
     	User principal = (User) session.getAttribute("principal");
+    	
+    	model.addAttribute("roomId", roomId);
+//    	model.addAttribute("user", principal);
+    	System.out.println("principal : "+principal);
 
     	String subCheck = chattingService.subCheck(roomId, principal.getId());
     	model.addAttribute("subCheck", subCheck);
@@ -100,4 +93,15 @@ public class ChatController {
     	return "chatting/product";
     }
 
+    @MessageMapping("/chat/{roomId}")
+    @SendTo("/topic/{roomId}")
+    public ChatMessage sendChatMessage(@DestinationVariable String roomId, ChatMessage message) {
+    	
+    	chattingService.insertMessage(message);
+    	
+    	System.out.println("roomId : "+roomId);
+    	System.out.println("message : "+message);
+    	return message;
+    }
 }
+

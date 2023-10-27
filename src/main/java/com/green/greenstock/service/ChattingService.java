@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.repository.interfaces.ChatRepository;
+import com.green.greenstock.repository.model.User;
 
 @Service
 public class ChattingService {
@@ -41,5 +42,9 @@ public class ChattingService {
 
 	public List<ChatMessage> selectMessageList(int roomId, int userId) {
 		return chatRepository.selectMessageList(roomId, userId);
+	}
+	
+	public User findUserById(int userId) {
+		return chatRepository.findUserById(userId);
 	}
 }

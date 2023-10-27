@@ -8,6 +8,7 @@
 <style>
 	#chat-messages{
 		height: 450px;
+		padding-top: 10px;
 		overflow: auto;
 		background-color: rgba(52,116,212,0.2);
   		border-top-right-radius: 15px;
@@ -25,26 +26,32 @@
 	}
 	.my-message-div{
 		width: 100%;
-		margin: 10px 0px;
+		margin-bottom: 5px;
 		display: flex;
 		flex-direction: row-reverse;
 	}
 	.message-div{
 		width: 100%;
-		margin: 10px 0px;
+		margin-bottom: 5px;
 		display: flex;
 	}
+	.my-message-user{
+		width:100%;
+		text-align: right;
+		padding-right: 5px;
+		overflow: hidden;
+	}
 	.message-user{
-		width:10%;
-		text-align: center;
+		width:100%;
+		text-align: left;
+		padding-left: 5px;
 		overflow: hidden;
 	}
 	.my-message-div .message-content{
 		width: 60%;
 		min-height: 45px;
 		border-radius: 5px;
-/* 		border: 1px solid black; */
-		margin: 5px;
+		margin: -2px 5px 5px 5px;
 		padding: 5px;
 		background-color: rgb(246,224,17);
 		box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
@@ -53,8 +60,7 @@
 		width: 60%;
 		min-height: 45px;
 		border-radius: 5px;
-/* 		border: 1px solid black; */
-		margin: 5px;
+		margin: -2px 5px 5px 5px;
 		padding: 5px;
 		background-color: white;
 		box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
@@ -70,22 +76,23 @@
     	Chat Room
     	<br>
     	<c:if test="${not empty roomId}">
-    		roomId : ${roomId}
+<%--     		roomId : ${roomId} --%>
     		<input type="hidden" id="hd-roomId" value="${roomId}">
     	</c:if>
-    	<c:if test="${not empty userId}">
-    		userId : ${userId}
-    		<input type="hidden" id="hd-userId" value="${userId}">
+    	<c:if test="${not empty principal}">
+<%--     		user : ${principal.id}, ${principal.userName} --%>
+    		<input type="hidden" id="hd-userId" value="${principal.id}">
+    		<input type="hidden" id="hd-userName" value="${principal.userName}">
     	</c:if>
    	</h3>
     <div id="chat-messages">
     	<c:forEach var="message" items="${list}">
   			<c:choose>
    				<c:when test="${message.userId eq principal.id}">
-		    		<div class="message-div" style="flex-direction: row-reverse;">
-		    			<div class="message-user">
-			    			${message.userId}
-		    			</div>
+	    			<div class="my-message-user">
+		    			${message.userName}
+	    			</div>
+		    		<div class="my-message-div">
 		    			<div class="message-content" style="background-color: rgb(246,224,17);">
 		    				${message.content}
 		    			</div>
@@ -93,10 +100,10 @@
 		    		</div>
    				</c:when>
    				<c:otherwise>
+	    			<div class="message-user">
+		    			${message.userName}
+	    			</div>
 		    		<div class="message-div">
-		    			<div class="message-user">
-			    			${message.userId}
-		    			</div>
 		    			<div class="message-content">
 		    				${message.content}
 		    			</div>
@@ -128,20 +135,22 @@
 		scrollToBottom();
     	var roomId = $("#hd-roomId").val();
     	var userId = $("#hd-userId").val();
+    	var userName = $("#hd-userName").val();
     	console.log("roomId : "+roomId);
     	console.log("userId : "+userId);
+    	console.log("userName : "+userName);
     	var stompClient = Stomp.over(new SockJS('/chat'));
         stompClient.connect({}, function (frame) {
             stompClient.subscribe('/topic/'+roomId, function (message) {
                 var messageBody = JSON.parse(message.body);
 //                 $('#chat-messages').append("<p><strong>" + messageBody.userId + ": </strong>" + messageBody.content + " " + messageBody.date + "</p>");
 				var messageDate = new Date(messageBody.date);
-                if (messageBody.userId==userId){
+                if (messageBody.userName==userName){
 					$('#chat-messages').append(
-							'<div class="my-message-div">'
-							+'<div class="message-user">'
-			    				+messageBody.userId
+							'<div class="my-message-user">'
+			    				+messageBody.userName
 			    			+'</div>'
+							+'<div class="my-message-div">'
 			    			+'<div class="message-content">'
 			    				+messageBody.content
 			    			+'</div>'
@@ -150,10 +159,10 @@
 							);
                 } else{
 					$('#chat-messages').append(
-							'<div class="message-div">'
-							+'<div class="message-user">'
-			    				+messageBody.userId
+							'<div class="message-user">'
+			    				+messageBody.userName
 			    			+'</div>'
+							+'<div class="message-div">'
 			    			+'<div class="message-content">'
 			    				+messageBody.content
 			    			+'</div><p>'
@@ -171,8 +180,9 @@
         		$('#message').val('');
         		return false;
         	}
-        	if($('#message').val().test('').length==0){
+        	if(/<|>/.test($('#message').val())){
         		$('#message').val('');
+        		alert()
         		return false;
         	}
         	
@@ -183,6 +193,7 @@
 
             stompClient.send("/app/chat/" + roomId, {}, JSON.stringify({
             	userId: userId,
+            	userName: userName,
                 roomId: roomId,
                 content: message,
                 date: new Date()
