@@ -26,7 +26,7 @@
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
-		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/sign_in_test.jpg');">
+		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/sign_in_test1.jpg');">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
 					<div class="card">
@@ -60,6 +60,12 @@
 										<p class="sign-upp">Don't have an account yet ?
 											<a class="text-blue" href="sign-up.html">Sign Up</a>
 										</p>
+										<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
+											<img width="74" height="38" src="/resources/img/kakao_login_small.png">
+										</a>
+										<a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=274947516179-mp9dq1e2lmf62hj46urhg6e30mn29q0u.apps.googleusercontent.com&redirect_uri=http://localhost/user/google/callback&response_type=code&scope=profile">
+											<img width="74" height="38" src="/resources/img/google.svg">
+										</a>
 									</div>
 								</div>
 							</form>

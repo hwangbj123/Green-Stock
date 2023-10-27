@@ -6,12 +6,14 @@ import java.sql.Timestamp;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class User {
-	private int id;
+	private Integer id;
 	private String userName;
 	private String password;
 	private String email;
