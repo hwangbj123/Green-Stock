@@ -10,4 +10,6 @@ public interface UserRepository {
 	public User findUserByUserName(User user);
 
 	public User findUserName(String username);
+
+	public User findUserFromEmail(String email);
 }

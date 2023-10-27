@@ -60,9 +60,18 @@
 		                  <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password">
 		                </div>
 		
-				        <div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="email" placeholder="Email" name="email">
+				        <div class="input-group">
+			                <input type="text" class="form-control" id="email" placeholder="Email" name="email">
+			                <div class="input-group-append">
+			                	<button class="btn btn-primary bg-primary" type="button" id="checkEmail">이메일 확인</button>
+			                </div>
 		                </div>
+		                <div class="form-group col-md-12 ">
+		                  <input type="text" class="form-control" id="emconfirm" placeholder="인증번호를 입력하세요." style="display: none;">
+		                </div>
+<!-- 				        <div class="form-group col-md-12 mb-4">
+		                  <input type="text" class="form-control" id="email" placeholder="Email" name="email">
+		                </div> -->
 		                		
 				        <div class="form-group col-md-12 mb-4">
 		                  <input type="text" class="form-control" id="tel" placeholder="Phone" name="tel">
@@ -184,6 +193,76 @@
 					$('#userName').focus();
 					return false;
 				}
+			});
+			
+			
+			//이메일확인
+			var $email = $("#email");
+			var $checkEmail = $("#checkEmail"); // 인증번호 발송 버튼
+			var $emailconfirm = $("#emconfirm"); // 인증번호 확인input
+			var $emailconfirmTxt = $("#emailconfirmTxt"); // 인증번호 확인 txt
+			let interval2;
+			
+			$checkEmail.click(function() {
+				
+				//이메일 유효성 검사
+				const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				
+				if(!emailRegex.test($email.val())) {
+					alert('이메일 형식을 확인해주세요 ex) dltmdgh757@naver.com');
+					$('#email').focus();
+					return false;
+				}
+				
+				//인풋창 활성화
+				$emailconfirm.css('display', '');
+				
+				
+				//인증메일 보내기
+				$.ajax({
+					type : "POST",
+					url : "/user/email-duplicate-check",
+					data : {
+						"email" : $email.val()
+					},
+					success : function(data){
+						if (data === 200) {
+								$.ajax({
+									type : "POST",
+									url : "/user/mail-confirm",
+									data : {
+										"email" : $email.val()
+									},
+									success : function(data){
+										alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
+										$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 발송되었습니다</span>")
+										$("#emconfirmchk").css({
+											"color" : "green",
+											"font-weight" : "bold",
+											"font-size" : "12px"
+										});
+										
+										$("#timer2").css({
+											"color" : "#7800f7",
+											"font-weight" : "bold",
+											"font-size" : "12px"
+										});
+
+										startTime2 = new Date().getTime() + 5 * 60 * 1000;
+										interval2 = setInterval(updateTimer2, 1000);
+										
+										chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
+									}
+								});
+							} else {
+							alert('사용중인 이메일 입니다.');
+							$('#email').focus();
+						}
+					}
+					,error: function(){
+						alert('서버 에러입니다.');
+					}
+				});
 			});
 		</script>
 		<script src="/resources/plugins/jquery/jquery-3.5.1.min.js"></script>

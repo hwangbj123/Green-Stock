@@ -13,19 +13,19 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class GoogleProfile {
+public class NaverResponse {
 
 	@JsonProperty("id")
 	private String id;
-	@JsonProperty("connected_at")
+	@JsonProperty("email")
+	private String email;
+	@JsonProperty("mobile")
+	private String mobile;
+	@JsonProperty("name")
 	private String name;
-	@JsonProperty("given_name")
-	private String givenName;
-	@JsonProperty("family_name")
-	private String familyName;
-	@JsonProperty("picture")
-	private String picture;
-	@JsonProperty("locale")
-	private String locale;
+	@JsonProperty("birthday")
+	private String birthday;
+	@JsonProperty("birthyear")
+	private String birthyear;
 
 }
