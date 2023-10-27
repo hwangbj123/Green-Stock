@@ -1,11 +1,10 @@
 $(document).ready(function() {
-	console.log('aaa');
 	setSmallCard();
 });
 
 
 function setSmallCard() {
-	$.get('/getMyPortfolioList', function(data) {
+	$.get('portfolio/getMyPortfolioList', function(data) {
 		console.log(data);
 		makeSmallCard(data);
 	})
@@ -13,7 +12,6 @@ function setSmallCard() {
 }
 
 function makeSmallCard(data) {
-	console.log(data);
 	//smallCard 의 순서는 ajax get 으로 받아온 포트폴리오의 순번일것이다.
 	if (data.length == 0) {
 		makeAddPortfolioDiv();
@@ -21,7 +19,6 @@ function makeSmallCard(data) {
 		let count = 0;
 		data.forEach((e, idx) => {
 			count++;
-			console.log('실행됨');
 			let smallCardInnerWrapper = $('<div id = "' + e.id + '" class="col-xl-3 col-sm-6 p-b-15 lbl-card" data-clicked = "false">');
 			let smallCard = $('<div class="card card-mini dash-card card-1"style="cursor : pointer;height : 100%">');
 			smallCard.on('click', () => smallCardClicked(e.id));
@@ -29,7 +26,10 @@ function makeSmallCard(data) {
 			let h2 = $('<h2 class="mb-1">'); // CardLayout header
 			let p = $('<p>') // CardLayout body
 			let span = $('<span id = "span_' + e.id + '" class="mdi mdi-file-document-box" style = "cursor : pointer">');
-			span.on('click', () => editClicked(e.id));
+			span.on('click', (event) => {
+				event.stopImmediatePropagation();
+				editClicked(e.id);
+			});
 			// h2 p span 은 card-body 안에
 			$('#smallCardOuterWrapper').append(smallCardInnerWrapper); // smallCardInnerWrapper를 smallCardOuterWrapper에 추가
 			smallCardInnerWrapper.append(smallCard);
@@ -63,16 +63,15 @@ function makeAddPortfolioDiv() {
 }
 
 
-
+//editBtnCLicked
 function editClicked(id) {
-	console.log('editButtonClicked');
+	console.log('editClicked');
 	console.log(id);
 }
 
 function saveButtonClicked(title, discription) {
-	console.log(title);
-	console.log(discription);
-	if (title == '' || discription == '' || title == ' ' || discription == ' ' || title == null || discription == null) {
+	if (title == '' || discription == '' || title.trim() == '' || discription.trim() == '' || title == null || discription == null) {
+		alert('값넣어라');
 		return;
 	}
 	console.log('saveButtonClicked');
@@ -89,95 +88,208 @@ function saveButtonClicked(title, discription) {
 	});
 	$('#smallCardOuterWrapper').children().each((idx, e) => e.remove());
 	$('#portfolioRegWrapper').remove();
+	$('#addCard').attr('data-clicked', 'false');
 	setSmallCard();
-
+	$('#body_body').append($('<div id = "asdf">'));
 
 }
 
 //smallCard 가 click 되면 해당 포트폴리오의 정보가 모두 다시 뿌려져야 한다.
 function smallCardClicked(id) {
+	console.log('실행');
 	var elements = $(".col-xl-3.col-sm-6.p-b-15.lbl-card");
-	console.log(elements);
 	let checker = new Checker(id, elements);
-	console.log(checker.anyOfClickedBool());
 	if (!checker.anyOfClickedBool()) {
-		console.log('102줄 실행')
-		setPortfolioInfo(id);
-		//attatchDetailOuterWrapper(navTag);
-		return;
+		console.log('101');
+		if (id == "addCard") {
+			addCardClicked();
+			$('#' + id).attr('data-clicked', 'true');
+			return;
+		} else {
+			$('#' + id).attr('data-clicked', 'true');
+			attatchPortfolioInfo(id);
+			return;
+		}
 	}
 	if (checker.checkSelfClicked()) {
-		console.log('108줄 실행')
-		$('#' + id).attr('data-clicked','false');
+		console.log('113');
+		if (id == "addCard") {
+			detatchAll();
+			$('#' + id).attr('data-clicked', 'false');
+		} else {
+			$('#' + id).attr('data-clicked', 'false');
+			detatchAll();
+		}
 		return;
 	}
 	if (
 		!checker.checkSelfClicked() &&
 		checker.anyOfClickedBool()
 	) {
-		console.log('실행됨116줄');
-		detatch($(".DetailOuterWrapper--"));
-		$(".col-xl-3 col-sm-6 p-b-15 lbl-card").each((idx, e) => e.setAttribute("data-clicked", "false"));
-		detatchAll();
-		setPortfolioInfo(id);
-		$('#' + id).attr('data-clicked','true');
-		//attatchDetailOuterWrapper(id);
+		console.log('126');
+		//$('#portfolioRegWrapper').remove();
+		// detatchAll(); attatch(); if(addCard) => addCardClicked() else attatch()  attatch 의 경우 차트와 orderReport, 및 모두를 없애야됨.
+		// 만약 addCard 클릭시에는 이 if 문이 실행되었을 경우 다른애들이 detatchALl 을 실행하고 해야됨. addCard 말고 실행될시에도 다른애들 다 없애고 attatch().
+		if (id == 'addCard') {
+			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
+			$('#' + id).attr('data-clicked', 'true');
+			detatchAll();
+			addCardClicked();
+		} else {
+			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
+			detatchAll();
+			$('#' + id).attr('data-clicked', 'true');
+			attatchPortfolioInfo(id);
+		}
+		$('#' + id).attr('data-clicked', 'true');
 		return;
 	}
 }
 
+function attatchPortfolioInfo(id) {
+	$.get('portfolio/getMyPortfolioInfo/' + id, function(data) {
+		setPortfolioInfo(data);
+		setChart(data.stockList);
+		setMyStock(data);
+	})
+}
+
+function setPortfolioInfo(data) {
+	console.log(data);
+	let portfolioInfoWrapper = $('<div id = "portfolioInfoWrapper" style = "width : 100%; height :90%;background-color:whitesmoke;margin:auto">');
+	$('#portfolioInfo').append(portfolioInfoWrapper);
+
+	let titleDivWrapper = $('<div style = "height : 10%; background-Color :white; display:flex;">' + data.title + '</div>');
+	let dsDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + data.discription + '</div>');
+	let ror = $('<div style = "height : 15%;background-Color : white; display:flex;font-size:xx-large;color : red;font-weight : bold;">ROR : -99%</div>');
+
+	portfolioInfoWrapper.append(titleDivWrapper);
+	portfolioInfoWrapper.append(dsDivWrapper);
+	portfolioInfoWrapper.append(ror);
+}
+
+function setMyStock(data) {
+	console.log(data);
+}
+
+
 // info 관련 모든 정보를 detatch
-function detatchAll(){
-	$('#portfolioInfo').children().each((idx,e) => e.remove());
-	//$('#doChart').remove();
-	//doChart 의 footer 도 remove.
-	//Stock 도 reomve
+function detatchAll() {
+	if ($('#portfolioInfoWrapper').length > 0) {
+		console.log('detatchInfoWrapper')
+		$('#portfolioInfoWrapper').remove();
+		console.log('실행');
+	}
+	if ($('#portfolioRegWrapper').length > 0) {
+		$('#portfolioRegWrapper').remove();
+		console.log('실행');
+	}
 }
 
 //CardHeader 에 portfolio 정보를 입력한다.
-function setPortfolioInfo(id) {
-	/*
-		$.get('https://api.example.com/data', function(data) { console.log(data); })
-	*/
-	$('#' + id).attr('data-clicked','true');
+//addCard 가 아닌 다른 smallCards 가 클릭될 시 실행된다.
+
+function setChart(data) {
+	$('#donutChartBody').append($('<canvas id="doChart"></canvas>'));
+	console.log(data[0].amount);
+	console.log(data[0].stock);
+	let amountList = [];
+	let stockList = [];
+	let stockNameList = [];
+	data.forEach(e => {
+		amountList.push(e.amount);
+	})
+	data.forEach(e => {
+		stockList.push(e.stock);
+	})
+	stockList.forEach(e => {
+		stockNameList.push(e.name);
+	})
+	console.log(stockNameList);
+	let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5","#a4d9e5","#a4d9e5","#a4d9e5","#a4d9e5"];
+	let doughnut = document.getElementById("doChart");
+	if (doughnut !== null) {
+		let myDoughnutChart = new Chart(doughnut, {
+			type: "doughnut",
+			data: {
+				labels: stockNameList,
+				datasets: [
+					{
+						label: stockNameList,
+						data: amountList,
+						backgroundColor: colorList,
+						borderWidth: 1
+						// borderColor: ['#88aaf3','#29cc97','#8061ef','#fec402']
+						// hoverBorderColor: ['#88aaf3', '#29cc97', '#8061ef', '#fec402']
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false
+				},
+				cutoutPercentage: 75,
+				tooltips: {
+					callbacks: {
+						title: function(tooltipItem, data) {
+							return "Order : " + data["labels"][tooltipItem[0]["index"]];
+						},
+						label: function(tooltipItem, data) {
+							return data["datasets"][0]["data"][tooltipItem["index"]];
+						}
+					},
+					titleFontColor: "#888",
+					bodyFontColor: "#555",
+					titleFontSize: 12,
+					bodyFontSize: 14,
+					backgroundColor: "rgba(256,256,256,0.95)",
+					displayColors: true,
+					borderColor: "rgba(220, 220, 220, 0.9)",
+					borderWidth: 2
+				}
+			}
+		});
+	}
+}
+
+function setMyStock() {
+
 }
 
 // Card Headr 내부 작업. ( a)
 function addCardClicked() {
-	if ($('#portfolioRegWrapper').length != 1) {
-		let portfolioRegDiv = $('<div id = "portfolioRegWrapper" style = "width : 100%; height :100%;">');
-		let titleDiv = $('<div style = "height : 20%;">');
-		let dsDiv = $('<div style = "height : 20%;">');
+	let portfolioRegDiv = $('<div id = "portfolioRegWrapper" style = "width : 100%; height :100%;">');
+	let titleDiv = $('<div style = "height : 20%;">');
+	let dsDiv = $('<div style = "height : 20%;">');
 
-		let nameSpan = $('<span class="ec-register-wrap ec-register-half" >');
-		let titlelabel = $('<label style = "height : 5%;width : 100%">Title</label>');
-		let titleinput = $('<input id = "titleInput" type="text" placeholder="포트폴리오 제목을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;"required="">');
+	let nameSpan = $('<span class="ec-register-wrap ec-register-half" >');
+	let titlelabel = $('<label style = "height : 5%;width : 100%">Title</label>');
+	let titleinput = $('<input id = "titleInput" type="text" placeholder="포트폴리오 제목을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;"required="">');
 
-		let dsSpan = $('<span style = "margin-top:10%" class="ec-register-wrap ec-register-half">');
-		let dslabel = $('<label style = "height : 5%;width : 100%">discription</label>');
-		let dsinput = $('<input id = "discriptionInput" type="text" placeholder="포트폴리오 설명을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;"required="">');
+	let dsSpan = $('<span style = "margin-top:10%" class="ec-register-wrap ec-register-half">');
+	let dslabel = $('<label style = "height : 5%;width : 100%">discription</label>');
+	let dsinput = $('<input id = "discriptionInput" type="text" placeholder="포트폴리오 설명을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;"required="">');
 
-		$('#portfolioInfo').append(portfolioRegDiv);
-		portfolioRegDiv.append(titleDiv);
-		titleDiv.append(nameSpan);
-		nameSpan.append(titlelabel);
-		nameSpan.append(titleinput);
+	$('#portfolioInfo').append(portfolioRegDiv);
+	portfolioRegDiv.append(titleDiv);
+	titleDiv.append(nameSpan);
+	nameSpan.append(titlelabel);
+	nameSpan.append(titleinput);
 
-		$('#portfolioInfo').append(portfolioRegDiv);
-		portfolioRegDiv.append(dsDiv);
-		dsDiv.append(dsSpan);
-		dsSpan.append(dslabel);
-		dsSpan.append(dsinput);
+	$('#portfolioInfo').append(portfolioRegDiv);
+	portfolioRegDiv.append(dsDiv);
+	dsDiv.append(dsSpan);
+	dsSpan.append(dslabel);
+	dsSpan.append(dsinput);
 
-		let buttonWrapper = $('<div class = "buttonsWrapper" style = "display : flex;width : 40%; height : 13%;margin-top : 5%; float : right; justify-content: right;">');
-		$('#portfolioRegWrapper').append(buttonWrapper);
-		buttonWrapper.append($('<button type = "button" id = "saveButton" class = "btn btn-primary" style ="margin-right :25% ">저장</button>'));
-		$('#saveButton').on('click', () => saveButtonClicked($('#titleInput').val(), $('#discriptionInput').val()));
-	} else {
-		$('#portfolioRegWrapper').remove();
-	}
+	let buttonWrapper = $('<div class = "buttonsWrapper" style = "display : flex;width : 40%; height : 13%;margin-top : 5%; float : right; justify-content: right;">');
+	$('#portfolioRegWrapper').append(buttonWrapper);
+	buttonWrapper.append($('<button type = "button" id = "saveButton" class = "btn btn-primary" style ="margin-right :25% ">저장</button>'));
+	$('#saveButton').on('click', () => saveButtonClicked($('#titleInput').val(), $('#discriptionInput').val()));
+
 }
-
 
 
 class Checker {
@@ -191,7 +303,6 @@ class Checker {
 		let a;
 		this.tagList.each((idx, e) => {
 			if (e.getAttribute("data-clicked") == "true") {
-				console.log(e);
 				a = e;
 			}
 		});
@@ -200,12 +311,8 @@ class Checker {
 
 	// navEles 들 중 체크된 요소가 있는 지 확인.
 	anyOfClickedBool() {
-		console.log(this.tagList);
 		for (let i = 0; i < this.tagList.length; i++) {
-				console.log('202줄');
-				console.log(this.tagList[i].getAttribute("data-clicked"));
 			if (this.tagList[i].getAttribute("data-clicked") == "true") {
-				console.log(this.tagList[i].getAttribute("data-clicked"));
 				return true;
 			}
 		}
@@ -217,9 +324,7 @@ class Checker {
 		this.tagName.attr("data-clicked") == "true";
 	}
 }
-/*
-<span class="ec-register-wrap ec-register-half">
-	<label>First Name*</label>
-	<input type="text" name="firstname" placeholder="Enter your first name" required="">
-</span>
-*/
+
+
+// Chart
+
