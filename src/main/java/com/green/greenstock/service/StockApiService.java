@@ -2,7 +2,9 @@ package com.green.greenstock.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -73,7 +75,7 @@ public class StockApiService {
 	
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
 	// 국내주식현재가격
-	public Mono<DomesticStockCurrentPrice> getApiDomesticStockCurrentPrice(String companyCode) {
+	public DomesticStockCurrentPrice getApiDomesticStockCurrentPrice(String companyCode) {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -98,12 +100,13 @@ public class StockApiService {
 				.header(APP_SECRET, appSecret)
 				.header(TR_ID, trId)
 				.retrieve()
-				.bodyToMono(DomesticStockCurrentPrice.class);
+				.bodyToMono(DomesticStockCurrentPrice.class)
+				.block();
 	}
 
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_6df56964-f22b-43d4-9457-f06264018e5b
 	// 거래량 조회
-	public Mono<DomesticStockVolumeRank> getApiVolumeRank() {
+	public DomesticStockVolumeRank getApiVolumeRank() {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -138,7 +141,24 @@ public class StockApiService {
 				.header(TR_ID, trId)
 				.header("custtype", "P") // P 개인 B 법인
 				.retrieve()
-				.bodyToMono(DomesticStockVolumeRank.class);
+				.bodyToMono(DomesticStockVolumeRank.class)
+				.block();
+	}
+	
+	// 검색 주식 목록
+	public List<DomesticStockCurrentPrice> test(String companyName) {
+		
+		List<DomesticStockCurrentPrice> domesticStockCurrentPriceList = new ArrayList<>();
+		List<DomesticStockCode> codeList = domesticStockCodeRepository.findAllLikeCompanyName(companyName);
+		for(DomesticStockCode code : codeList) {
+			domesticStockCurrentPriceList.add(getApiDomesticStockCurrentPrice(code.getCompanyCode()));
+			 try {
+	                Thread.sleep(500); // 0.5초 대기
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+		}
+		return domesticStockCurrentPriceList;
 	}
 	
 	/* 토큰 시작 */

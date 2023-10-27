@@ -1,5 +1,8 @@
 package com.green.greenstock.dto;
 
+
+import java.text.DecimalFormat;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -91,4 +94,11 @@ public class DomesticStockCurrentPriceOutput {
     private String mrktWarnClsCode;
     private String shortOverYn;
     private String sltrYn;
+    
+    public void ss() {
+    	String num = "1000000";
+    	DecimalFormat dFormat = new DecimalFormat("###,###");
+    	dFormat.format(num);
+    }
+    
 }

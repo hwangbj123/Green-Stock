@@ -1,6 +1,7 @@
 package com.green.greenstock.controller;
 
-import org.springframework.http.HttpStatus;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.DomesticStockCurrentPrice;
 import com.green.greenstock.dto.DomesticStockVolumeRank;
-import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.service.StockApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
+import retrofit2.http.GET;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,9 +31,9 @@ public class StockApiController {
 			@RequestParam(defaultValue = "1") int filter) {
 		
 		String companyCode = stockApiService.getCompanyCode(filter, companyName);
-		Mono<DomesticStockCurrentPrice> monoStockCurrentPrice = stockApiService.getApiDomesticStockCurrentPrice(companyCode);
-		log.debug("data : {}", monoStockCurrentPrice.block());
-		model.addAttribute("stockCurrentPrice",monoStockCurrentPrice.block());
+		DomesticStockCurrentPrice stockCurrentPrice = stockApiService.getApiDomesticStockCurrentPrice(companyCode);
+//		log.debug("data : {}", monoStockCurrentPrice.block());
+		model.addAttribute("stockCurrentPrice",stockCurrentPrice.getOutput());
 		model.addAttribute("companyName", companyName);
 		model.addAttribute("companyCode", companyCode);
 		
@@ -44,7 +44,13 @@ public class StockApiController {
 	@ResponseBody
 	@GetMapping("/volumeRank")
 	public DomesticStockVolumeRank getApiVolumeRank() {
-		return stockApiService.getApiVolumeRank().block();
-		
+		return stockApiService.getApiVolumeRank();
 	}
+	
+	@GetMapping("/list")
+	@ResponseBody
+	public List<DomesticStockCurrentPrice> getStockList(String companyName) {
+		return stockApiService.test(companyName);
+	}
+	
 }
