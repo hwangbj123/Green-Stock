@@ -8,6 +8,7 @@ import lombok.Data;
 public class ChatMessage {
     private int roomId;
 	private String userId;
+	private String userName;
     private String content;
     private Date date;
     // 생성자, 게터, 세터 등을 추가하세요.
