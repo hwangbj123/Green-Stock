@@ -833,11 +833,10 @@
 								<div class="card-header justify-content-center">
 									<h2>Orders Overview</h2>
 								</div>
-								<div class="card-body">
-									<canvas id="doChart"></canvas>
+								<div id = "donutChartBody" class="card-body">
 								</div>
 								
-								<div class="card-footer d-flex flex-wrap bg-white p-0">
+								<!-- <div class="card-footer d-flex flex-wrap bg-white p-0">
 									<div class="col-6">
 										<div class="p-20">
 											<ul class="d-flex flex-column justify-content-between">
@@ -868,7 +867,7 @@
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="col-xl-4 col-md-12 p-b-15">
@@ -940,88 +939,6 @@
 													<div class="dropdown show d-inline-block widget-dropdown">
 														<a class="dropdown-toggle icon-burger-mini" href=""
 															role="button" id="dropdown-recent-order1"
-															data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" data-display="static"></a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class="dropdown-item"><a href="#">View</a></li>
-															<li class="dropdown-item"><a href="#">Remove</a></li>
-														</ul>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>24541</td>
-												<td><a class="text-dark" href=""> Toddler Shoes,
-														Gucci Watch</a></td>
-												<td class="d-none d-lg-table-cell">2 Units</td>
-												<td class="d-none d-lg-table-cell">Nov 15, 2018</td>
-												<td class="d-none d-lg-table-cell">$550</td>
-												<td><span class="badge badge-primary">Delayed</span></td>
-												<td class="text-right">
-													<div class="dropdown show d-inline-block widget-dropdown">
-														<a class="dropdown-toggle icon-burger-mini" href="#"
-															role="button" id="dropdown-recent-order2"
-															data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" data-display="static"></a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class="dropdown-item"><a href="#">View</a></li>
-															<li class="dropdown-item"><a href="#">Remove</a></li>
-														</ul>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>24541</td>
-												<td><a class="text-dark" href=""> Hat Black Suits</a></td>
-												<td class="d-none d-lg-table-cell">1 Unit</td>
-												<td class="d-none d-lg-table-cell">Nov 18, 2018</td>
-												<td class="d-none d-lg-table-cell">$325</td>
-												<td><span class="badge badge-warning">On Hold</span></td>
-												<td class="text-right">
-													<div class="dropdown show d-inline-block widget-dropdown">
-														<a class="dropdown-toggle icon-burger-mini" href="#"
-															role="button" id="dropdown-recent-order3"
-															data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" data-display="static"></a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class="dropdown-item"><a href="#">View</a></li>
-															<li class="dropdown-item"><a href="#">Remove</a></li>
-														</ul>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>24541</td>
-												<td><a class="text-dark" href=""> Backpack Gents,
-														Swimming Cap Slin</a></td>
-												<td class="d-none d-lg-table-cell">5 Units</td>
-												<td class="d-none d-lg-table-cell">Dec 13, 2018</td>
-												<td class="d-none d-lg-table-cell">$200</td>
-												<td><span class="badge badge-success">Completed</span></td>
-												<td class="text-right">
-													<div class="dropdown show d-inline-block widget-dropdown">
-														<a class="dropdown-toggle icon-burger-mini" href="#"
-															role="button" id="dropdown-recent-order4"
-															data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" data-display="static"></a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class="dropdown-item"><a href="#">View</a></li>
-															<li class="dropdown-item"><a href="#">Remove</a></li>
-														</ul>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>24541</td>
-												<td><a class="text-dark" href=""> Speed 500 Ignite</a></td>
-												<td class="d-none d-lg-table-cell">1 Unit</td>
-												<td class="d-none d-lg-table-cell">Dec 23, 2018</td>
-												<td class="d-none d-lg-table-cell">$150</td>
-												<td><span class="badge badge-danger">Cancelled</span></td>
-												<td class="text-right">
-													<div class="dropdown show d-inline-block widget-dropdown">
-														<a class="dropdown-toggle icon-burger-mini" href="#"
-															role="button" id="dropdown-recent-order5"
 															data-bs-toggle="dropdown" aria-haspopup="true"
 															aria-expanded="false" data-display="static"></a>
 														<ul class="dropdown-menu dropdown-menu-right">
@@ -1111,7 +1028,7 @@
 
 	<!-- Chart -->
 	<script src="resources/plugins/charts/Chart.min.js"></script>
-	<script src="resources/js/chart.js"></script>
+	<script src="resources/js/myportfolioChart.js"></script>
 
 	<!-- Google map chart -->
 	<script src="resources/plugins/charts/google-map-loader.js"></script>

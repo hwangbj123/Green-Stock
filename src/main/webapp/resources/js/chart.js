@@ -849,9 +849,9 @@ $(document).ready(function() {
   }
 
   /*======== 11. DOUGHNUT CHART ========*/
-  var doughnut = document.getElementById("doChart");
+  let doughnut = document.getElementById("doChart");
   if (doughnut !== null) {
-    var myDoughnutChart = new Chart(doughnut, {
+    let myDoughnutChart = new Chart(doughnut, {
       type: "doughnut",
       data: {
         labels: ["completed", "unpaid", "pending", "canceled", "returned", "Broken"],
