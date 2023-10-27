@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
+import com.green.greenstock.repository.model.User;
 
 @Mapper
 public interface ChatRepository {
@@ -16,4 +17,5 @@ public interface ChatRepository {
 	public String subCheck(@Param("roomId") int roomId, @Param("userId") int userId);
 	public int insertMessage(ChatMessage message);
 	public List<ChatMessage> selectMessageList(@Param("roomId") int roomId, @Param("userId") int userId);
+	public User findUserById(int userId);
 }

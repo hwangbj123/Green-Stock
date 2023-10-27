@@ -13,7 +13,7 @@ import lombok.Data;
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class User {
-	private int id;
+	private Integer id;
 	private String userName;
 	private String password;
 	private String email;

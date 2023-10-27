@@ -118,7 +118,7 @@ public class UserController {
     		log.info("토큰 : " + response.getBody());
         }
         RestTemplate apiRt = new RestTemplate();
-        String apiUrl = "https://www.googleapis.com/oauth2/v1/userinfo"; // 사용자 정보를 가져올 API URL
+        String apiUrl = "https://www.googleapis.com/oauth2/v1/userinfo"; // API URL
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + response.getBody().getAccessToken());
@@ -127,9 +127,33 @@ public class UserController {
 
         ResponseEntity<GoogleProfile> userInfoResponse = apiRt.exchange(apiUrl, HttpMethod.GET, entity, GoogleProfile.class);
         if (userInfoResponse.getStatusCode() == HttpStatus.OK) {
-            // 사용자 정보가 userInfoResponse.getBody()에 포함됩니다.
+            
         	GoogleProfile userInfo = userInfoResponse.getBody();
             log.info("Google 사용자 정보: " + userInfo);
+            
+            User oldUser = userService.findUserName(userInfo.getFamilyName() + userInfo.getGivenName());
+            
+            //첫번째 구글로그인
+            if(oldUser == null) {
+                Date date = Date.valueOf("3000-01-01");
+                
+                User user = User.builder()
+                		.userName(userInfo.getFamilyName() + userInfo.getGivenName())
+                		.password("google")
+                		.tel("010-000-0000")
+                		.birthDate((date))
+                		.regDate(Timestamp.valueOf(LocalDateTime.now()))
+                		.build();
+                
+                userService.insertUser(user);
+                oldUser = user;
+            }
+            
+            //기존 이용자
+    		session.setAttribute("principal", oldUser);
+    		session.setAttribute("isGoogle", true);
+    		
+    		log.info("Google : session 등록확인");
         }
 		
 		return "/";
@@ -228,7 +252,7 @@ public class UserController {
 		
 		log.info("user : " + oldUser);
 		
-		session.setAttribute("user", oldUser);
+		session.setAttribute("principal", oldUser);
 		
 		session.setAttribute("iskakao", true);
 		
