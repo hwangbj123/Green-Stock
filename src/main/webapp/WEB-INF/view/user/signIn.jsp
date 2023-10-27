@@ -63,6 +63,9 @@
 										<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
 											<img width="74" height="38" src="/resources/img/kakao_login_small.png">
 										</a>
+										<a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=274947516179-mp9dq1e2lmf62hj46urhg6e30mn29q0u.apps.googleusercontent.com&redirect_uri=http://localhost/user/google/callback&response_type=code&scope=profile">
+											<img width="74" height="38" src="/resources/img/google.svg">
+										</a>
 									</div>
 								</div>
 							</form>
