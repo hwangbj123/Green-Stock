@@ -70,7 +70,7 @@ public class BoardNoticeController {
 	//공지사항 삭제
 	@GetMapping("/delete{id}")
 	public int deleteNotice(@PathVariable int id ) {
-		int result = boardNoticeService.noticeDeleteService(id);
+		int result =boardNoticeService.noticeDeleteService(id);
 		return result;
 	}
 	//공지사항 내용보기

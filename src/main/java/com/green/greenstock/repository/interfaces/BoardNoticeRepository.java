@@ -22,11 +22,9 @@ public interface BoardNoticeRepository {
 	//공지사항 수정
 	public int updateNotice(Noticeboard noticeboard);
 	public Noticeboard getNoticeboard(int id);
-	
-	
+		
 	//공지사항 삭제
 	public int deleteNotice(int id);
-	//공지사항 업데이트
 
 	//공지사항 갯수 정하기
 	
