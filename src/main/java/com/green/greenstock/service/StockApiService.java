@@ -11,13 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-<<<<<<< HEAD
-import com.green.greenstock.dto.StockCurrentPrice;
-=======
 import com.green.greenstock.dto.DomesticStockCode;
 import com.green.greenstock.dto.DomesticStockCurrentPrice;
 import com.green.greenstock.dto.DomesticStockVolumeRank;
->>>>>>> aebc21eb8f76ae1ce7f4f94b7201615df5a8fde4
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
 import com.green.greenstock.repository.interfaces.DomesticStockCodeRepository;
 import com.green.greenstock.repository.interfaces.KosdaqCodeRepository;
