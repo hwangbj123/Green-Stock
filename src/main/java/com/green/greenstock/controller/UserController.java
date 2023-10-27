@@ -130,6 +130,9 @@ public class UserController {
             // 사용자 정보가 userInfoResponse.getBody()에 포함됩니다.
         	GoogleProfile userInfo = userInfoResponse.getBody();
             log.info("Google 사용자 정보: " + userInfo);
+            
+			/* User user = User.builder().userName(apiUrl) */
+            
         }
 		
 		return "/";
