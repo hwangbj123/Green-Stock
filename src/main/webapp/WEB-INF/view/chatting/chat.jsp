@@ -166,6 +166,16 @@
         });
 
         $('#chat-form').on('submit', function (e) {
+        	
+        	if($('#message').val().replace(/\s/gi, '').length==0){
+        		$('#message').val('');
+        		return false;
+        	}
+        	if($('#message').val().test('').length==0){
+        		$('#message').val('');
+        		return false;
+        	}
+        	
             e.preventDefault();
 //             var userId = userId; // 사용자 이름 또는 ID를 여기에 추가
             var message = $('#message').val();
