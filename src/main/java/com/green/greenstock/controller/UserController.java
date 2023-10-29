@@ -36,6 +36,7 @@ import com.green.greenstock.dto.NaverProfile;
 import com.green.greenstock.dto.NaverResponse;
 import com.green.greenstock.dto.OAuthToken;
 import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.MailService;
 import com.green.greenstock.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@Autowired
 	HttpSession session;
@@ -80,6 +84,33 @@ public class UserController {
 	public String SignUpProc(User user) {
 		userService.insertUser(user);
 		return "user/signIn";
+	}
+	
+	@GetMapping("/findIdPw")
+	public String FindIdPw() {
+		return "user/findIdPw";
+	}
+	
+	@PostMapping("/find-id")
+	@ResponseBody
+	String FindId(@RequestParam("email") String email) throws Exception {
+		
+		log.info("가입코드 이메일 전송 컨트롤러 실행");
+		
+		//이메일정보로 유저찾기
+		User user = userService.findUserFromEmail(email);
+		
+		log.info("이메일 유저정보 조회");
+		if(user != null) {
+			String code = mailService.sendUserId(email, user);
+			log.info("메일보내기 완료");
+		    return code;
+		} else {
+			//오류처리
+			log.info("이메일로 유저찾기 실패"); 
+			return null;
+		}
+		
 	}
 
 	@PostMapping("/duplicate-check")
@@ -356,7 +387,7 @@ public class UserController {
 		
 		log.info("가입코드 이메일 전송 컨트롤러 실행");
 		
-	    String code = userService.sendSimpleMessage(email);
+	    String code = mailService.sendSimpleMessage(email);
 	    log.info("인증코드 : " + code);
 	    return code;
 	}

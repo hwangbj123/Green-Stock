@@ -52,9 +52,9 @@
 									
 									<div class="col-md-12">
 										<div class="d-flex my-2 justify-content-end">
-											<p><a class="text-blue" href="#">Forgot Password?</a></p>
+											<p><a class="text-blue" href="/user/findIdPw">아이디/비밀번호 찾기</a></p>
 										</div>
-										
+
 										<button type="submit" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;">Sign In</button>
 										
 										<p class="sign-upp">Don't have an account yet ?
