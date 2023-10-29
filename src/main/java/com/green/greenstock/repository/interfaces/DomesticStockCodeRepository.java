@@ -11,4 +11,5 @@ public interface  DomesticStockCodeRepository {
 
 	DomesticStockCode findByCompanyName(String companyName);
 	List<DomesticStockCode>findAllLikeCompanyName(String companyName);
+	DomesticStockCode findByCompanyCode(String companyCode);
 }

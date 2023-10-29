@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -15,7 +16,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.green.greenstock.dto.DomesticStockCode;
 import com.green.greenstock.dto.DomesticStockCurrentPrice;
+import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRank;
+import com.green.greenstock.dto.ResponseDomesticStockSearchDto;
+import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
 import com.green.greenstock.repository.interfaces.DomesticStockCodeRepository;
 import com.green.greenstock.repository.interfaces.KosdaqCodeRepository;
@@ -25,7 +29,9 @@ import com.green.greenstock.repository.model.AccessTokenInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,26 +58,14 @@ public class StockApiService {
 	
 	
 	
-	// filter 값과 회사이름으로 종목코드 찾기
-	public String getCompanyCode(int filter, String companyName) {
-		String companyCode = null;  
+	// 종목코드 값으로 회사이름 찾기
+	public String getCompanyName(String companyCode) {
+		// 종목코드
+		DomesticStockCode domesticStockCode= domesticStockCodeRepository.findByCompanyCode(companyCode);
 		
-		switch (filter) {
-			case 1: // 국내
-				DomesticStockCode code = domesticStockCodeRepository.findByCompanyName(companyName);
-				companyCode = code != null ? code.getCompanyCode() : "005930";
-				break;
-			case 2:	// 해외
-				companyCode = overseasStockCodeRepository.findSymbByKnam(companyName).getSymb();
-				break;
-			default:
-				companyCode = filter == 1 ? "005930" : "AAPL"; // 기본값 삼성전자 OR APPLE 
-				break;
-		}
-		log.debug("filter : {}", filter);
-		log.debug("companyName : {}", companyName);
+		log.debug("companyName : {}", domesticStockCode.getCompanyName());
 		log.debug("companyCode : {}", companyCode);
-		return companyCode;
+		return domesticStockCode.getCompanyName();
 	}
 	
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
@@ -147,19 +141,43 @@ public class StockApiService {
 	}
 	
 	// 검색 주식 목록
-	public List<DomesticStockCurrentPrice> test(String companyName) {
+	public ResponseDomesticStockSearchDto getApiDomesticStockCurrentPriceList(String searchData, int page) {
 		
-		List<DomesticStockCurrentPrice> domesticStockCurrentPriceList = new ArrayList<>();
-		List<DomesticStockCode> codeList = domesticStockCodeRepository.findAllLikeCompanyName(companyName);
-		for(DomesticStockCode code : codeList) {
-			domesticStockCurrentPriceList.add(getApiDomesticStockCurrentPrice(code.getCompanyCode()));
-			 try {
-	                Thread.sleep(500); // 0.5초 대기
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
+		ResponseDomesticStockSearchDto domesticStockSearchDto = new ResponseDomesticStockSearchDto(); // dto 생성
+		List<DomesticStockCurrentPriceOutput> dtoList = new ArrayList<>(); // dto에 넣을 List 생성
+		List<DomesticStockCode> codeList = domesticStockCodeRepository.findAllLikeCompanyName(searchData); // 검색어와 유사한 종목코드 리스트
+		
+		// API 요청 한계로 인해 10개 요청하기
+		int total = codeList.size(); // 총 개수
+		if((total/10) + 1 < page ) {
+			throw new CustomRestfulException("입력이 올바르지 않습니다.", HttpStatus.BAD_REQUEST);
 		}
-		return domesticStockCurrentPriceList;
+		
+		int start = (page - 1) * 10; // 시작 번호
+		int end = (page * 10 >= total) ? total : (page * 10); // 끝번호
+		
+		for(int i = start; i < end; i++) {
+			if(codeList.get(i) != null) {
+				DomesticStockCode domesticStockCode = codeList.get(i);
+				dtoList.add(getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput()); // 리스트에 추가 (output)
+				dtoList.get(i).setCompanyName(domesticStockCode.getCompanyName()); // 리스트에 추가 (회사 한글명)
+				dtoList.get(i).setType(domesticStockCode.getType()); // 리스트에 추가 (type: kospi, kosdaq)
+				dtoList.get(i).setCompanyCode(domesticStockCode.getCompanyCode());
+			}else {
+				throw new CustomRestfulException("목록을 가져오지 못했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
+		domesticStockSearchDto.setListSize(total); // 검색된 전체 개수
+		domesticStockSearchDto.setSearchData(searchData); // 검색어
+		domesticStockSearchDto.setPage(page); // 현재 페이지
+		domesticStockSearchDto.setTotalpage((total/10) + 1); // 총 페이지수
+		log.debug("total {}", total);
+		log.debug("start {}", start);
+		log.debug("end {}", end);
+		log.debug("listSize {}", domesticStockSearchDto.getDomesticStockCurrentPriceList().size());
+		return domesticStockSearchDto;
 	}
 	
 	/* 토큰 시작 */
@@ -188,6 +206,7 @@ public class StockApiService {
 	// 토큰 유효성 검증(종합) / null, 시간
 	public AccessTokenInfo validateAccessToken() {
 		AccessTokenInfo recentAccessTokenInfo = accessTokenRepository.findTopByOrderByTokenIdDesc(); // 최근 토큰정보 가져오기
+		log.debug("tokenId {}", recentAccessTokenInfo.getTokenId());
 		if(recentAccessTokenInfo == null || isAccessTokenExpired(recentAccessTokenInfo)){ // 최근 토큰이 존재한다면
 			return getApiAccessToken(); // 토큰을 발급받고 토큰을 리턴
 		}else {

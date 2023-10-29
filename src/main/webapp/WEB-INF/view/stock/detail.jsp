@@ -1,6 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
+		<meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
+		
+		<!-- css Icon Font -->
+		<link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
+		
+		<!-- css All Plugins Files -->
+		<link rel="stylesheet" href="/resources/css/plugins/animate.css" />
+		<link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
+		<link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
+		<link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
+		<link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
+		<link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
+		
+		<!-- Main Style -->
+		<link rel="stylesheet" href="/resources/css/style.css" />
+		<link rel="stylesheet" href="/resources/css/responsive.css" />
+		
+		<!-- Background css -->
+		<link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
+         <!-- Vendor JS -->
+	    <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
+	    <script src="/resources/js/vendor/popper.min.js"></script>
+	    <script src="/resources/js/vendor/bootstrap.min.js"></script>
+	    <script src="/resources/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+	    <script src="/resources/js/vendor/modernizr-3.11.2.min.js"></script>
+	
+	    <!--Plugins JS-->
+	    <script src="/resources/js/plugins/swiper-bundle.min.js"></script>
+	    <script src="/resources/js/plugins/countdownTimer.min.js"></script>
+	    <script src="/resources/js/plugins/scrollup.js"></script>
+	    <script src="/resources/js/plugins/jquery.zoom.min.js"></script>
+	    <script src="/resources/js/plugins/slick.min.js"></script>
+	    <script src="/resources/js/plugins/infiniteslidev2.js"></script>
+	    <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
+	    <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
+	
+	    <!-- Main Js -->
+	    <script src="/resources/js/vendor/index.js"></script>
+	    <script src="/resources/js/main.js"></script>
+	    <style>
+	    	.primaryColorRed{
+	    		color: #ff909d;
+	    	}
+	    	.primaryColorBlue{
+	    		color: #3474d4;
+	    	}
+	    	.searchList{}
+	    	.searchList .tag{
+	    		background-color: #1c8855;
+	    		box-shadow: 0px 0px 5px 0px #ccc;
+	    	}
+	    	.searchList > tbody > tr > td:nth-child(n+2){
+	    		padding-right: 48px;
+	    	}
+	    	
+	    </style>
+	</head>
+<body>
+<%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper container">
       <div class="content">
@@ -12,24 +79,24 @@
         </div>
         <div class="row mb-4">
           <div class="col-lg-3 col-md-6">
-            <h2>${stockCurrentPrice.stckPrpr}</h2>
+            <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
               <h6>전일</h6>
-              <p>${stockCurrentPrice.stckSdpr}</p>
+              <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
               <h6>고가</h6>
-              <p>${stockCurrentPrice.stckHgpr} (상한가 ${stockCurrentPrice.stckMxpr})</p>
+              <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
               <h6>거래량(주)</h6>
-              <p>${stockCurrentPrice.acmlVol}</p>
+              <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
             </div>
           </div>
         </div>
@@ -37,25 +104,27 @@
           <div class="col-lg-3 col-md-6">
           	<div>
               <h6>전일대비</h6>
-              <p>${stockCurrentPrice.prdyVrss} ${stockCurrentPrice.prdyCtrt}</p>
+              <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+              	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
+              	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
               <h6>시가</h6>
-              <p>${stockCurrentPrice.stckOprc}</p>
+              <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
               <h6>저가</h6>
-              <p>${stockCurrentPrice.stckLwpr} (하한가 ${stockCurrentPrice.stckLlam})</p>
+              <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
             <div>
-              <h6>거래대금</h6>
-              <p>${stockCurrentPrice.acmlTrPbmn}</p>
+              <h6>거래대금(백만)</h6>
+              <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
             </div>
           </div>
         </div>
@@ -99,35 +168,31 @@
                       <tbody>
                         <tr>
                           <th class="text-start">시가총액</th>
-                          <td>${stockCurrentPrice.htsAvls}</td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">시가총액순위</th>
-                          <td>hts_avls</td>
+                          <td><fmt:formatNumber value="${stockCurrentPrice.htsAvls}"/></td>
                         </tr>
                         <tr>
                           <th class="text-start">상장주식수</th>
-                          <td>${stockCurrentPrice.lstnStcn}</td>
+                          <td><fmt:formatNumber value="${stockCurrentPrice.lstnStcn}"/></td>
                         </tr>
                         <tr>
                           <th class="text-start">외국인보유주식수</th>
-                          <td>${stockCurrentPrice.frgnHldnQty}</td>
+                          <td><fmt:formatNumber value="${stockCurrentPrice.frgnHldnQty}"/></td>
                         </tr>
                         <tr>
                           <th class="text-start">외국인소진율</th>
-                          <td>${stockCurrentPrice.htsFrgnEhrt}</td>
+                          <td>${stockCurrentPrice.htsFrgnEhrt} %</td>
                         </tr>
                         <tr>
                           <th class="text-start">52주 최고 | 최저</th>
-                          <td>${stockCurrentPrice.w52Hgpr} | ${stockCurrentPrice.w52Lwpr}</td>
+                          <td><fmt:formatNumber value="${stockCurrentPrice.w52Hgpr}"/> | <fmt:formatNumber value="${stockCurrentPrice.w52Lwpr}"/></td>
                         </tr>
                         <tr>
                           <th class="text-start">PER | EPS</th>
-                          <td>${stockCurrentPrice.per} | ${stockCurrentPrice.eps}</td>
+                          <td>${stockCurrentPrice.per} 배 | <fmt:formatNumber value="${stockCurrentPrice.eps}"/></td>
                         </tr>
                         <tr>
                           <th class="text-start">PBR | BPS</th>
-                          <td>${stockCurrentPrice.pbr} | ${stockCurrentPrice.bps}</td>
+                          <td>${stockCurrentPrice.pbr} 배 | <fmt:formatNumber value="${stockCurrentPrice.bps}"/></td>
                         </tr>
                       </tbody>
                     </table>
