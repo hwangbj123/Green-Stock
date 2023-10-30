@@ -38,4 +38,6 @@ out/
 
 src/main/resources/key.yml
 
+src/main/resources/email.properties
+
 src/main/resources/googleKey.yml

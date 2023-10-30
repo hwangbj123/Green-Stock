@@ -35,6 +35,7 @@ import com.green.greenstock.dto.NaverOAuthTokenDto;
 import com.green.greenstock.dto.NaverProfile;
 import com.green.greenstock.dto.NaverResponse;
 import com.green.greenstock.dto.OAuthToken;
+import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.MailService;
 import com.green.greenstock.service.UserService;
@@ -64,14 +65,14 @@ public class UserController {
 	}
 
 	@PostMapping("/sign-in")
-	public String SignInProc(User user) {
+	public ResponseEntity<Integer> SignInProc(User user) {
 		User principal = userService.findUserByUserName(user);
 		if (principal != null) {
 			principal.setPassword(null);
 			session.setAttribute("principal", principal);
-			return "redirect:/main";
+			return ResponseEntity.status(HttpStatus.OK).body(200);
 		} else {
-			return "redirect:/user/sign-in";
+			return ResponseEntity.status(HttpStatus.OK).body(400);
 		}
 	}
 
@@ -82,8 +83,29 @@ public class UserController {
 
 	@PostMapping("/sign-up")
 	public String SignUpProc(User user) {
+		if(user.getUserName() == null || user.getUserName().isEmpty()) {
+			throw new CustomRestfulException("username을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getPassword() == null || user.getPassword().isEmpty()) {
+			throw new CustomRestfulException("password을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getEmail() == null || user.getEmail().isEmpty()) {
+			throw new CustomRestfulException("email을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getTel() == null || user.getTel().isEmpty()) {
+			throw new CustomRestfulException("전화번호를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getBirthDate() == null) {
+			throw new CustomRestfulException("생년월일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
 		userService.insertUser(user);
 		return "user/signIn";
+	}
+	
+	@GetMapping("/sign-out")
+	public String SignOut() {
+		session.invalidate();
+		return "redirect:/user/sign-in";
 	}
 	
 	@GetMapping("/findIdPw")
@@ -95,7 +117,11 @@ public class UserController {
 	@ResponseBody
 	String FindId(@RequestParam("email") String email) throws Exception {
 		
-		log.info("가입코드 이메일 전송 컨트롤러 실행");
+		if(email == null || email.isEmpty()) {
+			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		log.info("아이디찾기 이메일 전송 컨트롤러 실행");
 		
 		//이메일정보로 유저찾기
 		User user = userService.findUserFromEmail(email);
@@ -103,7 +129,7 @@ public class UserController {
 		log.info("이메일 유저정보 조회");
 		if(user != null) {
 			String code = mailService.sendUserId(email, user);
-			log.info("메일보내기 완료");
+			log.info("인증코드 : " + code);
 		    return code;
 		} else {
 			//오류처리
@@ -111,6 +137,43 @@ public class UserController {
 			return null;
 		}
 		
+	}
+	
+	@PostMapping("/find-pw")
+	@ResponseBody
+	String FindPw(@RequestParam("email") String email, @RequestParam("username") String username) throws Exception {
+		
+		if(email == null || email.isEmpty()) {
+			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(username == null || username.isEmpty()) {
+			throw new CustomRestfulException("ID를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		log.info("비번찾기 이메일 전송 컨트롤러 실행");
+		
+		//이메일정보로 유저찾기
+		User user = userService.findUserFromEmail(email);
+		
+		if(user.getUserName().equals(username)) {
+			log.info("이메일 유저정보 조회");
+			String code = mailService.sendSimpleMessage(email);
+			log.info("인증코드 : " + code);
+			return code;
+		} else {
+			//오류처리
+			log.error("일치하는 유저가 없습니다.");
+			return null;
+		}
+	}
+	
+	@PostMapping("/modify-pw")
+	public String ModifyPw(User principal) {
+		User user = userService.findUserName(principal.getUserName());
+		user.setPassword(principal.getPassword());
+		userService.modifyPw(user);
+		return "user/signIn";
 	}
 
 	@PostMapping("/duplicate-check")
@@ -369,6 +432,10 @@ public class UserController {
 	@PostMapping("/email-duplicate-check")
 	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
 		
+		if(email == null || email.isEmpty()) {
+			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
 		log.info("이메일 중복체크 컨트롤러 실행");
 		
 		if(userService.findUserFromEmail(email)!=null) {
@@ -384,6 +451,10 @@ public class UserController {
 	@PostMapping("/mail-confirm")
 	@ResponseBody
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
+		
+		if(email == null || email.isEmpty()) {
+			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
+		}
 		
 		log.info("가입코드 이메일 전송 컨트롤러 실행");
 		

@@ -148,9 +148,22 @@ function smallCardClicked(id) {
 
 function attatchPortfolioInfo(id) {
 	$.get('portfolio/getMyPortfolioInfo/' + id, function(data) {
+		let amountList = [];
+		let stockList = [];
+		let stockNameList = [];
+		data.stockList.forEach(e => {
+			amountList.push(e.amount * e.stock.price);
+		})
+		data.stockList.forEach(e => {
+			stockList.push(e.stock);
+		})
+		stockList.forEach(e => {
+			stockNameList.push(e.name);
+		})
 		setPortfolioInfo(data);
-		setChart(data.stockList);
-		setMyStock(data);
+		setDonutChart(stockNameList, amountList, data.totalAsset);
+		setMyStock(data,stockList, amountList, id);
+		setMonthlyAssetChart();
 	})
 }
 
@@ -161,27 +174,36 @@ function setPortfolioInfo(data) {
 
 	let titleDivWrapper = $('<div style = "height : 10%; background-Color :white; display:flex;">' + data.title + '</div>');
 	let dsDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + data.discription + '</div>');
+	let totalAssetDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + data.totalAsset + '</div>');
 	let ror = $('<div style = "height : 15%;background-Color : white; display:flex;font-size:xx-large;color : red;font-weight : bold;">ROR : -99%</div>');
 
 	portfolioInfoWrapper.append(titleDivWrapper);
 	portfolioInfoWrapper.append(dsDivWrapper);
+	portfolioInfoWrapper.append(totalAssetDivWrapper);
 	portfolioInfoWrapper.append(ror);
 }
 
-function setMyStock(data) {
-	console.log(data);
-}
-
-
 // info 관련 모든 정보를 detatch
 function detatchAll() {
-	if ($('#portfolioInfoWrapper').length > 0) {
+	console.log('실행됨');
+	if ($('#portfolioInfoWrapper').length > 0 && $('#donutChartBody').children().length > 0 && $('#myStockCardTable').children().length > 0 && $('#assetBody').children().length > 0) {
 		console.log('detatchInfoWrapper')
 		$('#portfolioInfoWrapper').remove();
+		$('#donutChartBody').children().each((idx, e) => {
+			$(e).remove();
+		});
+		$('#donutChartBody').children().each((idx, e) => {
+			$(e).remove();
+		});
+		$('#assetBody').children().each((idx, e) => {
+			$(e).remove();
+		});
 		console.log('실행');
 	}
-	if ($('#portfolioRegWrapper').length > 0) {
-		$('#portfolioRegWrapper').remove();
+	if ($('#myStockCardTable').children().length > 0) {
+		$('#myStockCardTable').children().each((idx, e) => {
+			$(e).remove();
+		})
 		console.log('실행');
 	}
 }
@@ -189,24 +211,10 @@ function detatchAll() {
 //CardHeader 에 portfolio 정보를 입력한다.
 //addCard 가 아닌 다른 smallCards 가 클릭될 시 실행된다.
 
-function setChart(data) {
+function setDonutChart(stockNameList, amountList, totalAsset) {
 	$('#donutChartBody').append($('<canvas id="doChart"></canvas>'));
-	console.log(data[0].amount);
-	console.log(data[0].stock);
-	let amountList = [];
-	let stockList = [];
-	let stockNameList = [];
-	data.forEach(e => {
-		amountList.push(e.amount);
-	})
-	data.forEach(e => {
-		stockList.push(e.stock);
-	})
-	stockList.forEach(e => {
-		stockNameList.push(e.name);
-	})
 	console.log(stockNameList);
-	let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5","#a4d9e5","#a4d9e5","#a4d9e5","#a4d9e5"];
+	let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5"];
 	let doughnut = document.getElementById("doChart");
 	if (doughnut !== null) {
 		let myDoughnutChart = new Chart(doughnut, {
@@ -252,10 +260,271 @@ function setChart(data) {
 			}
 		});
 	}
+	console.log(totalAsset);
+	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + totalAsset + '</div>'));
 }
 
-function setMyStock() {
+function setRanking() {
+	$.get('portfolio/getRanking', function(data) {
 
+	});
+}
+
+function setMonthlyAssetChart() {
+	/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
+	//<canvas id="monthlyAsset" class="chartjs"></canvas>
+	$.get('portfolio/getMonthlyAsset', function(data) {
+		console.log(data);
+		$('#assetBody').append($('<canvas style = "height : 300px" id="monthlyAsset" class="chartjs"></canvas>'))
+		var activity = document.getElementById("monthlyAsset");
+		if (activity !== null) {
+			var config = {
+				// The type of chart we want to create
+				type: "line",
+				// The data for our dataset
+				data: {
+					labels: [
+						"4 Jan",
+						"5 Jan",
+						"6 Jan",
+						"7 Jan",
+						"8 Jan",
+						"9 Jan",
+						"10 Jan"
+					],
+					datasets: [
+						{
+							label: "Monthly Asset",
+							backgroundColor: "transparent",
+							borderColor: "rgba(82, 136, 255, .8)",
+							data: data,
+							lineTension: 0,
+							pointRadius: 5,
+							pointBackgroundColor: "rgba(255,255,255,1)",
+							pointHoverBackgroundColor: "rgba(255,255,255,1)",
+							pointBorderWidth: 2,
+							pointHoverRadius: 7,
+							pointHoverBorderWidth: 1
+						}/*,
+					{
+						label: "Inactive",
+						backgroundColor: "transparent",
+						borderColor: "rgba(255, 199, 15, .8)",
+						data: activityData[0].second,
+						lineTension: 0,
+						borderDash: [10, 5],
+						borderWidth: 1,
+						pointRadius: 5,
+						pointBackgroundColor: "rgba(255,255,255,1)",
+						pointHoverBackgroundColor: "rgba(255,255,255,1)",
+						pointBorderWidth: 2,
+						pointHoverRadius: 7,
+						pointHoverBorderWidth: 1
+					}*/
+					]
+				},
+				// Configuration options go here
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					scales: {
+						xAxes: [
+							{
+								gridLines: {
+									display: false,
+								},
+								ticks: {
+									fontColor: "#8a909d", // this here
+								},
+							}
+						],
+						yAxes: [
+							{
+								gridLines: {
+									fontColor: "#8a909d",
+									fontFamily: "Roboto, sans-serif",
+									display: true,
+									color: "#eee",
+									zeroLineColor: "#eee"
+								},
+								ticks: {
+									// callback: function(tick, index, array) {
+									//   return (index % 2) ? "" : tick;
+									// }
+									//stepSize: 50,
+									fontColor: "#8a909d",
+									fontFamily: "Roboto, sans-serif"
+								}
+							}
+						]
+					},
+					tooltips: {
+						mode: "index",
+						intersect: false,
+						titleFontColor: "#888",
+						bodyFontColor: "#555",
+						titleFontSize: 12,
+						bodyFontSize: 15,
+						backgroundColor: "rgba(256,256,256,0.95)",
+						displayColors: true,
+						xPadding: 10,
+						yPadding: 7,
+						borderColor: "rgba(220, 220, 220, 0.9)",
+						borderWidth: 2,
+						caretSize: 6,
+						caretPadding: 5
+					}
+				}
+			};
+
+			var ctx = document.getElementById("monthlyAsset").getContext("2d");
+			var myLine = new Chart(ctx, config);
+
+			/*var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");
+			items.forEach(function(item, index) {
+				item.addEventListener("click", function() {
+					config.data.datasets[0].data = activityData[index].first;
+					config.data.datasets[1].data = activityData[index].second;
+					myLine.update();
+				});
+			});*/
+		}
+	})
+}
+
+
+function setMyStock(initialData,stockList, amountList, portfolioId) {
+	//table header
+	console.log(initialData.stockList);
+	
+	let thead = $('<thead>');
+	//console.log(Object.keys(stockList[0]));
+	Object.keys(stockList[0]).forEach(e => {
+		let th = $('<th>' + e + '</th>');
+		thead.append(th);
+	})
+	let amount = $('<th>amount</th>');
+	let nowPriceTh = $('<th>nowPrice</th>')
+	let nowRor = $('<th>ROR</th>');
+	let totalAmountTh = $('<th>totalAmount</th>')
+	thead.append(amount);
+	thead.append(nowPriceTh);
+	thead.append(nowRor);
+	thead.append(totalAmountTh);
+	$('#myStockCardTable').append(thead);
+
+
+	//table body
+	let tbody = $('<tbody>');
+	let collength;
+
+	stockList.forEach((e, idx) => {
+		let values = Object.values(e);
+		let tr = $('<tr>')
+		collength = values.length + 5; // buy sell totalAmount
+		for (let i = 0; i < values.length; i++) {
+			tr.append($('<td>' + values[i] + '</td>'))
+		}
+		$.get('portfolio/getStock/' + stockList[idx].id, function(data) {
+			tr.append($('<td>' + (initialData.stockList[idx].amount).toFixed(2) + '</td>'));
+			tr.append($('<td>' + data.price + '</td>'));
+			tr.append($('<td>' + ifPlus(calculatePercentageChange(stockList[idx].price, data.price, tr).toFixed(2)) + '</td>'));
+
+			let totalStocksTd = $('<td>' + (initialData.stockList[idx].amount * data.price).toFixed(0) + '</td>');
+			let buyTd = $('<td style="cursor:pointer"id = addBtn>buy</td>');
+			let sellTd = $('<td style="cursor:pointer" id = sellBtn>sell</td>');
+			tr.append(totalStocksTd);
+			tr.append(buyTd);
+			tr.append(sellTd);
+			buyTd.on('click', () => buyClicked(portfolioId, e.id));
+			sellTd.on('click', () => sellClicked(portfolioId, e.id));
+			tbody.append(tr);
+		});
+	})
+
+	/*let addTr = $('<tr>');
+	addTr.append($('<td colspan = "' + collength + '"style="cursor:pointer;width:100%;text-align:center">+</td>'));
+	addTr.on('click', () => addStockClicked(portfolioId));
+	tbody.append(addTr);*/
+	$('#myStockCardTable').append(tbody);
+}
+
+function calculatePercentageChange(oldValue, newValue, tr) {
+	console.log('----------------');
+	console.log(oldValue);
+	console.log(newValue);
+	if (oldValue === 0) {
+		if (newValue === 0) {
+			return 0; // 두 값이 모두 0이면 변화가 없음
+		} else {
+			return Infinity; // 이전 값이 0이고 새 값이 0이 아니면 무한대 (무한한 증가)
+		}
+	}
+
+	const change = ((newValue - oldValue) / Math.abs(oldValue)) * 100;
+	if (change < 0) {
+		tr.css('color', 'blue');
+	} else if (change == 0) {
+		tr.css('color', 'black');
+	} else {
+		tr.css('color', 'red');
+	}
+	return change;
+}
+
+function ifPlus(ele) {
+	if (ele > 0) {
+		return '+' + ele + '%';
+	} else {
+		return ele + '%';
+	}
+}
+
+function buyClicked(pId, stockId) {
+	console.log(pId + '    ' + stockId);
+	newWindow(pId, stockId, 'buy');
+}
+
+function sellClicked(pId, stockId) {
+	console.log(pId + '    ' + stockId);
+	newWindow(pId, stockId, 'sell')
+}
+
+function addStockClicked(pfId) {
+	console.log(pfId);
+}
+
+function newWindow(pId, stockId, type) {
+	var newWindow = window.open(
+		"portfolio/popUpPage",
+		"_blank",
+		"width=200,height=100"
+	);
+
+	newWindow.onload = function() {
+		var contentDiv = newWindow.document.createElement("div");
+		contentDiv.innerHTML =
+			'<div id="dataForm" method="post"><input style = "height : 20px" type="text" id="inputField" placeholder = "숫자를 입력해주세요."><button style = "height : 25px;margin-left : 3%"type="button" id="submitButton">' + type + '</button></div>';
+		newWindow.document.body.appendChild(contentDiv);
+		contentDiv
+			.querySelector("#submitButton")
+			.addEventListener("click", function() {
+				var inputData = contentDiv.querySelector("#inputField").value;
+				$.ajax({
+					url: "portfolio/buySell/" + type,
+					method: "post",
+					contentType: "application/json",
+					data: JSON.stringify({ 'potfolioId': pId, 'stockId': stockId, 'amount': inputData }),
+					success: (data) => {
+						console.log(data);
+					},
+				});
+				newWindow.close();
+			});
+	};
 }
 
 // Card Headr 내부 작업. ( a)
