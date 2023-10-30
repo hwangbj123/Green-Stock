@@ -42,10 +42,13 @@
 	</insert>
 	
 	<select id="selectMessageList" resultType="com.green.greenstock.dto.ChatMessage">
-		select * from message
+		select message_id, user_id, room_id, content, date, user_name 
+		from message
+		join user_tb on message.user_id = user_tb.id
 		where room_id = #{roomId}
 		and date > (select date from subscribe
 					where room_id = #{roomId}
 					and user_id = #{userId})
 	</select>
+	
 </mapper>

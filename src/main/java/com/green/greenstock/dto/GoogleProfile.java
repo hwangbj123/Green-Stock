@@ -27,46 +27,5 @@ public class GoogleProfile {
 	private String picture;
 	@JsonProperty("locale")
 	private String locale;
-	
-	/*
-	 * @JsonInclude(JsonInclude.Include.NON_NULL)
-	 * 
-	 * @JsonPropertyOrder({ "profile_nickname_needs_agreement", "profile",
-	 * "has_email", "email_needs_agreement", "is_email_valid", "is_email_verified",
-	 * "email", "birthyear", "birthday", "phone_number" })
-	 * 
-	 * @Data public class KakaoAccount {
-	 * 
-	 * @JsonProperty("profile_nickname_needs_agreement") private Boolean
-	 * profileNicknameNeedsAgreement;
-	 * 
-	 * @JsonProperty("profile") private Profile profile;
-	 * 
-	 * @JsonProperty("has_email") private Boolean hasEmail;
-	 * 
-	 * @JsonProperty("email_needs_agreement") private Boolean emailNeedsAgreement;
-	 * 
-	 * @JsonProperty("is_email_valid") private Boolean isEmailValid;
-	 * 
-	 * @JsonProperty("is_email_verified") private Boolean isEmailVerified;
-	 * 
-	 * @JsonProperty("email") private String email;
-	 * 
-	 * @JsonProperty("birthyear") private String birthYear;
-	 * 
-	 * @JsonProperty("birthday") private String birthDay;
-	 * 
-	 * @JsonProperty("phone_number") private String phoneNumber;
-	 * 
-	 * @JsonInclude(JsonInclude.Include.NON_NULL)
-	 * 
-	 * @JsonPropertyOrder({ "nickname" })
-	 * 
-	 * @Data public class Profile {
-	 * 
-	 * @JsonProperty("nickname") private String nickname; }
-	 * 
-	 * }
-	 */
 
 }

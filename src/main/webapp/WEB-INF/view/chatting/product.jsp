@@ -1146,7 +1146,7 @@
 		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />
 	                        	</c:when>
 	                        	<c:otherwise>
-	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="fetchFnc(${roomId},${principal.id})">채팅 서비스를 이용하시려면 해당 채널에 구독해야합니다</button>
+	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="fetchFnc(${roomId},${principal.id})">채팅창 열기</button>
 	                        	</c:otherwise>
 							</c:choose>
 <!-- 	                        	<div class="chattingDiv" style="display: none;"> -->
@@ -2015,11 +2015,6 @@
 				if(confirm("해당 채널에 구독 되어있지 않습니다. 구독하시겠습니까?")){
 					location.href="/subscribe?roomId="+roomId+"&userId="+userId;
 				}
-			}else{
-// 				alert("해당 채널에 구독 되어있습니다. userId : "+userId+", subCheck : "+subRes);
-// 				$("#subCheckBtn").css("display","none");
-// 				$(".chattingDiv").css("display","");
-// 				$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
 			}
 		}
    	</script> 

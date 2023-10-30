@@ -42,5 +42,10 @@ public class UserService {
 		User user = userRepository.findUserName(username);
 		return user;
 	}
+
+	public User findUserFromEmail(String email) {
+		User user = userRepository.findUserFromEmail(email);
+		return user;
+	}
 	
 }

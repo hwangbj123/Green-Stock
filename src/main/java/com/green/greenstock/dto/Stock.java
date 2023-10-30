@@ -14,5 +14,5 @@ import lombok.ToString;
 public class Stock {
 	private Integer id;
 	private String name;
-	private double amount;
+	private Integer price;
 }

@@ -17,4 +17,7 @@
 		select * from user_tb where user_name = #{username}
 	</select>
 
+	 <select id="findUserFromEmail" resultType="User">
+		select * from user_tb where email = #{email}
+	</select>
 </mapper>

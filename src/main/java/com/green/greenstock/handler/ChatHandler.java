@@ -1,4 +1,4 @@
-package com.green.greenstock.handler.exception;
+package com.green.greenstock.handler;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
