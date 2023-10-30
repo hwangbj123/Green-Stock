@@ -40,10 +40,10 @@
 						<div class="card-body p-5">
 							<h4 class="text-dark mb-5">Sign In</h4>
 							
-							<form action="/user/sign-in" method="post">
+							<form action="/user/sign-in" method="post" id="loginForm">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
-										<input type="text" class="form-control" id="text" name="userName" placeholder="Username">
+										<input type="text" class="form-control" id="userName" name="userName" placeholder="Username">
 									</div>
 									
 									<div class="form-group col-md-12 ">
@@ -55,20 +55,23 @@
 											<p><a class="text-blue" href="/user/findIdPw">아이디/비밀번호 찾기</a></p>
 										</div>
 
-										<button type="submit" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;">Sign In</button>
+										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">Sign In</button>
 										
 										<p class="sign-upp">Don't have an account yet ?
 											<a class="text-blue" href="/user/sign-up">Sign Up</a>
 										</p>
-										<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
-											<img width="74" height="38" src="/resources/img/kakao_login_small.png">
-										</a>
-										<a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=274947516179-mp9dq1e2lmf62hj46urhg6e30mn29q0u.apps.googleusercontent.com&redirect_uri=http://localhost/user/google/callback&response_type=code&scope=profile">
-											<img width="74" height="38" src="/resources/img/google.svg">
-										</a>
-										<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=4QL7qRNsZX0v8r2aJUDp&redirect_uri=http://localhost/user/naver/callback&state=test">
-											<img width="74" height="38" src="/resources/img/naver.png">
-										</a>
+										<div style="margin-top: 30px; display: flex; justify-content: space-evenly;">
+											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
+												<img width="40" height="40" src="/resources/img/kakao_logo.svg">
+											</a>
+											<a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=274947516179-mp9dq1e2lmf62hj46urhg6e30mn29q0u.apps.googleusercontent.com&redirect_uri=http://localhost/user/google/callback&response_type=code&scope=profile">
+												<img width="40" height="40" src="/resources/img/google.svg">
+											</a>
+											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=4QL7qRNsZX0v8r2aJUDp&redirect_uri=http://localhost/user/naver/callback&state=test">
+												<img width="40" height="40" src="/resources/img/naver.png">
+											</a>
+										</div>
+
 									</div>
 								</div>
 							</form>
@@ -86,5 +89,47 @@
 	
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
+		
+		<script>
+		$(document).ready(function() {
+			$('#signInBtn').click(function() {
+				//유효성
+				let idval = $('#userName').val();
+				let pwval = $('#password').val();
+				let idvalcheck = /^[a-z0-9]+$/;
+				if (!idvalcheck.test(idval) || idval.length < 4) {
+					alert('아이디는 영소문자,숫자로 된 4자 이상이어야 합니다.');
+					$('#userName').focus();
+					return false
+				}
+				if(pwval.length < 1) {
+					alert('비밀번호를 입력하세요.');
+					$('#password').focus();
+					return false
+				}
+				
+				$.ajax({
+					type : "POST",
+					url : "/user/sign-in",
+					data : {
+						"userName" : idval,
+						"password" : pwval
+					},
+					success : function(data){
+						if (data === 200) {
+							window.location.href = "http://localhost/main";
+							} else {
+							alert('로그인실패. \n아이디 비밀번호를 다시 확인해주세요.');
+							$('#userName').focus();
+						}
+					}
+					,error: function(){
+						alert('서버 에러입니다.');
+					}
+				});
+			});
+		});
+
+		</script>
 	</body>
 </html>

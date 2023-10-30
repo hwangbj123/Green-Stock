@@ -12,4 +12,6 @@ public interface UserRepository {
 	public User findUserName(String username);
 
 	public User findUserFromEmail(String email);
+
+	public int modifyUserPw(User user);
 }

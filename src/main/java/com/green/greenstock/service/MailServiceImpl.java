@@ -28,8 +28,4 @@ public interface MailServiceImpl {
 
 	MimeMessage createUserIdMessage(String to, String userId) throws MessagingException, UnsupportedEncodingException;
 
-
-	
-	
-	
 }
