@@ -24,6 +24,7 @@ public class Noticeboard {
 	private Timestamp noticeCreated;
 	private Timestamp noticeUpdated;	
 	private int noticeState ;
+	private int view;
 	
 
 }

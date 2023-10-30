@@ -13,15 +13,16 @@
 	<!-- 공지사항 작성 -->
 	<insert id = "writeNotice">
 	INSERT INTO noticeboard(		
-		user_id,
-		notice_title,
-		notice_content,
-		notice_created,
-		notice_updated		
+			user_id,
+			notice_title,
+			notice_content,
+			notice_created,
+			notice_updated		
 		)
 	values(#{userId},#{noticeTitle},#{noticeContent},now(),now());
 	</insert>
 	
+	<!-- 공지사항 수정  -->
 	<update id = "updateNotice">
 		UPDATE noticeboard 
 		SET 
@@ -32,11 +33,24 @@
 		WHERE id = #{id};	
 	</update>
 	
-	
+	<!-- 공지사항 삭제  -->
 	<delete id="deleteNotice">
-		delete  from  noticeboard
+		delete from  noticeboard
 		where id = #{id};
 	</delete>
+	
+	<!-- 공지사항 상세보기  -->
+	<select id = "viewNoticePage" resultType ="com.green.greenstock.repository.model.Noticeboard">
+		SELECT 
+			    id = {id},
+		    	user_id = {userId},
+		    	notice_title = {noticeTile},
+		    	notice_content = {noticeContent},
+		    	notice_updated = now(),
+		    	notice_state = {noticeState}
+		FROM noticeboard
+		WHERE id = {id};
+	</select>
 		
 
 </mapper>
