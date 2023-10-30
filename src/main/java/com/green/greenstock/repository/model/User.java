@@ -20,4 +20,5 @@ public class User {
 	private String tel;
 	private Date birthDate;
 	private Timestamp regDate;
+	private Integer roletypeId;
 }

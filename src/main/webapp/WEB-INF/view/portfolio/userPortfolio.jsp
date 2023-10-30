@@ -874,30 +874,10 @@
 							<!-- Sales Graph -->
 							<div id="user-acquisition" class="card card-default">
 								<div class="card-header">
-									<h2>Order Report</h2>
+									<h2>Ranking</h2>
 								</div>
 								<div class="card-body">
-									<ul
-										class="nav nav-tabs nav-style-border justify-content-between justify-content-lg-start border-bottom"
-										role="tablist">
-										<li class="nav-item"><a class="nav-link active"
-											data-bs-toggle="tab" href="#todays" role="tab"
-											aria-selected="true">Today's</a></li>
-										<li class="nav-item"><a class="nav-link"
-											data-bs-toggle="tab" href="#monthly" role="tab"
-											aria-selected="false">Monthly </a></li>
-										<li class="nav-item"><a class="nav-link"
-											data-bs-toggle="tab" href="#yearly" role="tab"
-											aria-selected="false">Yearly</a></li>
-									</ul>
-									<div class="tab-content pt-4" id="salesReport">
-										<div class="tab-pane fade show active" id="source-medium"
-											role="tabpanel">
-											<div class="mb-6" style="max-height: 247px">
-												<canvas id="acquisition" class="chartjs2"></canvas>
-												<div id="acqLegend" class="customLegend mb-2"></div>
-											</div>
-										</div>
+									<div class="tab-content" id="rankingWrapper">
 									</div>
 								</div>
 							</div>
@@ -913,10 +893,10 @@
 									<h2> My Stock</h2>
 								</div>
 								<div class="card-body pt-0 pb-5">
-									<table
+									<table  id = "myStockCardTable" 
 										class="table card-table table-responsive table-responsive-large"
 										style="width: 100%">
-										<thead>
+										<!-- <thead>
 											<tr>
 												<th>Order ID</th>
 												<th>Product Name</th>
@@ -948,7 +928,7 @@
 													</div>
 												</td>
 											</tr>
-										</tbody>
+										</tbody> -->
 									</table>
 								</div>
 							</div>
@@ -958,34 +938,33 @@
 
 
 					<div class="row">
-						<div class="col-xl-8 col-md-12 p-b-15">
+						<div class="col-xl-12 col-md-12 p-b-15">
 							<!-- User activity statistics -->
 							<div class="card card-default" id="user-activity">
 								<div class="no-gutters">
 									<div>
 										<div class="card-header justify-content-between">
-											<h2>User Activity</h2>
-											<div class="date-range-report ">
+											<h2>Monthly Asset</h2>
+											<!-- <div class="date-range-report ">
 												<span></span>
-											</div>
+											</div> -->
 										</div>
 										<div class="card-body">
 											<div class="tab-content" id="userActivityContent">
-												<div class="tab-pane fade show active" id="user"
+												<div id = "assetBody" class="tab-pane fade show active" id="user"
 													role="tabpanel">
-													<canvas id="activity" class="chartjs"></canvas>
 												</div>
 											</div>
 										</div>
-										<div class="card-footer d-flex flex-wrap bg-white border-top">
+										<!-- <div class="card-footer d-flex flex-wrap bg-white border-top">
 											<a href="#" class="text-uppercase py-3">In-Detail
 												Overview</a>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-4 col-md-12 p-b-15">
+						<%-- <div class="col-xl-4 col-md-12 p-b-15">
 							<div class="card card-default">
 								<div class="card-header flex-column align-items-start">
 									<h2>Current Users</h2>
@@ -997,7 +976,7 @@
 									<a href="#" class="text-uppercase py-3">In-Detail Overview</a>
 								</div>
 							</div>
-						</div>
+						</div> --%>
 					</div>
 				</div>
 			</div>

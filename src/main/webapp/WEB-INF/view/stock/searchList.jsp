@@ -61,7 +61,11 @@
 	    		box-shadow: 0px 0px 5px 0px #ccc;
 	    	}
 	    	.searchList > tbody > tr > td:nth-child(n+2){
-	    		padding-right: 48px;
+	    		padding-right: 38px;
+	    	}
+	    	.searchList .badge{
+		    	padding: 3.6px 3.4px;
+    			font-size: 0.65rem;
 	    	}
 	    	
 	    </style>
@@ -73,9 +77,9 @@
 	<div class="content">
 		<div class="breadcrumb-wrapper">
 			<div>
-				<h2>검색목록</h2>
+				<h4>검색목록</h4>
 				<p class="breadcrumbs"><span>&quot;${responseDomesticStockSearchDto.searchData}&quot;</span>
-					<span><i class="mdi mdi-chevron-right"></i></span>검색결과 ${responseDomesticStockSearchDto.listSize} 건</p>
+					<span><i class="mdi mdi-chevron-right"></i></span>검색결과 ${responseDomesticStockSearchDto.pagination.totalCount} 건</p>
 			</div>
 		</div>
 		<div class="row">
@@ -131,14 +135,14 @@
 						</div>
 						<!-- 페이징 영역 -->
 						<div class="ec-pro-pagination">
-                            <span>Showing 1-10 of ${responseDomesticStockSearchDto.listSize} 개</span>
+                            <span>Showing ${responseDomesticStockSearchDto.pagination.start}-${responseDomesticStockSearchDto.pagination.end} of ${responseDomesticStockSearchDto.pagination.totalCount} 개</span>
                             <ul class="ec-pro-pagination-inner">
-                                <li><a class="active" href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a class="next" href="#">Next <i class="ecicon eci-angle-right"></i></a></li>
+                            	<c:forEach var="num" begin="${responseDomesticStockSearchDto.pagination.startPageGroup}" end="${responseDomesticStockSearchDto.pagination.endPageGroup}">
+                                <li><a class="${num eq responseDomesticStockSearchDto.pagination.currentPage ? 'active' : ''}" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${num}">${num}</a></li>
+                                </c:forEach>
+                                <c:if test="${responseDomesticStockSearchDto.pagination.nextPageGroup}">
+                                	<li><a class="next" href="#">Next <i class="ecicon eci-angle-right"></i></a></li>
+                               	</c:if>
                             </ul>
                         </div>
 					</div>

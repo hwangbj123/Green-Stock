@@ -10,4 +10,9 @@ public class TestController {
 	public String test() {
 		return "/portfolio/userPortfolio";
 	}
+	
+	@GetMapping("/portfolio/popUpPage")
+	public String popUpPage() {
+		return "/portfolio/popUpPage";
+	}
 }
