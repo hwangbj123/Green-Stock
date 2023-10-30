@@ -87,11 +87,11 @@
 
                                 <!-- Header User Start -->
                                 <c:if test="${empty principal}">
-                                	<li><a href="http://localhost/user/sign-in" style="margin-right: 20px; display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Login</span></a></li>
+                                	<li><a href="http://localhost/user/sign-in" style="display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Login</span></a></li>
 									<li><a href="http://localhost/user/sign-up" class="signIn_button" style="display: flex; align-items: center;"><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a></li>
                                 </c:if>
                                 <c:if test="${principal.roletypeId == 1}">
-                                	<li><a href="http://localhost/user/my-info" style="margin-right: 20px; display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Mypage</span></a></li>
+                                	<li><a href="http://localhost/user/user-info" style="display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">User-Info</span></a></li>
 									<li><a href="http://localhost/user/sign-out" style="display: flex; align-items: center;" class="signIn_button"><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a></li>
                                 </c:if>
 

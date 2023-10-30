@@ -24,4 +24,12 @@
 	<update id="modifyUserPw">
 		update user_tb set password = #{password} where user_name = #{userName}
 	</update>
+	
+	<update id="modifyUserInfo">
+		update user_tb set user_name = #{userName}, password = #{password}, email = #{email}, tel = #{tel}, birth_date = #{birthDate} where id = #{id}
+	</update>
+	
+	<delete id="deleteUser">
+		delete from user_tb where id = #{id}
+	</delete>
 </mapper>

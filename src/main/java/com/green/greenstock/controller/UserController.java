@@ -177,7 +177,7 @@ public class UserController {
 	}
 
 	@PostMapping("/duplicate-check")
-	public ResponseEntity<Integer> duplicateCheck(@RequestParam("username") String username) {
+	public ResponseEntity<Integer> DuplicateCheck(@RequestParam("username") String username) {
 		if (userService.findUserName(username) != null) {
 			log.info("중복채크 실패");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
@@ -189,7 +189,7 @@ public class UserController {
 
 	// 구글 소셜 로그인
 	@GetMapping("/google/callback")
-	public String googleCallback(@RequestParam String code) {
+	public String GoogleCallback(@RequestParam String code) {
 		log.info("구글 로그인 컨트롤러 실행");
 		log.info("구글 로그인 콜백메서드 동작");
 		log.info("구글 인가 코드 확인 : " + code);
@@ -252,7 +252,7 @@ public class UserController {
 
 	// 네이버 소셜 로그인
 	@GetMapping("/naver/callback")
-	public String naverCallback(@RequestParam String code) throws UnsupportedEncodingException {
+	public String NaverCallback(@RequestParam String code) throws UnsupportedEncodingException {
 		log.info("네이버 로그인 컨트롤러 실행");
 		log.info("네이버 로그인 콜백메서드 동작");
 		log.info("네이버 인가 코드 확인 : " + code);
@@ -327,7 +327,7 @@ public class UserController {
 
 	// 카카오 소셜 로그인
 	@GetMapping("/kakao/callback")
-	public String kakaoCallback(@RequestParam String code) {
+	public String KakaoCallback(@RequestParam String code) {
 
 		log.info("카카오 로그인 컨트롤러 실행");
 		log.info("카카오 로그인 콜백메서드 동작");
@@ -430,7 +430,7 @@ public class UserController {
 	
 	
 	@PostMapping("/email-duplicate-check")
-	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
+	public ResponseEntity<Integer> EmailDuplicateCheck(@RequestParam("email") String email) {
 		
 		if(email == null || email.isEmpty()) {
 			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
@@ -450,7 +450,7 @@ public class UserController {
 	// 이메일 인증
 	@PostMapping("/mail-confirm")
 	@ResponseBody
-	String mailConfirm(@RequestParam("email") String email) throws Exception {
+	public String MailConfirm(@RequestParam("email") String email) throws Exception {
 		
 		if(email == null || email.isEmpty()) {
 			throw new CustomRestfulException("E-mail 입력하세요", HttpStatus.BAD_REQUEST);
@@ -463,4 +463,39 @@ public class UserController {
 	    return code;
 	}
 
+	@GetMapping("/user-info")
+	public String UserInfo() {
+		return "user/modifyUser";
+	}
+	
+	@PostMapping("/modify-userInfo")
+	public String ModifyUserInfo(User user) {
+		
+		if(user.getUserName() == null || user.getUserName().isEmpty()) {
+			throw new CustomRestfulException("username을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getPassword() == null || user.getPassword().isEmpty()) {
+			throw new CustomRestfulException("password을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getEmail() == null || user.getEmail().isEmpty()) {
+			throw new CustomRestfulException("email을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getTel() == null || user.getTel().isEmpty()) {
+			throw new CustomRestfulException("전화번호를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if(user.getBirthDate() == null) {
+			throw new CustomRestfulException("생년월일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		userService.modifyUserInfo(user);
+		
+		return "/main";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteUser(Integer id) {
+		session.invalidate();
+		userService.deleteUser(id);
+		return "redirect:/user/signIn";
+	}
 }
