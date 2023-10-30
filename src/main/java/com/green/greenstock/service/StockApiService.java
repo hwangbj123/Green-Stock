@@ -26,6 +26,7 @@ import com.green.greenstock.repository.interfaces.KosdaqCodeRepository;
 import com.green.greenstock.repository.interfaces.KospiCodeRepository;
 import com.green.greenstock.repository.interfaces.OverseasStockCodeRepository;
 import com.green.greenstock.repository.model.AccessTokenInfo;
+import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -155,30 +156,48 @@ public class StockApiService {
 		
 		int start = (page - 1) * 10; // 시작 번호
 		int end = (page * 10 >= total) ? total : (page * 10); // 끝번호
-		
+		int j = 0; // dtoList 주소값
 		for(int i = start; i < end; i++) {
 			if(codeList.get(i) != null) {
 				DomesticStockCode domesticStockCode = codeList.get(i);
 				dtoList.add(getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput()); // 리스트에 추가 (output)
-				dtoList.get(i).setCompanyName(domesticStockCode.getCompanyName()); // 리스트에 추가 (회사 한글명)
-				dtoList.get(i).setType(domesticStockCode.getType()); // 리스트에 추가 (type: kospi, kosdaq)
-				dtoList.get(i).setCompanyCode(domesticStockCode.getCompanyCode());
+				dtoList.get(j).setCompanyName(domesticStockCode.getCompanyName()); // 리스트에 추가 (회사 한글명)
+				dtoList.get(j).setType(domesticStockCode.getType()); // 리스트에 추가 (type: kospi, kosdaq)
+				dtoList.get(j).setCompanyCode(domesticStockCode.getCompanyCode());
 			}else {
 				throw new CustomRestfulException("목록을 가져오지 못했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+			j++;			
 		}
 		
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
-		domesticStockSearchDto.setListSize(total); // 검색된 전체 개수
+		
+		//domesticStockSearchDto.setListSize(total); // 검색된 전체 개수
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		domesticStockSearchDto.setPage(page); // 현재 페이지
-		domesticStockSearchDto.setTotalpage((total/10) + 1); // 총 페이지수
+		//domesticStockSearchDto.setPage(page); // 현재 페이지
+		//domesticStockSearchDto.setTotalpage((total/10) + 1); // 총 페이지수
+		
+		domesticStockSearchDto.setPagination(new Pagination(total, page));
+		
 		log.debug("total {}", total);
 		log.debug("start {}", start);
 		log.debug("end {}", end);
 		log.debug("listSize {}", domesticStockSearchDto.getDomesticStockCurrentPriceList().size());
 		return domesticStockSearchDto;
 	}
+	
+	// fastAPI 통신 테스트
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/* 토큰 시작 */
 	// AccessToken 발급
