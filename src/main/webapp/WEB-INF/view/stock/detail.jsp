@@ -50,7 +50,7 @@
 	    <script src="/resources/js/main.js"></script>
 	    
 	    <!-- kjh -->
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+	    
 	    <style>
 	    	.primaryColorRed{
 	    		color: #ff909d;
@@ -68,221 +68,198 @@
 	    	}
 	    	
 	    </style>
-	    <script>
-	    document.addEventListener("DOMContentLoaded", function(){
-            var context = document.getElementById('myChart').getContext('2d');
-        	var myChart = new Chart(context, {
-	            type: 'bar', // 차트의 형태
-	            data: { // 차트에 들어갈 데이터
-	                labels: [
-	                    //x 축
-	                    '1','2','3','4','5','6','7'
-	                ],
-	                datasets: [
-	                    { //데이터
-	                        label: 'test1', //차트 제목
-	                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-	                        data: [
-	                            21,19,25,20,23,26,25 //x축 label에 대응되는 데이터 값
-	                        ],
-	                        backgroundColor: [
-	                            //색상
-	                            'rgba(255, 99, 132, 0.2)',
-	                            'rgba(54, 162, 235, 0.2)',
-	                            'rgba(255, 206, 86, 0.2)',
-	                            'rgba(75, 192, 192, 0.2)',
-	                            'rgba(153, 102, 255, 0.2)',
-	                            'rgba(255, 159, 64, 0.2)'
-	                        ],
-	                        borderColor: [
-	                            //경계선 색상
-	                            'rgba(255, 99, 132, 1)',
-	                            'rgba(54, 162, 235, 1)',
-	                            'rgba(255, 206, 86, 1)',
-	                            'rgba(75, 192, 192, 1)',
-	                            'rgba(153, 102, 255, 1)',
-	                            'rgba(255, 159, 64, 1)'
-	                        ],
-	                        borderWidth: 1 //경계선 굵기
-	                    }/* ,
-	                    {
-	                        label: 'test2',
-	                        fill: false,
-	                        data: [
-	                            8, 34, 12, 24
-	                        ],
-	                        backgroundColor: 'rgb(157, 109, 12)',
-	                        borderColor: 'rgb(157, 109, 12)'
-	                    } */
-	                ]
-	            },
-	            options: {
-	                scales: {
-	                    yAxes: [
-	                        {
-	                            ticks: {
-	                                beginAtZero: true
-	                            }
-	                        }
-	                    ]
-	                }
-	            }
-	        });
-	    });
-
-        </script>
+	   
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
- <!-- CONTENT WRAPPER -->
-    <div class="ec-content-wrapper container">
-      <div class="content">
-        <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography">
-          <h1 class="ec-fw-bold mb-2">${companyName}</h1>
-          <p class="breadcrumbs">
-            <span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
-          </p>
-        </div>
-        <div class="row mb-4">
-          <div class="col-lg-3 col-md-6">
-            <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>전일</h6>
-              <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>고가</h6>
-              <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>거래량(주)</h6>
-              <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-4">
-          <div class="col-lg-3 col-md-6">
-          	<div>
-              <h6>전일대비</h6>
-              <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-              	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
-              	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>시가</h6>
-              <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>저가</h6>
-              <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div>
-              <h6>거래대금(백만)</h6>
-              <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
-            </div>
-          </div>
+<!-- CONTENT WRAPPER -->
+<div class="ec-content-wrapper container">
+  <div class="content">
+    <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography">
+      <h1 class="ec-fw-bold mb-2">${companyName}</h1>
+      <p class="breadcrumbs">
+        <span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
+      </p>
+    </div>
+    <div class="row mb-4">
+      <div class="col-lg-3 col-md-6">
+        <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>전일</h6>
+          <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
         </div>
       </div>
-      <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
-        <div class="container">
-          <div class="row">
-            <!--Category Nav Start -->
-            <div class="col-lg-3">
-              <ul class="ec-cat-tab-nav nav" role="tablist">
-                <li class="cat-item">
-                  <a class="cat-link active" data-bs-toggle="tab" href="#tab-cat-1" aria-selected="false" role="tab" tabindex="-1">
-                    <div class="cat-desc text-center"><span>투자정보</span></div>
-                  </a>
-                </li>
-                <li class="cat-item">
-                  <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-2" aria-selected="false" role="tab" tabindex="-1">
-                    <div class="cat-desc"><span>호가10단계</span></div>
-                  </a>
-                </li>
-                <li class="cat-item">
-                  <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-3" aria-selected="false" role="tab" tabindex="-1">
-                    <div class="cat-desc"><span>Bags</span></div>
-                  </a>
-                </li>
-                <li class="cat-item">
-                  <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-4" aria-selected="true" role="tab">
-                    <div class="cat-desc"><span>Shoes</span></div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!-- Category Nav End -->
-            <!--Category Tab Start -->
-            <div class="col-lg-9">
-              <div class="tab-content">
-                <!-- 1st Category tab end -->
-                <div class="tab-pane fade d-flex active show" id="tab-cat-1" role="tabpanel">
-                  <div class="table-responsive">
-                    <table class="table table-borederd text-end">
-                      <tbody>
-                        <tr>
-                          <th class="text-start">시가총액</th>
-                          <td><fmt:formatNumber value="${stockCurrentPrice.htsAvls}"/></td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">상장주식수</th>
-                          <td><fmt:formatNumber value="${stockCurrentPrice.lstnStcn}"/></td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">외국인보유주식수</th>
-                          <td><fmt:formatNumber value="${stockCurrentPrice.frgnHldnQty}"/></td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">외국인소진율</th>
-                          <td>${stockCurrentPrice.htsFrgnEhrt} %</td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">52주 최고 | 최저</th>
-                          <td><fmt:formatNumber value="${stockCurrentPrice.w52Hgpr}"/> | <fmt:formatNumber value="${stockCurrentPrice.w52Lwpr}"/></td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">PER | EPS</th>
-                          <td>${stockCurrentPrice.per} 배 | <fmt:formatNumber value="${stockCurrentPrice.eps}"/> 원</td>
-                        </tr>
-                        <tr>
-                          <th class="text-start">PBR | BPS</th>
-                          <td>${stockCurrentPrice.pbr} 배 | <fmt:formatNumber value="${stockCurrentPrice.bps}"/> 원</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <!-- 1st Category tab end -->
-                <div class="tab-pane fade" id="tab-cat-2" role="tabpanel">bbb</div>
-                <!-- 2nd Category tab end -->
-                <!-- 3rd Category tab start -->
-                <div class="tab-pane fade" id="tab-cat-3" role="tabpanel">ccc</div>
-                <!-- 3rd Category tab end -->
-                <!-- 4th Category tab start -->
-                <div class="tab-pane fade" id="tab-cat-4" role="tabpanel">ddd</div>
-                <!-- 4th Category tab end -->
-              </div>
-              <div>
-              	<canvas id="myChart"></canvas>
-              </div>
-              <!-- Category Tab End -->
-            </div>
-          </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>고가</h6>
+          <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
         </div>
-      </section>
-      <!-- End Content -->
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>거래량(주)</h6>
+          <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
+        </div>
+      </div>
     </div>
-    <!-- End Content Wrapper -->
-<%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
+    <div class="row mb-4">
+      <div class="col-lg-3 col-md-6">
+      	<div>
+          <h6>전일대비</h6>
+          <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
+          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>시가</h6>
+          <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>저가</h6>
+          <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div>
+          <h6>거래대금(백만)</h6>
+          <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
+    <div class="container">
+      <div class="row">
+        <!--Category Nav Start -->
+        <div class="col-lg-3 w-auto">
+          <ul class="ec-cat-tab-nav nav" role="tablist">
+            <li class="cat-item">
+              <a class="cat-link active" data-bs-toggle="tab" href="#tab-cat-1" aria-selected="false" role="tab" tabindex="-1">
+                <div class="cat-desc text-center"><span>투자정보</span></div>
+              </a>
+            </li>
+            <li class="cat-item">
+              <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-2" aria-selected="false" role="tab" tabindex="-1">
+                <div class="cat-desc"><span>호가10단계</span></div>
+              </a>
+            </li>
+            <li class="cat-item">
+              <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-3" aria-selected="false" role="tab" tabindex="-1">
+                <div class="cat-desc"><span>Bags</span></div>
+              </a>
+            </li>
+            <li class="cat-item">
+              <a class="cat-link" data-bs-toggle="tab" href="#tab-cat-4" aria-selected="true" role="tab">
+                <div class="cat-desc"><span>Shoes</span></div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- Category Nav End -->
+        <!--Category Tab Start -->
+        <div class="col-lg-9 row d-flex">
+          <div class="tab-content col-6">
+            <!-- 1st Category tab start -->
+            <div class="tab-pane fade active show" id="tab-cat-1" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-borederd text-end">
+                  <tbody>
+                    <tr>
+                      <th class="text-start">시가총액</th>
+                      <td><fmt:formatNumber value="${stockCurrentPrice.htsAvls}"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">상장주식수</th>
+                      <td><fmt:formatNumber value="${stockCurrentPrice.lstnStcn}"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">외국인보유주식수</th>
+                      <td><fmt:formatNumber value="${stockCurrentPrice.frgnHldnQty}"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">외국인소진율</th>
+                      <td>${stockCurrentPrice.htsFrgnEhrt} %</td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">52주 최고 | 최저</th>
+                      <td><fmt:formatNumber value="${stockCurrentPrice.w52Hgpr}"/> | <fmt:formatNumber value="${stockCurrentPrice.w52Lwpr}"/></td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">PER | EPS</th>
+                      <td>${stockCurrentPrice.per} 배 | <fmt:formatNumber value="${stockCurrentPrice.eps}"/> 원</td>
+                    </tr>
+                    <tr>
+                      <th class="text-start">PBR | BPS</th>
+                      <td>${stockCurrentPrice.pbr} 배 | <fmt:formatNumber value="${stockCurrentPrice.bps}"/> 원</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 1st Category tab end -->
+            <!-- 2nd Category tab start -->
+            <div class="tab-pane fade col-8" id="tab-cat-2" role="tabpanel">
+            	<div class="table-responsive d-flex">
+	                <table class="table table-borederd text-end">
+	                  <tbody>
+	                  	<tr><th>매도 잔량</th><th>호가</th></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn10}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp10}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn9}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp9}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn8}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp8}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn7}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp7}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn6}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp6}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn5}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp5}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn4}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp4}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn3}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp3}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn2}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp2}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.askpRsqn1}"/></td><td><fmt:formatNumber value="${askingSellingPrice.askp1}"/></td></tr>
+ 	                  </tbody>
+	                </table>
+	                <table class="table table-borederd text-end">
+	                  <tbody>
+	                  	<tr><th>매수 잔량</th><th>호가</th></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn10}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp10}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn9}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp9}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn8}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp8}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn7}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp7}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn6}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp6}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn5}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp5}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn4}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp4}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn3}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp3}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn2}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp2}"/></td></tr>
+	                  	<tr><td><fmt:formatNumber value="${askingSellingPrice.bidpRsqn1}"/></td><td><fmt:formatNumber value="${askingSellingPrice.bidp1}"/></td></tr>
+ 	                  </tbody>
+	                </table>
+             	</div>
+            </div>
+            <!-- 2nd Category tab end -->
+            <!-- 3rd Category tab start -->
+            <div class="tab-pane fade" id="tab-cat-3" role="tabpanel">ccc</div>
+            <!-- 3rd Category tab end -->
+            <!-- 4th Category tab start -->
+            <div class="tab-pane fade" id="tab-cat-4" role="tabpanel">ddd</div>
+            <!-- 4th Category tab end -->
+          </div>
+          <div class="col-6">
+          	<canvas id="stockDetailchart"></canvas>
+          </div>
+          <!-- Category Tab End -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Content -->
+</div>
+<!-- End Content Wrapper -->
+   
+<%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/detail.js"></script>
+</html>

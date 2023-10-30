@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCode;
-import com.green.greenstock.dto.DomesticStockCurrentPrice;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
-import com.green.greenstock.dto.DomesticStockVolumeRank;
+import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseDomesticStockSearchDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
@@ -71,7 +72,7 @@ public class StockApiService {
 	
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
 	// 국내주식현재가격
-	public DomesticStockCurrentPrice getApiDomesticStockCurrentPrice(String companyCode) {
+	public ResponseApiInfo<?> getApiDomesticStockCurrentPrice(String companyCode) {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -96,13 +97,13 @@ public class StockApiService {
 				.header(APP_SECRET, appSecret)
 				.header(TR_ID, trId)
 				.retrieve()
-				.bodyToMono(DomesticStockCurrentPrice.class)
+				.bodyToMono(ResponseApiInfo.class)
 				.block();
 	}
 
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_6df56964-f22b-43d4-9457-f06264018e5b
 	// 거래량 조회
-	public DomesticStockVolumeRank getApiVolumeRank() {
+	public ResponseApiInfo<?> getApiVolumeRank() {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -137,7 +138,7 @@ public class StockApiService {
 				.header(TR_ID, trId)
 				.header("custtype", "P") // P 개인 B 법인
 				.retrieve()
-				.bodyToMono(DomesticStockVolumeRank.class)
+				.bodyToMono(ResponseApiInfo.class)
 				.block();
 	}
 	
@@ -160,24 +161,24 @@ public class StockApiService {
 		for(int i = start; i < end; i++) {
 			if(codeList.get(i) != null) {
 				DomesticStockCode domesticStockCode = codeList.get(i);
-				dtoList.add(getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput()); // 리스트에 추가 (output)
+				ObjectMapper mapper = new ObjectMapper();
+				DomesticStockCurrentPriceOutput output = mapper.convertValue(
+						getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput(),
+						DomesticStockCurrentPriceOutput.class);
+				
+				dtoList.add(output); // 리스트에 추가 (output)
 				dtoList.get(j).setCompanyName(domesticStockCode.getCompanyName()); // 리스트에 추가 (회사 한글명)
 				dtoList.get(j).setType(domesticStockCode.getType()); // 리스트에 추가 (type: kospi, kosdaq)
-				dtoList.get(j).setCompanyCode(domesticStockCode.getCompanyCode());
+				dtoList.get(j).setCompanyCode(domesticStockCode.getCompanyCode()); // 리스트에 축 (회사 종목코드)
 			}else {
 				throw new CustomRestfulException("목록을 가져오지 못했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			j++;			
+			j++; // 하나 추가될때마다 1 증가
 		}
 		
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
-		
-		//domesticStockSearchDto.setListSize(total); // 검색된 전체 개수
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		//domesticStockSearchDto.setPage(page); // 현재 페이지
-		//domesticStockSearchDto.setTotalpage((total/10) + 1); // 총 페이지수
-		
-		domesticStockSearchDto.setPagination(new Pagination(total, page));
+		domesticStockSearchDto.setPagination(new Pagination(total, page)); // 페이지 네이션
 		
 		log.debug("total {}", total);
 		log.debug("start {}", start);
@@ -186,8 +187,38 @@ public class StockApiService {
 		return domesticStockSearchDto;
 	}
 	
-	// fastAPI 통신 테스트
-	
+	// 주식 현재가 호가 예상체결가
+	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_af3d3794-92c0-4f3b-8041-4ca4ddcda5de
+	public ResponseApiInfo<?> getAskingSellingPrice(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-asking-price-exp-ccn";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010200"; // 거래ID
+		
+		WebClient webClient = buildWebClient();
+		
+		return webClient
+						.get()
+						.uri(uribuilder -> uribuilder
+										.path(uri)
+										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+										.build())
+						.header(CONTENT_TYPE, contentType)
+						.header(AUTHORIZATION, auth)
+						.header(APP_KEY, appKey)
+						.header(APP_SECRET, appSecret)
+						.header(TR_ID, trId)
+						.retrieve()
+						.bodyToMono(ResponseApiInfo.class)
+						.block();
+		
+	}
 	
 	
 	
