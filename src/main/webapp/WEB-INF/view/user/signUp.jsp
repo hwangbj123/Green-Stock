@@ -211,7 +211,7 @@
 				const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 				
 				if(!emailRegex.test($email.val())) {
-					alert('이메일 형식을 확인해주세요 ex) dltmdgh757@naver.com');
+					alert('이메일 형식을 확인해주세요 ex) Gstock@naver.com');
 					$('#email').focus();
 					return false;
 				}
@@ -236,7 +236,7 @@
 										"email" : $email.val()
 									},
 									success : function(data){
-										alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
+										alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n확인부탁드립니다.");
 										$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 발송되었습니다</span>")
 										$("#emconfirmchk").css({
 											"color" : "green",

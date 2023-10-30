@@ -13,7 +13,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.green.greenstock.controller.UserController;
 import com.green.greenstock.repository.model.User;
 
 import lombok.extern.slf4j.Slf4j;
