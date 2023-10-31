@@ -38,47 +38,81 @@
      <!-- Background css -->
      <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
      <style>
-     	.board-content{
+     	.board-div{
      		width: 80%;
-     		min-width: 400px;
-     		height: 800px;
+     		margin: 30px auto;
+     		
+     	}
+     	.board-tb{
+     		width: 90%;
+     		min-width: 500px;
      		margin: auto;
-/*      		border: 1px solid black; */
-     	}
-     	.write-tb{
-     		width: 100%;
-     		height: 800px;
      		text-align: center;
      	}
-     	.write-tb td{
-     		min-height: 50px;
-     	}
-     	.write-tb td input{
-     		width: 90%;
+     	.board-tb td{
      		height: 50px;
      	}
-     	.write-tb td select{
-     		width: 90%;
-     		height: 50px;
+     	.page-a{
+     		display: inline-block;
+     		border: 1px solid lightgrey;
+/*      		width: 30px;  */
+     		padding: 7px 18px;
+     		margin: 1px;
+     		border-radius: 5px;
+     	}
+     	#page{
+     		 width: 100%; 
+     		 margin: auto; 
+     		 text-align: center; 
+     		 margin-top: 50px;
+     		 display: flex;
+     		 justify-content: center;
+     	}
+     	#listopt-div{
+     		 width: 100%; 
+     		 margin: auto; 
+     		 text-align: center; 
+     		 margin-top: 50px;
+     		 padding: 0px 50px;
+     		 display: flex;
+     		 justify-content: space-between;
+     	}
+     	#listopt-div button{
+     		width: 100px;
+     	}
+     	#search-div {
+     		width: 520px;
+     		display: flex;
+     		justify-content: space-between;
+     	}
+     	#search-div select{
+     		height: 43px;
+     		width: 60px;
      		text-align: center;
      	}
-     	.write-tb td button{
-     		width: 30%;
-     		height: 60px;
-     		margin: 10px;
+     	#search-div input{
+     		width: 330px;
+     		height: 45px;
      	}
-     	#content-textarea{
+     	#category-tb {
+     		width: 65%;
+     		height: 40px;
+     		margin: auto;
+     	}
+     	#category-tb td{
+/*      		border: 1px solid #3474d4; */
+     		padding: 1px;
+     	}
+     	#category-tb button{
      		width: 100%;
      		height: 100%;
-     		border: 1px solid lightgrey;
-     		padding: 20px 30px;
-     		resize: none;
-     		text-align: left;
-     		margin: auto;
+     		border: 1px solid #3474d4;
+     		color: #777777;
      	}
+     	
      </style>
  </head>
-<body class="blog_page">
+<body>
     <div id="ec-overlay">
         <div class="ec-ellipsis">
             <div></div>
@@ -849,13 +883,13 @@
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Blog Page</h2>
+                            <h2 class="ec-breadcrumb-title">Multi Vendor</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Blog Page</li>
+                                <li class="ec-breadcrumb-item active">Multi Vendor</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -866,160 +900,148 @@
     </div>
     <!-- Ec breadcrumb end -->
 
-    <!-- Ec Blog page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="ec-blogs-rightside col-lg-12 col-md-12">
+    <div class="section-space-p">
+<!------카테고리 div	    	 -->
+    	<table id="category-tb">
+    			<tr>
+					<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/list"' >전체</button></td>
+					<c:forEach var="c" items="${cate}" varStatus="status">
+						<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
+					</c:forEach>
+				</tr>
+    	</table>
+<!------리스트 div -->
+    	<div class="board-div">
+	    	<table class="board-tb">
+	    		<tr>
+	    			<td style="width: 5%;">번호</td>
+	    			<td style="width: 10%;">카테고리</td>
+	    			<td style="width: 50%;">제목</td>
+	    			<td style="width: 10%;">작성자</td>
+	    			<td style="width: 15%;">날짜</td>
+	    			<td style="width: 5%;">조회수</td>
+	    			<td style="width: 5%;">추천</td>
+	    		</tr>
+		    	<c:forEach var="board" items="${list}">
+		    		<tr>
+		    			<td>${board.id}</td>
+		    			<td>
+		    				<c:forEach var="c" items="${cate}" varStatus="status">
+           						<c:if test="${board.categoryId eq status.count}">
+           							${c}
+           						</c:if>
+           					</c:forEach>
+						</td>
+		    			<td>
+		    				<a href="detail/${board.id}">${board.title}
+			    				<c:if test="${board.reply ne 0}">
+			    					<span style="color: #bbb;">[${board.reply}]</span>
+			    				</c:if>
+		    				</a>
+	    				</td>
+		    			<td>${board.userName}</td>
+		    			<td>
+		    				<fmt:formatDate value="${board.date}" pattern="MM-dd HH:mm:ss"/>
+		   				</td>
+		    			<td>${board.views}</td>
+		    			<td>${board.recommand}</td>
+		    		</tr>
+		    	</c:forEach>
+	    	</table>
+<!----------검색 div	    	 -->
+			<form action="/board/search" id="search-frm">
+	    	<div id="listopt-div">
+	    		<div id="search-div">
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+	    			<select name="searchType">
+	    				<option value="title">제목</option>
+	    				<option value="content">내용</option>
+	    				<option value="userName">작성자</option>
+	    			</select>
+	    			</div>
+		    		<input class="form-control ec-search-bar" type="text" name="searchWord">
+		    		<input type="hidden" name="page" value="${page.paging.page}">
+		    		<button type="button" class="btn btn-primary" id="search-btn">검색</button>
+	    		</div>
+	    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    	</div>
+			</form>
+<!----------페이징 function -->
+			<c:set var="search" value="/board/search?"/>
+			<c:if test="${not empty paging.searchType}">
+				<c:set var="search" value="${search}${'searchType='}${paging.searchType}&&"/>
+			</c:if>
+			<c:if test="${not empty paging.searchWord}">
+				<c:set var="search" value="${search}${'searchWord='}${paging.searchWord}&"/>
+			</c:if>
+			<c:if test="${not empty paging.categoryId}">
+				<c:set var="search" value="${search}${'categoryId='}${paging.categoryId}&"/>
+			</c:if>
+	    	
+<!----------페이징 div -->
+	    	<div id="page">
+<!-- 	    		시작 페이지 -->
+	    		<c:choose>
+	    			<c:when test="${page.paging.page>4}">
+		    			<c:set var="startPage" value="${page.paging.page-4}"/>
+	    			</c:when>
+	    			<c:otherwise>
+		    			<c:set var="startPage" value="1"/>
+	    			</c:otherwise>
+	    		</c:choose>
 
-                    <!-- Blog content Start -->
-                    <div class="ec-blogs-content">
-                        <div class="ec-blogs-inner">
-                            <div class="board-content">
-                        		<table class="write-tb">
-                        			<tr>
-                        				<td style="width:10%; height: 56px;">카테고리</td>
-                        				<td>
-                        					<c:forEach var="c" items="${cate}" varStatus="status">
-                        						<c:if test="${board.categoryId eq status.count}">
-                        							${c}
-                        						</c:if>
-                        					</c:forEach>
-                        				</td>
-                        			</tr>
-                        			<tr>
-                        				<td style="height: 56px;">제목</td>
-                        				<td>
-                        					${board.title }
-										</td>
-                        			</tr>
-                        			<tr>
-                        				<td style="height: 56px;">작성자</td>
-                        				<td>
-                        					${board.userName}
-										</td>
-                        			</tr>
-                        			<tr>
-<!-- 	                        				<td>내용</td> -->
-                        				<td colspan="2" style="padding: 30px 0px;height: 600px;">
-                        					<div id="content-textarea">
-                        						${board.content}
-                        					</div>
-										</td>
-                        			</tr>
-	                        			<tr>
-	                        				<td colspan="2">
-	                        				<div style="display: flex; justify-content: center;">
-                        			<c:if test="${board.userId eq principal.id}">
-	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/update/${board.id}'">수정</button>
-                        			</c:if>
-	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
-                        			<c:if test="${board.userId eq principal.id}">
-	                        					<button type="button" class="btn btn-primary" onclick="boardDelete(${board.id})" style="background-color: rgba(200,0,0,0.5);">
-	                        						삭제
-	                        					</button>
-                        			</c:if>
-                        					</div>
-	                        				</td>
-	                        			</tr>
-                        		</table>
-                        	</div>
-                            <div class="ec-blog-arrows" style="margin-top: 100px;">
-                                <a href="blog-detail-left-sidebar.html"><i class="ecicon eci-angle-left"></i> Prev
-                                    Post</a>
-                                <a href="blog-detail-left-sidebar.html">Next Post <i
-                                        class="ecicon eci-angle-right"></i></a>
-                            </div>
-                            <div class="ec-blog-comments">
-                                <div class="ec-blog-cmt-preview">
-                                    <div class="ec-blog-comment-wrapper mt-55">
-                                    
-<!------------------------------------- 댓글 -->
-										<c:forEach var="comment" items="${reply}">
-	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);">
-	                                            <div class="ec-blog-comment-content">
-	                                                <h5>${comment.userName}</h5>
-	                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>
-<%-- 	                                                <span style="color: red;">ref : ${comment.ref} , step : ${comment.step } , level : ${comment.level }</span> --%>
-	                                                <p>${comment.content}</p>
-	                                                <div class="ec-blog-details-btn">
-	                                                <c:if test="${comment.deleted eq 0}">
-	                                                    <c:if test="${empty principal}">
-		                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
-		                                                    	댓글
-		                                                    </button>
-	                                                    </c:if>
-	                                                    <c:if test="${comment.userId eq principal.id}">
-		                                                    <button type="button" onclick="rereplyOpen(${comment.id}, 
-		                                                    										   ${principal.id}, 
-		                                                    										   ${comment.boardId},
-		                                                    										   ${comment.ref},
-		                                                    										   ${comment.step},
-		                                                    										   ${comment.level})" style="color: #777777;">
-		                                                    	댓글
-		                                                    </button>
-	                                                    	<button type="button" onclick="replyDelete(${comment.id}, ${comment.boardId})" style="color: #777777;">
-	                                                    		삭제
-	                                                    	</button>
-	                                                    </c:if>
-	                                                </c:if>
-	                                                </div>
-	                                                <div class="rereply-div" id="rereply-id${comment.id}">
-	                                                </div>
-	                                            </div>
-	                                        </div>
-										</c:forEach>
-                                        
-                                    </div>
-                                </div>
-                                <div class="ec-blog-cmt-form">
-                                    <div class="ec-blog-reply-wrapper mt-50">
-                                        <h4 class="ec-blog-dec-title">Leave A Reply</h4>
-                                        <form class="ec-blog-form" method="post" action="/board/reply-write">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="ec-leave-form">
-                                                    	<c:choose>
-	                                                    	<c:when test="${not empty principal}">
-		                                                        <input type="text" value="${principal.userName}" readonly>
-	                                                    	</c:when>
-	                                                    	<c:otherwise>
-		                                                        <input type="text" name="userId" value="로그인이 필요합니다" readonly>
-	                                                    	</c:otherwise>
-                                                    	</c:choose>
-                                                        <input type="hidden" name="userId" value="${principal.id}">
-                                                    	<input type="hidden" name="boardId" value="${board.id}">
-                                                    	<input type="hidden" name="level" value="0">
-                                                    	<input type="hidden" name="step" value="0">
-                                                    	<input type="hidden" name="ref" value="${maxRef+1}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="ec-text-leave">
-                                                        <textarea placeholder="Content" name="content"></textarea>
-                                                        <c:choose>
-	                                                    	<c:when test="${not empty principal}">
-		                                                        <button type="submit" class="btn btn-lg btn-secondary">등록</button>
-	                                                    	</c:when>
-	                                                    	<c:otherwise>
-		                                                        <button type="button" class="btn btn-lg btn-secondary" onclick="toSignIn()">등록</button>
-	                                                    	</c:otherwise>
-                                                    	</c:choose>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Blog content End -->
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- 				엔드 페이지	    		 -->
+	    		<c:choose>
+	    			<c:when test="${page.endPage < page.paging.page+4}">
+		    			<c:set var="endPage" value="${page.endPage}"/>
+	    			</c:when>
+	    			<c:otherwise>
+		    			<c:set var="endPage" value="${page.paging.page+4}"/>
+	    			</c:otherwise>
+	    		</c:choose>
 
+<!-- 	    		이전 버튼 -->
+	    		<c:if test="${startPage ne 1}">
+	    			<a class="page-a" href="${search}page=${page.paging.page-5}">
+	    				prev
+	    			</a>
+	    		</c:if>
+<!-- 	    		페이지 넘버 반복문 -->
+	    		<c:set var="nowPage" value="${startPage}"/>
+	    		<c:forEach begin="${startPage}" end="${endPage}">
+	    			<c:choose>
+	    				<c:when test="${page.paging.page eq nowPage}">
+	    					<p class="page-a" style="background-color: #3474D4; color: white; cursor: pointer;">
+				    			<c:out value="${nowPage}"/>
+	    					</p>
+	    				</c:when>
+	    				<c:otherwise>
+	    					<a class="page-a" href="${search}page=${nowPage}">
+				    			<c:out value="${nowPage}"/>
+	    					</a>
+	    				</c:otherwise>
+	    			</c:choose>
+	    			<c:set var="nowPage" value="${nowPage+1}"/>
+	    		</c:forEach>
+<!-- 	    		다음 버튼 -->
+	    		<c:if test="${page.endPage > startPage+9}">
+	    			<c:choose>
+	    				<c:when test="${page.endPage > page.paging.page+5}">
+	    			<a class="page-a" href="${search}page=${page.paging.page+5}">
+			    				next
+			    			</a>
+	    				</c:when>
+	    				<c:otherwise>
+			    			<a class="page-a" href="${search}page=${page.endPage}">
+			    				next
+			    			</a>
+	    				</c:otherwise>
+	    			</c:choose>
+	    		</c:if>
+	    	</div>
+    	</div>
+        
+    </div>
     <!-- Footer Start -->
     <footer class="ec-footer section-space-mt">
         <div class="footer-container">
@@ -1160,6 +1182,112 @@
     </footer>
     <!-- Footer Area End -->
     
+    <!-- Modal -->
+    <div class="modal fade" id="ec_quickview_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close qty_close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12 col-xs-12">
+                            <!-- Swiper -->
+                            <div class="qty-product-cover">
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_1.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_2.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_3.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_4.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_5.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="qty-nav-thumb">
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_1.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_2.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_3.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_4.jpg" alt="">
+                                </div>
+                                <div class="qty-slide">
+                                    <img class="img-responsive" src="/resources/images/product-image/3_5.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-12 col-xs-12">
+                            <div class="quickview-pro-content">
+                                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">Handbag leather purse for women</a>
+                                </h5>
+                                <div class="ec-quickview-rating">
+                                    <i class="ecicon eci-star fill"></i>
+                                    <i class="ecicon eci-star fill"></i>
+                                    <i class="ecicon eci-star fill"></i>
+                                    <i class="ecicon eci-star fill"></i>
+                                    <i class="ecicon eci-star"></i>
+                                </div>
+
+                                <div class="ec-quickview-desc">Lorem Ipsum is simply dummy text of the printing and
+                                    typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                    since the 1500s,</div>
+                                <div class="ec-quickview-price">
+                                    <span class="old-price">$100.00</span>
+                                    <span class="new-price">$80.00</span>
+                                </div>
+
+                                <div class="ec-pro-variation">
+                                    <div class="ec-pro-variation-inner ec-pro-variation-color">
+                                        <span>Color</span>
+                                        <div class="ec-pro-color">
+                                            <ul class="ec-opt-swatch">
+                                                <li><span style="background-color:#696d62;"></span></li>
+                                                <li><span style="background-color:#d73808;"></span></li>
+                                                <li><span style="background-color:#577023;"></span></li>
+                                                <li><span style="background-color:#2ea1cd;"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="ec-pro-variation-inner ec-pro-variation-size ec-pro-size">
+                                        <span>Size</span>
+                                        <div class="ec-pro-variation-content">
+                                            <ul class="ec-opt-size">
+                                                <li class="active"><a href="#" class="ec-opt-sz"
+                                                        data-tooltip="Small">S</a></li>
+                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Medium">M</a></li>
+                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Large">X</a></li>
+                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Extra Large">XL</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ec-quickview-qty">
+                                    <div class="qty-plus-minus">
+                                        <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                    </div>
+                                    <div class="ec-quickview-cart ">
+                                        <button class="btn btn-primary"><i class="fi-rr-shopping-basket"></i> Add To Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal end -->
+
     <!-- Footer navigation panel for responsive display -->
     <div class="ec-nav-toolbar">
         <div class="container">
@@ -1342,7 +1470,7 @@
             <h3>Features</h3>
         </div>
         <a href="#" class="ec-tools-sidebar-toggle in-out">
-            <img alt="icon" src="/resources/images/common/settings.png">
+            <img alt="icon" src="/resources/images/common/settings.png" />
         </a>
         <div class="ec-tools-detail">
             <div class="ec-tools-sidebar-content ec-change-color ec-color-desc">
@@ -1394,7 +1522,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="ec-tools-sidebar-content">
                 <h3>Clear local storage</h3>
                 <a class="clear-cach" href="javascript:void(0)">Clear Cache & Default</a>
@@ -1419,55 +1546,30 @@
     <script src="/resources/js/plugins/infiniteslidev2.js"></script>
     <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
-
+    <script src="/resources/js/plugins/nouislider.js"></script>
+    
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script>
-    	function toSignIn(){
-    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
-    			location.href="/user/sign-in";
-    		}
-    	}
-    
-    	function replyDelete(id, boardId){
-    		if(confirm("정말로 댓글을 삭제하시겠습니까? \n해당 댓글에 달린 댓글은 삭제되지 않습니다")){
-    			location.href="/board/reply-delete?id="+id+"&boardId="+boardId;
-    		}
-    	}
-    
-   		function rereplyOpen(id,uid,bid,ref,step,level){
-    		$(".rereply-div").empty();	
-    		$("#rereply-id"+id).append(
-    				'<form class="ec-blog-form" method="post" action="/board/reply-write">'
-                    +'<div class="row">'
-                        +'<div class="col-md-6">'
-                            +'<div class="ec-leave-form">'
-                                +'<input type="hidden" name="userId" value="'+uid+'">'
-                            	+'<input type="hidden" name="boardId" value="'+bid+'">'
-                            	+'<input type="hidden" name="ref" value="'+ref+'">'
-                            	+'<input type="hidden" name="step" value="'+(step+1)+'">'
-                            	+'<input type="hidden" name="level" value="'+(level+1)+'">'
-                            +'</div>'
-                        +'</div>'
-                        +'<div class="col-md-12">'
-                            +'<div class="ec-text-leave">'
-                                +'<textarea placeholder="Content" name="content"></textarea>'
-                                +'<button type="submit" class="btn btn-lg btn-secondary">등록</button>'
-                            +'</div>'
-                        +'</div>'
-                    +'</div>'
-                +'</form>'
-    		);	
-    	}
-   		function boardDelete(boardId){
-			if(confirm("정말 게시글을 삭제하시겠습니까?")){
-	    		location.href='/board/delete/'+boardId;	
-			}
-   		}
-    	$(function(){
-    	});
-    </script>
+	<script>
+		function searchParam(key) {
+	   	  return new URLSearchParams(location.search).get(key);
+	   	};
+	   	
+	   	$(function(){
+	   		var cate = searchParam('categoryId');
+	   		if(cate){
+	   			$("#search-div").append('<input type="hidden" name="categoryId" value="'+cate+'">');
+	   		}
+	   		
+			$("#search-btn").on("click", function(){
+				if($("input[name=searchWord]").val().length!=0){
+					$("#search-frm").submit();
+				}else{
+					$("input[name=searchWord]").focus();
+				}
+			}) // end of onclick
+	   	})
+	</script>
 </body>
-
 </html>

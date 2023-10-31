@@ -182,7 +182,6 @@
         	}
         	if(/<|>/.test($('#message').val())){
         		$('#message').val('');
-        		alert()
         		return false;
         	}
         	

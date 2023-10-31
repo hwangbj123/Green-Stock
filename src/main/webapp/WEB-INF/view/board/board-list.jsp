@@ -52,6 +52,64 @@
      	.board-tb td{
      		height: 50px;
      	}
+     	.page-a{
+     		display: inline-block;
+     		border: 1px solid lightgrey;
+/*      		width: 30px;  */
+     		padding: 7px 18px;
+     		margin: 1px;
+     		border-radius: 5px;
+     	}
+     	#page{
+     		 width: 100%; 
+     		 margin: auto; 
+     		 text-align: center; 
+     		 margin-top: 50px;
+     		 display: flex;
+     		 justify-content: center;
+     	}
+     	#listopt-div{
+     		 width: 100%; 
+     		 margin: auto; 
+     		 text-align: center; 
+     		 margin-top: 50px;
+     		 padding: 0px 50px;
+     		 display: flex;
+     		 justify-content: space-between;
+     	}
+     	#listopt-div button{
+     		width: 100px;
+     	}
+     	#search-div {
+     		width: 520px;
+     		display: flex;
+     		justify-content: space-between;
+     	}
+     	#search-div select{
+     		height: 43px;
+     		width: 60px;
+     		text-align: center;
+     	}
+     	#search-div input{
+     		width: 330px;
+     		height: 45px;
+     	}
+     	#category-tb {
+     		width: 65%;
+     		height: 40px;
+     		margin: auto;
+     	}
+     	#category-tb td{
+/*      		border: 1px solid #3474d4; */
+     		padding: 1px;
+     	}
+     	#category-tb button{
+     		width: 100%;
+     		height: 100%;
+     		border: 1px solid #3474d4;
+     		color: #777777;
+     	}
+     	
      </style>
  </head>
 <body>
@@ -843,6 +901,16 @@
     <!-- Ec breadcrumb end -->
 
     <div class="section-space-p">
+<!------카테고리 div	    	 -->
+    	<table id="category-tb">
+    			<tr>
+					<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/list"' >전체</button></td>
+					<c:forEach var="c" items="${cate}" varStatus="status">
+						<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
+					</c:forEach>
+				</tr>
+    	</table>
+<!------리스트 div -->
     	<div class="board-div">
 	    	<table class="board-tb">
 	    		<tr>
@@ -865,7 +933,11 @@
            					</c:forEach>
 						</td>
 		    			<td>
-		    				<a href="detail/${board.id}">${board.title}</a>
+		    				<a href="detail/${board.id}">${board.title}
+			    				<c:if test="${board.reply ne 0}">
+			    					<span style="color: #bbb;">[${board.reply}]</span>
+			    				</c:if>
+		    				</a>
 	    				</td>
 		    			<td>${board.userName}</td>
 		    			<td>
@@ -876,6 +948,85 @@
 		    		</tr>
 		    	</c:forEach>
 	    	</table>
+<!----------검색 div	    	 -->
+			<form id="search-frm" action="/board/search">
+	    	<div id="listopt-div">
+	    		<div id="search-div">
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+	    			<select name="searchType">
+	    				<option value="title">제목</option>
+	    				<option value="content">내용</option>
+	    				<option value="userName">작성자</option>
+	    			</select>
+	    			</div>
+		    		<input class="form-control ec-search-bar" type="text" name="searchWord">
+		    		<input type="hidden" name="page" value="${page.paging.page}">
+		    		<button type="button" class="btn btn-primary" id="search-btn">검색</button>
+	    		</div>
+	    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    	</div>
+			</form>
+<!----------페이징 div -->
+	    	<div id="page">
+<!-- 	    		시작 페이지 -->
+	    		<c:choose>
+	    			<c:when test="${page.paging.page>4}">
+		    			<c:set var="startPage" value="${page.paging.page-4}"/>
+	    			</c:when>
+	    			<c:otherwise>
+		    			<c:set var="startPage" value="1"/>
+	    			</c:otherwise>
+	    		</c:choose>
+
+<!-- 				엔드 페이지	    		 -->
+	    		<c:choose>
+	    			<c:when test="${page.endPage < page.paging.page+4}">
+		    			<c:set var="endPage" value="${page.endPage}"/>
+	    			</c:when>
+	    			<c:otherwise>
+		    			<c:set var="endPage" value="${page.paging.page+4}"/>
+	    			</c:otherwise>
+	    		</c:choose>
+
+<!-- 	    		이전 버튼 -->
+	    		<c:if test="${startPage ne 1}">
+	    			<a class="page-a" href="list?page=${page.paging.page-5}">
+	    				prev
+	    			</a>
+	    		</c:if>
+<!-- 	    		페이지 넘버 반복문 -->
+	    		<c:set var="nowPage" value="${startPage}"/>
+	    		<c:forEach begin="${startPage}" end="${endPage}">
+	    			<c:choose>
+	    				<c:when test="${page.paging.page eq nowPage}">
+	    					<p class="page-a" style="background-color: #3474D4; color: white; cursor: pointer;">
+				    			<c:out value="${nowPage}"/>
+	    					</p>
+	    				</c:when>
+	    				<c:otherwise>
+	    					<a class="page-a" href="list?page=${nowPage}">
+				    			<c:out value="${nowPage}"/>
+	    					</a>
+	    				</c:otherwise>
+	    			</c:choose>
+	    			<c:set var="nowPage" value="${nowPage+1}"/>
+	    		</c:forEach>
+<!-- 	    		이후 버튼 -->
+	    		<c:if test="${page.endPage > startPage+9}">
+	    			<c:choose>
+	    				<c:when test="${page.endPage > page.paging.page+5}">
+			    			<a class="page-a" href="list?page=${page.paging.page+5}">
+			    				next
+			    			</a>
+	    				</c:when>
+	    				<c:otherwise>
+			    			<a class="page-a" href="list?page=${page.endPage}">
+			    				next
+			    			</a>
+	    				</c:otherwise>
+	    			</c:choose>
+	    		</c:if>
+	    	</div>
     	</div>
         
     </div>
@@ -1388,6 +1539,16 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-
+	<script>
+		$(function(){
+			$("#search-btn").on("click", function(){
+				if($("input[name=searchWord]").val().length!=0){
+					$("#search-frm").submit();
+				}else{
+					$("input[name=searchWord]").focus();
+				}
+			})
+		})
+	</script>
 </body>
 </html>
