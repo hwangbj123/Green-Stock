@@ -7,4 +7,5 @@ public class DomesticStockCode {
 
 	private String companyCode;
 	private String companyName;
+	private String type;
 }

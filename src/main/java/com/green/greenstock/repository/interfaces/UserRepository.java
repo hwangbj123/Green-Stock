@@ -10,4 +10,12 @@ public interface UserRepository {
 	public User findUserByUserName(User user);
 
 	public User findUserName(String username);
+
+	public User findUserFromEmail(String email);
+
+	public int modifyUserPw(User user);
+
+	public int modifyUserInfo(User user);
+
+	public int deleteUser(Integer id);
 }

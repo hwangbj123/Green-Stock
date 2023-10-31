@@ -8,6 +8,11 @@ public class TestController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "/user/userPortfolio";
+		return "/portfolio/userPortfolio";
+	}
+	
+	@GetMapping("/portfolio/popUpPage")
+	public String popUpPage() {
+		return "/portfolio/popUpPage";
 	}
 }
