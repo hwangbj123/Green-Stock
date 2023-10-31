@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="/WEB-INF/view/notice/noticeWrite.jsp" %>
+<%-- <%@ include file="/WEB-INF/view/layout/header.jsp" %> --%>
 <!DOCTYPE html>
 
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	 <link rel = "stylesheet" href = "static/css/notice2.css">
-	 <link rel = "stylesheet" href="/"/>
+	 <link rel = "stylesheet" href = "/css/notice2.css">
      <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
      <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
      <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -22,7 +21,7 @@
      <link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
      <link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
      <link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
+     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />	
      <link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
  
      <!-- Main Style -->
@@ -57,7 +56,12 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+$(function(){
 
+	$('#$notice.noticeTitle').click(function(){
+		
+	});
+});
  
 </script>
     <header class="ec-header">
@@ -494,19 +498,38 @@
             </div>
         </div>
         <!-- Ec Main Menu End -->	
-	<div class="content">
+	<div class="content container">
 		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
 			<div>
 				<p class="breadcrumbs">					
-					<span>
+					
 					<i class="mdi mdi-chevron-right">
 					</i>
-					</span>공지사항</p>
+					<h5>공지사항 메인페이지</h5>
 			</div>
-			
-			<!-- <div>
-				<a href="product-list.html" class="btn btn-primary">추가하기</a>
-			</div> -->
+			<!-- 검색페이지 시작 -->
+			<div class="container">
+		<div class="row">
+			<form method="post" name="notice-search" action="">
+				<table class="pull-right">
+					<tr>
+						<td>
+						<select class="form-control" name="searchField">							
+								<option value="0">선택</option>
+								<option value="bbsTitle">제목</option>
+								<option value="userID">작성자</option>
+						</select>
+						</td>
+						<td><input type="text" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+
+				</table>
+			</form>
+		</div>
+	</div>
+			<!-- 검색페이지 종료 -->
 		</div>
 		<div class="row">
 			<div class="col-12">
@@ -516,56 +539,46 @@
 							<div id="responsive-data-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 							<div class="row justify-content-between top-information">								
 							<div class="dataTables_length" id="responsive-data-table_length">
-							<label>갯수체크 
-							<select name="responsive-data-table_length" aria-controls="responsive-data-table" class="form-select form-select-sm">
-							<option value="20">20</option>
-							<option value="30">30</option>
-							<option value="50">50</option>
-							<option value="75">75</option>
-							<option value="-1">All</option>
-							</select>
 							
-							</label>
 							</div>
 							<div id="responsive-data-table_filter" class="dataTables_filter">
-					
-							<label>목록검색<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="responsive-data-table"></label>
-							<button id ="search-button">검색</button>
+												
 							</div>
 							</div>
 							<table id="responsive-data-table" class="table dataTable no-footer" style="width: 100%;" aria-describedby="responsive-data-table_info">
 								<thead>
 									<tr>
-									<th class="noticeId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending" style="width: 50px;">번호</th>
-									<th class="notice-Title" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 60px;">제목</th>
-									<th class="notice-userId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Offer: activate to sort column ascending" style="width: 100px;">작성자</th>
-									<th class="notice-Created" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Purchased: activate to sort column ascending" style="width: 100px;">작성일</th>
+									<th class="noticeId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending">번호</th>
+									<th class="notice-Title" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">제목</th>
+									<th class="notice-userId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Offer: activate to sort column ascending">작성자</th>
+									<th class="notice-Created" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Purchased: activate to sort column ascending">작성일</th>
 									<th class="sorting" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Stock: activate to sort column ascending" style="width: 100px;">조회수</th>
 									</tr>
 								</thead>
 								<tbody>
+								
 									<c:forEach items = "${noticeList}" var="notice">																																																																																																																																																																																																										
-										<tr class="Noticeboard-list">																
 										
+										<tr class="Noticeboard-list">																																			
 											<!-- <img class="tbl-thumb"></td> -->
-											<td>${notice.id}</td>
-											<td>${notice.noticeTitle}</td>
+											<td>${notice.id}</td>  											                                  
+                                            <td><a href ="/notice/view/${notice.id}">${notice.noticeTitle}</a></td>                                                                                       								
 											<td>${notice.userId}</td>
-											<td>${notice.noticeCreated}</td>																				
-											<td>
-												<div class="btn-group mb-1">
-													<button type="button" class="btn btn-outline-success">Info</button>
-													<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-														<span class="sr-only">Info</span>
-													</button>												
-												</div>
-											</td>
+											<td>${notice.noticeCreated}</td>	
+                                            <td>1</td>																														
+												
 										</tr>
-									</c:forEach>																											
-									</tbody>
-							
+									</c:forEach>		
+                                    <a href="/notice/write">작성하기</a>																									
+									</tbody>							
 							</table>
-							<div class="row justify-content-between bottom-information"><div class="dataTables_info" id="responsive-data-table_info" role="status" aria-live="polite">Showing 1 to 20 of 57 entries</div><div class="dataTables_paginate paging_simple_numbers" id="responsive-data-table_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="responsive-data-table_previous"><a href="#" aria-controls="responsive-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="responsive-data-table" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="responsive-data-table_next"><a href="#" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div><div class="clear"></div></div>
+							<div class="row justify-content-between bottom-information"><div class="dataTables_info" id="responsive-data-table_info" role="status" aria-live="polite">Showing 1 to 20 of 57 entries</div><div class="dataTables_paginate paging_simple_numbers" id="responsive-data-table_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="responsive-data-table_previous"><a href="#" aria-controls="responsive-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+							<li class="paginate_button page-item active"><a href="#" aria-controls="responsive-data-table" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="responsive-data-table_next"><a href="#" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">Next</a>
+							</li>
+							</ul>
+							</div>
+							</div>
+							<div class="clear"></div></div>
 						</div>
 					</div>
 				</div>

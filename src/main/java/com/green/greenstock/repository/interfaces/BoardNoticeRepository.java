@@ -19,6 +19,10 @@ public interface BoardNoticeRepository {
 	
 	//공지사항 작성
 	public int writeNotice(Noticeboard noticeboard);
+	
+	//작성 (추가예정) 
+	//public int writeNoticeProc(Noticeboard noticeboard);
+	
 	//공지사항 수정
 	public int updateNotice(Noticeboard noticeboard);
 	//public Noticeboard getNoticeboard(int id);
@@ -32,13 +36,14 @@ public interface BoardNoticeRepository {
 	 * @return
 	 */
 	//공지사항 상세보기 
-	public int viewNoticePage(int id);
+	public Noticeboard viewNoticePage(int id);
 	
+	//조회수
 	//페이징 
 	
 	//카테고리
 	
-	//조회수
+	
 	
 
 	
