@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.DomesticStockCode;
-import com.green.greenstock.dto.DomesticStockCurrentPrice;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
-import com.green.greenstock.dto.DomesticStockVolumeRank;
+import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseDomesticStockSearchDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
@@ -25,14 +25,13 @@ import com.green.greenstock.repository.interfaces.DomesticStockCodeRepository;
 import com.green.greenstock.repository.interfaces.KosdaqCodeRepository;
 import com.green.greenstock.repository.interfaces.KospiCodeRepository;
 import com.green.greenstock.repository.interfaces.OverseasStockCodeRepository;
+import com.green.greenstock.repository.interfaces.WebSocketKeyRepository;
 import com.green.greenstock.repository.model.AccessTokenInfo;
+import com.green.greenstock.repository.model.WebSocketKeyInfo;
 import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,6 +49,7 @@ public class StockApiService {
 	private final KosdaqCodeRepository kosdaqCodeRepository;
 	private final OverseasStockCodeRepository overseasStockCodeRepository;
 	private final DomesticStockCodeRepository domesticStockCodeRepository; 
+	private final WebSocketKeyRepository webSocketKeyRepository;
 
 	private static final String APP_KEY = "appkey";
 	private static final String APP_SECRET= "appsecret";
@@ -71,7 +71,7 @@ public class StockApiService {
 	
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
 	// 국내주식현재가격
-	public DomesticStockCurrentPrice getApiDomesticStockCurrentPrice(String companyCode) {
+	public ResponseApiInfo<?> getApiDomesticStockCurrentPrice(String companyCode) {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -96,13 +96,13 @@ public class StockApiService {
 				.header(APP_SECRET, appSecret)
 				.header(TR_ID, trId)
 				.retrieve()
-				.bodyToMono(DomesticStockCurrentPrice.class)
+				.bodyToMono(ResponseApiInfo.class)
 				.block();
 	}
 
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_6df56964-f22b-43d4-9457-f06264018e5b
 	// 거래량 조회
-	public DomesticStockVolumeRank getApiVolumeRank() {
+	public ResponseApiInfo<?> getApiVolumeRank() {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -137,7 +137,7 @@ public class StockApiService {
 				.header(TR_ID, trId)
 				.header("custtype", "P") // P 개인 B 법인
 				.retrieve()
-				.bodyToMono(DomesticStockVolumeRank.class)
+				.bodyToMono(ResponseApiInfo.class)
 				.block();
 	}
 	
@@ -160,24 +160,24 @@ public class StockApiService {
 		for(int i = start; i < end; i++) {
 			if(codeList.get(i) != null) {
 				DomesticStockCode domesticStockCode = codeList.get(i);
-				dtoList.add(getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput()); // 리스트에 추가 (output)
+				ObjectMapper mapper = new ObjectMapper();
+				DomesticStockCurrentPriceOutput output = mapper.convertValue(
+						getApiDomesticStockCurrentPrice(domesticStockCode.getCompanyCode()).getOutput(),
+						DomesticStockCurrentPriceOutput.class);
+				
+				dtoList.add(output); // 리스트에 추가 (output)
 				dtoList.get(j).setCompanyName(domesticStockCode.getCompanyName()); // 리스트에 추가 (회사 한글명)
 				dtoList.get(j).setType(domesticStockCode.getType()); // 리스트에 추가 (type: kospi, kosdaq)
-				dtoList.get(j).setCompanyCode(domesticStockCode.getCompanyCode());
+				dtoList.get(j).setCompanyCode(domesticStockCode.getCompanyCode()); // 리스트에 축 (회사 종목코드)
 			}else {
 				throw new CustomRestfulException("목록을 가져오지 못했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			j++;			
+			j++; // 하나 추가될때마다 1 증가
 		}
 		
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
-		
-		//domesticStockSearchDto.setListSize(total); // 검색된 전체 개수
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		//domesticStockSearchDto.setPage(page); // 현재 페이지
-		//domesticStockSearchDto.setTotalpage((total/10) + 1); // 총 페이지수
-		
-		domesticStockSearchDto.setPagination(new Pagination(total, page));
+		domesticStockSearchDto.setPagination(new Pagination(total, page)); // 페이지 네이션
 		
 		log.debug("total {}", total);
 		log.debug("start {}", start);
@@ -186,16 +186,73 @@ public class StockApiService {
 		return domesticStockSearchDto;
 	}
 	
-	// fastAPI 통신 테스트
+	// 주식 현재가 호가 예상체결가
+	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_af3d3794-92c0-4f3b-8041-4ca4ddcda5de
+	public ResponseApiInfo<?> getAskingSellingPrice(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-asking-price-exp-ccn";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010200"; // 거래ID
+		
+		WebClient webClient = buildWebClient();
+		
+		return webClient
+						.get()
+						.uri(uribuilder -> uribuilder
+										.path(uri)
+										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+										.build())
+						.header(CONTENT_TYPE, contentType)
+						.header(AUTHORIZATION, auth)
+						.header(APP_KEY, appKey)
+						.header(APP_SECRET, appSecret)
+						.header(TR_ID, trId)
+						.retrieve()
+						.bodyToMono(ResponseApiInfo.class)
+						.block();
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 국내주식기간별시세(일/주/월/년)
+	public ResponseApiInfo<?> getDailyitemchartpricee(String companyCode){
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-daily-price";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST03010100"; // 거래ID
+		
+		WebClient webClient = buildWebClient();
+		
+		return webClient
+						.get()
+						.uri(uribuilder -> uribuilder
+										.path(uri)
+										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+										.queryParam("FID_INPUT_DATE_1", "20231031") // 조회 시작일자 (ex. 20220501)
+										.queryParam("FID_INPUT_DATE_2", "20231031") // 조회 종료일자 (ex. 20220530)
+										.queryParam("FID_PERIOD_DIV_CODE", "D") // D:일봉, W:주봉, M:월봉, Y:년봉
+										.queryParam("FID_ORG_ADJ_PRC", 0) // FID 수정주가 원주가 가격
+										.build())
+						.header(CONTENT_TYPE, contentType)
+						.header(AUTHORIZATION, auth)
+						.header(APP_KEY, appKey)
+						.header(APP_SECRET, appSecret)
+						.header(TR_ID, trId)
+						.retrieve()
+						.bodyToMono(ResponseApiInfo.class)
+						.block();
+	}
 	
 	
 	
@@ -225,23 +282,66 @@ public class StockApiService {
 	// 토큰 유효성 검증(종합) / null, 시간
 	public AccessTokenInfo validateAccessToken() {
 		AccessTokenInfo recentAccessTokenInfo = accessTokenRepository.findTopByOrderByTokenIdDesc(); // 최근 토큰정보 가져오기
-		log.debug("tokenId {}", recentAccessTokenInfo.getTokenId());
-		if(recentAccessTokenInfo == null || isAccessTokenExpired(recentAccessTokenInfo)){ // 최근 토큰이 존재한다면
+		if(recentAccessTokenInfo == null || isExpired(recentAccessTokenInfo.getAccessTokenTokenExpired())){ // 최근 토큰이 존재한다면
 			return getApiAccessToken(); // 토큰을 발급받고 토큰을 리턴
 		}else {
 			return recentAccessTokenInfo;
 		}
 	}
 	
-	// 토큰 유효성 검증 / 시간
-	private boolean isAccessTokenExpired(AccessTokenInfo accessTokenInfo) {
-	    String expiredTime = accessTokenInfo.getAccessTokenTokenExpired(); // 토큰 만료시간
+	// 토큰, 웹소켓키 검증 / 시간
+	private boolean isExpired(String expiredTime) {
+	    //String expiredTime = accessTokenInfo.getAccessTokenTokenExpired(); // 토큰 만료시간
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 날짜형식 포맷
 	    LocalDateTime dateTime = LocalDateTime.parse(expiredTime, formatter); // 만료시간(String)을 LocalDateTime으로 변환
 	    LocalDateTime now = LocalDateTime.now(); // 현재시간
 	    return now.isAfter(dateTime); // 현재시간이 만료시간보다 이후인지 확인
 	}
 	/* 토큰 끝 */
+	/* 웹소켓키 시작 */
+	// 실시간 웹소켓 접속키 발급받기
+	public WebSocketKeyInfo getApiWebSocketKey() {
+		WebClient webClient = buildWebClient();
+		Map<String, String> bodyMap = new HashMap<>();
+		bodyMap.put("grant_type", "client_credentials");
+		bodyMap.put(APP_KEY, appKey);
+		bodyMap.put("secretkey", appSecret);
+		
+		WebSocketKeyInfo keyInfo = webClient
+											.mutate()
+											.baseUrl("https://openapi.koreainvestment.com:9443")
+											.build()
+											.post()
+											.uri("/oauth2/Approval")
+											.body(BodyInserters.fromValue(bodyMap))
+											.retrieve()
+											.bodyToMono(WebSocketKeyInfo.class)
+											.block();
+		if(keyInfo != null) {
+			// 초기값 설정
+			keyInfo.setExpiresIn(86400); // 1일
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime plusDay = now.plusDays(1L); // 발급시간에서 하루 더하기
+			String formattedDateTime = plusDay.format(formatter);
+			keyInfo.setApprovalKeyExpired(formattedDateTime);
+			webSocketKeyRepository.save(keyInfo);
+			return keyInfo;
+		}else {
+			throw new CustomRestfulException("키 발급이 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	// 웹소켓키 검증 (종합)
+	public String validateWebSocketKey() {
+		WebSocketKeyInfo webSocketKeyInfo = webSocketKeyRepository.findTopByOrderByIdDesc();
+		if(webSocketKeyInfo == null || isExpired(webSocketKeyInfo.getApprovalKeyExpired())) {
+			return getApiWebSocketKey().getApprovalKey();
+		}else {
+			return webSocketKeyInfo.getApprovalKey();
+		}
+	}
+	/* 웹소켓키 끝 */
 	
 	/* 통신 시작 */
 	// 웹클라이언트(http통신 생성)

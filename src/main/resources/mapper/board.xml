@@ -23,21 +23,52 @@
 		)
 	</insert>
 	
-	<select id="selectBoardListAll" resultType="com.green.greenstock.repository.model.Board">
-		select board.id,
+	<select id="selectBoardListAll" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.repository.model.Board">
+		select b.id,
 				title,
-				user_id,
-				content,
-				date,
+				b.user_id,
+				b.content,
+				b.date,
 				category_id,
 				views,
-				recommand,
-				user_name
-		from board
-		join user_tb
-		on board.user_id = user_tb.id
+				b.recommand,
+				user_name,
+				r.reply
+		from board b
+		join user_tb u
+		on b.user_id = u.id
+		left join (select board_id, count(*) reply
+					 from reply
+				 	where deleted != 1
+					group by board_id) r
+		on b.id = r.board_id
 		order by id desc
+		limit #{offset}, #{recordSize}
 	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+	    select count(*)
+	    from board
+	    <where>
+	        <if test='categoryId != "0"'>
+	            and category_id = #{categoryId}
+	        </if>
+	        <if test='searchWord != null'>
+	            and (
+	                <if test='searchType == "title"'>
+	                    title
+	                </if>
+	                <if test='searchType == "content"'>
+	                    content
+	                </if>
+	                <if test='searchType == "userId"'>
+	                    user_id
+	                </if>
+	            ) like concat('%', #{searchWord}, '%')
+	        </if>
+	    </where>
+	</select>
+
 	
 	<select id="selectBoardById" resultType="com.green.greenstock.repository.model.Board">
 		select board.id,
@@ -67,4 +98,46 @@
 		where id=#{id}
 	</update>
 
+	<select id="selectBoardSearchList" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.repository.model.Board">
+		select b.id,
+				title,
+				b.user_id,
+				b.content,
+				b.date,
+				category_id,
+				views,
+				b.recommand,
+				user_name,
+				r.reply
+		from board b
+		join user_tb u
+		on b.user_id = u.id
+		left join (select board_id, count(*) reply
+					 from reply
+				 	where deleted != 1
+					group by board_id) r
+		on b.id = r.board_id
+		where 
+		 <if test='categoryId!="0"'>
+			category_id = #{categoryId}
+		 </if>
+		 <if test='categoryId!="0" and searchWord!=null'>
+		 	and
+		 </if>
+		 <if test='searchType!=null'>
+		 	<if test='searchType == "title"'>
+		 		title
+		 	</if>
+		 	<if test='searchType == "content"'>
+		 		content
+		 	</if>
+		 	<if test='searchType == "userName"'>
+		 		user_name
+		 	</if>
+			 like concat('%',#{searchWord},'%')
+		 </if>
+ 		order by id desc
+		limit #{offset}, #{recordSize}
+	</select>
+	
 </mapper>

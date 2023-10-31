@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class Stock {
-	private Integer id;
-	private String name;
+	private Integer companyCode;
+	private String companyName;
 	private Integer price; // 구매시 price이다.
 }

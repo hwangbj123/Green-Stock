@@ -33,7 +33,7 @@
 						<div class="card-header bg-primary">
 							<div class="ec-brand">
 								<a href="/main" title="Ekka">
-									<img class="ec-brand-icon" src="/resources/img/logo/logo-login.png" alt="" />
+									<img class="ec-brand-icon" src="/resources/img/G_logo_white.jpg" alt="" />
 								</a>
 							</div>
 						</div>
@@ -90,46 +90,9 @@
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
 		
-		<script>
-		$(document).ready(function() {
-			$('#signInBtn').click(function() {
-				//유효성
-				let idval = $('#userName').val();
-				let pwval = $('#password').val();
-				let idvalcheck = /^[a-z0-9]+$/;
-				if (!idvalcheck.test(idval) || idval.length < 4) {
-					alert('아이디는 영소문자,숫자로 된 4자 이상이어야 합니다.');
-					$('#userName').focus();
-					return false
-				}
-				if(pwval.length < 1) {
-					alert('비밀번호를 입력하세요.');
-					$('#password').focus();
-					return false
-				}
-				
-				$.ajax({
-					type : "POST",
-					url : "/user/sign-in",
-					data : {
-						"userName" : idval,
-						"password" : pwval
-					},
-					success : function(data){
-						if (data === 200) {
-							window.location.href = "http://localhost/main";
-							} else {
-							alert('로그인실패. \n아이디 비밀번호를 다시 확인해주세요.');
-							$('#userName').focus();
-						}
-					}
-					,error: function(){
-						alert('서버 에러입니다.');
-					}
-				});
-			});
-		});
+		<!-- custom Js -->
+		<script src="/resources/js/custom/common.js"></script>
+		<script src="/resources/js/custom/signIn.js"></script>
 
-		</script>
 	</body>
 </html>

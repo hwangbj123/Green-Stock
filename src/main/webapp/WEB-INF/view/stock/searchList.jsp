@@ -137,6 +137,10 @@
 						<div class="ec-pro-pagination">
                             <span>Showing ${responseDomesticStockSearchDto.pagination.start}-${responseDomesticStockSearchDto.pagination.end} of ${responseDomesticStockSearchDto.pagination.totalCount} 개</span>
                             <ul class="ec-pro-pagination-inner">
+                                <c:if test="${responseDomesticStockSearchDto.pagination.prevPageGroup}">
+                                	<li><a class="next" href="#">Next <i class="ecicon eci-angle-right"></i></a></li>
+                               	</c:if>
+                            
                             	<c:forEach var="num" begin="${responseDomesticStockSearchDto.pagination.startPageGroup}" end="${responseDomesticStockSearchDto.pagination.endPageGroup}">
                                 <li><a class="${num eq responseDomesticStockSearchDto.pagination.currentPage ? 'active' : ''}" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${num}">${num}</a></li>
                                 </c:forEach>

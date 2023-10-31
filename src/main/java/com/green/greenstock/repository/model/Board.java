@@ -15,4 +15,5 @@ public class Board {
 	private int categoryId;
 	private int views;
 	private int recommand;
+	private int reply;
 }

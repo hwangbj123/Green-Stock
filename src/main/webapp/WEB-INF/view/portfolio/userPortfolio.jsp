@@ -34,7 +34,16 @@
 
 <!-- FAVICON -->
 <link href="resources/img/favicon.png" rel="shortcut icon" />
-
+<style>
+.ui-autocomplete {
+	background-color: white; /* 배경색을 흰색으로 설정 */
+	color: black; /* 텍스트 색상을 흰색으로 설정 */
+}
+div[data-clicked="true"]:not(#addCard) div{
+	border-radius : 2px;
+	box-shadow : 1px 2px 2px 0px blue;
+}
+</style>
 </head>
 
 <body
@@ -819,23 +828,22 @@
 
 					<div class="row">
 						<div class="col-xl-4 col-md-12 p-b-15">
-							<div class="card card-default" style="height:100%">
+							<div class="card card-default" style="height: 100%">
 								<div class="card-header justify-content-center">
 									<h2>Card Header</h2>
 								</div>
-								<div id = "portfolioInfo" class="card-body"></div>
+								<div id="portfolioInfo" class="card-body"></div>
 								<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
 							</div>
 						</div>
 						<div class="col-xl-4 col-md-12 p-b-15">
 							<!-- Doughnut Chart -->
-							<div class="card card-default" style="height:100%">
+							<div class="card card-default" style="height: 100%">
 								<div class="card-header justify-content-center">
 									<h2>Orders Overview</h2>
 								</div>
-								<div id = "donutChartBody" class="card-body">
-								</div>
-								
+								<div id="donutChartBody" class="card-body"></div>
+
 								<!-- <div class="card-footer d-flex flex-wrap bg-white p-0">
 									<div class="col-6">
 										<div class="p-20">
@@ -877,8 +885,7 @@
 									<h2>Ranking</h2>
 								</div>
 								<div class="card-body">
-									<div class="tab-content" id="rankingWrapper">
-									</div>
+									<div class="tab-content" id="rankingWrapper"></div>
 								</div>
 							</div>
 						</div>
@@ -890,10 +897,12 @@
 								class="card card-table-border-none card-default recent-orders"
 								id="recent-orders">
 								<div class="card-header justify-content-between">
-									<h2> My Stock</h2>
+									<h2>My Stock</h2>
+									<div id="addStock"
+										style="width: 5%; height: 100%; cursor: pointer">+</div>
 								</div>
 								<div class="card-body pt-0 pb-5">
-									<table  id = "myStockCardTable" 
+									<table id="myStockCardTable"
 										class="table card-table table-responsive table-responsive-large"
 										style="width: 100%">
 										<!-- <thead>
@@ -951,9 +960,8 @@
 										</div>
 										<div class="card-body">
 											<div class="tab-content" id="userActivityContent">
-												<div id = "assetBody" class="tab-pane fade show active" id="user"
-													role="tabpanel">
-												</div>
+												<div id="assetBody" class="tab-pane fade show active"
+													id="user" role="tabpanel"></div>
 											</div>
 										</div>
 										<!-- <div class="card-footer d-flex flex-wrap bg-white border-top">
@@ -1000,6 +1008,7 @@
 
 	<!-- Common Javascript -->
 	<script src="resources/plugins/jquery/jquery-3.5.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="resources/js/bootstrap.bundle.min.js"></script>
 	<script src="resources/plugins/simplebar/simplebar.min.js"></script>
 	<script src="resources/plugins/jquery-zoom/jquery.zoom.min.js"></script>

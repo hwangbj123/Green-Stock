@@ -69,7 +69,7 @@
      	}
      	#content-textarea{
      		width: 100%;
-     		height: 500px;
+     		height: 100%;
      		border: 1px solid lightgrey;
      		padding: 20px 30px;
      		resize: none;
@@ -901,25 +901,30 @@
                         			</tr>
                         			<tr>
 <!-- 	                        				<td>내용</td> -->
-                        				<td colspan="2">
+                        				<td colspan="2" style="padding: 30px 0px;height: 600px;">
                         					<div id="content-textarea">
                         						${board.content}
                         					</div>
 										</td>
                         			</tr>
-                        			<c:if test="${board.userId eq principal.id}">
 	                        			<tr>
 	                        				<td colspan="2">
 	                        				<div style="display: flex; justify-content: center;">
+                        			<c:if test="${board.userId eq principal.id}">
 	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/update/${board.id}'">수정</button>
-	                        					<button type="button" class="btn btn-warning" onclick="location.href='/board/delete/${board.id}'">삭제</button>
+                        			</c:if>
+	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
+                        			<c:if test="${board.userId eq principal.id}">
+	                        					<button type="button" class="btn btn-primary" onclick="boardDelete(${board.id})" style="background-color: rgba(200,0,0,0.5);">
+	                        						삭제
+	                        					</button>
+                        			</c:if>
                         					</div>
 	                        				</td>
 	                        			</tr>
-                        			</c:if>
                         		</table>
                         	</div>
-                            <div class="ec-blog-arrows">
+                            <div class="ec-blog-arrows" style="margin-top: 100px;">
                                 <a href="blog-detail-left-sidebar.html"><i class="ecicon eci-angle-left"></i> Prev
                                     Post</a>
                                 <a href="blog-detail-left-sidebar.html">Next Post <i
@@ -928,52 +933,78 @@
                             <div class="ec-blog-comments">
                                 <div class="ec-blog-cmt-preview">
                                     <div class="ec-blog-comment-wrapper mt-55">
-                                        <h4 class="ec-blog-dec-title">Comments : 05</h4>
-                                        <div class="ec-single-comment-wrapper mt-35">
-                                            <div class="ec-blog-comment-content">
-                                                <h5>John Deo</h5>
-                                                <span>October 14, 2018 </span>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
-                                                    ad minim veniam, </p>
-                                                <div class="ec-blog-details-btn">
-                                                    <a href="blog-detail-left-sidebar.html">read more</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ec-single-comment-wrapper mt-50 ml-150">
-                                            <div class="ec-blog-comment-content">
-                                                <h5>Jenifer lowes</h5>
-                                                <span>October 14, 2018 </span>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
-                                                    ad minim veniam, </p>
-                                                <div class="ec-blog-details-btn">
-                                                    <a href="blog-detail-left-sidebar.html">read more</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    
+<!------------------------------------- 댓글 -->
+										<c:forEach var="comment" items="${reply}">
+	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);">
+	                                            <div class="ec-blog-comment-content">
+	                                                <h5>${comment.userName}</h5>
+	                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>
+<%-- 	                                                <span style="color: red;">ref : ${comment.ref} , step : ${comment.step } , level : ${comment.level }</span> --%>
+	                                                <p>${comment.content}</p>
+	                                                <div class="ec-blog-details-btn">
+	                                                <c:if test="${comment.deleted eq 0}">
+	                                                    <c:if test="${empty principal}">
+		                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
+		                                                    	댓글
+		                                                    </button>
+	                                                    </c:if>
+	                                                    <c:if test="${comment.userId eq principal.id}">
+		                                                    <button type="button" onclick="rereplyOpen(${comment.id}, 
+		                                                    										   ${principal.id}, 
+		                                                    										   ${comment.boardId},
+		                                                    										   ${comment.ref},
+		                                                    										   ${comment.step},
+		                                                    										   ${comment.level})" style="color: #777777;">
+		                                                    	댓글
+		                                                    </button>
+	                                                    	<button type="button" onclick="replyDelete(${comment.id}, ${comment.boardId})" style="color: #777777;">
+	                                                    		삭제
+	                                                    	</button>
+	                                                    </c:if>
+	                                                </c:if>
+	                                                </div>
+	                                                <div class="rereply-div" id="rereply-id${comment.id}">
+	                                                </div>
+	                                            </div>
+	                                        </div>
+										</c:forEach>
+                                        
                                     </div>
                                 </div>
                                 <div class="ec-blog-cmt-form">
                                     <div class="ec-blog-reply-wrapper mt-50">
                                         <h4 class="ec-blog-dec-title">Leave A Reply</h4>
-                                        <form class="ec-blog-form" action="#">
+                                        <form class="ec-blog-form" method="post" action="/board/reply-write">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="ec-leave-form">
-                                                        <input type="text" placeholder="Full Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="ec-leave-form">
-                                                        <input type="email" placeholder="Email Address ">
+                                                    	<c:choose>
+	                                                    	<c:when test="${not empty principal}">
+		                                                        <input type="text" value="${principal.userName}" readonly>
+	                                                    	</c:when>
+	                                                    	<c:otherwise>
+		                                                        <input type="text" name="userId" value="로그인이 필요합니다" readonly>
+	                                                    	</c:otherwise>
+                                                    	</c:choose>
+                                                        <input type="hidden" name="userId" value="${principal.id}">
+                                                    	<input type="hidden" name="boardId" value="${board.id}">
+                                                    	<input type="hidden" name="level" value="0">
+                                                    	<input type="hidden" name="step" value="0">
+                                                    	<input type="hidden" name="ref" value="${maxRef+1}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="ec-text-leave">
-                                                        <textarea placeholder="Message"></textarea>
-                                                        <a href="#" class="btn btn-lg btn-secondary">Order Now</a>
+                                                        <textarea placeholder="Content" name="content"></textarea>
+                                                        <c:choose>
+	                                                    	<c:when test="${not empty principal}">
+		                                                        <button type="submit" class="btn btn-lg btn-secondary">등록</button>
+	                                                    	</c:when>
+	                                                    	<c:otherwise>
+		                                                        <button type="button" class="btn btn-lg btn-secondary" onclick="toSignIn()">등록</button>
+	                                                    	</c:otherwise>
+                                                    	</c:choose>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1392,7 +1423,51 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-
+    <script>
+    	function toSignIn(){
+    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
+    			location.href="/user/sign-in";
+    		}
+    	}
+    
+    	function replyDelete(id, boardId){
+    		if(confirm("정말로 댓글을 삭제하시겠습니까? \n해당 댓글에 달린 댓글은 삭제되지 않습니다")){
+    			location.href="/board/reply-delete?id="+id+"&boardId="+boardId;
+    		}
+    	}
+    
+   		function rereplyOpen(id,uid,bid,ref,step,level){
+    		$(".rereply-div").empty();	
+    		$("#rereply-id"+id).append(
+    				'<form class="ec-blog-form" method="post" action="/board/reply-write">'
+                    +'<div class="row">'
+                        +'<div class="col-md-6">'
+                            +'<div class="ec-leave-form">'
+                                +'<input type="hidden" name="userId" value="'+uid+'">'
+                            	+'<input type="hidden" name="boardId" value="'+bid+'">'
+                            	+'<input type="hidden" name="ref" value="'+ref+'">'
+                            	+'<input type="hidden" name="step" value="'+(step+1)+'">'
+                            	+'<input type="hidden" name="level" value="'+(level+1)+'">'
+                            +'</div>'
+                        +'</div>'
+                        +'<div class="col-md-12">'
+                            +'<div class="ec-text-leave">'
+                                +'<textarea placeholder="Content" name="content"></textarea>'
+                                +'<button type="submit" class="btn btn-lg btn-secondary">등록</button>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</form>'
+    		);	
+    	}
+   		function boardDelete(boardId){
+			if(confirm("정말 게시글을 삭제하시겠습니까?")){
+	    		location.href='/board/delete/'+boardId;	
+			}
+   		}
+    	$(function(){
+    	});
+    </script>
 </body>
 
 </html>

@@ -36,6 +36,9 @@ public class UserService {
 
 	public User findUserByUserName(User user) {
 		User principal = userRepository.findUserByUserName(user);
+		if(principal == null) {
+			throw new CustomRestfulException("해당정보의 유저가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
 		boolean isPwdMatched = passwordEncoder.matches(user.getPassword(), principal.getPassword());
 		if(isPwdMatched==false) {
 			throw new CustomRestfulException("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
@@ -61,6 +64,24 @@ public class UserService {
 		int result = userRepository.modifyUserPw(user);		
 		if(result != 1) {
 			throw new CustomRestfulException("비밀번호 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Transactional
+	public void modifyUserInfo(User user) {
+		String rawPwd = user.getPassword();
+		String hashPwd = passwordEncoder.encode(rawPwd);
+		user.setPassword(hashPwd);
+		int result = userRepository.modifyUserInfo(user);
+		if(result != 1) {
+			throw new CustomRestfulException("회원정보 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	public void deleteUser(Integer id) {
+		int result = userRepository.deleteUser(id);
+		if(result != 1) {
+			throw new CustomRestfulException("회원탈퇴에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
