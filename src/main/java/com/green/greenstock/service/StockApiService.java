@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.DomesticStockCode;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.ResponseApiInfo;
+import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.dto.ResponseDomesticStockSearchDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
@@ -188,7 +189,7 @@ public class StockApiService {
 	
 	// 주식 현재가 호가 예상체결가
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_af3d3794-92c0-4f3b-8041-4ca4ddcda5de
-	public ResponseApiInfo<?> getAskingSellingPrice(String companyCode) {
+	public ResponseApiInfoList<?> getAskingSellingPrice(String companyCode) {
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -214,13 +215,13 @@ public class StockApiService {
 						.header(APP_SECRET, appSecret)
 						.header(TR_ID, trId)
 						.retrieve()
-						.bodyToMono(ResponseApiInfo.class)
+						.bodyToMono(ResponseApiInfoList.class)
 						.block();
 		
 	}
 	
 	// 국내주식기간별시세(일/주/월/년)
-	public ResponseApiInfo<?> getDailyitemchartpricee(String companyCode){
+	public String getDailyitemchartprice(String companyCode){
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -239,7 +240,7 @@ public class StockApiService {
 										.path(uri)
 										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
 										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
-										.queryParam("FID_INPUT_DATE_1", "20231031") // 조회 시작일자 (ex. 20220501)
+										.queryParam("FID_INPUT_DATE_1", "20231025") // 조회 시작일자 (ex. 20220501)
 										.queryParam("FID_INPUT_DATE_2", "20231031") // 조회 종료일자 (ex. 20220530)
 										.queryParam("FID_PERIOD_DIV_CODE", "D") // D:일봉, W:주봉, M:월봉, Y:년봉
 										.queryParam("FID_ORG_ADJ_PRC", 0) // FID 수정주가 원주가 가격
@@ -250,7 +251,7 @@ public class StockApiService {
 						.header(APP_SECRET, appSecret)
 						.header(TR_ID, trId)
 						.retrieve()
-						.bodyToMono(ResponseApiInfo.class)
+						.bodyToMono(String.class)
 						.block();
 	}
 	

@@ -86,19 +86,4 @@ public class AskingSellingPriceOutputDto {
 	private String ovtmTotalBidpRsqn;
 	private String ntbyAsprRsqn;
 	private String newMkopClsCode;
-	private String output2;
-
-	private String antcMkopClsCode;
-	private String stckPrpr;
-	private String stckOprc;
-	private String stckHgpr;
-	private String stckLwpr;
-	private String stckSdpr;
-	private String antcCnpr;
-	private String antcCntgVrssSign;
-	private String antcCntgVrss;
-	private String antcCntgPrdyCttrt;
-	private String antcVol;
-	private String stckShrnIscd;
-	private String viClsCode;
 }
