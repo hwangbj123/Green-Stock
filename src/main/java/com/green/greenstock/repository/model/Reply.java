@@ -5,15 +5,16 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Board {
+public class Reply {
 	private int id;
-	private String title;
+	private int boardId;
 	private int userId;
 	private String userName;
 	private String content;
 	private Date date;
-	private int categoryId;
-	private int views;
 	private int recommand;
-	private int reply;
+	private int ref; // 댓글 순서
+	private int step; // 대댓 순서
+	private int level; // 들여쓰기
+	private int deleted;
 }

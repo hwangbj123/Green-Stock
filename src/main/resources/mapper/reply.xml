@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.greenstock.repository.interfaces.ReplyRepository"> 
+
+	<select id="selectReplyList" resultType="com.green.greenstock.repository.model.Reply">
+		select reply.id, board_id, user_id, user_name, content, date, recommand, ref, level, step, deleted
+		from reply
+		join user_tb on reply.user_id = user_tb.id
+		where board_id=#{boardId}
+		order by ref, step, level
+	</select>
+	
+	<select id="selectMaxRef" resultType="int">
+		select IFNULL(max(ref),0) ref
+		from reply
+		where board_id=#{boardId}
+	</select>
+
+	<insert id="insertReply">
+		insert into reply(
+			board_id, user_id, content, ref, level, step
+		) values (
+			#{boardId}, #{userId}, #{content}, #{ref}, #{level}, #{step}
+		)
+	</insert>
+	
+	<update id="updateReply">
+		update reply
+		set step= step+1
+		where step >= #{step}
+		and ref = #{ref}
+		and board_id = #{boardId}
+	</update>
+	
+	<update id="deleteReply">
+		update reply
+		set content = '삭제된 댓글입니다'
+			,deleted = 1
+		where id=#{id}
+	</update>
+	
+</mapper>

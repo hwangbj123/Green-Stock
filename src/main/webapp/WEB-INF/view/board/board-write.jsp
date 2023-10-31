@@ -64,13 +64,13 @@
      		text-align: center;
      	}
      	.write-tb td button{
-     		width: 60%;
+     		width: 30%;
      		height: 60px;
      		margin: 10px;
      	}
      	#content-textarea{
      		width: 90%;
-     		height: 500px;
+     		height: 90%;
      		resize: none;
      	}
      </style>
@@ -879,7 +879,7 @@
 	                        				<td>카테고리</td>
 	                        				<td>
 	                        					<select id="category-select" name="categoryId">
-	                        						<option disabled="disabled" selected="selected">▼ ▼ ▼ ▼ ▼</option>
+	                        						<option disabled="disabled" selected="selected"> ㅡ ㅡ ㅡ </option>
 	                        					<c:forEach var="cateName" items="${cate}" varStatus="status">
 	                        						<option value="${status.count}">${cateName}</option>
 	                        					</c:forEach>
@@ -901,13 +901,14 @@
 	                        			</tr>
 	                        			<tr>
 <!-- 	                        				<td>내용</td> -->
-	                        				<td colspan="2">
+	                        				<td colspan="2" style="padding: 30px 0px; height: 500px;">
 	                        					<textarea id="content-textarea" name="content"></textarea>
 											</td>
 	                        			</tr>
 	                        			<tr>
-	                        				<td colspan="2">
-	                        					<button type="submit" class="btn btn-primary" id="write-submit-btn">저장</button>
+	                        				<td colspan="2" style="display: flex; justify-content: center;">
+	                        					<button type="button" class="btn btn-primary" id="write-submit-btn">저장</button>
+	                        					<button type="button" class="custom-btn btn-1" onclick="history.back()">취소</button>
 	                        				</td>
 	                        			</tr>
 	                        		</table>
@@ -1325,7 +1326,32 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-
+	<script>
+	$(function(){
+		$("#write-submit-btn").on("click", function(){
+			if($("#category-select").val()==null){
+				alert("카테고리를 선택해주세요");
+	    		$('#category-select').focus();
+			}else if($('#title-input').val().replace(/\s/gi, '').length==0){
+	    		$('#title-input').val('');
+	    		alert("제목을 입력해주세요");
+	    		$('#title-input').focus();
+			}else if($('#content-textarea').val().replace(/\s/gi, '').length==0){
+	    		$('#content-textarea').val('');
+	    		alert("내용을 입력해주세요");
+	    		$('#content-textarea').focus();
+	    	}else if(/<|>/.test($('#content-textarea').val())){
+	    		alert("일부 특수문자는 사용할 수 없습니다");
+	    		$('#content-textarea').val('');
+	    		$('#content-textarea').focus();
+	    	}else{
+	    		if(confirm("해당 내용으로 글을 작성하시겠습니까?")){
+		    		$("#board-write-frm").submit();
+	    		}
+	    	}
+		})
+	})
+	</script>
 </body>
 
 </html>

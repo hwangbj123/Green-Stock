@@ -38,9 +38,9 @@
 							</div>
 						</div>
 						<div class="card-body p-5">
-							<h4 class="text-dark mb-5">Sign In</h4>
+							<h4 class="text-dark mb-5" style="margin-bottom: 50px !important;">Verify User</h4>
 							
-							<form action="/user/sign-in" method="post" id="loginForm">
+							<form action="/user/verify-user" method="post" id="loginForm">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
 										<input type="text" class="form-control" id="userName" name="userName" placeholder="Username">
@@ -51,27 +51,7 @@
 									</div>
 									
 									<div class="col-md-12">
-										<div class="d-flex my-2 justify-content-end">
-											<p><a class="text-blue" href="/user/findIdPw">아이디/비밀번호 찾기</a></p>
-										</div>
-
-										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">Sign In</button>
-										
-										<p class="sign-upp">Don't have an account yet ?
-											<a class="text-blue" href="/user/sign-up">Sign Up</a>
-										</p>
-										<div style="margin-top: 30px; display: flex; justify-content: space-evenly;">
-											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
-												<img width="40" height="40" src="/resources/img/kakao_logo.svg">
-											</a>
-											<a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=274947516179-mp9dq1e2lmf62hj46urhg6e30mn29q0u.apps.googleusercontent.com&redirect_uri=http://localhost/user/google/callback&response_type=code&scope=profile">
-												<img width="40" height="40" src="/resources/img/google.svg">
-											</a>
-											<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=4QL7qRNsZX0v8r2aJUDp&redirect_uri=http://localhost/user/naver/callback&state=test">
-												<img width="40" height="40" src="/resources/img/naver.png">
-											</a>
-										</div>
-
+										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">유저 확인</button>
 									</div>
 								</div>
 							</form>
@@ -92,7 +72,6 @@
 		
 		<!-- custom Js -->
 		<script src="/resources/js/custom/common.js"></script>
-		<script src="/resources/js/custom/signIn.js"></script>
-
+		<script src="/resources/js/custom/verifyUser.js"></script>
 	</body>
 </html>

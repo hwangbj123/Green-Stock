@@ -69,8 +69,8 @@
      		margin: 10px;
      	}
      	#content-textarea{
-     		width: 90%;
-     		height: 500px;
+     		width: 100%;
+     		height: 100%;
      		resize: none;
      	}
      </style>
@@ -873,20 +873,23 @@
                     <div class="ec-blogs-content">
                         <div class="ec-blogs-inner">
                         	<div class="board-content">
-                        		<form method="post" action="/board/board-update" id="board-write-frm">
+                        		<form method="post" action="/board/board-update" id="board-update-frm">
 	                        		<table class="write-tb">
 	                        			<tr>
-	                        				<td>카테고리</td>
 	                        				<td>
-	                        					<c:forEach var="c" items="${cate}" varStatus="status">
-	                        						<c:if test="${board.categoryId eq status.count}">
-	                        							${c}
-	                        						</c:if>
+	                        					<select id="category-select" name="categoryId">
+	                        					<c:forEach var="cateName" items="${cate}" varStatus="status">
+	                        						<c:choose>
+	                        							<c:when test="${status.count eq board.categoryId}">
+			                        						<option value="${status.count}" selected>${cateName}</option>
+	                        							</c:when>
+	                        							<c:otherwise>
+			                        						<option value="${status.count}">${cateName}</option>
+	                        							</c:otherwise>
+	                        						</c:choose>
 	                        					</c:forEach>
+	                        					</select>
 	                        				</td>
-	                        			</tr>
-	                        			<tr>
-	                        				<td>제목</td>
 	                        				<td>
 	                        					<input type="text" id="title-input" name="title" value="${board.title}">
 	                        					<input type="hidden" name="id" value="${board.id}">
@@ -900,14 +903,13 @@
 											</td>
 	                        			</tr>
 	                        			<tr>
-<!-- 	                        				<td>내용</td> -->
-	                        				<td colspan="2">
+	                        				<td colspan="2" style="padding: 20px;height: 600px;">
 	                        					<textarea id="content-textarea" name="content">${board.content}</textarea>
 											</td>
 	                        			</tr>
 	                        			<tr>
 	                        				<td colspan="2">
-	                        					<button type="submit" class="btn btn-primary" id="update-submit-btn">저장</button>
+	                        					<button type="button" class="btn btn-primary" id="update-submit-btn">저장</button>
 	                        				</td>
 	                        			</tr>
 	                        		</table>
@@ -1324,7 +1326,32 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-
+	<script>
+	$(function(){
+		$("#update-submit-btn").on("click", function(){
+			if($("#category-select").val()==null){
+				alert("카테고리를 선택해주세요");
+	    		$('#category-select').focus();
+			}else if($('#title-input').val().replace(/\s/gi, '').length==0){
+	    		$('#title-input').val('');
+	    		alert("제목을 입력해주세요");
+	    		$('#title-input').focus();
+			}else if($('#content-textarea').val().replace(/\s/gi, '').length==0){
+	    		$('#content-textarea').val('');
+	    		alert("내용을 입력해주세요");
+	    		$('#content-textarea').focus();
+	    	}else if(/<|>/.test($('#content-textarea').val())){
+	    		alert("일부 특수문자는 사용할 수 없습니다");
+	    		$('#content-textarea').val('');
+	    		$('#content-textarea').focus();
+	    	}else{
+	    		if(confirm("해당 내용으로 글을 수정하시겠습니까?")){
+		    		$("#board-update-frm").submit();
+	    		}
+	    	}
+		})
+	})
+	</script>
 </body>
 
 </html>

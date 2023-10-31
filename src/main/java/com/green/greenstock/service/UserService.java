@@ -69,6 +69,9 @@ public class UserService {
 
 	@Transactional
 	public void modifyUserInfo(User user) {
+		String rawPwd = user.getPassword();
+		String hashPwd = passwordEncoder.encode(rawPwd);
+		user.setPassword(hashPwd);
 		int result = userRepository.modifyUserInfo(user);
 		if(result != 1) {
 			throw new CustomRestfulException("회원정보 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
