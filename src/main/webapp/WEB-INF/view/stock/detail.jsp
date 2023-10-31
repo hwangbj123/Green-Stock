@@ -77,64 +77,71 @@
   <div class="content">
     <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography">
       <h1 class="ec-fw-bold mb-2">${companyName}</h1>
+      <button id="test" class="btn btn-primary">실시간 온</button>
       <p class="breadcrumbs">
         <span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
       </p>
     </div>
-    <div class="row mb-4">
-      <div class="col-lg-3 col-md-6">
-        <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>전일</h6>
-          <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>고가</h6>
-          <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>거래량(주)</h6>
-          <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
-        </div>
-      </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-lg-3 col-md-6">
-      	<div>
-          <h6>전일대비</h6>
-          <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
-          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>시가</h6>
-          <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>저가</h6>
-          <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div>
-          <h6>거래대금(백만)</h6>
-          <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
-        </div>
-      </div>
+    <div class="row">
+	    <div class="row mb-4 w-50">
+	      <div class="col-lg-3 col-md-6">
+	        <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>전일</h6>
+	          <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
+	        </div>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>고가</h6>
+	          <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
+	        </div>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>거래량(주)</h6>
+	          <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="row mb-4 w-50">
+	      <div class="col-lg-3 col-md-6">
+	      	<div>
+	          <h6>전일대비</h6>
+	          <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+	          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
+	          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
+	        </div>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>시가</h6>
+	          <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
+	        </div>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>저가</h6>
+	          <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
+	        </div>
+	      </div>
+	      <div class="col-lg-3 col-md-6">
+	        <div>
+	          <h6>거래대금(백만)</h6>
+	          <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="w-25">
+	    	<canvas id="stockDetailchart"></canvas>
+	    </div>
     </div>
   </div>
   <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
     <div class="container">
+
       <div class="row">
         <!--Category Nav Start -->
         <div class="col-lg-3 w-auto">
@@ -245,9 +252,6 @@
             <!-- 4th Category tab start -->
             <div class="tab-pane fade" id="tab-cat-4" role="tabpanel">ddd</div>
             <!-- 4th Category tab end -->
-          </div>
-          <div class="col-6">
-          	<canvas id="stockDetailchart"></canvas>
           </div>
           <!-- Category Tab End -->
         </div>
