@@ -31,7 +31,7 @@
 				<div class="col text-center footer-copy">
 					<div class="footer-bottom-copy ">
 						<div class="ec-copy">
-							Copyright © 2023 <a class="site-name text-upper" href="#">ekka<span>.</span></a>.
+							Copyright © 2023 <a class="site-name text-upper" href="#">Gstock<span>.</span></a>.
 							All Rights Reserved
 						</div>
 					</div>
