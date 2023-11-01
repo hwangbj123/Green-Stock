@@ -50,13 +50,15 @@
 	    <script src="/resources/js/main.js"></script>
 	    
 	    <!-- kjh -->
-	    
 	    <style>
 	    	.primaryColorRed{
 	    		color: #ff909d;
 	    	}
 	    	.primaryColorBlue{
 	    		color: #3474d4;
+	    	}
+	    	.primaryColorNone{
+	    		color: #212121;
 	    	}
 	    	.searchList{}
 	    	.searchList .tag{
@@ -78,70 +80,82 @@
     <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography">
       <h1 class="ec-fw-bold mb-2">${companyName}</h1>
       <button id="test" class="btn btn-primary">실시간 온</button>
-      <p class="breadcrumbs">
+      <p class="breadcrumbs" id="companyCode">
         <span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
       </p>
     </div>
-    <div class="row">
-	    <div class="row mb-4 w-50">
-	      <div class="col-lg-3 col-md-6">
-	        <h2 class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>전일</h6>
-	          <p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
-	        </div>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>고가</h6>
-	          <p class="primaryColorRed"><fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/> (상한가 <fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/>)</p>
-	        </div>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>거래량(주)</h6>
-	          <p><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
-	        </div>
-	      </div>
+    <div class="row align-items-center">
+		<div class="col-4">
+			<canvas id="stockDetailchart"></canvas>
 	    </div>
-	    <div class="row mb-4 w-50">
-	      <div class="col-lg-3 col-md-6">
-	      	<div>
-	          <h6>전일대비</h6>
-	          <p class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-	          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
-	          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/> | ${stockCurrentPrice.prdyCtrt} %</p>
-	        </div>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>시가</h6>
-	          <p><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
-	        </div>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>저가</h6>
-	          <p class="primaryColorBlue"><fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/> (하한가 <fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/>)</p>
-	        </div>
-	      </div>
-	      <div class="col-lg-3 col-md-6">
-	        <div>
-	          <h6>거래대금(백만)</h6>
-	          <p><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
-	        </div>
-	      </div>
+    	<div class="col-8">
+			<div class="row mb-4">
+	      		<div class="col-lg-3 col-md-6">
+	        		<h2 class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
+	      		</div>
+	      	<div class="col-lg-3 col-md-6">
+	        	<div>
+	          		<h6>전일</h6>
+	          		<p><fmt:formatNumber value="${stockCurrentPrice.stckSdpr}"/></p>
+	        	</div>
+	      	</div>
+	      	<div class="col-lg-3 col-md-6">
+	        	<div>
+	          		<h6>고가</h6>
+	          		<p class="primaryColorRed">
+	          			<span class="changeElementArray">
+	          				<fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/>
+          				</span>
+          				(상한가 <span id="stckMxpr"><fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/></span>)
+					</p>
+	        	</div>
+	      	</div>
+	      	<div class="col-lg-3 col-md-6">
+		        <div>
+					<h6>거래량(주)</h6>
+		          	<p class="changeElementArray"><fmt:formatNumber value="${stockCurrentPrice.acmlVol}"/></p>
+		        </div>
+	      	</div>
 	    </div>
-	    <div class="w-25">
-	    	<canvas id="stockDetailchart"></canvas>
-	    </div>
+		    <div class="row mb-4">
+		      <div class="col-lg-3 col-md-6">
+		      	<div>
+		          <h6>전일대비</h6>
+		          <p class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+		          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
+		          	<span class="changeElementArray"><fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/></span> | <span class="changeElementArray">${stockCurrentPrice.prdyCtrt} %</span></p>
+		        </div>
+		      </div>
+		      <div class="col-lg-3 col-md-6">
+		        <div>
+		          <h6>시가</h6>
+		          <p class="changeElementArray"><fmt:formatNumber value="${stockCurrentPrice.stckOprc}"/></p>
+		        </div>
+		      </div>
+		      <div class="col-lg-3 col-md-6">
+		        <div>
+		          <h6>저가</h6>
+		          <p class="primaryColorBlue">
+		          	<span class="changeElementArray">
+		          		<fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/>
+	          		</span>
+	          		(하한가 <span id="stckLlam"><fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/></span>
+          			)
+				  </p>
+		        </div>
+		      </div>
+		      <div class="col-lg-3 col-md-6">
+		        <div>
+		          <h6>거래대금(백만)</h6>
+		          <p class="changeElementArray"><fmt:formatNumber value="${stockCurrentPrice.acmlTrPbmnMillion}"/></p>
+		        </div>
+		      </div>
+		    </div>
+		</div>
     </div>
   </div>
   <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
     <div class="container">
-
       <div class="row">
         <!--Category Nav Start -->
         <div class="col-lg-3 w-auto">
@@ -264,6 +278,12 @@
    
 <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
 </body>
+<script>
+const companyCode = document.getElementById('companyCode'); // 종목코드
+const companyCodeStr = companyCode.textContent.trim();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/js/detail.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/js/websocket.js"></script>
 </html>
