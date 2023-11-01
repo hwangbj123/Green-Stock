@@ -77,22 +77,24 @@
 <!-- CONTENT WRAPPER -->
 <div class="ec-content-wrapper container">
   <div class="content">
-    <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography">
-      <h1 class="ec-fw-bold mb-2">${companyName}</h1>
-      <button id="test" class="btn btn-primary">실시간 온</button>
-      <p class="breadcrumbs" id="companyCode">
-        <span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
-      </p>
-    </div>
-    <div class="row align-items-center">
-		<div class="col-4">
-			<canvas id="stockDetailchart"></canvas>
-	    </div>
-    	<div class="col-8">
+    <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography row">
+    	<div class="col-4">
+    		<h1 class="ec-fw-bold mb-2">${companyName}</h1>
+      		<!-- <button id="test" class="btn btn-primary">실시간 온</button> -->
+
+      		<p class="breadcrumbs w-100" id="companyCode">
+        		<span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
+      		</p>
+   			<button class="btn btnChartDate" data-date="week">1주</button>
+    		<button class="btn btnChartDate" data-date="month">1개월</button>
+    		<button class="btn btnChartDate" data-date="year">1년</button>
+    	</div>
+       	<div class="col-8">
 			<div class="row mb-4">
 	      		<div class="col-lg-3 col-md-6">
-	        		<h2 class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
+	        		<h2 class="changeElementArray mb-0 ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${stockCurrentPrice.stckPrpr}"/></h2>
 	      		</div>
+
 	      	<div class="col-lg-3 col-md-6">
 	        	<div>
 	          		<h6>전일</h6>
@@ -102,11 +104,11 @@
 	      	<div class="col-lg-3 col-md-6">
 	        	<div>
 	          		<h6>고가</h6>
-	          		<p class="primaryColorRed">
-	          			<span class="changeElementArray">
+	          		<p>
+	          			<span class="changeElementArray primaryColorRed">
 	          				<fmt:formatNumber value="${stockCurrentPrice.stckHgpr}"/>
           				</span>
-          				(상한가 <span id="stckMxpr"><fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/></span>)
+          				(상한가 <span class="primaryColorRed" id="stckMxpr"><fmt:formatNumber value="${stockCurrentPrice.stckMxpr}"/></span>)
 					</p>
 	        	</div>
 	      	</div>
@@ -121,9 +123,12 @@
 		      <div class="col-lg-3 col-md-6">
 		      	<div>
 		          <h6>전일대비</h6>
-		          <p class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-		          	${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'} 
-		          	<span class="changeElementArray"><fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/></span> | <span class="changeElementArray">${stockCurrentPrice.prdyCtrt} %</span></p>
+		          <p class="changeElementArray">
+		          	<span class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'}</span> 
+		          	<span class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+		          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/></span>
+		          	 | 
+		          	 <span class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${stockCurrentPrice.prdyCtrt} %</span></p>
 		        </div>
 		      </div>
 		      <div class="col-lg-3 col-md-6">
@@ -136,10 +141,10 @@
 		        <div>
 		          <h6>저가</h6>
 		          <p class="primaryColorBlue">
-		          	<span class="changeElementArray">
+		          	<span class="changeElementArray primaryColorBlue">
 		          		<fmt:formatNumber value="${stockCurrentPrice.stckLwpr}"/>
 	          		</span>
-	          		(하한가 <span id="stckLlam"><fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/></span>
+	          		(하한가 <span class="primaryColorBlue" id="stckLlam"><fmt:formatNumber value="${stockCurrentPrice.stckLlam}"/></span>
           			)
 				  </p>
 		        </div>
@@ -151,10 +156,17 @@
 		        </div>
 		      </div>
 		    </div>
-		</div>
+		    </div>
     </div>
-  </div>
-  <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
+    <div class="row align-items-center">
+
+		<div class="col-4">
+			<canvas id="stockDetailchart"></canvas>
+			<canvas id="stockDetailchart2"></canvas>
+	    </div>
+    	<div class="col-8">
+
+		    <section class="section ec-category-section section-space-p pb-4 pt-4" id="categories">
     <div class="container">
       <div class="row">
         <!--Category Nav Start -->
@@ -185,7 +197,7 @@
         <!-- Category Nav End -->
         <!--Category Tab Start -->
         <div class="col-lg-9 row d-flex">
-          <div class="tab-content col-6">
+          <div class="tab-content col-6 w-100">
             <!-- 1st Category tab start -->
             <div class="tab-pane fade active show" id="tab-cat-1" role="tabpanel">
               <div class="table-responsive">
@@ -272,6 +284,15 @@
       </div>
     </div>
   </section>
+		    
+		</div>
+		
+		
+		
+    </div>
+    
+  </div>
+  
   <!-- End Content -->
 </div>
 <!-- End Content Wrapper -->

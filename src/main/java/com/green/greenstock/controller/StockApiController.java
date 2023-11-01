@@ -122,8 +122,11 @@ public class StockApiController {
 	
 	// 국내주식기간별시세(일/주/월/년)
 	@ResponseBody
-	@GetMapping("/InquireDailyItemChartPrice/{companyCode}")
-	public String getDailyPrice(@PathVariable String companyCode) {
-		return stockApiService.getDailyitemchartprice(companyCode);
+	@GetMapping("/InquireDailyItemChartPrice/{companyCode}/{date}")
+	public String getDailyPrice(@PathVariable String companyCode, @PathVariable String date) {
+		if(companyCode == null || date == null || companyCode.isEmpty() || date.isEmpty()) {
+			throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
+		}
+		return stockApiService.getDailyitemchartprice(companyCode, date);
 	}
 }
