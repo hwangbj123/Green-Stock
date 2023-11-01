@@ -3,14 +3,14 @@ package com.green.greenstock.dto;
 import lombok.Data;
 
 @Data
-public class Pagination {
+public class ReplyPagination {
 	private int endPage;
 	private boolean prev;
 	private boolean next;
 	private int countData;
-	private PagingDto paging;
+	private ReplyPagingDto paging;
 	
-	public Pagination(int countData, PagingDto paging) {
+	public ReplyPagination(int countData, ReplyPagingDto paging) {
 		this.countData= countData;
 		this.paging = paging;
 		this.endPage = (int) Math.ceil(countData/10)+1;

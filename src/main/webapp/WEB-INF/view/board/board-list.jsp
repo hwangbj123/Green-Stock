@@ -45,7 +45,7 @@
      	}
      	.board-tb{
      		width: 90%;
-     		min-width: 500px;
+     		min-width: 650px;
      		margin: auto;
      		text-align: center;
      	}
@@ -81,7 +81,7 @@
      		width: 100px;
      	}
      	#search-div {
-     		width: 520px;
+     		width: 600px;
      		display: flex;
      		justify-content: space-between;
      	}
@@ -916,11 +916,11 @@
 	    		<tr>
 	    			<td style="width: 5%;">번호</td>
 	    			<td style="width: 10%;">카테고리</td>
-	    			<td style="width: 50%;">제목</td>
+	    			<td style="width: 45%;">제목</td>
 	    			<td style="width: 10%;">작성자</td>
 	    			<td style="width: 15%;">날짜</td>
-	    			<td style="width: 5%;">조회수</td>
-	    			<td style="width: 5%;">추천</td>
+	    			<td style="width: 8%;">조회수</td>
+	    			<td style="width: 6%;">추천</td>
 	    		</tr>
 		    	<c:forEach var="board" items="${list}">
 		    		<tr>
@@ -933,7 +933,7 @@
            					</c:forEach>
 						</td>
 		    			<td>
-		    				<a href="detail/${board.id}">${board.title}
+		    				<a href="detail?boardId=${board.id}">${board.title}
 			    				<c:if test="${board.reply ne 0}">
 			    					<span style="color: #bbb;">[${board.reply}]</span>
 			    				</c:if>
@@ -949,21 +949,36 @@
 		    	</c:forEach>
 	    	</table>
 <!----------검색 div	    	 -->
-			<form id="search-frm" action="/board/search">
+			<form action="/board/search" id="search-frm">
 	    	<div id="listopt-div">
 	    		<div id="search-div">
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
-	    			<select name="searchType">
-	    				<option value="title">제목</option>
-	    				<option value="content">내용</option>
-	    				<option value="userName">작성자</option>
-	    			</select>
+		    			<select name="orderType">
+		    				<option value="id">기본</option>
+		    				<option value="views">조회순</option>
+		    				<option value="recommand">추천순</option>
+		    				<option value="reply">댓글순</option>
+		    			</select>
+	    			</div>
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+		    			<select name="searchType">
+		    				<option value="title">제목</option>
+		    				<option value="content">내용</option>
+		    				<option value="userName">작성자</option>
+		    			</select>
 	    			</div>
 		    		<input class="form-control ec-search-bar" type="text" name="searchWord">
-		    		<input type="hidden" name="page" value="${page.paging.page}">
+<%-- 		    		<input type="hidden" name="page" value="${page.paging.page}"> --%>
 		    		<button type="button" class="btn btn-primary" id="search-btn">검색</button>
 	    		</div>
-	    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    		<c:choose>
+	    			<c:when test="${not empty principal}">
+			    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    			</c:when>
+	    			<c:otherwise>
+	    				<a class="btn btn-primary" onclick="alert('??')">글 작성</a>
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</div>
 			</form>
 <!----------페이징 div -->
@@ -1540,6 +1555,11 @@
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
 	<script>
+		function toSignIn(){
+			if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
+				location.href="/user/sign-in";
+			}
+		}
 		$(function(){
 			$("#search-btn").on("click", function(){
 				if($("input[name=searchWord]").val().length!=0){

@@ -4,12 +4,19 @@
 
 <mapper namespace="com.green.greenstock.repository.interfaces.ReplyRepository"> 
 
-	<select id="selectReplyList" resultType="com.green.greenstock.repository.model.Reply">
+	<select id="selectReplyList" parameterType="com.green.greenstock.dto.ReplyPagingDto" resultType="com.green.greenstock.repository.model.Reply">
 		select reply.id, board_id, user_id, user_name, content, date, recommand, ref, level, step, deleted
 		from reply
 		join user_tb on reply.user_id = user_tb.id
 		where board_id=#{boardId}
 		order by ref, step, level
+		limit #{offset}, #{recordSize}
+	</select>
+	
+	<select id="selectReplyCount" resultType="int">
+	    select count(*)
+	    from reply
+	    where board_id = #{boardId} 
 	</select>
 	
 	<select id="selectMaxRef" resultType="int">

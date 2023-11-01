@@ -31,9 +31,10 @@
 				b.date,
 				category_id,
 				views,
-				b.recommand,
 				user_name,
-				r.reply
+				r.reply,
+				(select count(user_id) from board_recommand rc
+				 where rc.board_id = b.id) recommand
 		from board b
 		join user_tb u
 		on b.user_id = u.id
@@ -48,42 +49,44 @@
 	
 	<select id="selectBoardCount" resultType="int">
 	    select count(*)
-	    from board
+	    from board b
+	    join user_tb u on b.user_id = u.id
 	    <where>
 	        <if test='categoryId != "0"'>
 	            and category_id = #{categoryId}
 	        </if>
 	        <if test='searchWord != null'>
-	            and (
-	                <if test='searchType == "title"'>
-	                    title
-	                </if>
-	                <if test='searchType == "content"'>
-	                    content
-	                </if>
-	                <if test='searchType == "userId"'>
-	                    user_id
-	                </if>
-	            ) like concat('%', #{searchWord}, '%')
+	            and
+			<if test='searchType == "title"'>
+				title
+			</if>
+			<if test='searchType == "content"'>
+				content
+			</if>
+			<if test='searchType == "userName"'>
+				user_name
+			</if>
+				like concat('%', #{searchWord}, '%')
 	        </if>
 	    </where>
 	</select>
 
 	
 	<select id="selectBoardById" resultType="com.green.greenstock.repository.model.Board">
-		select board.id,
+		select b.id,
 				title,
 				user_id,
 				content,
 				date,
 				category_id,
 				views,
-				recommand,
-				user_name
-		from board
-		join user_tb
-		on board.user_id = user_tb.id
-		where board.id = #{id}
+				user_name,
+				(select count(user_id) from board_recommand rc
+				 where rc.board_id = b.id) recommand
+		from board b
+		join user_tb u
+		on b.user_id = u.id
+		where b.id = #{id}
 	</select>
 
 	<update id="updateBoard">
@@ -106,9 +109,10 @@
 				b.date,
 				category_id,
 				views,
-				b.recommand,
 				user_name,
-				r.reply
+				r.reply,
+				(select count(user_id) from board_recommand rc
+				 where rc.board_id = b.id) recommand
 		from board b
 		join user_tb u
 		on b.user_id = u.id
@@ -132,12 +136,50 @@
 		 		content
 		 	</if>
 		 	<if test='searchType == "userName"'>
-		 		user_name
+		 		user_name 
 		 	</if>
 			 like concat('%',#{searchWord},'%')
 		 </if>
- 		order by id desc
+		<if test="orderType != null">
+	 		order by 
+			<if test='orderType == "id"'>
+				id
+			</if>
+			<if test='orderType == "views"'>
+				views
+			</if>
+			<if test='orderType == "recommand"'>
+				recommand
+			</if>
+			<if test='orderType == "reply"'>
+				reply
+			</if>
+			desc
+		</if>
 		limit #{offset}, #{recordSize}
 	</select>
+	
+	<update id="viewCountUp">
+		update board 
+		set views = views + 1
+		where id = #{boardId}
+	</update>
+	
+	<insert id="thumbUp">
+		insert into board_recommand
+		values (#{boardId}, #{userId})
+	</insert>
+	
+	<select id="thumbCheck">
+		select IFNULL(max(user_id), 0)
+		from board_recommand
+		where board_id = #{boardId} and user_id = #{userId}
+	</select>
+	
+	<insert id="thumbDelete">
+		delete from board_recommand
+		where board_id = #{boardId}
+		and user_id = #{userId}
+	</insert>
 	
 </mapper>
