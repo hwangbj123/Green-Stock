@@ -81,7 +81,7 @@
      		width: 100px;
      	}
      	#search-div {
-     		width: 520px;
+     		width: 600px;
      		display: flex;
      		justify-content: space-between;
      	}
@@ -910,8 +910,47 @@
 					</c:forEach>
 				</tr>
     	</table>
+    	
+
 <!------리스트 div -->
     	<div class="board-div">
+	    	
+		<!------검색 상태 표시 -->
+					<c:if test="${not empty paging.orderType}">
+						<c:if test="${paging.orderType eq 'views'}">
+								<c:out value='[조회순] '/>
+						</c:if>
+						<c:if test="${paging.orderType eq 'recommand'}">
+								<c:out value='[추천순] '/>
+						</c:if>
+						<c:if test="${paging.orderType eq 'reply'}">
+								<c:out value='[댓글순] '/>
+						</c:if>
+					</c:if>
+					<c:if test="${not empty paging.categoryId}">
+						<c:forEach var="c" items="${cate}" varStatus="status">
+							<c:if test="${status.count eq paging.categoryId}">
+								<c:out value='[${c}] 카테고리 '/>
+							</c:if>
+						</c:forEach>
+					</c:if>
+					<c:if test="${not empty paging.searchType}">
+						<c:if test="${paging.searchType eq 'title'}">
+								<c:out value='[제목]'/>
+						</c:if>
+						<c:if test="${paging.searchType eq 'content'}">
+								<c:out value='[내용]'/>
+						</c:if>
+						<c:if test="${paging.searchType eq 'userName'}">
+								<c:out value='[작성자]'/>
+						</c:if>
+					</c:if>
+					<c:if test="${not empty paging.searchWord}">
+								<c:out value='[\"${paging.searchWord}\"]'/>
+					</c:if>
+					에 대한 검색 결과
+				</p>
+				
 	    	<table class="board-tb">
 	    		<tr>
 	    			<td style="width: 5%;">번호</td>
@@ -933,7 +972,7 @@
            					</c:forEach>
 						</td>
 		    			<td>
-		    				<a href="detail/${board.id}">${board.title}
+		    				<a href="detail?boardId=${board.id}">${board.title}
 			    				<c:if test="${board.reply ne 0}">
 			    					<span style="color: #bbb;">[${board.reply}]</span>
 			    				</c:if>
@@ -953,17 +992,32 @@
 	    	<div id="listopt-div">
 	    		<div id="search-div">
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
-	    			<select name="searchType">
-	    				<option value="title">제목</option>
-	    				<option value="content">내용</option>
-	    				<option value="userName">작성자</option>
-	    			</select>
+		    			<select name="orderType">
+		    				<option value="id">기본</option>
+		    				<option value="views">조회순</option>
+		    				<option value="recommand">추천순</option>
+		    				<option value="reply">댓글순</option>
+		    			</select>
+	    			</div>
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+		    			<select name="searchType">
+		    				<option value="title">제목</option>
+		    				<option value="content">내용</option>
+		    				<option value="userName">작성자</option>
+		    			</select>
 	    			</div>
 		    		<input class="form-control ec-search-bar" type="text" name="searchWord">
-		    		<input type="hidden" name="page" value="${page.paging.page}">
+<%-- 		    		<input type="hidden" name="page" value="${page.paging.page}"> --%>
 		    		<button type="button" class="btn btn-primary" id="search-btn">검색</button>
 	    		</div>
-	    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    		<c:choose>
+	    			<c:when test="${not empty principal}">
+			    		<a class="btn btn-primary" href="/board/write">글 작성</a>
+	    			</c:when>
+	    			<c:otherwise>
+	    				<a class="btn btn-primary" onclick="toSignIn()">글 작성</a>
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</div>
 			</form>
 <!----------페이징 function -->
@@ -976,6 +1030,9 @@
 			</c:if>
 			<c:if test="${not empty paging.categoryId}">
 				<c:set var="search" value="${search}${'categoryId='}${paging.categoryId}&"/>
+			</c:if>
+			<c:if test="${not empty paging.orderType}">
+				<c:set var="search" value="${search}${'orderType='}${paging.orderType}&"/>
 			</c:if>
 	    	
 <!----------페이징 div -->
@@ -1555,6 +1612,12 @@
 		function searchParam(key) {
 	   	  return new URLSearchParams(location.search).get(key);
 	   	};
+	   	
+	   	function toSignIn(){
+    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
+    			location.href="/user/sign-in";
+    		}
+    	}
 	   	
 	   	$(function(){
 	   		var cate = searchParam('categoryId');

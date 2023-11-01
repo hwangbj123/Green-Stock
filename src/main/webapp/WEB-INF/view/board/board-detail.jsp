@@ -76,6 +76,22 @@
      		text-align: left;
      		margin: auto;
      	}
+     	.page-a{
+     		display: inline-block;
+     		border: 1px solid lightgrey;
+/*      		width: 30px;  */
+     		padding: 7px 18px;
+     		margin: 1px;
+     		border-radius: 5px;
+     	}
+     	#page{
+     		 width: 100%; 
+     		 margin: auto; 
+     		 text-align: center; 
+     		 margin-top: 50px;
+     		 display: flex;
+     		 justify-content: center;
+     	}
      </style>
  </head>
 <body class="blog_page">
@@ -865,7 +881,12 @@
         </div>
     </div>
     <!-- Ec breadcrumb end -->
-
+    
+    <!-- 따봉 버튼 -->
+	<div style="position: fixed; right: 20px; top: 50%; width: 40px; height: 40px; background-color: #555; border-radius: 5px; padding: 5px;">
+		<img src="/resources/img/favicon.png" onclick="thumbFnc(${board.id}, ${principal.id})" style="width: 30px; height: 30px; cursor: pointer;">
+	</div>
+	
     <!-- Ec Blog page -->
     <section class="ec-page-content section-space-p">
         <div class="container">
@@ -878,37 +899,35 @@
                             <div class="board-content">
                         		<table class="write-tb">
                         			<tr>
-                        				<td style="width:10%; height: 56px;">카테고리</td>
-                        				<td>
+                        				<td style="height: 56px; text-align: left;">
                         					<c:forEach var="c" items="${cate}" varStatus="status">
                         						<c:if test="${board.categoryId eq status.count}">
+                        							<div style="display: inline-block; width: 40px; height: 25px; border: 1px solid #777; border-radius: 5px; text-align: center;">
                         							${c}
+                        							</div>
                         						</c:if>
                         					</c:forEach>
-                        				</td>
-                        			</tr>
-                        			<tr>
-                        				<td style="height: 56px;">제목</td>
-                        				<td>
-                        					${board.title }
+                        					&nbsp;
+                        					<b>${board.title }</b>
 										</td>
                         			</tr>
                         			<tr>
-                        				<td style="height: 56px;">작성자</td>
-                        				<td>
+                        				<td style="height: 56px;">
                         					${board.userName}
+											조회수 : ${board.views}
+											추천 : ${board.recommand}
 										</td>
                         			</tr>
                         			<tr>
 <!-- 	                        				<td>내용</td> -->
-                        				<td colspan="2" style="padding: 30px 0px;height: 600px;">
+                        				<td style="padding: 30px 0px;height: 600px;">
                         					<div id="content-textarea">
                         						${board.content}
                         					</div>
 										</td>
                         			</tr>
 	                        			<tr>
-	                        				<td colspan="2">
+	                        				<td>
 	                        				<div style="display: flex; justify-content: center;">
                         			<c:if test="${board.userId eq principal.id}">
 	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/update/${board.id}'">수정</button>
@@ -925,10 +944,10 @@
                         		</table>
                         	</div>
                             <div class="ec-blog-arrows" style="margin-top: 100px;">
-                                <a href="blog-detail-left-sidebar.html"><i class="ecicon eci-angle-left"></i> Prev
-                                    Post</a>
-                                <a href="blog-detail-left-sidebar.html">Next Post <i
-                                        class="ecicon eci-angle-right"></i></a>
+<%--                             <c:if test="${board.id ne 1}"> --%>
+<%--                                 <a href="/board/detail?boardId=${board.id - 1}"><i class="ecicon eci-angle-left"></i> Prev Post</a> --%>
+<%--                             </c:if> --%>
+<!--                                 <a href="blog-detail-left-sidebar.html">Next Post <i class="ecicon eci-angle-right"></i></a> -->
                             </div>
                             <div class="ec-blog-comments">
                                 <div class="ec-blog-cmt-preview">
@@ -969,7 +988,70 @@
 	                                            </div>
 	                                        </div>
 										</c:forEach>
-                                        
+                                        	<!----------페이징 div -->
+								    	<div id="page">
+							<!-- 	    		시작 페이지 -->
+								    		<c:choose>
+								    			<c:when test="${page.paging.page>4}">
+									    			<c:set var="startPage" value="${page.paging.page-4}"/>
+								    			</c:when>
+								    			<c:otherwise>
+									    			<c:set var="startPage" value="1"/>
+								    			</c:otherwise>
+								    		</c:choose>
+							
+							<!-- 				엔드 페이지	    		 -->
+								    		<c:choose>
+								    			<c:when test="${page.endPage < page.paging.page+4}">
+									    			<c:set var="endPage" value="${page.endPage}"/>
+								    			</c:when>
+								    			<c:otherwise>
+									    			<c:set var="endPage" value="${page.paging.page+4}"/>
+								    			</c:otherwise>
+								    		</c:choose>
+							
+							<!-- 	    		이전 버튼 -->
+								    		<c:if test="${startPage ne 1}">
+								    			<a class="page-a" href="list?page=${page.paging.page-5}">
+								    				prev
+								    			</a>
+								    		</c:if>
+							<!-- 	    		페이지 넘버 반복문 -->
+								    		<c:set var="nowPage" value="${startPage}"/>
+								    		<c:if test="${endPage > 1}">
+									    		<c:forEach begin="${startPage}" end="${endPage}">
+									    			<c:choose>
+									    				<c:when test="${page.paging.page eq nowPage}">
+									    					<p class="page-a" style="background-color: #3474D4; color: white; cursor: pointer;">
+												    			<c:out value="${nowPage}"/>
+									    					</p>
+									    				</c:when>
+									    				<c:otherwise>
+									    					<a class="page-a" href="detail?boardId=${board.id}&page=${nowPage}">
+												    			<c:out value="${nowPage}"/>
+									    					</a>
+									    				</c:otherwise>
+									    			</c:choose>
+									    			<c:set var="nowPage" value="${nowPage+1}"/>
+									    		</c:forEach>
+								    		</c:if>
+							<!-- 	    		이후 버튼 -->
+								    		<c:if test="${page.endPage > startPage+9}">
+								    			<c:choose>
+								    				<c:when test="${page.endPage > page.paging.page+5}">
+										    			<a class="page-a" href="list?page=${page.paging.page+5}">
+										    				next
+										    			</a>
+								    				</c:when>
+								    				<c:otherwise>
+										    			<a class="page-a" href="list?page=${page.endPage}">
+										    				next
+										    			</a>
+								    				</c:otherwise>
+								    			</c:choose>
+								    		</c:if>
+								    	</div>
+                                        	<!----------페이징 div 끝 -->
                                     </div>
                                 </div>
                                 <div class="ec-blog-cmt-form">
@@ -1341,9 +1423,10 @@
         <div class="tool-title">
             <h3>Features</h3>
         </div>
-        <a href="#" class="ec-tools-sidebar-toggle in-out">
-            <img alt="icon" src="/resources/images/common/settings.png">
-        </a>
+<!--         <a class="ec-tools-sidebar-toggle"> -->
+<!-- <!--             <img alt="icon" src="/resources/images/common/settings.png"> --> -->
+<%--             <img alt="icon" src="/resources/img/logo/logo.png" onclick="thumbFnc(${board.id}, ${principal.id})"> --%>
+<!--         </a> -->
         <div class="ec-tools-detail">
             <div class="ec-tools-sidebar-content ec-change-color ec-color-desc">
                 <h3>Color Scheme</h3>
@@ -1464,6 +1547,15 @@
 			if(confirm("정말 게시글을 삭제하시겠습니까?")){
 	    		location.href='/board/delete/'+boardId;	
 			}
+   		}
+   		function thumbFnc(boardId, userId){
+   			if(userId==null){
+   				if(confirm("로그인이 필요한 서비스입니다\n로그인 하시겠습니까?")){
+   					location.href='/user/sign-in';
+   				}
+   			}else{
+				location.href='/board/thumb-check?boardId='+boardId+'&userId='+userId;
+   			}
    		}
     	$(function(){
     	});

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.green.greenstock.dto.PagingDto;
+import com.green.greenstock.dto.ReplyPagingDto;
 import com.green.greenstock.repository.interfaces.ReplyRepository;
 import com.green.greenstock.repository.model.Reply;
 
@@ -14,10 +16,14 @@ public class ReplyService {
 	@Autowired
 	private ReplyRepository replyRepository;
 
-	public List<Reply> selectReplyList(int boardId) {
-		return replyRepository.selectReplyList(boardId);
+	public List<Reply> selectReplyList(ReplyPagingDto paging) {
+		return replyRepository.selectReplyList(paging);
 	}
 	
+	public int selectReplyCount(int boardId) {
+		return replyRepository.selectReplyCount(boardId);
+	}
+
 	public int selectMaxRef(int boardId) {
 		return replyRepository.selectMaxRef(boardId);
 	}
