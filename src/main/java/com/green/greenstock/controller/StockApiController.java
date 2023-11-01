@@ -1,7 +1,12 @@
 package com.green.greenstock.controller;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
+import com.green.greenstock.dto.InquireDailyItemChartPriceOutput;
 import com.green.greenstock.dto.ResponseApiInfo;
+import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.service.StockApiService;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +61,9 @@ public class StockApiController {
 				resInfo.getOutput(), DomesticStockCurrentPriceOutput.class);
 		
 		// 호가 10단계
-		ResponseApiInfo<?> resInfo2 = stockApiService.getAskingSellingPrice(companyCode);
+		ResponseApiInfoList<?> resInfo2 = stockApiService.getAskingSellingPrice(companyCode);
 		AskingSellingPriceOutputDto ouputAsking = mapper.convertValue(resInfo2.getOutput1(), AskingSellingPriceOutputDto.class);
-		log.info("askp1 {}",ouputAsking.getAskp1());
+		
 		
 		model.addAttribute("stockCurrentPrice", outputPrice);
 		model.addAttribute("askingSellingPrice", ouputAsking);
@@ -63,6 +72,27 @@ public class StockApiController {
 		
 		return "/stock/detail";
 	}
+	
+	// 국내주식 현재가 조회 JSON 데이터
+	@ResponseBody
+	@GetMapping("/domestic/data/{companyCode}")
+	public DomesticStockCurrentPriceOutput getStockDetailJson(@PathVariable String companyCode) {
+		
+		if(companyCode == null || companyCode.isEmpty()) {
+			companyCode = "005930";
+		}
+		
+		// 종목 코드로 api 정보 가져오기
+		ResponseApiInfo<?> resInfo = stockApiService.getApiDomesticStockCurrentPrice(companyCode);
+		
+		if(resInfo == null) {
+			throw new CustomRestfulException("입력하신 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		// 제네릭 타입 확정
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.convertValue(resInfo.getOutput(), DomesticStockCurrentPriceOutput.class);
+	}
+	
 	
 	// 국내주식 현재가 검색 목록
 	@GetMapping("/domestic")
@@ -80,7 +110,21 @@ public class StockApiController {
 		return mapper.convertValue(resInfo.getOutput(), DomesticStockVolumeRankOutPut.class);
 	}
 	
+	// 웹소켓키 보내기
+	@ResponseBody
+	@GetMapping("/approvalKey")
+	public ResponseEntity<Map<String, String>> getApprovalKey(){
+		String webSocketKey = stockApiService.validateWebSocketKey();
+		Map<String, String> result = new HashMap<>();
+		result.put("webSocketKey", webSocketKey);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	
+	@ResponseBody
+	@GetMapping("/InquireDailyItemChartPrice")
+	public String getDailyPrice() {
+		return stockApiService.getDailyitemchartprice("005930");
+	}
 	
 	
 }

@@ -23,8 +23,11 @@ public class Noticeboard {
 	private String noticeContent;
 	private Timestamp noticeCreated;
 	private Timestamp noticeUpdated;	
-	private int noticeState ;
-	private int view;
+	private int noticeState;	
+	/**
+	 * TODO 조회수 추가
+	 */
+	private int noticeCount;
 	
 
 }

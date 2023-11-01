@@ -38,8 +38,7 @@ public class BoardNoticeService {
 	 * @param 
 	 */
 	public int noticeWriteService(Noticeboard noticeboard) {
-		
-		
+				
 		int result = noticeRepository.writeNotice(noticeboard);
 		return result;							
 	}
@@ -57,7 +56,8 @@ public class BoardNoticeService {
 			noticeboard.setNoticeTitle(noticeupdateDto.getNoticeTitle());
 			noticeboard.setNoticeContent(noticeupdateDto.getNoticeContent());
 			noticeboard.setNoticeState(noticeupdateDto.getNoticeState());
-			
+			System.out.println(noticeupdateDto);
+			System.out.println(noticeboard);
 			int result = noticeRepository.updateNotice(noticeboard);
 			
 			return result;
@@ -75,9 +75,9 @@ public class BoardNoticeService {
 
 	/**
 	 *	공지사항 상세보기  
-	 *  //코드 수정예정 
+	 *  
 	 */
-	public int noticeViewService(int id) {				
+	public Noticeboard noticeViewService(int id) {				
 		return noticeRepository.viewNoticePage(id);
 		
 	}

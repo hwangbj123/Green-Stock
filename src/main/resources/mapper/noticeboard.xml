@@ -41,16 +41,11 @@
 	
 	<!-- 공지사항 상세보기  -->
 	<select id = "viewNoticePage" resultType ="com.green.greenstock.repository.model.Noticeboard">
-		SELECT 
-			    id = {id},
-		    	user_id = {userId},
-		    	notice_title = {noticeTile},
-		    	notice_content = {noticeContent},
-		    	notice_updated = now(),
-		    	notice_state = {noticeState}
-		FROM noticeboard
-		WHERE id = {id};
+		SELECT * FROM noticeboard Where id = #{id};
 	</select>
-		
+	
+	<!-- 페이징 기능  -->
+	
+	
 
 </mapper>

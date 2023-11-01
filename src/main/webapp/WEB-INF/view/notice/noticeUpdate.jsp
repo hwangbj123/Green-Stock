@@ -8,18 +8,19 @@
     <title>Document</title>
 </head>
 <body>
-<h3> 작성 페이지 </h3>
-    <form action="/notice/write" method="post">
+<h3> 수정 페이지 </h3>
+    <form action="/notice/update" method="post">
         <table style="border: 1px solid blue ">                                                 
                                             
             <tr>                
                 <td>
-                	<input type="hidden" value="1" name="userId">
-                    제목:<input type="text" value="" name="noticeTitle"></td>                                      
+                	<input type="text" value="${notice.id}" name="id">
+                	<input type="hidden" value="${notice.userId}" name="userId">
+                    제목:<input type="text" value="${notice.noticeTitle}" name="noticeTitle"></td>                                      
             </tr>
             <tr>            
                 <td>                    
-                    <textarea name="noticeContent"></textarea>
+                    <textarea name="noticeContent">${notice.noticeContent}</textarea>
                 </td>
             </tr>
             <tr>
@@ -30,10 +31,10 @@
             </tr>         
             <tr>
                 <td><button type="submit">작성</button></td>
-                
-                <td><button type="submit">취소</button></td>
+                <td><a href ="/notice/list"><button type="button">목록</button></a></td>
             </tr>
         </table>
     </form>
+    
 </body>
 </html>

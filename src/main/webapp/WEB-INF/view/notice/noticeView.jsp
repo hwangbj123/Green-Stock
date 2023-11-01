@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-
+<%@ include file="/WEB-INF/view/layout/header.jsp" %> 
 <html>
 <head>
 <meta charset="UTF-8">
@@ -489,82 +489,45 @@
             </div>
         </div>
         <!-- Ec Main Menu End -->	
-	<div class="content">
+	<div class="content container">
 		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
 			<div>
 				<p class="breadcrumbs">					
-					<span>
+					
 					<i class="mdi mdi-chevron-right">
 					</i>
-					</span>공지사항</p>
+					<h3>뷰 페이지</h3>
 			</div>
 			
-			<div>
-				<a href="product-list.html" class="btn btn-primary">추가하기</a>
-			</div>
+			
 		</div>
 		<div class="row">
 			<div class="col-12">
 				<div class="card card-default">
 					<div class="card-body">
-						<div class="table-responsive">
-							<div id="responsive-data-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-							<div class="row justify-content-between top-information">								
-							<div class="dataTables_length" id="responsive-data-table_length">
-							<label>갯수체크 
-							<select name="responsive-data-table_length" aria-controls="responsive-data-table" class="form-select form-select-sm">
-							<option value="20">20</option>
-							<option value="30">30</option>
-							<option value="50">50</option>
-							<option value="75">75</option>
-							<option value="-1">All</option>
-							</select>
+						<div class="table-responsive">							
+							<table style="border: 1px solid blue "> 
+							      <tr>
+							          <td>${view.noticeTitle}</td>                                      
+							      </tr>
+							      <tr>
+							          <td>${view.userId}</td>
 							
-							</label>
-							</div>
-							<div id="responsive-data-table_filter" class="dataTables_filter">
-					
-							<label>목록검색<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="responsive-data-table"></label>
-							<button id ="search-button">검색</button>
-							</div>
-							</div>
-							<table id="responsive-data-table" class="table dataTable no-footer" style="width: 100%;" aria-describedby="responsive-data-table_info">
-								<thead>
-									<tr>
-									<th class="noticeId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending" style="width: 50px;">번호</th>
-									<th class="notice-Title" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 60px;">제목</th>
-									<th class="notice-userId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Offer: activate to sort column ascending" style="width: 100px;">작성자</th>
-									<th class="notice-Created" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Purchased: activate to sort column ascending" style="width: 100px;">작성일</th>
-									<th class="sorting" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Stock: activate to sort column ascending" style="width: 100px;">조회수</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items = "${noticeList}" var="notice">																																																																																																																																																																																																										
-										<tr class="Noticeboard-list">																
-										
-											<!-- <img class="tbl-thumb"></td> -->
-											<td>${notice.id}</td>
-											<td>${notice.noticeTitle}</td>
-											<td>${notice.userId}</td>
-											<td>${notice.noticeCreated}</td>																				
-											<td>
-												<div class="btn-group mb-1">
-													<button type="button" class="btn btn-outline-success">Info</button>
-													<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-														<span class="sr-only">Info</span>
-													</button>												
-												</div>
-											</td>
-										</tr>
-									</c:forEach>																											
-									</tbody>
-							
-							</table>
-							<div class="row justify-content-between bottom-information"><div class="dataTables_info" id="responsive-data-table_info" role="status" aria-live="polite">Showing 1 to 20 of 57 entries</div><div class="dataTables_paginate paging_simple_numbers" id="responsive-data-table_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="responsive-data-table_previous"><a href="#" aria-controls="responsive-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="responsive-data-table" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="responsive-data-table" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="responsive-data-table_next"><a href="#" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div><div class="clear"></div></div>
+							      </tr>
+							      <tr>
+							          <td><textarea readonly="readonly">${view.noticeContent}</textarea></td>
+							      </tr>
+							             		
+							      <tr>
+							      	<td><a href = "/notice/update/${view.id}" class="btn btn-primary">수정하기</a></td>
+							      	<td><a href = "/notice/delete/${view.id}" class="btn btn-primary">삭제하기</a></td>
+							          <td><a href = "/notice/list" class="btn btn-primary">목록으로</a></td>
+							      </tr>
+							  </table>
+						
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</div>	
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

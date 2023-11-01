@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.greenstock.repository.interfaces.PortfolioRepository"> 
+
+	<select id="findByPortfolioId" resultType="com.green.greenstock.dto.MyPortfolio">
+		select *
+		from myPortfolio
+		where p_id = #{pid}
+	</select>
+	
+	<select id="findByuserId" resultType="com.green.greenstock.dto.MyPortfolio">
+		select *
+		from myPortfolio
+		where user_id = #{id}
+	</select>
+	
+	<insert id="savePortfolio">
+		INSERT INTO myPortfolio(title, discription,user_id)
+	   		VALUES (#{pf.title}, #{pf.discription}, #{id})
+	</insert>
+	
+	
+
+
+</mapper>
