@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import com.green.greenstock.dto.ReplyPagination;
 import com.green.greenstock.dto.ReplyPagingDto;
 import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.Reply;
-import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.BoardService;
 import com.green.greenstock.service.ReplyService;
 
@@ -130,9 +128,9 @@ public class BoardController {
 		System.out.println("board update success");
 		return "redirect:list";
 	}
-	@GetMapping("/delete/{id}")
-	public String boardDelete(@PathVariable("id") int boardId) {
-		boardService.deleteBoard(boardId);
+	@PostMapping("/board-delete")
+	public String boardDelete(Board board) {
+//		boardService.deleteBoard(board);
 		System.out.println("board delete success");
 		return "redirect:/board/list";
 	}
@@ -140,7 +138,19 @@ public class BoardController {
 	@PostMapping("/reply-write")
 	public String postReplyWrite(Reply reply) {
 		System.out.println("reply-write board : "+reply);
-		replyService.updateReply(reply);
+		int step = replyService.getStep(reply);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@ set step : "+step);
+		if(step==0) {
+			System.out.println("update reply 2 step : "+reply.getStep());
+			replyService.updateReply(reply);
+		}else {
+			System.out.println("update reply step : "+reply.getStep());
+			System.out.println("update reply level : "+reply.getLevel());
+			int maxStep = replyService.maxStep(reply);
+			System.out.println("update reply max step : "+maxStep);
+			reply.setStep(maxStep);
+			replyService.updateReply(reply);
+		}
 		replyService.insertReply(reply);
 		int boardId = reply.getBoardId();
 		return "redirect:detail?boardId="+boardId;

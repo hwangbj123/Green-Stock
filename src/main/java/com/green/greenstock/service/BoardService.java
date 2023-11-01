@@ -41,8 +41,8 @@ public class BoardService {
 		return boardRepository.updateBoard(board);
 	}
 	
-	public int deleteBoard(int boardId) {
-		return boardRepository.deleteBoard(boardId);
+	public int deleteBoard(Board board) {
+		return boardRepository.deleteBoard(board);
 	}
 	
 	public List<Board> selectBoardSearchList(PagingDto paging){

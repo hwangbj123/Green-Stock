@@ -9,6 +9,12 @@
 		from stockList
 	</select>
 	
+	<select id="getStockByStockName" resultType="com.green.greenstock.dto.Stock">
+		select *
+		from stockList
+		where companyName = #{companyName}
+	</select>
+	
 	
 
 
