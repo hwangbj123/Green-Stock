@@ -2,7 +2,6 @@ package com.green.greenstock.controller;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -15,17 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
-import com.green.greenstock.dto.InquireDailyItemChartPriceOutput;
 import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.service.StockApiService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
