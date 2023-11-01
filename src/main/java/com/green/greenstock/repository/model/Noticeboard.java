@@ -27,7 +27,7 @@ public class Noticeboard {
 	/**
 	 * TODO 조회수 추가
 	 */
-	private int noticeCount;
+	private int hitCount;
 	
 
 }

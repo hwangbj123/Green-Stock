@@ -604,8 +604,12 @@
 												<th class="notice-Created" tabindex="0"
 													aria-controls="responsive-data-table" rowspan="1"
 													colspan="1"
+													aria-label="Purchased: activate to sort column ascending">공개/비공개</th>
+												<th class="notice-Created" tabindex="0"
+													aria-controls="responsive-data-table" rowspan="1"
+													colspan="1"
 													aria-label="Purchased: activate to sort column ascending">작성일</th>
-												<th class="sorting" tabindex="0"
+												<th class="noticeCount" tabindex="0"
 													aria-controls="responsive-data-table" rowspan="1"
 													colspan="1"
 													aria-label="Stock: activate to sort column ascending"
@@ -617,14 +621,19 @@
 												<tr class="Noticeboard-list">
 													<!-- <img class="tbl-thumb"></td> -->
 													<td>${notice.id}</td>
-													<td><a href="/notice/view/${notice.id}">${notice.noticeTitle}</a></td>
+													<td><a href="/notice/admin/view/${notice.id}">${notice.noticeTitle}</a></td>
 													<td>${notice.userId}</td>
+													<td>1</td>
 													<td>${notice.noticeUpdated}</td>
 													<td>${notice.hitCount}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
-									</table>																		
+									</table>
+
+									<div class="write">	
+										<a href="/notice/admin/write" class="btn btn-primary"
+											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>
 										<div class="row justify-content-between bottom-information">
 											<div class="dataTables_info" id="responsive-data-table_info"
 												role="status" aria-live="polite">Showing 1 to 20 of 57

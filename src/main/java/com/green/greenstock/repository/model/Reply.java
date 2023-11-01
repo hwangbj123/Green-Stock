@@ -9,6 +9,7 @@ public class Reply {
 	private int id;
 	private int boardId;
 	private int userId;
+	private int parentId;
 	private String userName;
 	private String content;
 	private Date date;

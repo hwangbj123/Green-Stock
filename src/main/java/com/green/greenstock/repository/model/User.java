@@ -1,15 +1,17 @@
 package com.green.greenstock.repository.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class User {
@@ -21,4 +23,11 @@ public class User {
 	private Date birthDate;
 	private Timestamp regDate;
 	private Integer roletypeId;
+	private boolean suspended;
+    private Date suspensionEndDate;
+    
+	public User() {
+		this.suspended = false;
+	}
+    
 }

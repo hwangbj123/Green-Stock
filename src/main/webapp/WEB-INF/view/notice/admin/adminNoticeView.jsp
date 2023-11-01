@@ -180,7 +180,7 @@
         </div>
         <!-- Header responsive Bottom  End -->        
         <!-- Ec Main Menu End -->	
-	<div class="content container"style="width: 50%;" >
+	<div class="content container" style="width : 50%;">
 		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
 			<div>
 				<p class="breadcrumbs">					
@@ -194,13 +194,16 @@
 			<div class="col-12">
 				<div class="card card-default">
 					<div class="card-body">
-						<h4>제목 : ${view.noticeTitle}</h4> 
-						<p>작성자 : ${view.userId}</p>  
-						<p style="">${view.noticeCreated}</p>						
+						<h4>제목 :${view.noticeTitle}</h4> 
+						<p>작성자 :${view.userId}</p>  
+						<p style="">${view.noticeCreated}</p>	
+						<p>${view.hitCount}</p>					
 						<p><textarea readonly="readonly" style ="width: 100%; height: 23em; border: none; resize: none">${view.noticeContent}</textarea></p>
 						<table class="table-responsive">
-						    <tr>					     
-					          <td><a href = "/notice/list" class="btn btn-primary">목록으로</a></td>
+						    <tr>
+					      	<td><a href = "/notice/admin/update/${view.id}" class="btn btn-primary">수정하기</a></td>
+					      	<td><a href = "/notice/admin/delete/${view.id}" class="btn btn-primary">삭제하기</a></td>
+					          <td><a href = "/notice/admin/list" class="btn btn-primary">목록으로</a></td>
 					      	</tr>							  
 						</table>														 							   			
 						</div>
