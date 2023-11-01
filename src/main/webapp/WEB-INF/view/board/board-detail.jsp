@@ -45,24 +45,24 @@
      		margin: auto;
 /*      		border: 1px solid black; */
      	}
-     	.write-tb{
+     	.detail-tb{
      		width: 100%;
      		height: 800px;
      		text-align: center;
      	}
-     	.write-tb td{
+     	.detail-tb td{
      		min-height: 50px;
      	}
-     	.write-tb td input{
+     	.detail-tb td input{
      		width: 90%;
      		height: 50px;
      	}
-     	.write-tb td select{
+     	.detail-tb td select{
      		width: 90%;
      		height: 50px;
      		text-align: center;
      	}
-     	.write-tb td button{
+     	.detail-tb td button{
      		width: 30%;
      		height: 60px;
      		margin: 10px;
@@ -75,6 +75,7 @@
      		resize: none;
      		text-align: left;
      		margin: auto;
+     		white-space:pre-line;
      	}
      	.page-a{
      		display: inline-block;
@@ -897,7 +898,8 @@
                     <div class="ec-blogs-content">
                         <div class="ec-blogs-inner">
                             <div class="board-content">
-                        		<table class="write-tb">
+                            	
+                        		<table class="detail-tb">
                         			<tr>
                         				<td style="height: 56px; text-align: left;">
                         					<c:forEach var="c" items="${cate}" varStatus="status">
@@ -912,9 +914,9 @@
 										</td>
                         			</tr>
                         			<tr>
-                        				<td style="height: 56px;">
-                        					${board.userName}
-											조회수 : ${board.views}
+                        				<td style="height: 56px; text-align: left;">
+                        					${board.userName} 
+											조회수 : ${board.views},
 											추천 : ${board.recommand}
 										</td>
                         			</tr>
@@ -934,7 +936,7 @@
                         			</c:if>
 	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
                         			<c:if test="${board.userId eq principal.id}">
-	                        					<button type="button" class="btn btn-primary" onclick="boardDelete(${board.id})" style="background-color: rgba(200,0,0,0.5);">
+	                        					<button type="button" class="btn btn-primary">
 	                        						삭제
 	                        					</button>
                         			</c:if>
@@ -1072,7 +1074,7 @@
                                                         <input type="hidden" name="userId" value="${principal.id}">
                                                     	<input type="hidden" name="boardId" value="${board.id}">
                                                     	<input type="hidden" name="level" value="0">
-                                                    	<input type="hidden" name="step" value="0">
+                                                    	<input type="hidden" name="step" value="1">
                                                     	<input type="hidden" name="ref" value="${maxRef+1}">
                                                     </div>
                                                 </div>
@@ -1526,10 +1528,11 @@
                     +'<div class="row">'
                         +'<div class="col-md-6">'
                             +'<div class="ec-leave-form">'
+                                +'<input type="hidden" name="parentId" value="'+id+'">'
                                 +'<input type="hidden" name="userId" value="'+uid+'">'
                             	+'<input type="hidden" name="boardId" value="'+bid+'">'
                             	+'<input type="hidden" name="ref" value="'+ref+'">'
-                            	+'<input type="hidden" name="step" value="'+(step+1)+'">'
+                            	+'<input type="hidden" name="step" value="'+step+'">'
                             	+'<input type="hidden" name="level" value="'+(level+1)+'">'
                             +'</div>'
                         +'</div>'

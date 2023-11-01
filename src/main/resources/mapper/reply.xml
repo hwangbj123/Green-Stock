@@ -9,7 +9,7 @@
 		from reply
 		join user_tb on reply.user_id = user_tb.id
 		where board_id=#{boardId}
-		order by ref, step, level
+		order by ref, step desc
 		limit #{offset}, #{recordSize}
 	</select>
 	
@@ -27,19 +27,29 @@
 
 	<insert id="insertReply">
 		insert into reply(
-			board_id, user_id, content, ref, level, step
+			board_id, user_id, content, ref, level, step, parent_id
 		) values (
-			#{boardId}, #{userId}, #{content}, #{ref}, #{level}, #{step}
-		)
+			#{boardId}, #{userId}, #{content}, #{ref}, #{level}, #{step}, #{parentId}
+        )
 	</insert>
 	
 	<update id="updateReply">
-		update reply
-		set step= step+1
-		where step >= #{step}
-		and ref = #{ref}
-		and board_id = #{boardId}
+		update reply 
+		set step = step + #{step} where board_id = #{boardId} and ref = #{ref} and step >= #{step}
 	</update>
+	
+	<update id="updateReply2">
+		update reply 
+		set step = step + #{step} where board_id = #{boardId} and ref = #{ref}
+	</update>
+	
+	<select id="getStep" resultType="int">
+		select IFNULL(min(step),0) from reply where board_id = #{boardId} and ref = #{ref} and parent_id = #{parentId}
+	</select>
+	
+	<select id="maxStep" resultType="int">
+		select IFNULL(max(step)+1,1) step from reply where board_id = #{boardId} and ref = #{ref} and #{level} > level and #{step} > step;
+	</select>
 	
 	<update id="deleteReply">
 		update reply

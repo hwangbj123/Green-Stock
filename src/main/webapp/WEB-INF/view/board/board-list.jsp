@@ -56,7 +56,7 @@
      		display: inline-block;
      		border: 1px solid lightgrey;
 /*      		width: 30px;  */
-     		padding: 7px 18px;
+     		padding: 4px 12px;
      		margin: 1px;
      		border-radius: 5px;
      	}
@@ -976,7 +976,7 @@
 			    		<a class="btn btn-primary" href="/board/write">글 작성</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a class="btn btn-primary" onclick="alert('??')">글 작성</a>
+	    				<a class="btn btn-primary" onclick="toSignIn()">글 작성</a>
 	    			</c:otherwise>
 	    		</c:choose>
 	    	</div>

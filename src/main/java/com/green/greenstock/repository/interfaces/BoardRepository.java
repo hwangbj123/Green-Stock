@@ -17,7 +17,7 @@ public interface BoardRepository {
 	public int selectBoardCount(PagingDto paging);
 	public Board selectBoardById(int id);
 	public int updateBoard(Board board);
-	public int deleteBoard(int boardId);
+	public int deleteBoard(Board board);
 	public List<Board> selectBoardSearchList(PagingDto paging);
 	public int viewCountUp(int boardId);
 	public int thumbUp(@Param("boardId") int boardId,@Param("userId") int userId);
