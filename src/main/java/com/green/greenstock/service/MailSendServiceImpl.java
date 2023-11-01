@@ -12,4 +12,6 @@ public interface MailSendServiceImpl {
 
 	String sendUserId(String to, User user) throws Exception;
 
+	void sendSuspensionMessage(String userName, Integer suspendDate) throws Exception;
+
 }

@@ -69,13 +69,15 @@ public class UserController {
 	@PostMapping("/sign-in")
 	public ResponseEntity<Integer> SignInProc(User user) {
 		User principal = userService.findUserByUserName(user);
-		if (principal != null) {
-			principal.setPassword(null);
-			session.setAttribute("principal", principal);
-			return ResponseEntity.status(HttpStatus.OK).body(200);
-		} else {
+		if (principal == null) {
 			return ResponseEntity.status(HttpStatus.OK).body(400);
 		}
+		if (principal.getSuspensionEndDate() != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(500);
+		}
+		principal.setPassword(null);
+		session.setAttribute("principal", principal);
+		return ResponseEntity.status(HttpStatus.OK).body(200);
 	}
 
 	@GetMapping("/sign-up")
