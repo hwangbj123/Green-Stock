@@ -232,6 +232,9 @@ public class StockApiService {
 		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
 		String trId = "FHKST03010100"; // 거래ID
 		
+		// TODO 날짜별 , 일주월년? 함수 변수 주기
+		
+		
 		WebClient webClient = buildWebClient();
 		
 		return webClient
@@ -240,7 +243,7 @@ public class StockApiService {
 										.path(uri)
 										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
 										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
-										.queryParam("FID_INPUT_DATE_1", "20231025") // 조회 시작일자 (ex. 20220501)
+										.queryParam("FID_INPUT_DATE_1", "20230125") // 조회 시작일자 (ex. 20220501)
 										.queryParam("FID_INPUT_DATE_2", "20231031") // 조회 종료일자 (ex. 20220530)
 										.queryParam("FID_PERIOD_DIV_CODE", "D") // D:일봉, W:주봉, M:월봉, Y:년봉
 										.queryParam("FID_ORG_ADJ_PRC", 0) // FID 수정주가 원주가 가격

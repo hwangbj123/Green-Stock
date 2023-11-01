@@ -120,11 +120,10 @@ public class StockApiController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	// 국내주식기간별시세(일/주/월/년)
 	@ResponseBody
-	@GetMapping("/InquireDailyItemChartPrice")
-	public String getDailyPrice() {
-		return stockApiService.getDailyitemchartprice("005930");
+	@GetMapping("/InquireDailyItemChartPrice/{companyCode}")
+	public String getDailyPrice(@PathVariable String companyCode) {
+		return stockApiService.getDailyitemchartprice(companyCode);
 	}
-	
-	
 }
