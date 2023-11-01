@@ -54,7 +54,7 @@
 <body>
 
  <script type="text/javascript">
-	
+
 </script>
     <header class="ec-header">
         <!--Ec Header Top Start -->
@@ -179,35 +179,56 @@
             </div>
         </div>
         <!-- Header responsive Bottom  End -->        
-        <!-- Ec Main Menu End -->	
-	<div class="content container"style="width: 50%;" >
-		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
+        <!-- Ec Main Menu End -->	     
+	<div class="content container" style="width: 50%; ">
+		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between"
+		style="width :1000px ">					
 			<div>
-				<p class="breadcrumbs">					
-					
+				<p class="breadcrumbs">										
 					<i class="mdi mdi-chevron-right">
 					</i>
-					<h3>뷰 페이지</h3>
+					</p><nav>
+					<h3>작성 페이지</h3>
+					</nav>
+					<label for="file">파일 올려주세요 
+					  <input type="file"
+					         id="profile"
+					         accept="image/png, image/jpeg">
+					</label>
 			</div>					
 		</div>
-		<div class="row">
-			<div class="col-12">
-				<div class="card card-default">
-					<div class="card-body">
-						<h4>제목 : ${view.noticeTitle}</h4> 
-						<p>작성자 : ${view.userId}</p>  
-						<p style="">${view.noticeCreated}</p>						
-						<p><textarea readonly="readonly" style ="width: 100%; height: 23em; border: none; resize: none">${view.noticeContent}</textarea></p>
-						<table class="table-responsive">
-						    <tr>					     
-					          <td><a href = "/notice/list" class="btn btn-primary">목록으로</a></td>
-					      	</tr>							  
-						</table>														 							   			
-						</div>
+        <form action="/notice/admin/write" method="post">
+        <div>
+        <input type="hidden" value="1" name="userId" style="">제목 :</div>
+            <table class="noticeWrite" style="width: 840px; height:200px ;">            
+            	<tbody><tr>
+            		<td>
+            			<input type="text" value="" name="noticeTitle" required="required">
+            		</td>
+            	</tr>            	
+            	<tr>
+            		<td>
+            		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>
+            		</td>            		            	
+            	</tr>  
+            	<tr>
+            	<td>		            	
+           			<div style="text-align: right;">
+					    <input type="radio" name="noticeState" value="0" checked style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;text-align: center;">비공개
+					    <input type="radio" name="noticeState" value="1" style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;">공개	
 					</div>
-				</div>
-			</div>
-		</div>	
+            	</td>            		
+            	</tr>            	                
+            	<tr>
+            		<td>
+            			<a><button type="submit" class="btn btn-primary">작성</button></a> 
+            			<a><button type="submit" class="btn btn-primary">취소</button></a>                                       	
+            		</td>            		           	
+            	</tr>             	                                                   
+    	</tbody>
+    	</table>
+    	</form>
+    	</div>
 	</header>
 	</body>
 	</head>

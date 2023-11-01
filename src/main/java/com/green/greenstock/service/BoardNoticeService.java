@@ -5,12 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
-import com.green.greenstock.dto.NoticeViewDto;
-import com.green.greenstock.dto.NoticeWriteDto;
 import com.green.greenstock.repository.interfaces.BoardNoticeRepository;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.Noticeboard;
-import com.green.greenstock.repository.model.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,8 +55,7 @@ public class BoardNoticeService {
 			noticeboard.setNoticeState(noticeupdateDto.getNoticeState());
 			System.out.println(noticeupdateDto);
 			System.out.println(noticeboard);
-			int result = noticeRepository.updateNotice(noticeboard);
-			
+			int result = noticeRepository.updateNotice(noticeboard);	
 			return result;
 	}	
 	
@@ -77,10 +73,23 @@ public class BoardNoticeService {
 	 *	공지사항 상세보기  
 	 *  
 	 */
-	public Noticeboard noticeViewService(int id) {				
-		return noticeRepository.viewNoticePage(id);
+	public Noticeboard noticeViewService(int id) {
+		Noticeboard noticeboard = noticeRepository.viewNoticePage(id);
+		return noticeboard;
 		
 	}
+		
+	/**
+	 * 조회수 증가 
+	 */
 	
+	public int noticeHitCountService(int id) {
+		int result = noticeRepository.noticeHitCount(id);
+		return result;
+	}
+	
+	/**
+	 * 페이징 
+	 */
 
 }

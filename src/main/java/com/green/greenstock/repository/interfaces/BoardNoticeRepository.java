@@ -31,18 +31,22 @@ public interface BoardNoticeRepository {
 	public int deleteNotice(int id);
 
 	/**
-	 * 공지사항 번로 상세보기 
+	 * 공지사항 번호 상세보기 
 	 * @param id
 	 * @return
 	 */
 	//공지사항 상세보기 
 	public Noticeboard viewNoticePage(int id);
 	
-	//조회수
+	//조회수 +1 
+	public int noticeHitCount(int id);
+	
+	
 	//페이징 
 	
 	//카테고리
 	
+	//파일
 	
 	
 
