@@ -20,7 +20,7 @@
 	width: 100%;
 	margin: auto;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 0px;
 	display: flex;
 	justify-content: center;
 }
@@ -36,7 +36,7 @@
 				</p>
 			</div>
 			<div>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+				<button type="button" class="btn btn-danger" data-bs-toggle="modal"
 					data-bs-target="#addUser">Suspended User</button>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 										<th>Phone</th>
 										<th>Birth-Date</th>
 										<th>Join On</th>
-										<th>Action</th>
+										<th>Sus-Date</th>
 									</tr>
 								</thead>
 
@@ -63,10 +63,12 @@
 											<td>${user.userName}</td>
 											<td>${user.email}</td>
 											<td>${user.tel}</td>
-											<td>${user.birthDate}</td>
+											<td><fmt:formatDate value="${user.birthDate}"
+													pattern="yyyy-MM-dd" /></td>
 											<td><fmt:formatDate value="${user.regDate}"
 													pattern="yyyy-MM-dd" /></td>
-											<td>-</td>
+											<td><fmt:formatDate value="${user.suspensionEndDate}"
+													pattern="yyyy-MM-dd" /></td>
 											<td>
 												<div class="btn-group mb-1">
 													<button type="button" class="btn btn-outline-success">Info</button>
@@ -88,9 +90,26 @@
 								</tbody>
 							</table>
 						</div>
-						<!----------페이징 div -->
+						<!-- 검색 div-->
+						<form action="/admin/search-user" id="search-frm">
+							<div class="search-form d-lg-inline-block">
+								<div class="input-group" style="margin-top: 20px;">
+									<input type="text" name="query" id="search-input"
+										class="form-control" placeholder="search user" autofocus
+										autocomplete="off" style="border: 1px solid #ddd;"/>
+									<button type="button" name="search" id="search-btn"
+										class="btn btn-flat" style="border: 1px solid #ddd;">
+										<i class="mdi mdi-magnify"></i>
+									</button>
+								</div>
+								<div id="search-results-container">
+									<ul id="search-results"></ul>
+								</div>
+							</div>
+						</form>
+						<!--페이징 div -->
 						<div id="customPagenation">
-							<!-- 	    		시작 페이지 -->
+							<!--시작 페이지 -->
 							<c:choose>
 								<c:when test="${page.paging.page>4}">
 									<c:set var="startPage" value="${page.paging.page-4}" />
@@ -100,7 +119,7 @@
 								</c:otherwise>
 							</c:choose>
 
-							<!-- 				엔드 페이지	    		 -->
+							<!-- 엔드 페이지 -->
 							<c:choose>
 								<c:when test="${page.endPage < page.paging.page+4}">
 									<c:set var="endPage" value="${page.endPage}" />
@@ -110,38 +129,43 @@
 								</c:otherwise>
 							</c:choose>
 
-							<!-- 	    		이전 버튼 -->
+							<!-- 이전 버튼 -->
 							<c:if test="${startPage ne 1}">
-								<a class="page-a" style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+								<a class="page-a"
+									style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
 									href="user?page=${page.paging.page-5}"> prev </a>
 							</c:if>
-							<!-- 	    		페이지 넘버 반복문 -->
+							<!-- 페이지 넘버 반복문 -->
 							<c:set var="nowPage" value="${startPage}" />
 							<c:forEach begin="${startPage}" end="${endPage}">
 								<c:choose>
 									<c:when test="${page.paging.page eq nowPage}">
 										<p class="page-a" id="customPageA"
-											style="background-color: #3474D4; color: white; cursor: pointer; display: inline-block; border: 1px solid lightgrey; padding: 4px 12px;	margin: 1px; border-radius: 5px;">
+											style="background-color: #3474D4; color: white; cursor: pointer; display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;">
 											<c:out value="${nowPage}" />
 										</p>
 									</c:when>
 									<c:otherwise>
-										<a class="page-a" id="customPageA" href="user?page=${nowPage}" style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"> <c:out
-												value="${nowPage}" />
+										<a class="page-a" id="customPageA" href="user?page=${nowPage}"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;">
+											<c:out value="${nowPage}" />
 										</a>
 									</c:otherwise>
 								</c:choose>
 								<c:set var="nowPage" value="${nowPage+1}" />
 							</c:forEach>
-							<!-- 	    		이후 버튼 -->
+							<!-- 이후 버튼 -->
 							<c:if test="${page.endPage > startPage+9}">
 								<c:choose>
 									<c:when test="${page.endPage > page.paging.page+5}">
-										<a class="page-a" style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;" href="user?page=${page.paging.page+5}">
-											next </a>
+										<a class="page-a"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+											href="user?page=${page.paging.page+5}"> next </a>
 									</c:when>
 									<c:otherwise>
-										<a class="page-a" style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;" href="user?page=${page.endPage}"> next </a>
+										<a class="page-a"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+											href="user?page=${page.endPage}"> next </a>
 									</c:otherwise>
 								</c:choose>
 							</c:if>

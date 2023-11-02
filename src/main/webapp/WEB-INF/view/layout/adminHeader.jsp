@@ -35,6 +35,8 @@
 
 <!-- FAVICON -->
 <link href="/resources/img/favicon.png" rel="shortcut icon" />
+
+
 <style>
 .ui-autocomplete {
 	background-color: white; /* 배경색을 흰색으로 설정 */
@@ -59,7 +61,7 @@ div[data-clicked="true"]:not(#addCard) div{
 			<div id="sidebar" class="sidebar ec-sidebar-footer">
 
 				<div class="ec-brand">
-					<a href="/main" title="Ekka"> <img src="/resources/img/G_logo.jpg" alt="" />
+					<a href="/main" title="Gstock"> <img src="/resources/img/G_logo.jpg" alt="" />
 					</a>
 				</div>
 

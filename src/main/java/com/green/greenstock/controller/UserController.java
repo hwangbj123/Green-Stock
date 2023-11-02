@@ -28,8 +28,8 @@ import com.green.greenstock.dto.NaverResponse;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.model.User;
-import com.green.greenstock.service.MailSendServiceImpl;
-import com.green.greenstock.service.SocialLoginServiceImpl;
+import com.green.greenstock.service.MailSendService;
+import com.green.greenstock.service.SocialLoginService;
 import com.green.greenstock.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +43,10 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
-	private MailSendServiceImpl mailSendService;
+	private MailSendService mailSendService;
 	
 	@Autowired
-	private SocialLoginServiceImpl socialLoginServiceImpl;
+	private SocialLoginService socialLoginServiceImpl;
 	
 	@Autowired
 	HttpSession session;
