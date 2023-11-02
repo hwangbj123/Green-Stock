@@ -17,17 +17,15 @@ import lombok.NoArgsConstructor;
 @JsonNaming(value =PropertyNamingStrategies.SnakeCaseStrategy.class )
 public class Noticeboard {
 	
-	private int id;
+	private int id;				
 	private	int userId;	
 	private String noticeTitle;
 	private String noticeContent;
 	private Timestamp noticeCreated;
 	private Timestamp noticeUpdated;	
 	private int noticeState;	
-	/**
-	 * TODO 조회수 추가
-	 */
 	private int hitCount;
+	
 	
 
 }

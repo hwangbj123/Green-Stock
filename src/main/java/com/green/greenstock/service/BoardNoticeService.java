@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
+import com.green.greenstock.dto.Pagination;
+import com.green.greenstock.dto.PagingDto;
+import com.green.greenstock.dto.NoticePagingDto;
 import com.green.greenstock.repository.interfaces.BoardNoticeRepository;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.Noticeboard;
@@ -19,13 +22,14 @@ public class BoardNoticeService {
 	private final BoardNoticeRepository noticeRepository;
 	/**
 	 * 
-	 * 공지사항 목록 
+	 * 공지사항 목록 조회
 	 * @param -list
 	 * @return noticeList
 	 * 
 	 */	
 	public List<Noticeboard> noticeListService() {
 		List<Noticeboard> noticeList = noticeRepository.findAll();
+		
 		return noticeList;
 	}
 
@@ -35,7 +39,6 @@ public class BoardNoticeService {
 	 * @param 
 	 */
 	public int noticeWriteService(Noticeboard noticeboard) {
-				
 		int result = noticeRepository.writeNotice(noticeboard);
 		return result;							
 	}
@@ -88,8 +91,15 @@ public class BoardNoticeService {
 		return result;
 	}
 	
+	
+	
 	/**
 	 * 페이징 
 	 */
-
+	public int noticeListCount(NoticePagingDto paging) {
+		return noticeRepository.listCount(paging);
+		
+	}
+	
+	
 }

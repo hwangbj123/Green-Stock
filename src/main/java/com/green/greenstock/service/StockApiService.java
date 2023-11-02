@@ -1,5 +1,6 @@
 package com.green.greenstock.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -221,7 +222,7 @@ public class StockApiService {
 	}
 	
 	// 국내주식기간별시세(일/주/월/년)
-	public String getDailyitemchartprice(String companyCode){
+	public String getDailyitemchartprice(String companyCode, String date){
 		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
 		AccessTokenInfo accessToken = validateAccessToken();
 		// URI
@@ -232,8 +233,7 @@ public class StockApiService {
 		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
 		String trId = "FHKST03010100"; // 거래ID
 		
-		// TODO 날짜별 , 일주월년? 함수 변수 주기
-		
+		String[] dateArr = setDateArr(date);
 		
 		WebClient webClient = buildWebClient();
 		
@@ -243,8 +243,8 @@ public class StockApiService {
 										.path(uri)
 										.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
 										.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
-										.queryParam("FID_INPUT_DATE_1", "20230125") // 조회 시작일자 (ex. 20220501)
-										.queryParam("FID_INPUT_DATE_2", "20231031") // 조회 종료일자 (ex. 20220530)
+										.queryParam("FID_INPUT_DATE_1", dateArr[0]) // 조회 시작일자 (ex. 20220501)
+										.queryParam("FID_INPUT_DATE_2", dateArr[1]) // 조회 종료일자 (ex. 20220530)
 										.queryParam("FID_PERIOD_DIV_CODE", "D") // D:일봉, W:주봉, M:월봉, Y:년봉
 										.queryParam("FID_ORG_ADJ_PRC", 0) // FID 수정주가 원주가 가격
 										.build())
@@ -258,7 +258,26 @@ public class StockApiService {
 						.block();
 	}
 	
-	
+	public String[] setDateArr(String date) {
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		
+		String nowDate = now.format(dateTimeFormatter);
+		String beforeWeekDate = now.minusDays(9).format(dateTimeFormatter);
+		String beforeMonthDate = now.minusMonths(1).format(dateTimeFormatter);
+		String beforeYearDate = now.minusYears(1).format(dateTimeFormatter);
+		String selectedDateData  = null;
+		
+		if(date.equals("month")) {
+			selectedDateData = beforeMonthDate;
+		}else if(date.equals("year")) {
+			selectedDateData = beforeYearDate;
+		}else {
+			selectedDateData = beforeWeekDate;
+		}
+		String[] dateArr = {selectedDateData, nowDate};
+		return dateArr;
+	}
 	
 	/* 토큰 시작 */
 	// AccessToken 발급

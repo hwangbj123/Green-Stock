@@ -2,7 +2,7 @@ package com.green.greenstock.service;
 
 import com.green.greenstock.repository.model.User;
 
-public interface MailSendServiceImpl {
+public interface MailSendService {
 	
 	// 메일 발송
 	String sendSimpleMessage(String to) throws Exception;

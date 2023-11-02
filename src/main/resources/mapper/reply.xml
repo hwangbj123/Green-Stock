@@ -5,7 +5,9 @@
 <mapper namespace="com.green.greenstock.repository.interfaces.ReplyRepository"> 
 
 	<select id="selectReplyList" parameterType="com.green.greenstock.dto.ReplyPagingDto" resultType="com.green.greenstock.repository.model.Reply">
-		select reply.id, board_id, user_id, user_name, content, date, recommand, ref, level, step, deleted
+		select reply.id, board_id, user_id, user_name, content, date, ref, level, step, deleted,
+				(select count(user_id) from reply_recommand rc
+				 where rc.reply_id = reply.id) recommand
 		from reply
 		join user_tb on reply.user_id = user_tb.id
 		where board_id=#{boardId}
@@ -58,4 +60,34 @@
 		where id=#{id}
 	</update>
 	
+	<insert id="replyThumbUp">
+		insert into reply_recommand
+		values (#{replyId}, #{userId})
+	</insert>
+	
+	<select id="replyThumbCheck">
+		select IFNULL(max(user_id), 0)
+		from reply_recommand
+		where reply_id = #{replyId} and user_id = #{userId}
+	</select>
+	
+	<insert id="replyThumbDelete">
+		delete from reply_recommand
+		where reply_id = #{replyId}
+		and user_id = #{userId}
+	</insert>
+	
+	<select id="getReplyCount" resultType="int">
+		select count(reply_recommand.user_id) 
+		from reply_recommand 
+		join reply on reply_recommand.reply_id = reply.id 
+		where reply_id = #{replyId}
+	</select>
+	
+	<select id="replyUserCheck" resultType="Integer">
+		select reply_recommand.reply_id 
+		from reply_recommand 
+		join reply on reply_recommand.reply_id = reply.id 
+		where reply_recommand.user_id = #{userId} and board_id = #{boardId};
+	</select>
 </mapper>

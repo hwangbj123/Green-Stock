@@ -23,7 +23,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		User principal = (User) session.getAttribute("user");
+		User principal = (User) session.getAttribute("principal");
 		if(principal == null ) {
 			throw new com.green.greenstock.handler.exception.UnAuthorizedException("로그인 먼저 해주십시오", HttpStatus.UNAUTHORIZED);
 		}

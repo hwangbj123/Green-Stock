@@ -50,5 +50,20 @@ public class ReplyService {
 	public int deleteReply(Reply reply) {
 		return replyRepository.deleteReply(reply);
 	}
-
+	
+	public int replyThumbCheck(int replyId, int userId) {
+		return replyRepository.replyThumbCheck(replyId, userId);
+	}
+	public int replyThumbUp(int replyId, int userId) {
+		return replyRepository.replyThumbUp(replyId, userId);
+	}
+	public int replyThumbDelete(int replyId, int userId) {
+		return replyRepository.replyThumbDelete(replyId, userId);
+	}
+	public int getReplyCount(int replyId) {
+		return replyRepository.getReplyCount(replyId);
+	}
+	public List<Integer> replyUserCheck(int userId, int boardId) {
+		return replyRepository.replyUserCheck(userId, boardId);
+	}
 }

@@ -16,16 +16,17 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		return new BCryptPasswordEncoder();
 	}
 	
-//	@Autowired
-//	private AuthInterceptor authInterceptor;
-	
 	@Autowired
-	private AdminInterceptor adminInterceptor;
+	private AuthInterceptor authInterceptor;
+	
+//	@Autowired
+//	private AdminInterceptor adminInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/customerservice/inquiry/**").addPathPatterns("/user/my-info/**").addPathPatterns("/user/payList/**").addPathPatterns("/user/ticketList/**").addPathPatterns("/user/rentalList/**").addPathPatterns("/show/apply*")
 //				.excludePathPatterns("/show/applyIntro").excludePathPatterns("/payment/cancel");
 //		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
+		registry.addInterceptor(authInterceptor).addPathPatterns("/board/write").addPathPatterns("/board/update/*").addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*");
 	}
 }
