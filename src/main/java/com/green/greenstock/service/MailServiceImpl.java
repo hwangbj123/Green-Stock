@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class MailService implements MailCreateServiceImpl, MailSendServiceImpl{
+public class MailServiceImpl implements MailCreateService, MailSendService{
 
 	@Autowired
 	JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired

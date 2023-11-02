@@ -5,8 +5,8 @@
 <mapper namespace="com.green.greenstock.repository.interfaces.UserRepository">
  
 	<insert id="insertUser">
-	  	insert into user_tb(user_name, password, email, tel, birth_date, reg_date, roletype_id)
-	  	values(#{userName}, #{password}, #{email}, #{tel}, #{birthDate}, now(), #{roletypeId})
+	  	insert into user_tb(user_name, password, email, tel, birth_date, reg_date, roletype_id, suspended)
+	  	values(#{userName}, #{password}, #{email}, #{tel}, #{birthDate}, now(), #{roletypeId}, #{suspended})
   	</insert>
   	
   	<select id="findAllUser" resultType="User">

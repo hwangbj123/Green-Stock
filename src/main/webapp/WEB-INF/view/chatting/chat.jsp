@@ -72,19 +72,21 @@
 </style>
 </head>
 <body>
-    <h3>
-    	Chat Room
-    	<br>
-    	<c:if test="${not empty roomId}">
-<%--     		roomId : ${roomId} --%>
-    		<input type="hidden" id="hd-roomId" value="${roomId}">
-    	</c:if>
-    	<c:if test="${not empty principal}">
-<%--     		user : ${principal.id}, ${principal.userName} --%>
-    		<input type="hidden" id="hd-userId" value="${principal.id}">
-    		<input type="hidden" id="hd-userName" value="${principal.userName}">
-    	</c:if>
-   	</h3>
+	<div style="width: 100%;">
+	    <h3>
+	    	Chat Room
+	    	<br>
+	    	<c:if test="${not empty roomId}">
+	<%--     		roomId : ${roomId} --%>
+	    		<input type="hidden" id="hd-roomId" value="${roomId}">
+	    	</c:if>
+	    	<c:if test="${not empty principal}">
+	<%--     		user : ${principal.id}, ${principal.userName} --%>
+	    		<input type="hidden" id="hd-userId" value="${principal.id}">
+	    		<input type="hidden" id="hd-userName" value="${principal.userName}">
+	    	</c:if>
+	   	</h3>
+   	</div>
     <div id="chat-messages">
     	<c:forEach var="message" items="${list}">
   			<c:choose>
@@ -123,84 +125,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script>
-    function searchParam(key) {
-   	  return new URLSearchParams(location.search).get(key);
-   	};
-   	function scrollToBottom(){
-   		$('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
-   	}
-    $(function(){
-//     	----------------------------------- STOMP
-		scrollToBottom();
-    	var roomId = $("#hd-roomId").val();
-    	var userId = $("#hd-userId").val();
-    	var userName = $("#hd-userName").val();
-    	console.log("roomId : "+roomId);
-    	console.log("userId : "+userId);
-    	console.log("userName : "+userName);
-    	var stompClient = Stomp.over(new SockJS('/chat'));
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe('/topic/'+roomId, function (message) {
-                var messageBody = JSON.parse(message.body);
-//                 $('#chat-messages').append("<p><strong>" + messageBody.userId + ": </strong>" + messageBody.content + " " + messageBody.date + "</p>");
-				var messageDate = new Date(messageBody.date);
-                if (messageBody.userName==userName){
-					$('#chat-messages').append(
-							'<div class="my-message-user">'
-			    				+messageBody.userName
-			    			+'</div>'
-							+'<div class="my-message-div">'
-			    			+'<div class="message-content">'
-			    				+messageBody.content
-			    			+'</div>'
-			    				+messageDate.getHours()+":"+messageDate.getMinutes()
-			    			+'</div>'
-							);
-                } else{
-					$('#chat-messages').append(
-							'<div class="message-user">'
-			    				+messageBody.userName
-			    			+'</div>'
-							+'<div class="message-div">'
-			    			+'<div class="message-content">'
-			    				+messageBody.content
-			    			+'</div><p>'
-			    				+messageDate.getHours()+":"+messageDate.getMinutes()
-			    			+'</p></div>'
-							);
-                }
-				scrollToBottom();
-            });
-        });
-
-        $('#chat-form').on('submit', function (e) {
-        	
-        	if($('#message').val().replace(/\s/gi, '').length==0){
-        		$('#message').val('');
-        		return false;
-        	}
-        	if(/<|>/.test($('#message').val())){
-        		$('#message').val('');
-        		return false;
-        	}
-        	
-            e.preventDefault();
-//             var userId = userId; // 사용자 이름 또는 ID를 여기에 추가
-            var message = $('#message').val();
-//             var roomId = "roomId"; // 채팅 방 번호를 여기에 추가
-
-            stompClient.send("/app/chat/" + roomId, {}, JSON.stringify({
-            	userId: userId,
-            	userName: userName,
-                roomId: roomId,
-                content: message,
-                date: new Date()
-            }));
-            $('#message').val(''); // 채팅 입력 창을 초기화
-        });
-//     	----------------------------------- 새 창
-    });
-    </script>
+    <script src="/resources/js/custom/chat.js"></script>
 </body>
 </html>

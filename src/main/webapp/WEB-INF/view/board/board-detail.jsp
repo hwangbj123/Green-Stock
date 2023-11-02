@@ -93,6 +93,16 @@
      		 display: flex;
      		 justify-content: center;
      	}
+     	#thumb-div{
+     		position: fixed; 
+     		right: 20px; 
+     		top: 50%; 
+     		width: 40px; 
+     		height: 40px; 
+     		background-color: #555; 
+     		border-radius: 5px; 
+     		padding: 5px;"
+     	}
      </style>
  </head>
 <body class="blog_page">
@@ -884,7 +894,12 @@
     <!-- Ec breadcrumb end -->
     
     <!-- 따봉 버튼 -->
-	<div style="position: fixed; right: 20px; top: 50%; width: 40px; height: 40px; background-color: #555; border-radius: 5px; padding: 5px;">
+	<div id="thumb-div">
+			<input type="hidden" id="thumb-check" value="
+		<c:if test="${not empty thumb}">
+			<c:out value="${thumb}"/>
+		</c:if>
+			">
 		<img src="/resources/img/favicon.png" onclick="thumbFnc(${board.id}, ${principal.id})" style="width: 30px; height: 30px; cursor: pointer;">
 	</div>
 	
@@ -956,8 +971,55 @@
                                     <div class="ec-blog-comment-wrapper mt-55">
                                     
 <!------------------------------------- 댓글 -->
+										<!-- 베스트 댓글 표시 -->
+										<c:set var="maxRecommand" value="0"/>
 										<c:forEach var="comment" items="${reply}">
-	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);">
+											<c:set var="maxRecommand" value="${comment.recommand}"/>
+										</c:forEach>
+										<!-- 최다 추천수 2 이상이면 최상단에 표시 -->
+										<c:if test="${maxRecommand >= 2}">
+											<c:set var="forBreak" value="0"/>
+											<c:forEach var="comment" items="${reply}">
+												<c:if test="${comment.recommand eq maxRecommand && forBreak eq 0}">
+													<div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px); background-color: #fee;">
+		                                            <div class="ec-blog-comment-content">
+		                                                <h5>${comment.userName}</h5>
+		                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>
+	<%-- 	                                                <span style="color: red;">ref : ${comment.ref} , step : ${comment.step } , level : ${comment.level }</span> --%>
+		                                                <p>${comment.content}</p>
+		                                                <div class="ec-blog-details-btn">
+		                                                <c:if test="${comment.deleted eq 0}">
+		                                                    <c:if test="${empty principal}">
+			                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
+			                                                    	댓글
+			                                                    </button>
+				                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
+				                                                    	추천👍🏻
+			                                                    <c:if test="${comment.recommand > 0}">
+				                                                    <c:out value="${comment.recommand}"/>
+			                                                    </c:if>
+				                                                    </button>
+		                                                    </c:if>
+	                                                    	<span style="color: black; margin-bottom: 2px;">추천👍</span>
+	                                                    	<span style="font-size: 20px; color: black; font-weight: bolder;">${comment.recommand}</span>
+		                                                </c:if>
+	                                                </div>
+	                                                <div class="rereply-div" id="rereply-id${comment.id}">
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                        <c:set var="forBreak" value="1"/>
+											</c:if>
+										</c:forEach>
+										</c:if>
+										<!-- 베스트 댓글 표시 코드 끝-->
+										<!-- 전체 댓글 -->
+										<c:forEach var="comment" items="${reply}">
+	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);
+	                                        	<c:if test="${comment.userId eq board.userId}">
+	                                        		<c:out value="background-color: rgba(52,116,212,0.1);"/>
+	                                        	</c:if>
+	                                        ">
 	                                            <div class="ec-blog-comment-content">
 	                                                <h5>${comment.userName}</h5>
 	                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>
@@ -969,19 +1031,35 @@
 		                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
 		                                                    	댓글
 		                                                    </button>
+			                                                    <button type="button" onclick="toSignIn()" style="color: #777777;">
+			                                                    	추천👍🏻
+		                                                    <c:if test="${comment.recommand > 0}">
+			                                                    <c:out value="${comment.recommand}"/>
+		                                                    </c:if>
+			                                                    </button>
 	                                                    </c:if>
-	                                                    <c:if test="${comment.userId eq principal.id}">
+	                                                    <c:if test="${not empty principal.id}">
 		                                                    <button type="button" onclick="rereplyOpen(${comment.id}, 
 		                                                    										   ${principal.id}, 
 		                                                    										   ${comment.boardId},
 		                                                    										   ${comment.ref},
 		                                                    										   ${comment.step},
-		                                                    										   ${comment.level})" style="color: #777777;">
+		                                                    										   ${comment.level})">
 		                                                    	댓글
 		                                                    </button>
-	                                                    	<button type="button" onclick="replyDelete(${comment.id}, ${comment.boardId})" style="color: #777777;">
-	                                                    		삭제
-	                                                    	</button>
+		                                                    <c:if test="${comment.userId eq principal.id}">
+		                                                    	<button type="button" onclick="replyDelete(${comment.id}, ${comment.boardId})">
+		                                                    		삭제
+		                                                    	</button>
+		                                                    </c:if>
+		                                                    <button type="button" id="reply-thumb-btn-${comment.id}" style="border-radius: 6px;" onclick="replyThumb(${comment.id}, ${principal.id})">
+		                                                    	추천👍
+		                                                    	<span id="reply-thumb-span-${comment.id}">
+		   		                                                    <c:if test="${comment.recommand > 0}">                                                    
+					                                                    	<c:out value="${comment.recommand}"/>
+					                                                </c:if>
+		                                                    	</span>
+			                                                    </button>
 	                                                    </c:if>
 	                                                </c:if>
 	                                                </div>
@@ -990,7 +1068,9 @@
 	                                            </div>
 	                                        </div>
 										</c:forEach>
-                                        	<!----------페이징 div -->
+										<!-- 전체 댓글 끝-->
+										
+                                       	<!----------페이징 div -->
 								    	<div id="page">
 							<!-- 	    		시작 페이지 -->
 								    		<c:choose>
@@ -1509,58 +1589,107 @@
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
     <script>
-    	function toSignIn(){
-    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
-    			location.href="/user/sign-in";
-    		}
-    	}
-    
-    	function replyDelete(id, boardId){
-    		if(confirm("정말로 댓글을 삭제하시겠습니까? \n해당 댓글에 달린 댓글은 삭제되지 않습니다")){
-    			location.href="/board/reply-delete?id="+id+"&boardId="+boardId;
-    		}
-    	}
-    
-   		function rereplyOpen(id,uid,bid,ref,step,level){
-    		$(".rereply-div").empty();	
-    		$("#rereply-id"+id).append(
-    				'<form class="ec-blog-form" method="post" action="/board/reply-write">'
-                    +'<div class="row">'
-                        +'<div class="col-md-6">'
-                            +'<div class="ec-leave-form">'
-                                +'<input type="hidden" name="parentId" value="'+id+'">'
-                                +'<input type="hidden" name="userId" value="'+uid+'">'
-                            	+'<input type="hidden" name="boardId" value="'+bid+'">'
-                            	+'<input type="hidden" name="ref" value="'+ref+'">'
-                            	+'<input type="hidden" name="step" value="'+step+'">'
-                            	+'<input type="hidden" name="level" value="'+(level+1)+'">'
-                            +'</div>'
-                        +'</div>'
-                        +'<div class="col-md-12">'
-                            +'<div class="ec-text-leave">'
-                                +'<textarea placeholder="Content" name="content"></textarea>'
-                                +'<button type="submit" class="btn btn-lg btn-secondary">등록</button>'
-                            +'</div>'
-                        +'</div>'
-                    +'</div>'
-                +'</form>'
-    		);	
-    	}
-   		function boardDelete(boardId){
-			if(confirm("정말 게시글을 삭제하시겠습니까?")){
-	    		location.href='/board/delete/'+boardId;	
+	    	function toSignIn(){
+	    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
+	    			location.href="/user/sign-in";
+	    		}
+	    	}
+	    
+	    	function replyDelete(id, boardId){
+	    		if(confirm("정말로 댓글을 삭제하시겠습니까? \n해당 댓글에 달린 댓글은 삭제되지 않습니다")){
+	    			location.href="/board/reply-delete?id="+id+"&boardId="+boardId;
+	    		}
+	    	}
+	    
+	   		function rereplyOpen(id,uid,bid,ref,step,level){
+	    		$(".rereply-div").empty();	
+	    		$("#rereply-id"+id).append(
+	    				'<form class="ec-blog-form" method="post" action="/board/reply-write">'
+	                    +'<div class="row">'
+	                        +'<div class="col-md-6">'
+	                            +'<div class="ec-leave-form">'
+	                                +'<input type="hidden" name="parentId" value="'+id+'">'
+	                                +'<input type="hidden" name="userId" value="'+uid+'">'
+	                            	+'<input type="hidden" name="boardId" value="'+bid+'">'
+	                            	+'<input type="hidden" name="ref" value="'+ref+'">'
+	                            	+'<input type="hidden" name="step" value="'+step+'">'
+	                            	+'<input type="hidden" name="level" value="'+(level+1)+'">'
+	                            +'</div>'
+	                        +'</div>'
+	                        +'<div class="col-md-12">'
+	                            +'<div class="ec-text-leave">'
+	                                +'<textarea placeholder="Content" name="content"></textarea>'
+	                                +'<button type="submit" class="btn btn-lg btn-secondary">등록</button>'
+	                            +'</div>'
+	                        +'</div>'
+	                    +'</div>'
+	                +'</form>'
+	    		);	
+	    	}
+	   		function boardDelete(boardId){
+				if(confirm("정말 게시글을 삭제하시겠습니까?")){
+		    		location.href='/board/delete/'+boardId;	
+				}
+	   		}
+	   		async function thumbFnc(boardId, userId){
+	   			if(userId==null){
+	   				if(confirm("로그인이 필요한 서비스입니다\n로그인 하시겠습니까?")){
+	   					location.href='/user/sign-in';
+	   				}
+	   			}else{
+					var response = await fetch("/board/thumb-check?boardId="+boardId+"&userId="+userId);
+					var check = await response.json();
+					console.log(check);
+					if(check==0){
+						document.getElementById("thumb-div").style.backgroundColor = "#555";
+					}else{
+						document.getElementById("thumb-div").style.backgroundColor = "#f77";
+					}		
+	   			}
+	   		}
+	   		async function replyThumb(replyId, userId){
+	   			if(userId==null){
+	   				if(confirm("로그인이 필요한 서비스입니다\n로그인 하시겠습니까?")){
+	   					location.href='/user/sign-in';
+	   				}
+	   			}else{
+					var response = await fetch("/board/reply-thumb-check?replyId="+replyId+"&userId="+userId);
+					var check = await response.text();
+					console.log("rpCheck : "+check);
+					if(check==0){
+						document.getElementById("reply-thumb-btn-"+replyId).style.backgroundColor = "";
+						var replyCount = await fetch("/board/get-reply-count?replyId="+replyId);
+						var count = await replyCount.text();
+						if(count==0){
+							document.getElementById("reply-thumb-span-"+replyId).textContent = "";
+						}else{
+							document.getElementById("reply-thumb-span-"+replyId).textContent = count;
+						}
+						console.log("count : "+count);
+					}else{
+						document.getElementById("reply-thumb-btn-"+replyId).style.backgroundColor = "#f77";
+						var replyCount = await fetch("/board/get-reply-count?replyId="+replyId);
+						var count = await replyCount.text();
+						document.getElementById("reply-thumb-span-"+replyId).textContent = count;
+						console.log("count : "+count);
+					}		
+	   			}
+	   		}
+   		$(function(){
+			if (${not empty replyUser}) {
+				replyUser = ${replyUser};
+				console.log(replyUser);
+				$.each(replyUser, function(index, value) {
+					document.getElementById("reply-thumb-btn-"+value).style.backgroundColor = "#f77";
+				});
 			}
-   		}
-   		function thumbFnc(boardId, userId){
-   			if(userId==null){
-   				if(confirm("로그인이 필요한 서비스입니다\n로그인 하시겠습니까?")){
-   					location.href='/user/sign-in';
-   				}
-   			}else{
-				location.href='/board/thumb-check?boardId='+boardId+'&userId='+userId;
-   			}
-   		}
-    	$(function(){
+
+   			
+    		if($("#thumb-check").val().length==0 || $("#thumb-check").val()==0){
+    			$("#thumb-div").css("background-color","#555");
+    		}else{
+    			$("#thumb-div").css("background-color","#f77");
+    		}
     	});
     </script>
 </body>
