@@ -3,6 +3,8 @@ package com.green.greenstock.repository.model;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -20,6 +22,7 @@ public class User {
 	private String password;
 	private String email;
 	private String tel;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthDate;
 	private Timestamp regDate;
 	private Integer roletypeId;

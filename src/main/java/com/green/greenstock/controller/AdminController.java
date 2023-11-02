@@ -17,7 +17,7 @@ import com.green.greenstock.dto.Pagination;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.model.User;
-import com.green.greenstock.service.MailSendServiceImpl;
+import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SuspensionService;
 import com.green.greenstock.service.UserService;
 
@@ -35,7 +35,7 @@ public class AdminController {
 	private SuspensionService suspensionService;
 	
 	@Autowired
-	private MailSendServiceImpl mailSendService;
+	private MailSendService mailSendService;
 	
 	@Autowired
 	HttpSession session;
