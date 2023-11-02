@@ -12,7 +12,6 @@ import com.green.greenstock.dto.PortfolioInfoDTO;
 public interface PortfolioRepository {
 
 	MyPortfolio findByPortfolioId(int pid);
-	PortfolioInfoDTO findAllDataByPortfolioId(int pid);
 	void savePortfolio(@Param("pf") MyPortfolio pf,@Param("id") int id);
 	List<MyPortfolio> findByuserId(int id);
 	int updateTitle(MyPortfolio mp);

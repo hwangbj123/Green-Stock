@@ -15,5 +15,6 @@ public class MyStocks {
 	private int pId;
 	private int amount;
 	private int price;
-	private Stock stock;
+	private String companyName;
+	private String companyCode;
 }

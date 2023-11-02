@@ -11,8 +11,7 @@ public interface StockRepository {
 
 	List<String> getAutoCompleteData();
 
-	Stock getStockByStockId(Integer id);
+	Stock getStockByStockId(String companyCode);
 
 	Stock getStockByStockName(String stockname);
-	
 }
