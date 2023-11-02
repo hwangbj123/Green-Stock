@@ -95,5 +95,9 @@ public class UserService {
 	public int countUser() {
 		return userRepository.countUser();
 	}
+
+	public List<User> findSearchUser(String search, PagingDto paging) {
+		return userRepository.findSearchUser(search, paging);
+	}
 	
 }

@@ -133,7 +133,7 @@ public class UserController {
 		log.info("이메일 유저정보 조회");
 		if(user != null) {
 			String code = mailSendService.sendUserId(email, user);
-			log.info("인증코드 : " + code);
+			log.info("유저아이디 : " + code);
 		    return code;
 		} else {
 			//오류처리

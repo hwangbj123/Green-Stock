@@ -94,7 +94,7 @@
 						<form action="/admin/search-user" id="search-frm">
 							<div class="search-form d-lg-inline-block">
 								<div class="input-group" style="margin-top: 20px;">
-									<input type="text" name="query" id="search-input"
+									<input type="text" name="search" id="search-input"
 										class="form-control" placeholder="search user" autofocus
 										autocomplete="off" style="border: 1px solid #ddd;"/>
 									<button type="button" name="search" id="search-btn"
