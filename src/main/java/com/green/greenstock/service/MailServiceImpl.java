@@ -19,10 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class MailService implements MailCreateServiceImpl, MailSendServiceImpl{
+public class MailServiceImpl implements MailCreateService, MailSendService{
 
 	@Autowired
 	JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
+	
+	@Autowired
+	UserService userService;
 
 	private String ePw; // 인증번호
 
@@ -89,7 +92,7 @@ public class MailService implements MailCreateServiceImpl, MailSendServiceImpl{
 		MimeMessage message = emailsender.createMimeMessage();
 
 		message.addRecipients(RecipientType.TO, to);// 보내는 대상
-		message.setSubject("예술의 전당 임시 비밀번호 발송");// 제목
+		message.setSubject("Gstock 임시 비밀번호 발송");// 제목
 
 		String msgg = "";
 		msgg += "<div style='margin:100px;'>";
@@ -197,5 +200,39 @@ public class MailService implements MailCreateServiceImpl, MailSendServiceImpl{
 		}
 
 		return ePw;
+	}
+
+	@Override
+	public void sendSuspensionMessage(String userName, Integer suspendDate) throws UnsupportedEncodingException, MessagingException {
+		User user = userService.findUserName(userName);
+		String to = user.getEmail();
+		
+		MimeMessage message = createSuspensionMessage(to, suspendDate, userName);
+		try {
+			emailsender.send(message);
+		} catch (MailException es) {
+			es.printStackTrace();
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private MimeMessage createSuspensionMessage(String to, Integer suspendDate, String userName) throws MessagingException, UnsupportedEncodingException {
+		MimeMessage message = emailsender.createMimeMessage();
+
+		message.addRecipients(RecipientType.TO, to);// 보내는 대상
+		message.setSubject("Gstock 계정정지 안내");// 제목
+
+		String msgg = "";
+		msgg += "<div style='margin:100px;'>";
+		msgg += "<h1> 안녕하세요</h1>";
+		msgg += "<h1> Gstock입니다</h1>";
+		msgg += "<br>";
+		msgg += "<p>이용약관 위반으로 " + userName + "가 사용정지되었습니다.<p>";
+		msgg += "<br>";
+		msgg += "<p>정지기간은 " + suspendDate + "입니다. 이용에 불편없으시길 바랍니다.<p>";
+		message.setText(msgg, "utf-8", "html");
+		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
+
+		return message;
 	}
 }

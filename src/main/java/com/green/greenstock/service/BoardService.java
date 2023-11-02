@@ -5,13 +5,17 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.green.greenstock.dto.PagingDto;
+import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.BoardRepository;
 import com.green.greenstock.repository.model.Board;
+import com.green.greenstock.repository.model.User;
 
 @Service
 public class BoardService {
@@ -23,7 +27,12 @@ public class BoardService {
 		return boardRepository.findCategoryList();
 	}
 	
-	public int insertBoard(Board board) {
+	public int insertBoard(Board board, HttpServletRequest request) {
+		HttpSession session = (HttpSession) request.getSession();
+		User user = (User) session.getAttribute("principal");
+		if(user==null) {
+			throw new CustomRestfulException("로그인이 필요한 서비스입니다", HttpStatus.BAD_REQUEST);
+		}
 		return boardRepository.insertBoard(board); 
 	}
 	public List<Board> selectBoardListAll(PagingDto paging){
@@ -37,12 +46,26 @@ public class BoardService {
 		return boardRepository.selectBoardById(id);
 	}
 
-	public int updateBoard(Board board) {
+	public int updateBoard(Board board, HttpServletRequest request) {
+		HttpSession session = (HttpSession) request.getSession();
+		User user = (User) session.getAttribute("principal");
+		if(user==null) {
+			throw new CustomRestfulException("로그인이 필요한 서비스입니다", HttpStatus.BAD_REQUEST);
+		}else if(board.getUserId()==user.getId()) {
+			throw new CustomRestfulException("해당정보의 유저가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
 		return boardRepository.updateBoard(board);
 	}
 	
-	public int deleteBoard(int boardId) {
-		return boardRepository.deleteBoard(boardId);
+	public int deleteBoard(Board board, HttpServletRequest request) {
+		HttpSession session = (HttpSession) request.getSession();
+		User user = (User) session.getAttribute("principal");
+		if(user==null) {
+			throw new CustomRestfulException("로그인이 필요한 서비스입니다", HttpStatus.BAD_REQUEST);
+		}else if(board.getUserId()==user.getId()) {
+			throw new CustomRestfulException("해당정보의 유저가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		return boardRepository.deleteBoard(board);
 	}
 	
 	public List<Board> selectBoardSearchList(PagingDto paging){

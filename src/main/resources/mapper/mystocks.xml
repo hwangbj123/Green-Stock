@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.green.greenstock.repository.interfaces.MyStocksRepository">
+
+	<insert id="insertMyStocks">
+		INSERT INTO myStocks(p_id, amount, price, companyCode)
+		VALUES (#{pId}, #{amount}, #{price},#{stock.companyCode})
+	</insert>
+
+	<update id="updateMyStocks">
+		UPDATE mystocks
+		SET  p_id = #{pId},
+		amount = #{amount},
+		price = #{price}
+		where companyCode = #{stock.companyCode}
+	</update>
+	
+	<delete id = "deleteMyStocks">
+		DELETE from mystocks
+		WHERE companyCode = #{companyCode}
+	</delete>
+
+
+
+</mapper>

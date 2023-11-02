@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.greenstock.dto.BuySellDTO;
+import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.MyPortfolio;
 import com.green.greenstock.dto.MyStocks;
+import com.green.greenstock.dto.PortfolioInfoDTO;
 import com.green.greenstock.dto.Stock;
+import com.green.greenstock.repository.interfaces.MyStocksRepository;
 import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.interfaces.StockRepository;
 
@@ -23,13 +26,16 @@ import com.green.greenstock.repository.interfaces.StockRepository;
 public class TestRestController2 {
 
 	@Autowired
-	DataRestController dataRestController;
-	
+	private DataRestController dataRestController;
+
 	@Autowired
 	private PortfolioRepository portfolioRepository;
-	
+
 	@Autowired
 	private StockRepository stockRepository;
+	
+	@Autowired
+	private MyStocksRepository mystocksRepository;
 
 	@GetMapping("/getMyPortfolioList")
 	public List<MyPortfolio> test() {
@@ -50,45 +56,67 @@ public class TestRestController2 {
 		System.out.println(portfolioRepository.findByPortfolioId(id));
 		return portfolioRepository.findByPortfolioId(id);
 	}
+	
+	@GetMapping("/getAllDataInfo/{id}")
+	public PortfolioInfoDTO getAllDataInfo(@PathVariable int id) {
+		System.out.println("실행됨");
+		System.out.println(portfolioRepository.findByPortfolioId(id));
+		return portfolioRepository.findAllDataByPortfolioId(id);
+	}
 
 	@GetMapping("/getStock/{id}")
-	public Stock getStock(@PathVariable Integer id) {
+	public Stock getStock(@PathVariable String id) {
 		Stock stock = new Stock();
 		stock.setCompanyCode(id);
 		stock.setCompanyName("testSTock");
-		if (id < 5) {
-			stock.setPrice(1500 + id);
-		} else {
-			stock.setPrice(800 + id);
-		}
 		return stock;
 	}
+	
 
+	@GetMapping("/test")
+	public void abc() {
+		//000640
+		System.out.println(dataRestController.getStockDetailJson("000640").getStckPrpr());
+	}
+	
 	@PostMapping("/buySell/{type}")
 	public void buySell(@PathVariable String type, @RequestBody BuySellDTO buySellDto) {
 		// 포트폴리오 상태 업데이트
-		MyPortfolio mp = portfolioRepository.findByPortfolioId(buySellDto.getPotfolioId());
+		System.out.println(buySellDto);
+		MyPortfolio mp = portfolioRepository.findByPortfolioId(buySellDto.getPortfolioId());
+		System.out.println("--------------------");
+		
+		int price = Integer.parseInt(dataRestController.getStockDetailJson(buySellDto.getStockId().toString()).getStckPrpr());
+		System.out.println("--------------------");
 		MyStocks ms = new MyStocks();
 		ms.setAmount(buySellDto.getAmount());
 		Stock stock = new Stock();
 		stock.setCompanyCode(buySellDto.getStockId());
 		stock.setCompanyName(buySellDto.getCompanyName());
-		// service.getStockNowPrice(stockId) or controller.getStockNowPrice();
+		ms.setPrice(price);
+		ms.setStock(stock);
+		ms.setPId(buySellDto.getPortfolioId());
 		mp.buySell(ms, type);
+		portfolioRepository.buySellStock(mp);
+		if(type.equals("buy")) {
+			if(mp.isStockExist()) {
+				System.out.println(mp.isStockExist());
+				System.out.println("buy mystockExist");
+				mystocksRepository.updateMyStocks(ms);
+			}else {
+				System.out.println(mp.isStockExist());
+				System.out.println("buy myStockDoesntExist");
+				mystocksRepository.insertMyStocks(ms);
+			}
+		}else {
+			if(mp.isStockExist()) {
+				mystocksRepository.updateMyStocks(ms);
+			}else {
+				mystocksRepository.deleteMyStocks(ms.getStock().getCompanyCode());
+			}
+		}
 		
-		// getStockNowPrice.getStockId();
-		//ms.setStock(stockRepository.getStockByStockId(buySellDto.getStockId()));
 		
-
-		stock.setCompanyCode(buySellDto.getStockId());
-
-		/*
-		 * if (type == "buy") {
-		 * 
-		 * } else {
-		 * 
-		 * } return 1;
-		 */
 	}
 
 	@GetMapping("/getMonthlyAsset")
@@ -112,52 +140,38 @@ public class TestRestController2 {
 		return stockRepository.getAutoCompleteData();
 	}
 
-	@GetMapping("/testCode123")
-	public String testCode() {
-		System.out.println("TextCode1 탐");
-		MyPortfolio mp = new MyPortfolio();
-		mp.setPId(1);
-		MyStocks ms = new MyStocks();
-		ms.setAmount(5);
-		Stock stock = new Stock();
-		stock.setCompanyCode(1);
-		stock.setCompanyName("asdf");
-		stock.setPrice(1000);
-		ms.setStock(stock);
-		List<MyStocks> list = new ArrayList<>();
-		list.add(ms);
-		mp.setStockList(list);
-
-		Stock stock2 = new Stock();
-		stock2.setCompanyCode(1);
-		stock2.setCompanyName("asdf");
-		stock2.setPrice(1300);
-		MyStocks ms2 = new MyStocks();
-		ms2.setStock(stock2);
-		ms2.setAmount(5);
-		mp.buySell(ms2, "sell");
-		mp.setTotalAsset();
+	@PostMapping("/testCode123/{type}")
+	public String testCode(@PathVariable String type, @RequestBody MyPortfolio mp) {
+		System.out.println("------------------");
 		System.out.println(mp);
-		System.out.println("--------------------");
-		System.out.println("TextCode1 탐");
+		System.out.println("------------------");
+		if (type.equals("title")) {
+			System.out.println("title");
+			portfolioRepository.updateTitle(mp);
+		} else {
+			System.out.println("diss");
+			portfolioRepository.updateDiscription(mp);
+		}
 		return "asdf";
 	}
-	
+
 	@GetMapping("/getStockByStockName/{stockname}")
 	public Stock getStockIdByStockName(@PathVariable String stockname) {
-		System.out.println(stockname);
-		Stock stock = new Stock();
-		stock.setCompanyCode(1);
-		stock.setPrice(1000);
-		System.out.println(stock);
+		Stock stock = stockRepository.getStockByStockName(stockname);
 		return stock;
 	}
-	
-	@GetMapping("/getTestData")
-	public String bcd() {
-		String data = dataRestController.abc();
-		return data;
+
+	@GetMapping("/deletePortfolio/{pfId}")
+	public int deletePortfolio(@PathVariable int pfId) {
+		System.out.println(pfId);
+		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
-	
+
+	@GetMapping("/getTestData")
+	public DomesticStockCurrentPriceOutput bcd() {
+		DomesticStockCurrentPriceOutput a = dataRestController.getStockDetailJson("000040");
+		System.out.println(a.getStckPrpr());
+		return a;
+	}
 
 }

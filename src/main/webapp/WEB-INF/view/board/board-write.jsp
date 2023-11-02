@@ -902,7 +902,7 @@
 	                        			<tr>
 <!-- 	                        				<td>내용</td> -->
 	                        				<td colspan="2" style="padding: 30px 0px; height: 500px;">
-	                        					<textarea id="content-textarea" name="content"></textarea>
+	                        					<textarea id="summernote" name="content"></textarea>
 											</td>
 	                        			</tr>
 	                        			<tr>
@@ -1326,8 +1326,17 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
+    
+    <!-- Summernote -->
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<script>
 	$(function(){
+		$('#summernote').summernote({
+            placeholder: '내용을 작성하세요',
+            height: 400,
+            maxHeight: 400
+        });
 		$("#write-submit-btn").on("click", function(){
 			if($("#category-select").val()==null){
 				alert("카테고리를 선택해주세요");

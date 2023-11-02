@@ -25,6 +25,9 @@ $(document).ready(function() {
 			success: function(data) {
 				if (data === 200) {
 					window.location.href = "http://localhost/main";
+				} else if(data === 500) {
+					alert('정지된 유저입니다. \n자세한 내용은 가입이메일을 확인해주세요.');
+					$('#userName').focus();
 				} else {
 					alert('로그인실패. \n아이디 비밀번호를 다시 확인해주세요.');
 					$('#userName').focus();

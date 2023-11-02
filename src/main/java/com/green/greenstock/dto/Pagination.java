@@ -13,7 +13,7 @@ public class Pagination {
 	public Pagination(int countData, PagingDto paging) {
 		this.countData= countData;
 		this.paging = paging;
-		this.endPage = (int) Math.ceil(countData/10)+1;
+		this.endPage = (int) Math.ceil((countData-1)/10)+1;
 		
 		this.prev = paging.getPage()>5?true:false; // 현재 페이지 5 이상이면 true
 		this.next = paging.getPage()<endPage-5?true:false; // endpage 보다 5 이상 작으면 true

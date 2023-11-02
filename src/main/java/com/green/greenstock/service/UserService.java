@@ -1,11 +1,14 @@
 package com.green.greenstock.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.User;
@@ -83,6 +86,14 @@ public class UserService {
 		if(result != 1) {
 			throw new CustomRestfulException("회원탈퇴에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	public List<User> findAllUser(PagingDto paging) {
+		return userRepository.findAllUser(paging);
+	}
+
+	public int countUser() {
+		return userRepository.countUser();
 	}
 	
 }

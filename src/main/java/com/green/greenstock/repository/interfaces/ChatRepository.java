@@ -14,6 +14,7 @@ public interface ChatRepository {
 	public int createChattingRoom(ChattingRoom chattingRoom);
 	public List<ChattingRoom> findChattingRoomAll();
 	public int subscribe(@Param("roomId") int roomId, @Param("userId") int userId);
+	public int unSubscribe(@Param("roomId") int roomId, @Param("userId") int userId);
 	public String subCheck(@Param("roomId") int roomId, @Param("userId") int userId);
 	public int insertMessage(ChatMessage message);
 	public List<ChatMessage> selectMessageList(@Param("roomId") int roomId, @Param("userId") int userId);
