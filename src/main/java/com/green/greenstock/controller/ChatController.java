@@ -80,15 +80,17 @@ public class ChatController {
     public String product(@PathVariable("roomId") int roomId,HttpServletRequest request, Model model) {
     	
     	HttpSession session =  request.getSession();
-    	User principal = (User) session.getAttribute("principal");
     	
     	model.addAttribute("roomId", roomId);
-//    	model.addAttribute("user", principal);
-    	System.out.println("principal : "+principal);
 
-    	String subCheck = chattingService.subCheck(roomId, principal.getId());
-    	model.addAttribute("subCheck", subCheck);
-    	System.out.println("subCheck : "+subCheck);
+    	User principal = (User) session.getAttribute("principal");
+
+    	if(principal!=null) {
+    		System.out.println("principal : "+principal);
+    		String subCheck = chattingService.subCheck(roomId, principal.getId());
+    		model.addAttribute("subCheck", subCheck);
+    		System.out.println("subCheck : "+subCheck);
+    	}
     	
     	return "chatting/product";
     }

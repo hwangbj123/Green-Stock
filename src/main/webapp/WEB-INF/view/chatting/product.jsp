@@ -1140,7 +1140,7 @@
 <%--                           	<input type="button" onclick="window.open('/chat?roomId=${roomId}&userId=${principal.id}','_blank','width=450,height=600')" value="새 창"> --%>
 							<c:choose>
 	                        	<c:when test="${empty principal}">
-	                        		<button class="btn btn-primary" style="width: 100%; font-weight: bold;" onclick="location.href='/user/sign-in'">채팅 서비스를 이용하시려면 로그인이 필요합니다</button>
+	                        		<button class="btn btn-primary" style="width: 100%; font-size: 12px; font-weight: bold;" onclick="location.href='/user/sign-in'">채팅 서비스 ( 로그인 필요 )</button>
 	                        	</c:when>
 	                        	<c:when test="${subCheck eq principal.id}">
 		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />

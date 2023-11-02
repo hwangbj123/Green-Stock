@@ -41,9 +41,9 @@ public class BoardController {
 		return "board/board-write";
 	}
 	@PostMapping("/board-write")
-	public String postBoardWrite(Board board) {
+	public String postBoardWrite(Board board, HttpServletRequest request) {
 		System.out.println("board-write board : "+board);
-		boardService.insertBoard(board);
+		boardService.insertBoard(board, request);
 		return "redirect:/board/list";
 	}
 	
@@ -123,8 +123,8 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board-update")
-	public String postBoardUpdate(Board board) {
-		boardService.updateBoard(board);
+	public String postBoardUpdate(Board board, HttpServletRequest request) {
+		boardService.updateBoard(board, request);
 		System.out.println("board update success");
 		return "redirect:list";
 	}
