@@ -36,6 +36,16 @@
  
      <!-- Background css -->
      <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
+     <style>
+     	#unSubscribe-btn{
+	     	width: 100%; 
+	     	height: 30px; 
+	     	border-radius: 3px; 
+	     	background-color: #e55; 
+	     	color: white; 
+	     	margin-bottom: 10px;
+     	}
+     </style>
  </head>
 <body class="product_page">
     <div id="ec-overlay">
@@ -1143,10 +1153,13 @@
 	                        		<button class="btn btn-primary" style="width: 100%; font-size: 12px; font-weight: bold;" onclick="location.href='/user/sign-in'">채팅 서비스 ( 로그인 필요 )</button>
 	                        	</c:when>
 	                        	<c:when test="${subCheck eq principal.id}">
+	                        		<button type="button" id="unSubscribe-btn" onclick="unsubscribe(${roomId}, ${principal.id})">
+	                        			구독 해제
+	                        		</button>
 		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />
 	                        	</c:when>
 	                        	<c:otherwise>
-	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="fetchFnc(${roomId},${principal.id})">채팅창 열기</button>
+	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribe(${roomId},${principal.id})">채팅창 열기</button>
 	                        	</c:otherwise>
 							</c:choose>
 <!-- 	                        	<div class="chattingDiv" style="display: none;"> -->
@@ -2007,16 +2020,6 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-	<script>
-		async function fetchFnc(roomId, userId){
-			var response = await fetch("/subCheck?roomId="+roomId+"&userId="+userId);
-			var subRes = await response.json();
-			if(subRes==0){
-				if(confirm("해당 채널에 구독 되어있지 않습니다. 구독하시겠습니까?")){
-					location.href="/subscribe?roomId="+roomId+"&userId="+userId;
-				}
-			}
-		}
-   	</script> 
+    <script src="/resources/js/custom/subscribe.js"></script>
 </body>
 </html>

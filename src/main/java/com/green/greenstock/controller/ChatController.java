@@ -76,6 +76,12 @@ public class ChatController {
 		return "redirect:product/"+roomId;
 	}
 	
+	@GetMapping("/un-subscribe")
+	public String unSubscribe(int roomId, int userId) {
+		chattingService.unSubscribe(roomId, userId);
+		return "redirect:product/"+roomId;
+	}
+	
     @GetMapping("product/{roomId}")
     public String product(@PathVariable("roomId") int roomId,HttpServletRequest request, Model model) {
     	

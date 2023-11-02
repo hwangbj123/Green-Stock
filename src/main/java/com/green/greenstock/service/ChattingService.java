@@ -29,6 +29,10 @@ public class ChattingService {
 		return chatRepository.subscribe(roomId, userId);
 	}
 	
+	public int unSubscribe(int roomId, int userId) {
+		return chatRepository.unSubscribe(roomId, userId);
+	}
+	
 	public String subCheck(int roomId, int userId) {
 		System.out.println("subCheck Service ");
 		String res = chatRepository.subCheck(roomId, userId);
