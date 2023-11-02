@@ -80,7 +80,7 @@
     <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography row">
     	<div class="col-4">
     		<h1 class="ec-fw-bold mb-2">${companyName}</h1>
-      		<!-- <button id="test" class="btn btn-primary">실시간 온</button> -->
+      		<button id="test" class="btn btn-primary">실시간 온</button>
 
       		<p class="breadcrumbs w-100" id="companyCode">
         		<span><i class="mdi mdi-chevron-right"></i></span>${companyCode}
@@ -123,12 +123,12 @@
 		      <div class="col-lg-3 col-md-6">
 		      	<div>
 		          <h6>전일대비</h6>
-		          <p class="changeElementArray">
+		          <p>
 		          	<span class="${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${stockCurrentPrice.prdyVrssSign < 3 ? '▲' : '▼'}</span> 
 		          	<span class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
 		          	<fmt:formatNumber value="${stockCurrentPrice.prdyVrss}"/></span>
 		          	 | 
-		          	 <span class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${stockCurrentPrice.prdyCtrt} %</span></p>
+		          	 <span class="changeElementArray ${stockCurrentPrice.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${stockCurrentPrice.prdyCtrt} </span>%</p>
 		        </div>
 		      </div>
 		      <div class="col-lg-3 col-md-6">
@@ -299,10 +299,6 @@
    
 <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
 </body>
-<script>
-const companyCode = document.getElementById('companyCode'); // 종목코드
-const companyCodeStr = companyCode.textContent.trim();
-</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 <script src="/js/chart.js"></script>

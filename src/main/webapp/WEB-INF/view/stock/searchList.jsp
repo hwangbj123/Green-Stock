@@ -48,6 +48,8 @@
 	    <!-- Main Js -->
 	    <script src="/resources/js/vendor/index.js"></script>
 	    <script src="/resources/js/main.js"></script>
+	    <!-- kjh -->
+	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 	    <style>
 	    	.primaryColorRed{
 	    		color: #ff909d;
@@ -67,18 +69,22 @@
 		    	padding: 3.6px 3.4px;
     			font-size: 0.65rem;
 	    	}
-	    	
+	    	.findResult::before {
+	    	    content: '\f002';
+    			font: var(--fa-font-solid);
+    			margin-right: 5px;
+	    	}
 	    </style>
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->
-<div class="ec-content-wrapper container">
+<div class="ec-content-wrapper container mb-5">
 	<div class="content">
 		<div class="breadcrumb-wrapper">
 			<div>
 				<h4>검색목록</h4>
-				<p class="breadcrumbs"><span>&quot;${responseDomesticStockSearchDto.searchData}&quot;</span>
+				<p class="breadcrumbs mb-3 findResult"><span>&quot;${responseDomesticStockSearchDto.searchData}&quot;</span>
 					<span><i class="mdi mdi-chevron-right"></i></span>검색결과 ${responseDomesticStockSearchDto.pagination.totalCount} 건</p>
 			</div>
 		</div>
@@ -138,14 +144,14 @@
                             <span>Showing ${responseDomesticStockSearchDto.pagination.start}-${responseDomesticStockSearchDto.pagination.end} of ${responseDomesticStockSearchDto.pagination.totalCount} 개</span>
                             <ul class="ec-pro-pagination-inner">
                                 <c:if test="${responseDomesticStockSearchDto.pagination.prevPageGroup}">
-                                	<li><a class="next" href="#">Next <i class="ecicon eci-angle-right"></i></a></li>
+                                	<li><a class="next" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${responseDomesticStockSearchDto.pagination.currentPage - 1}">Prev <i class="ecicon eci-angle-left"></i></a></li>
                                	</c:if>
                             
                             	<c:forEach var="num" begin="${responseDomesticStockSearchDto.pagination.startPageGroup}" end="${responseDomesticStockSearchDto.pagination.endPageGroup}">
                                 <li><a class="${num eq responseDomesticStockSearchDto.pagination.currentPage ? 'active' : ''}" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${num}">${num}</a></li>
                                 </c:forEach>
                                 <c:if test="${responseDomesticStockSearchDto.pagination.nextPageGroup}">
-                                	<li><a class="next" href="#">Next <i class="ecicon eci-angle-right"></i></a></li>
+                                	<li><a class="next" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${responseDomesticStockSearchDto.pagination.currentPage + 1}">Next <i class="ecicon eci-angle-right"></i></a></li>
                                	</c:if>
                             </ul>
                         </div>
@@ -155,4 +161,6 @@
 		</div>
 	</div> <!-- End Content -->
 </div> <!-- End Content Wrapper -->
-<%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
+<%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+</body>
+</html>
