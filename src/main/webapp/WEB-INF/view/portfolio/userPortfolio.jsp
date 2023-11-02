@@ -39,10 +39,6 @@
 	background-color: white; /* 배경색을 흰색으로 설정 */
 	color: black; /* 텍스트 색상을 흰색으로 설정 */
 }
-div[data-clicked="true"]:not(#addCard) div{
-	border-radius : 2px;
-	box-shadow : 1px 2px 2px 0px blue;
-}
 </style>
 </head>
 
@@ -898,8 +894,8 @@ div[data-clicked="true"]:not(#addCard) div{
 								id="recent-orders">
 								<div class="card-header justify-content-between">
 									<h2>My Stock</h2>
-									<div id="addStock"
-										style="width: 5%; height: 100%; cursor: pointer">+</div>
+									<span id="addStock"
+										style="width: 5%; height: 100%; cursor: pointer" class = "mdi mdi-clipboard-plus"></span>
 								</div>
 								<div class="card-body pt-0 pb-5">
 									<table id="myStockCardTable"
@@ -940,6 +936,8 @@ div[data-clicked="true"]:not(#addCard) div{
 										</tbody> -->
 									</table>
 								</div>
+								<div id="stockCardFooter"
+									class="card-footer d-flex flex-wrap bg-white p-20"></div>
 							</div>
 						</div>
 					</div>

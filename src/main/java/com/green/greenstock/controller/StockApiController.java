@@ -2,7 +2,6 @@ package com.green.greenstock.controller;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -15,17 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
-import com.green.greenstock.dto.InquireDailyItemChartPriceOutput;
 import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.service.StockApiService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -122,8 +119,11 @@ public class StockApiController {
 	
 	// 국내주식기간별시세(일/주/월/년)
 	@ResponseBody
-	@GetMapping("/InquireDailyItemChartPrice/{companyCode}")
-	public String getDailyPrice(@PathVariable String companyCode) {
-		return stockApiService.getDailyitemchartprice(companyCode);
+	@GetMapping("/InquireDailyItemChartPrice/{companyCode}/{date}")
+	public String getDailyPrice(@PathVariable String companyCode, @PathVariable String date) {
+		if(companyCode == null || date == null || companyCode.isEmpty() || date.isEmpty()) {
+			throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
+		}
+		return stockApiService.getDailyitemchartprice(companyCode, date);
 	}
 }

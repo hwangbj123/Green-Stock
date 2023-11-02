@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class BuySellDTO {
-	private Integer potfolioId;
-	private Integer stockId;
+	private Integer portfolioId;
+	private String stockId;
 	private String companyName;
 	private Integer price;
-	private double amount;
+	private int amount;
 }
