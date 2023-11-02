@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 	 <link rel = "stylesheet" href="/"/>
      <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
      <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
@@ -49,13 +50,72 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-     
+    
+    <!--summernote  -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>		     
 </head>
 <body>
+<div class ="container">
+<textarea id="summernote" name="content"></textarea>
 
- <script type="text/javascript">
-
+<script>
+    
 </script>
+
+	                     		           
+<div class="content container" style="width: 50%; ">
+		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between"
+		style="width :1000px ">					
+			<div>
+				<p class="breadcrumbs">										
+					<i class="mdi mdi-chevron-right">
+					</i>
+					</p><nav>
+					<h3>작성 페이지</h3>
+					</nav>
+					<label for="file">파일 올려주세요 
+					  <input type="file"
+					         id="profile"
+					         accept="image/png, image/jpeg">
+					</label>
+			</div>					
+		</div>
+        <form action="/notice/admin/write" method="post">
+        <div>
+        <input type="hidden" value="1" name="userId" style="">제목 :</div>
+            <table class="noticeWrite" style="width: 840px; height:200px ;">            
+            	<tbody><tr>
+            		<td>
+            			<input type="text" value="" name="noticeTitle" required="required">
+            		</td>
+            	</tr>            	
+            	<tr>
+            		<td>
+            		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>
+            		</td>            		            	
+            	</tr>  
+            	<tr>
+            	<td>		            	
+           			<div style="text-align: right;">
+					    <input type="radio" name="noticeState" value="0" checked style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;text-align: center;">비공개
+					    <input type="radio" name="noticeState" value="1" style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;">공개	
+					</div>
+            	</td>            		
+            	</tr>            	                
+            	<tr>
+            		<td>
+            			<a><button type="submit" class="btn btn-primary">작성</button></a> 
+            			<a><button type="submit" class="btn btn-primary">취소</button></a>                                       	
+            		</td>            		           	
+            	</tr>             	                                                   
+    	</tbody>
+    	</table>
+    	</form>
+    	</div>
+</div>
+
     <header class="ec-header">
         <!--Ec Header Top Start -->
         <div class="header-top">
@@ -180,55 +240,7 @@
         </div>
         <!-- Header responsive Bottom  End -->        
         <!-- Ec Main Menu End -->	     
-	<div class="content container" style="width: 50%; ">
-		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between"
-		style="width :1000px ">					
-			<div>
-				<p class="breadcrumbs">										
-					<i class="mdi mdi-chevron-right">
-					</i>
-					</p><nav>
-					<h3>작성 페이지</h3>
-					</nav>
-					<label for="file">파일 올려주세요 
-					  <input type="file"
-					         id="profile"
-					         accept="image/png, image/jpeg">
-					</label>
-			</div>					
-		</div>
-        <form action="/notice/admin/write" method="post">
-        <div>
-        <input type="hidden" value="1" name="userId" style="">제목 :</div>
-            <table class="noticeWrite" style="width: 840px; height:200px ;">            
-            	<tbody><tr>
-            		<td>
-            			<input type="text" value="" name="noticeTitle" required="required">
-            		</td>
-            	</tr>            	
-            	<tr>
-            		<td>
-            		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>
-            		</td>            		            	
-            	</tr>  
-            	<tr>
-            	<td>		            	
-           			<div style="text-align: right;">
-					    <input type="radio" name="noticeState" value="0" checked style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;text-align: center;">비공개
-					    <input type="radio" name="noticeState" value="1" style="font-size: 5px;width: 3%;height: 20px;margin-right: 0px;">공개	
-					</div>
-            	</td>            		
-            	</tr>            	                
-            	<tr>
-            		<td>
-            			<a><button type="submit" class="btn btn-primary">작성</button></a> 
-            			<a><button type="submit" class="btn btn-primary">취소</button></a>                                       	
-            		</td>            		           	
-            	</tr>             	                                                   
-    	</tbody>
-    	</table>
-    	</form>
-    	</div>
+	
 	</header>
 	</body>
 	</head>

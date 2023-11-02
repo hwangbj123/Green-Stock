@@ -625,7 +625,7 @@
 													<td>${notice.userId}</td>
 													<td>1</td>
 													<td>${notice.noticeUpdated}</td>
-													<td>${notice.hitCount}</td>
+													<td>조회수: ${notice.hitCount}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -645,6 +645,7 @@
 														id="responsive-data-table_previous"><a href="#"
 														aria-controls="responsive-data-table" data-dt-idx="0"
 														tabindex="0" class="page-link">Previous</a></li>
+													
 													<li class="paginate_button page-item active"><a
 														href="#" aria-controls="responsive-data-table"
 														data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
@@ -658,6 +659,7 @@
 														id="responsive-data-table_next"><a href="#"
 														aria-controls="responsive-data-table" data-dt-idx="4"
 														tabindex="0" class="page-link">Next</a></li>
+													
 												</ul>
 											</div>
 										</div>

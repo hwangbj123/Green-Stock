@@ -620,7 +620,7 @@
 													<td><a href="/notice/view/${notice.id}">${notice.noticeTitle}</a></td>
 													<td>${notice.userId}</td>
 													<td>${notice.noticeUpdated}</td>
-													<td>${notice.hitCount}</td>
+													<td>조회수 : ${notice.hitCount}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -645,6 +645,7 @@
 													<li class="paginate_button page-item "><a href="#"
 														aria-controls="responsive-data-table" data-dt-idx="3"
 														tabindex="0" class="page-link">3</a></li>
+														
 													<li class="paginate_button page-item next"
 														id="responsive-data-table_next"><a href="#"
 														aria-controls="responsive-data-table" data-dt-idx="4"
