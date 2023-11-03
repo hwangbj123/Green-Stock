@@ -109,6 +109,8 @@ public class BoardController {
 			
 			model.addAttribute("thumb", thumb);
 			model.addAttribute("replyUser",replyUser);
+		}else {
+			model.addAttribute("replyUser",'0');
 		}
 		
 		boardService.viewCountUpFnc(paging.getBoardId(), request, response);
@@ -140,8 +142,9 @@ public class BoardController {
 		return "redirect:list";
 	}
 	@PostMapping("/board-delete")
-	public String boardDelete(Board board) {
-//		boardService.deleteBoard(board);
+	public String boardDelete(Board board, HttpServletRequest request) {
+		boardService.deleteBoard(board, request);
+		System.out.println("board delete request : "+request);
 		System.out.println("board delete success");
 		return "redirect:/board/list";
 	}
@@ -170,6 +173,7 @@ public class BoardController {
 	public String postReplyDelete(Reply reply) {
 		System.out.println("reply-delete board : "+reply);
 		replyService.deleteReply(reply);
+		replyService.deleteReplyRecommand(reply);
 		int boardId = reply.getBoardId();
 		return "redirect:detail?boardId="+boardId;
 	}

@@ -59,6 +59,10 @@
 			,deleted = 1
 		where id=#{id}
 	</update>
+	<update id="deleteReplyRecommand">
+		delete from reply_recommand
+		where reply_id=#{id}
+	</update>
 	
 	<insert id="replyThumbUp">
 		insert into reply_recommand

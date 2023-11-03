@@ -94,16 +94,13 @@
 						<form action="/admin/search-user" id="search-frm">
 							<div class="search-form d-lg-inline-block">
 								<div class="input-group" style="margin-top: 20px;">
-									<input type="text" name="search" id="search-input"
+									<input type="text" name="search" id="c-search-input"
 										class="form-control" placeholder="search user" autofocus
 										autocomplete="off" style="border: 1px solid #ddd;"/>
-									<button type="button" name="search" id="search-btn"
+									<button type="button" id="search-btnn"
 										class="btn btn-flat" style="border: 1px solid #ddd;">
 										<i class="mdi mdi-magnify"></i>
 									</button>
-								</div>
-								<div id="search-results-container">
-									<ul id="search-results"></ul>
 								</div>
 							</div>
 						</form>
@@ -207,8 +204,8 @@
 
 					<div class="modal-footer px-4">
 						<button type="button" class="btn btn-secondary btn-pill"
-							data-bs-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary btn-pill">정지하기</button>
+							data-bs-dismiss="modal">취소</button>
+						<button type="submit" id = "suspend=btn" class="btn btn-primary btn-pill" onclick="this.disabled=true;">정지하기</button>
 					</div>
 				</form>
 			</div>
@@ -218,3 +215,8 @@
 </div>
 <!-- End Content Wrapper -->
 <%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>
+
+<!-- custom Js -->
+<script src="/resources/js/custom/common.js"></script>
+<script src="/resources/js/custom/adminUser.js"></script>
+

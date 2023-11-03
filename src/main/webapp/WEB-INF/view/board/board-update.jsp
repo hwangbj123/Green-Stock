@@ -38,42 +38,10 @@
      <!-- Background css -->
      <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
      
-     <style>
-     	.board-content{
-     		width: 80%;
-     		min-width: 400px;
-     		height: 800px;
-     		margin: auto;
-     		border: 1px solid black;
-     	}
-     	.write-tb{
-     		width: 100%;
-     		height: 800px;
-     		text-align: center;
-     	}
-     	.write-tb td{
-     		min-height: 50px;
-     	}
-     	.write-tb td input{
-     		width: 90%;
-     		height: 50px;
-     	}
-     	.write-tb td select{
-     		width: 90%;
-     		height: 50px;
-     		text-align: center;
-     	}
-     	.write-tb td button{
-     		width: 60%;
-     		height: 60px;
-     		margin: 10px;
-     	}
-     	#content-textarea{
-     		width: 100%;
-     		height: 100%;
-     		resize: none;
-     	}
-     </style>
+     <!-- Custom css -->
+     <link rel="stylesheet" href="/resources/css/custom/boardWrite.css" />
+     
+     
  </head>
 <body class="blog_page">
     <div id="ec-overlay">
@@ -873,7 +841,7 @@
                     <div class="ec-blogs-content">
                         <div class="ec-blogs-inner">
                         	<div class="board-content">
-                        		<form method="post" action="/board/board-update" id="board-update-frm">
+                        		<form method="post" action="/board/board-update" id="board-write-frm">
 	                        		<table class="write-tb">
 	                        			<tr>
 	                        				<td>
@@ -909,7 +877,8 @@
 	                        			</tr>
 	                        			<tr>
 	                        				<td colspan="2">
-	                        					<button type="button" class="btn btn-primary" id="update-submit-btn">저장</button>
+	                        					<button type="button" class="btn btn-primary" id="update-submit-btn" onclick="boardWriteInit.submit()">저장</button>
+	                        					<button type="button" class="custom-btn btn-1" onclick="history.back()">취소</button>
 	                        				</td>
 	                        			</tr>
 	                        		</table>
@@ -1346,7 +1315,7 @@
 	    		$('#content-textarea').focus();
 	    	}else{
 	    		if(confirm("해당 내용으로 글을 수정하시겠습니까?")){
-		    		$("#board-update-frm").submit();
+		    		$("#board-write-frm").submit();
 	    		}
 	    	}
 		})

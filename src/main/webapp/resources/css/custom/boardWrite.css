@@ -1,0 +1,35 @@
+@charset "EUC-KR";
+.board-content{
+	width: 80%;
+	min-width: 400px;
+	height: 800px;
+	margin: auto;
+	border: 1px solid black;
+}
+.write-tb{
+	width: 100%;
+	height: 800px;
+	text-align: center;
+}
+.write-tb td{
+	min-height: 50px;
+}
+.write-tb td input{
+	width: 90%;
+	height: 50px;
+}
+.write-tb td select{
+	width: 90%;
+	height: 50px;
+	text-align: center;
+}
+.write-tb td button{
+	width: 30%;
+	height: 60px;
+	margin: 10px;
+}
+#content-textarea{
+	width: 90%;
+	height: 90%;
+	resize: none;
+}
