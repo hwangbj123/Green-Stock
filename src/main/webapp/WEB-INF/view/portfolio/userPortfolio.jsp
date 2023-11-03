@@ -52,13 +52,13 @@
 		<!--  PAGE WRAPPER -->
 		<div style="width: 100%;">
 			<!-- <div class="ec-page-wrapper"> -->
-			<div style="width: 80%; margin : auto;">
+			<div style="width: 100%; margin: auto;">
 
 				<!-- Header -->
 				<%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 				<!-- CONTENT WRAPPER -->
-				<div class="ec-content-wrapper" style = "width : 70%; margin : auto;">
+				<div class="ec-content-wrapper" style="width: 50%; margin: auto;">
 					<div class="content">
 						<!-- Top Statistics -->
 						<div id="smallCardOuterWrapper" class="row"></div>
@@ -67,7 +67,7 @@
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<div class="card card-default" style="height: 100%">
 									<div class="card-header justify-content-center">
-										<h2>Card Header</h2>
+										<h2>Portfolio Info</h2>
 									</div>
 									<div id="portfolioInfo" class="card-body"></div>
 									<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
@@ -88,7 +88,7 @@
 									<div class="card-header">
 										<h2>Ranking</h2>
 									</div>
-									<div class="card-body">
+									<div id="rankingBody" style="overflow: auto" class="card-body">
 										<div class="tab-content" id="rankingWrapper"></div>
 									</div>
 								</div>
@@ -108,6 +108,28 @@
 									</div>
 									<div class="card-body pt-0 pb-5">
 										<table id="myStockCardTable"
+											class="table card-table table-responsive table-responsive-large"
+											style="width: 100%">
+
+										</table>
+									</div>
+									<div id="stockCardFooter"
+										class="card-footer d-flex flex-wrap bg-white p-20"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-12 p-b-15">
+								<!-- trade log table -->
+								<div
+									class="card card-table-border-none card-default recent-orders"
+									id="recent-orders">
+									<div class="card-header justify-content-between">
+										<h2>Trade log</h2>
+									</div>
+									<div class="card-body pt-0 pb-5" style="overflow : auto; height : 300px;">
+										<table id="myTradeLogTable"
 											class="table card-table table-responsive table-responsive-large"
 											style="width: 100%">
 

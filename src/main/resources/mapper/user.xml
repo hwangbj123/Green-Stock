@@ -37,6 +37,10 @@
 		select count(*) from user_tb
 	</select>
 	
+	<select id="findAdminMainUserList" resultType="User">
+		select * from user_tb order by id desc limit 10
+	</select>
+	
 	<update id="modifyUserPw">
 		update user_tb set password = #{password} where user_name = #{userName}
 	</update>

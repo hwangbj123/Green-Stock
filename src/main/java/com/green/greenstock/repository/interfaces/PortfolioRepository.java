@@ -18,4 +18,6 @@ public interface PortfolioRepository {
 	int updateDiscription(MyPortfolio mp);
 	int deleteByPortfolioId(Integer id);
 	void buySellStock(MyPortfolio mp);
+	List<MyPortfolio> findAllPortfolioDescRor();
+	int updateVisibility(MyPortfolio mp);
 }

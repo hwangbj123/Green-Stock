@@ -12,5 +12,9 @@
 		#{price}, #{quantity});
 
 	</insert>
+	
+	<select id="findAllTradeLogByPortfolioId" resultType="com.green.greenstock.dto.TradeLogDTO">
+		select * from tradelog where p_id = #{pid} order by id desc;
+	</select>
 
 </mapper>

@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.green.greenstock.dto.NoticePagingDto;
+import com.green.greenstock.dto.PageCriteriation;
 import com.green.greenstock.dto.NoticeUpdateDto;
 import com.green.greenstock.dto.NoticeWriteDto;
+import com.green.greenstock.dto.PageCriteriaDto;
 import com.green.greenstock.repository.model.Noticeboard;
 
 
@@ -18,7 +19,7 @@ public interface BoardNoticeRepository {
 	 * 공지사항 목록
 	 * @return
 	 */
-	public List<Noticeboard>findAll();
+	public List<Noticeboard>findAll(PageCriteriaDto criteriaDto);
 	
 	
 	/**
@@ -59,11 +60,13 @@ public interface BoardNoticeRepository {
 	
 	
 	/**
-	 * 페이징 기능 
+	 * 한페이지의 전체 글수 는 몇개인가?
 	 * @param id
 	 * @return
 	 */
-	public int listCount(NoticePagingDto noticePagingDto);	
+	public int listCount(PageCriteriaDto criteriaDto);
+	
+	
 	
 	/**
 	 * 검색 기능
@@ -79,19 +82,6 @@ public interface BoardNoticeRepository {
 	/**
 	 * 카테고리 기능
 	 */
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 }

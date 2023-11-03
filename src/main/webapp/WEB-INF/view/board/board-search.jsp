@@ -37,80 +37,10 @@
  
      <!-- Background css -->
      <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-     <style>
-     	.board-div{
-     		width: 80%;
-     		margin: 30px auto;
-     		
-     	}
-     	.board-tb{
-     		width: 90%;
-     		min-width: 500px;
-     		margin: auto;
-     		text-align: center;
-     	}
-     	.board-tb td{
-     		height: 50px;
-     	}
-     	.page-a{
-     		display: inline-block;
-     		border: 1px solid lightgrey;
-/*      		width: 30px;  */
-     		padding: 7px 18px;
-     		margin: 1px;
-     		border-radius: 5px;
-     	}
-     	#page{
-     		 width: 100%; 
-     		 margin: auto; 
-     		 text-align: center; 
-     		 margin-top: 50px;
-     		 display: flex;
-     		 justify-content: center;
-     	}
-     	#listopt-div{
-     		 width: 100%; 
-     		 margin: auto; 
-     		 text-align: center; 
-     		 margin-top: 50px;
-     		 padding: 0px 50px;
-     		 display: flex;
-     		 justify-content: space-between;
-     	}
-     	#listopt-div button{
-     		width: 100px;
-     	}
-     	#search-div {
-     		width: 600px;
-     		display: flex;
-     		justify-content: space-between;
-     	}
-     	#search-div select{
-     		height: 43px;
-     		width: 60px;
-     		text-align: center;
-     	}
-     	#search-div input{
-     		width: 330px;
-     		height: 45px;
-     	}
-     	#category-tb {
-     		width: 65%;
-     		height: 40px;
-     		margin: auto;
-     	}
-     	#category-tb td{
-/*      		border: 1px solid #3474d4; */
-     		padding: 1px;
-     	}
-     	#category-tb button{
-     		width: 100%;
-     		height: 100%;
-     		border: 1px solid #3474d4;
-     		color: #777777;
-     	}
-     	
-     </style>
+     
+     <!-- Custom css -->
+     <link rel="stylesheet" href="/resources/css/custom/boardList.css" />
+
  </head>
 <body>
     <div id="ec-overlay">
@@ -906,7 +836,7 @@
     			<tr>
 					<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/list"' >전체</button></td>
 					<c:forEach var="c" items="${cate}" varStatus="status">
-						<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
+						<td><button type="button" class="btn btn-primary" id="category-btn-${status.count}" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
 					</c:forEach>
 				</tr>
     	</table>
@@ -1015,7 +945,7 @@
 			    		<a class="btn btn-primary" href="/board/write">글 작성</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a class="btn btn-primary" onclick="toSignIn()">글 작성</a>
+	    				<a class="btn btn-primary" onclick="boardListInit.toSignIn()">글 작성</a>
 	    			</c:otherwise>
 	    		</c:choose>
 	    	</div>
@@ -1608,31 +1538,8 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-	<script>
-		function searchParam(key) {
-	   	  return new URLSearchParams(location.search).get(key);
-	   	};
-	   	
-	   	function toSignIn(){
-    		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
-    			location.href="/user/sign-in";
-    		}
-    	}
-	   	
-	   	$(function(){
-	   		var cate = searchParam('categoryId');
-	   		if(cate){
-	   			$("#search-div").append('<input type="hidden" name="categoryId" value="'+cate+'">');
-	   		}
-	   		
-			$("#search-btn").on("click", function(){
-				if($("input[name=searchWord]").val().length!=0){
-					$("#search-frm").submit();
-				}else{
-					$("input[name=searchWord]").focus();
-				}
-			}) // end of onclick
-	   	})
-	</script>
+    
+	<script src="/resources/js/custom/boardList.js"></script>
+	
 </body>
 </html>

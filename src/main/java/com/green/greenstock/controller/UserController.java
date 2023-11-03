@@ -32,21 +32,20 @@ import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SocialLoginService;
 import com.green.greenstock.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	
-	@Autowired
-	private MailSendService mailSendService;
+	private final MailSendService mailSendService;
 	
-	@Autowired
-	private SocialLoginService socialLoginServiceImpl;
+	private final SocialLoginService socialLoginServiceImpl;
 	
 	@Autowired
 	HttpSession session;
@@ -228,9 +227,9 @@ public class UserController {
 						.regDate(Timestamp.valueOf(LocalDateTime.now())).build();
 
 				userService.insertUser(user);
-				oldUser = user;
+				oldUser = userService.findUserName(user.getUserName());
 			}
-
+			log.info("user : " + oldUser);
 			// 기존 이용자
 			session.setAttribute("principal", oldUser);
 			session.setAttribute("isGoogle", true);
@@ -272,6 +271,7 @@ public class UserController {
 
 		    //첫번째 네이버로그인 
 		    if(oldUser == null) { 
+				log.info("기존유저가 아니므로 회원가입 진행");
 		    	Date date =	Date.valueOf(naverUser.getBirthyear()+ "-" + naverUser.getBirthday());
 
 			    User user = User.builder()
@@ -283,8 +283,9 @@ public class UserController {
 			            .build();
 	
 			    userService.insertUser(user);
-			    oldUser = user;
+			    oldUser = userService.findUserName(user.getUserName());
 			    }
+			log.info("user : " + oldUser);
 		    //기존 이용자 
 		    session.setAttribute("principal", oldUser);
 		    session.setAttribute("isNaver", true);
@@ -348,26 +349,17 @@ public class UserController {
 			log.info("userDto : " + userDto);
 
 			userService.insertUser(userDto);
-			oldUser = userDto;
+			oldUser = userService.findUserName(userDto.getUserName());
 		} else {
 			log.info("가입된 회원이므로 카카오 로그인 진행");
 		}
-
-		StringBuilder kakaoName = new StringBuilder(oldUser.getEmail());
-
-		for (int i = 0; i < kakaoName.length(); i++) {
-			if (kakaoName.charAt(i) == '@')
-				kakaoName.delete(i, kakaoName.length());
-		}
-
-		oldUser.setUserName(kakaoName.toString());
 
 		log.info("user : " + oldUser);
 
 		session.setAttribute("principal", oldUser);
 
 		session.setAttribute("iskakao", true);
-
+		
 		String uri = (String) session.getAttribute("beforeLogin");
 		if (uri != null && !uri.equals("http://localhost/user/sign-up")
 				&& !uri.equals("http://localhost/user/sign-in")) {

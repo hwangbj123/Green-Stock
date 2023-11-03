@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
+import com.green.greenstock.handler.exception.UnSearchedException;
 import com.green.greenstock.handler.exception.UnSignUpException;
 
 
@@ -53,6 +54,16 @@ public class MyRestfullExceptionHandler {
 		sb.append("<script>");
 		sb.append("alert('"+e.getMessage() + "');");
 		sb.append("location.href='/user/signUp';");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	@ExceptionHandler(UnSearchedException.class)
+	public String notSearchException(UnSearchedException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('"+e.getMessage() + "');");
+		sb.append("location.href='/admin/user';");
 		sb.append("</script>");
 		return sb.toString();
 	}

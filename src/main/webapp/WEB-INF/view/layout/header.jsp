@@ -92,7 +92,10 @@
                                 	<li><a href="http://localhost/user/verify-user" style="display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">User-Info</span></a></li>
 									<li><a href="http://localhost/user/sign-out" style="display: flex; align-items: center;" class="signIn_button"><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a></li>
                                 </c:if>
-
+                                <c:if test="${principal.roletypeId == 0}">
+                                	<li><a href="http://localhost/admin/main" style="display: flex; align-items: center;" class="login_btn"><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Admin-Page</span></a></li>
+									<li><a href="http://localhost/user/sign-out" style="display: flex; align-items: center;" class="signIn_button"><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a></li>
+                                </c:if>
                             </div>
                         </div>
                     </div>

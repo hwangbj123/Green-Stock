@@ -31,4 +31,6 @@ public interface UserRepository {
 	public List<User> findBySuspended(boolean b);
 
 	public List<User> findSearchUser(@Param("search")String search, @Param("paging")PagingDto paging);
+
+	public List<User> findAdminMainUserList();
 }
