@@ -9,39 +9,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.green.greenstock.dto.Pagination;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
+import com.green.greenstock.handler.exception.UnSearchedException;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SuspensionService;
 import com.green.greenstock.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	
-	@Autowired
-	private SuspensionService suspensionService;
+	private final SuspensionService suspensionService;
 	
-	@Autowired
-	private MailSendService mailSendService;
+	private final MailSendService mailSendService;
 	
 	@Autowired
 	HttpSession session;
 	
 	@GetMapping("/main")
-	public String AdminMain() {
+	public String AdminMain(Model model) {
 		
 		//접근유저가 권한있는 사용자인지 확인
 		if(session.getAttribute("principal") == null) {
@@ -53,6 +52,9 @@ public class AdminController {
 		if(user.getRoletypeId() != 0) {
 			throw new UnAuthorizedException("권한있는 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
 		}
+		
+		List<User> userList = userService.findAdminMainUserList();
+		model.addAttribute("userList", userList);
 		
 		return "admin/adminMain";
 	}
@@ -83,8 +85,10 @@ public class AdminController {
 	@GetMapping("/search-user")
 	public String searchUser(String search, PagingDto paging, Model model) {
 		List<User> userList = userService.findSearchUser(search ,paging);
-		int total = 1;
-		Pagination pagination = new Pagination(total, paging);
+		if(userList.isEmpty()) {
+			throw new UnSearchedException("해당 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+		}
+		Pagination pagination = new Pagination(1, paging);
 		model.addAttribute("userList", userList);
 		model.addAttribute("page", pagination);
 		return "admin/adminUser";

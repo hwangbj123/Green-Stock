@@ -34,7 +34,7 @@ let verifyUser = {
 				if (data === 200) {
 					window.location.href = "http://localhost/user/user-info";
 				} else {
-					alert('로그인실패. \n아이디 비밀번호를 다시 확인해주세요.');
+					alert('유저 인증 실패. \n아이디 비밀번호를 다시 확인해주세요.');
 					$('#userName').focus();
 				}
 			}
