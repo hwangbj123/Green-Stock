@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <%-- <%@ include file="/WEB-INF/view/layout/header.jsp" %> --%>
 <!DOCTYPE html>
 
@@ -630,41 +631,61 @@
 											</c:forEach>
 										</tbody>
 									</table>
-
+									
+									
 									<div class="write">	
 										<a href="/notice/admin/write" class="btn btn-primary"
-											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>
+											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																		
+										<div class="clear"></div>
+									</div>
+									<div id = "paging">
+									<!-- 페이징 시작 -->
 										<div class="row justify-content-between bottom-information">
 											<div class="dataTables_info" id="responsive-data-table_info"
 												role="status" aria-live="polite">Showing 1 to 20 of 57
-												entries</div>
+												entries</div>																					
 											<div class="dataTables_paginate paging_simple_numbers"
-												id="responsive-data-table_paginate">
+												id="responsive-data-table_paginate">												
+												
+
+												  <!-- 이전  페이지 번호 설정 -->
+												<c:set var="totalPages" value="${endPage}" />												
+												
 												<ul class="pagination">
-													<li class="paginate_button page-item previous disabled"
-														id="responsive-data-table_previous"><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="0"
-														tabindex="0" class="page-link">Previous</a></li>
-													
-													<li class="paginate_button page-item active"><a
-														href="#" aria-controls="responsive-data-table"
-														data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-													<li class="paginate_button page-item "><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="2"
-														tabindex="0" class="page-link">2</a></li>
-													<li class="paginate_button page-item "><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="3"
-														tabindex="0" class="page-link">3</a></li>
-													<li class="paginate_button page-item next"
-														id="responsive-data-table_next"><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="4"
-														tabindex="0" class="page-link">Next</a></li>
-													
-												</ul>
+												  <li class="paginate_button page-item previous ${currentPage == 1 ? 'disabled' : ''}" id="responsive-data-table_previous">
+												    <a href="#" aria-controls="responsive-data-table" data-dt-idx="0" tabindex="0" class="page-link">이전</a>
+												  </li>
+												  
+												  
+													<!--페이지 번호 반복문  -->
+												<c:set var="currentPage" value="${startPage}" />
+												<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
+												   <c:choose>
+												      <c:when test="${total.pageCriteriaDto eq currentPage}">
+												         <li class="paginate_button page-item ${currentPage == pageNum ? 'active' : ''}">
+												            <a href="/notice/admin/list?page=${pageNum}" aria-controls="responsive-data-table" data-dt-idx="${pageNum}" tabindex="0" class="page-link">
+												               <c:out value="${pageNum}" />
+												            </a>
+												         </li>
+												      </c:when>
+												   </c:choose>
+												</c:forEach>
+											    													
+												<!-- 다음 페이지  -->																																	      																										    													    													  																																															    		
+												<c:if test="${total.endPage > startPage + 10}">
+											    <c:choose>
+											        <c:when test="${total.endPage > total.pageCriteriaDto.pageNum + 10}">
+											            <a href="admin/list?page=${total.pageCriteriaDto.pageNum + 10}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
+											        </c:when>
+											    </c:choose>
+											</c:if>
+												  <li class="paginate_button page-item next ${currentPage == total ? 'disabled' : ''}" id="responsive-data-table_next">
+												    <a href="#" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
+												  </li>
+												</ul>																																
 											</div>
 										</div>
-										<div class="clear"></div>
-									</div>
+									</div>	
 								</div>
 							</div>
 						</div>

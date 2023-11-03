@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.green.greenstock.dto.NoticePagingDto;
+import com.green.greenstock.dto.PageCriteriation;
 import com.green.greenstock.dto.NoticeUpdateDto;
+import com.green.greenstock.dto.PageCriteriaDto;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.repository.model.Noticeboard;
 import com.green.greenstock.service.BoardNoticeService;
@@ -42,9 +43,13 @@ public class BoardNoticeController {
 	//공지사랑 목록 (어드민)
 	
 	@GetMapping("/admin/list")
-	public String adminListNotice(Model model, NoticePagingDto noticePagingDto){	
-		//공지사항 목록을 불러오는 부분 
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService();
+	public String adminListNotice(Model model, PageCriteriaDto pageCriteriaDto){	
+		//공지사항 목록을 불러오는 부분 	
+		List<Noticeboard> listNotice = boardNoticeService.noticeListService(pageCriteriaDto);
+		int total =  boardNoticeService.noticeListCount(pageCriteriaDto);
+		PageCriteriation pageCriteriation = new PageCriteriation(total, pageCriteriaDto);			
+		model.addAttribute("page",pageCriteriation);
+		System.out.println("tdddd :" + total);
 		if(listNotice.isEmpty()) {
 			model.addAttribute("noticeList",null);
 		}else {
@@ -59,18 +64,18 @@ public class BoardNoticeController {
 	 * @return
 	 */
 	//공지사항 목록 리스트(일반)
-	@GetMapping("/list")
-	public String listNotice(Model model){	
-		//공지사항 목록을 불러오는 부분 
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService();
-		if(listNotice.isEmpty()) {
-			model.addAttribute("noticeList",null);
-		}else {
-			model.addAttribute("noticeList", listNotice);
-		}
-		return "notice/noticeList"; 
-		
-	}
+//	@GetMapping("/list")
+//	public String listNotice(Model model){	
+//		//공지사항 목록을 불러오는 부분 
+//		List<Noticeboard> listNotice = boardNoticeService.noticeListService();
+//		if(listNotice.isEmpty()) {
+//			model.addAttribute("noticeList",null);
+//		}else {
+//			model.addAttribute("noticeList", listNotice);
+//		}
+//		return "notice/noticeList"; 
+//		
+//	}
 	
 	//공지사항 작성된것을 보내는 주소 
 	@GetMapping("/admin/write")
