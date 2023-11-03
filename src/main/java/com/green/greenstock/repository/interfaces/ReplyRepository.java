@@ -16,9 +16,9 @@ public interface ReplyRepository {
 	public int getStep(Reply reply);
 	public int maxStep(Reply reply);
 	public int updateReply(Reply reply);
-	public int updateReply2(Reply reply);
 	public int insertReply(Reply reply);
 	public int deleteReply(Reply reply);
+	public int deleteReplyRecommand(Reply reply);
 	public int replyThumbCheck(@Param("replyId") int replyId,@Param("userId") int userId);
 	public int replyThumbUp(@Param("replyId") int replyId,@Param("userId") int userId);
 	public int replyThumbDelete(@Param("replyId") int replyId,@Param("userId") int userId);

@@ -38,10 +38,6 @@ public class ReplyService {
 	public int updateReply(Reply reply) {
 		return replyRepository.updateReply(reply);
 	}
-	
-	public int updateReply2(Reply reply) {
-		return replyRepository.updateReply2(reply);
-	}
 
 	public int insertReply(Reply reply) {
 		return replyRepository.insertReply(reply);
@@ -49,6 +45,9 @@ public class ReplyService {
 	
 	public int deleteReply(Reply reply) {
 		return replyRepository.deleteReply(reply);
+	}
+	public int deleteReplyRecommand(Reply reply) {
+		return replyRepository.deleteReplyRecommand(reply);
 	}
 	
 	public int replyThumbCheck(int replyId, int userId) {

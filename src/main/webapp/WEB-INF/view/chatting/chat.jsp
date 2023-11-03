@@ -5,71 +5,9 @@
 <html>
 <head>
     <title>Chat Application</title>
-<style>
-	#chat-messages{
-		height: 450px;
-		padding-top: 10px;
-		overflow: auto;
-		background-color: rgba(52,116,212,0.2);
-  		border-top-right-radius: 15px;
-  		border-top-left-radius: 15px;
-	}
-	#chat-messages::-webkit-scrollbar {
-	    width: 10px;
-  	}
-  	#chat-messages::-webkit-scrollbar-thumb {
-	    background-color: rgba(52,116,212,0.5);
-	}
-	#chat-messages::-webkit-scrollbar-track {
-  		border-top-right-radius: 15px;
-	    background-color: rgba(10,10,10,0.1);
-	}
-	.my-message-div{
-		width: 100%;
-		margin-bottom: 5px;
-		display: flex;
-		flex-direction: row-reverse;
-	}
-	.message-div{
-		width: 100%;
-		margin-bottom: 5px;
-		display: flex;
-	}
-	.my-message-user{
-		width:100%;
-		text-align: right;
-		padding-right: 5px;
-		overflow: hidden;
-	}
-	.message-user{
-		width:100%;
-		text-align: left;
-		padding-left: 5px;
-		overflow: hidden;
-	}
-	.my-message-div .message-content{
-		width: 60%;
-		min-height: 45px;
-		border-radius: 5px;
-		margin: -2px 5px 5px 5px;
-		padding: 5px;
-		background-color: rgb(246,224,17);
-		box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
-	}
-	.message-div .message-content{
-		width: 60%;
-		min-height: 45px;
-		border-radius: 5px;
-		margin: -2px 5px 5px 5px;
-		padding: 5px;
-		background-color: white;
-		box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
-	}
-	.submit-div{
-		width: 100%; 
-		display: flex;
-	}
-</style>
+	
+	<!-- Custom css -->
+    <link rel="stylesheet" href="/resources/css/custom/chat.css" />
 </head>
 <body>
 	<div style="width: 100%;">
@@ -118,9 +56,16 @@
     <form id="chat-form">
     	<div class="submit-div">
 	        <input type="text" id="message" style="width: 100%; height: 45px;" placeholder="Enter your message">
-	        <button class="btn btn-primary" type="submit">Send</button>
+	        <button type="button" class="btn btn-primary" id="send-btn">Send</button>
     	</div>
     </form>
+    <br>
+   	<h3>구독자 목록</h3>
+    <div class="user-list-div">
+    	<c:forEach var="user" items="${userList}" varStatus="status">
+    		${user.userName}<br>
+    	</c:forEach>
+    </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

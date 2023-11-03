@@ -109,6 +109,8 @@ public class BoardController {
 			
 			model.addAttribute("thumb", thumb);
 			model.addAttribute("replyUser",replyUser);
+		}else {
+			model.addAttribute("replyUser",'0');
 		}
 		
 		boardService.viewCountUpFnc(paging.getBoardId(), request, response);
@@ -170,6 +172,7 @@ public class BoardController {
 	public String postReplyDelete(Reply reply) {
 		System.out.println("reply-delete board : "+reply);
 		replyService.deleteReply(reply);
+		replyService.deleteReplyRecommand(reply);
 		int boardId = reply.getBoardId();
 		return "redirect:detail?boardId="+boardId;
 	}

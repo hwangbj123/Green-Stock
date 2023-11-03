@@ -28,36 +28,16 @@ public class ChatController {
 
 	@Autowired
 	ChattingService chattingService;
-	
-//	@GetMapping("/chatList")
-//	public String chatList(Model model) {
-//		List<ChattingRoom> chattingRooms = chattingService.findChattingRoomAll();
-//		model.addAttribute("rooms", chattingRooms);
-//		
-//		return "chatting/chatList";
-//	}
-	
-//	@GetMapping("/chatCreate")
-//	public String chatCreate(String roomNumber, String roomName) {
-//		System.out.println("roomNumber : "+roomNumber);
-//		System.out.println("roomName : "+roomName);
-//		
-//		ChattingRoom chattingRoom = new ChattingRoom();
-//		chattingRoom.setRoomNumber(roomNumber);
-//		chattingRoom.setRoomName(roomName);
-//		
-//		chattingService.createChattingRoom(chattingRoom);
-//		return "redirect:chatList";
-//	}
 
 	@GetMapping("/chat")
 	public String chatMain(int roomId, int userId, Model model) {
+		List<ChatMessage> list = chattingService.selectMessageList(roomId, userId);
+		List<User> userList = chattingService.selectUserListByRoomId(roomId);
+		
 		model.addAttribute("roomId", roomId);
 		model.addAttribute("userId", userId);
-		
-		List<ChatMessage> list = chattingService.selectMessageList(roomId, userId);
 		model.addAttribute("list", list);
-//		System.out.println("list : "+list);
+		model.addAttribute("userList", userList);
 		
 		return "chatting/chat";
 	}

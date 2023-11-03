@@ -37,80 +37,9 @@
  
      <!-- Background css -->
      <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-     <style>
-     	.board-div{
-     		width: 80%;
-     		margin: 30px auto;
-     		
-     	}
-     	.board-tb{
-     		width: 90%;
-     		min-width: 650px;
-     		margin: auto;
-     		text-align: center;
-     	}
-     	.board-tb td{
-     		height: 50px;
-     	}
-     	.page-a{
-     		display: inline-block;
-     		border: 1px solid lightgrey;
-/*      		width: 30px;  */
-     		padding: 4px 12px;
-     		margin: 1px;
-     		border-radius: 5px;
-     	}
-     	#page{
-     		 width: 100%; 
-     		 margin: auto; 
-     		 text-align: center; 
-     		 margin-top: 50px;
-     		 display: flex;
-     		 justify-content: center;
-     	}
-     	#listopt-div{
-     		 width: 100%; 
-     		 margin: auto; 
-     		 text-align: center; 
-     		 margin-top: 50px;
-     		 padding: 0px 50px;
-     		 display: flex;
-     		 justify-content: space-between;
-     	}
-     	#listopt-div button{
-     		width: 100px;
-     	}
-     	#search-div {
-     		width: 600px;
-     		display: flex;
-     		justify-content: space-between;
-     	}
-     	#search-div select{
-     		height: 43px;
-     		width: 60px;
-     		text-align: center;
-     	}
-     	#search-div input{
-     		width: 330px;
-     		height: 45px;
-     	}
-     	#category-tb {
-     		width: 65%;
-     		height: 40px;
-     		margin: auto;
-     	}
-     	#category-tb td{
-/*      		border: 1px solid #3474d4; */
-     		padding: 1px;
-     	}
-     	#category-tb button{
-     		width: 100%;
-     		height: 100%;
-     		border: 1px solid #3474d4;
-     		color: #777777;
-     	}
-     	
-     </style>
+ 
+     <!-- Custom css -->
+     <link rel="stylesheet" href="/resources/css/custom/boardList.css" />
  </head>
 <body>
     <div id="ec-overlay">
@@ -967,9 +896,9 @@
 		    				<option value="userName">작성자</option>
 		    			</select>
 	    			</div>
-		    		<input class="form-control ec-search-bar" type="text" name="searchWord">
+		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
 <%-- 		    		<input type="hidden" name="page" value="${page.paging.page}"> --%>
-		    		<button type="button" class="btn btn-primary" id="search-btn">검색</button>
+		    		<button type="button" class="btn btn-primary" id="search-btn" onclick="boardListInit.searchValid()">검색</button>
 	    		</div>
 	    		<c:choose>
 	    			<c:when test="${not empty principal}">
@@ -1554,21 +1483,6 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-	<script>
-		function toSignIn(){
-			if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
-				location.href="/user/sign-in";
-			}
-		}
-		$(function(){
-			$("#search-btn").on("click", function(){
-				if($("input[name=searchWord]").val().length!=0){
-					$("#search-frm").submit();
-				}else{
-					$("input[name=searchWord]").focus();
-				}
-			})
-		})
-	</script>
+	<script src="/resources/js/custom/boardList.js"></script>
 </body>
 </html>
