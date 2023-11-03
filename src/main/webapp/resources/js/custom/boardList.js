@@ -2,6 +2,7 @@ let boardListInit = {
 	version: 1,
 	init: function(){
 		this.keepCategory();
+		this.nowCategory();
 	},
 	toSignIn: function(){
 		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
@@ -33,9 +34,16 @@ let boardListInit = {
 	keepCategory: function(){
 		let cate = this.searchParam('categoryId');
 		if(cate){
-			this.appendParam(cate);
+			this.appendCategory(cate);
 		}
-	}
+	},
+	
+	nowCategory: function(){
+		console.log('now Category method');
+		let cate = this.searchParam('categoryId');
+		console.log('cate : '+cate);
+		document.getElementById('category-btn-'+cate).style.backgroundColor = "#eee";
+	},
 };
 
 boardListInit.init();

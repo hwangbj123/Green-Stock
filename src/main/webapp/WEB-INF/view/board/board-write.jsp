@@ -856,7 +856,7 @@
 	                        			<tr>
 	                        				<td>제목</td>
 	                        				<td>
-	                        					<input type="text" id="title-input" name="title">
+	                        					<input type="text" id="title-input" name="title"">
 											</td>
 	                        			</tr>
 	                        			<tr>

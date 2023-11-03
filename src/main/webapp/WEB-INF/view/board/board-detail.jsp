@@ -831,11 +831,14 @@
     
     <!-- 따봉 버튼 -->
 	<div id="thumb-div">
-			<input type="hidden" id="thumb-check" value="
-		<c:if test="${not empty thumb}">
-			<c:out value="${thumb}"/>
-		</c:if>
-			">
+		<c:choose>
+			<c:when test="${not empty thumb}">
+				<input type="hidden" id="thumb-check" value="${thumb}">
+			</c:when>
+			<c:otherwise>
+				<input type="hidden" id="thumb-check" value="">
+			</c:otherwise>
+		</c:choose>
 		<img src="/resources/img/favicon.png" onclick="boardDetailInit.thumbFnc(${board.id}, ${principal.id})" style="width: 30px; height: 30px; cursor: pointer;">
 	</div>
 	
@@ -855,24 +858,27 @@
                         				<td style="height: 56px; text-align: left;">
                         					<c:forEach var="c" items="${cate}" varStatus="status">
                         						<c:if test="${board.categoryId eq status.count}">
-                        							<div style="display: inline-block; width: 40px; height: 25px; border: 1px solid #777; border-radius: 5px; text-align: center;">
-                        							${c}
-                        							</div>
+                        							[${c}]
                         						</c:if>
                         					</c:forEach>
-                        					&nbsp;
-                        					<b>${board.title }</b>
+                        					<br>
+                        					<span style="font-size: 3em; font-weight: bold;">
+                        						${board.title }
+                       						</span>
 										</td>
                         			</tr>
                         			<tr>
-                        				<td style="height: 56px; text-align: left;">
-                        					${board.userName} 
+                        				<td style="height: 56px; text-align: left; display: flex; justify-content: space-between;">
+											<div>
 											조회수 : ${board.views},
 											추천 : ${board.recommand}
+											</div>
+											<div>
+											${board.userName}
+											</div>
 										</td>
                         			</tr>
                         			<tr>
-<!-- 	                        				<td>내용</td> -->
                         				<td style="padding: 30px 0px;height: 600px;">
                         					<div id="content-textarea">
                         						${board.content}
@@ -882,32 +888,30 @@
 	                        			<tr>
 	                        				<td>
 	                        				<div style="display: flex; justify-content: center;">
-                        			<c:if test="${board.userId eq principal.id}">
-	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/update/${board.id}'">수정</button>
-                        			</c:if>
-	                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
-                        			<c:if test="${board.userId eq principal.id}">
-	                        					<button type="button" class="btn btn-primary">
-	                        						삭제
-	                        					</button>
-                        			</c:if>
+												<form method="post" action="/board/board-delete" id="board-delete-frm" style="width: 100%;">
+		                        					<c:if test="${board.userId eq principal.id}">
+			                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/update/${board.id}'">수정</button>
+		                        					</c:if>
+			                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
+		                        					<c:if test="${board.userId eq principal.id}">
+														<input type="hidden" name="id" value="${board.id}">
+			                        					<button type="button" class="btn btn-primary" id="delete-btn" onclick="boardDetailInit.boardDelete()">
+			                        						삭제
+			                        					</button>
+		                        					</c:if>
+												</form>
                         					</div>
 	                        				</td>
 	                        			</tr>
                         		</table>
                         	</div>
-                            <div class="ec-blog-arrows" style="margin-top: 100px;">
-<%--                             <c:if test="${board.id ne 1}"> --%>
-<%--                                 <a href="/board/detail?boardId=${board.id - 1}"><i class="ecicon eci-angle-left"></i> Prev Post</a> --%>
-<%--                             </c:if> --%>
-<!--                                 <a href="blog-detail-left-sidebar.html">Next Post <i class="ecicon eci-angle-right"></i></a> -->
-                            </div>
                             <div class="ec-blog-comments">
                                 <div class="ec-blog-cmt-preview">
                                     <div class="ec-blog-comment-wrapper mt-55">
                                     
 <!------------------------------------- 댓글 -->
 										<!-- 베스트 댓글 표시 -->
+									<div id="best-comment">
 										<c:set var="maxRecommand" value="0"/>
 										<c:forEach var="comment" items="${reply}">
 											<c:if test="${comment.recommand > maxRecommand}">
@@ -917,17 +921,19 @@
 										<!-- 최다 추천수 2 이상이면 최상단에 표시 -->
 										<c:if test="${maxRecommand >= 2}">
 											<c:set var="forBreak" value="0"/>
+											<h4>BEST</h4>
 											<c:forEach var="comment" items="${reply}">
 												<c:if test="${comment.recommand eq maxRecommand && forBreak eq 0}">
-													<div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px); background-color: #fee;">
+													<div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-top: 0px; margin-left: calc(${comment.level} * 50px); background-color: #fee;">
 		                                            <div class="ec-blog-comment-content">
 		                                                <h5>${comment.userName}</h5>
 		                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>
 		                                                <p>${comment.content}</p>
 		                                                <div class="ec-blog-details-btn">
 		                                                <c:if test="${comment.deleted eq 0}">
-	                                                    	<span style="color: black; margin-bottom: 2px;">추천👍</span>
-	                                                    	<span style="font-size: 20px; color: black; font-weight: bolder;">${comment.recommand}</span>
+	                                                    	<span style="color: black; margin-bottom: 2px; font-size: 20px; font-weight: bolder;">
+	                                                    		👍 ${comment.recommand}
+                                                    		</span>
 		                                                </c:if>
 	                                                </div>
 	                                                <div class="rereply-div" id="rereply-id${comment.id}">
@@ -938,8 +944,10 @@
 										</c:if>
 										</c:forEach>
 										</c:if>
+									</div>
 										<!-- 베스트 댓글 표시 코드 끝-->
 										<!-- 전체 댓글 -->
+										<h4>COMMENT</h4>
 										<c:forEach var="comment" items="${reply}">
 	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);
 	                                        	<c:if test="${comment.userId eq board.userId}">

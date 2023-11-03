@@ -836,7 +836,7 @@
     			<tr>
 					<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/list"' >전체</button></td>
 					<c:forEach var="c" items="${cate}" varStatus="status">
-						<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
+						<td><button type="button" class="btn btn-primary" id="category-btn-${status.count}" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
 					</c:forEach>
 				</tr>
     	</table>
@@ -1538,6 +1538,8 @@
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
-	<script src="/resources/js/custom/boardlist.js"></script>
+    
+	<script src="/resources/js/custom/boardList.js"></script>
+	
 </body>
 </html>

@@ -41,9 +41,9 @@ let boardDetailInit = {
         );
     },
 
-    boardDelete: function(boardId) {
+    boardDelete: function() {
         if (confirm("정말 게시글을 삭제하시겠습니까?")) {
-            location.href = `/board/delete/${boardId}`;
+            document.getElementById("board-delete-frm").submit();
         }
     },
 

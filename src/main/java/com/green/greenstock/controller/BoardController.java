@@ -142,8 +142,9 @@ public class BoardController {
 		return "redirect:list";
 	}
 	@PostMapping("/board-delete")
-	public String boardDelete(Board board) {
-//		boardService.deleteBoard(board);
+	public String boardDelete(Board board, HttpServletRequest request) {
+		boardService.deleteBoard(board, request);
+		System.out.println("board delete request : "+request);
 		System.out.println("board delete success");
 		return "redirect:/board/list";
 	}
