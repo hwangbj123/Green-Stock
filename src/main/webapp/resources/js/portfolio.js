@@ -24,13 +24,13 @@ function makeSmallCard(data) {
 			console.log(pid);
 			count++;
 			let smallCardInnerWrapper = $('<div id="' + pid + '" class="col-xl-3 col-sm-6 p-b-15 lbl-card" data-clicked="false">');
-			let smallCard = $('<div class="card card-mini dash-card card-1"style="cursor : pointer;height : 100%">');
+			let smallCard = $('<div id = "smallCardC_' + pid + '" class="card card-mini dash-card card-1"style="cursor : pointer;height : 100%">');
 			smallCard.on('click', () => smallCardClicked(pid));
 			let cardBody = $('<div style="display:flex; justify-content: space-between;" class="card-body" id="smallCard_' + pid + '">');
 			let infoWrapper = $('<div id = "infoWrpper">')
-			let h2 = $('<h2 id = "h2_' + pid + '" class="mb-1">'); // CardLayout header
-			let p = $('<p id = "p_' + pid + '">') // CardLayout body
-			let span = $('<span data-clicked="false" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer; font-size: smaller">정보변경</span>');
+			let h2 = $('<h2 class = "editableH2s" id = "h2_' + pid + '" class="mb-1">'); // CardLayout header
+			let p = $('<p class = "editablePs" id = "p_' + pid + '">') // CardLayout body
+			let span = $('<span data-clicked="false" class = "editSpans" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer; font-size: smaller">변경</span>');
 			span.on('click', (event) => {
 				event.stopImmediatePropagation();
 				editClicked(pid);
@@ -71,28 +71,53 @@ function makeAddPortfolioDiv() {
 
 //editBtnCLicked
 function editClicked(id) {
-	let delButton = $('<div style=  "position : absolute; z-index : 999; bottom : 90%; left : 97%; background : url(\'/resources/img/icons/x.png\');background-size: cover;background-repeat : no-repeat; height : 15%;width : 5%;">');
-	$('#' + id).children().append(delButton);
+	let eles = $('.editSpans');
+	let checker = new Checker('span_' + id, eles);
+	let delButton = $('<div class = "delButtons"style=  "position : absolute; z-index : 999; bottom : 90%; left : 97%; background : url(\'/resources/img/icons/x.png\');background-size: cover;background-repeat : no-repeat; height : 20%;width : 10%;">');
 	delButton.on('click', (e) => {
 		e.stopPropagation();
 		delButtonClicked(id);
 	});
+	console.log('실행됨');
+	if (!checker.anyOfClickedBool()) { // nothing checked
+		console.log('실행됨');
+		$('#span_' + id).attr('data-clicked', 'true');
+		$('#' + id).children().append(delButton);
+		$('.editSpans').each((idx, e) => $(e).html('변경'));
+		$('#span_' + id).html('확인');
+		pfedit(id);
+		return;
+	}
+	if (checker.checkSelfClicked()) { // 내가 체크되있음
+		console.log('실행됨');
+		$('#span_' + id).attr('data-clicked', 'false');
+		$('#span_' + id).html('변경');
+		$('.delButtons').each((idx, e) => $(e).remove());
+		return;
+	}
+	if (!checker.checkSelfClicked() && checker.anyOfClickedBool()) { // 나 아니고 딴애들
+		console.log('실행됨');
+		$('.delButtons').each((idx, e) => e.remove());
+		$('#span_' + id).children().append(delButton);
+		$('#span_' + id).attr('data-clicked', 'true');
+		$('#' + id).children().append(delButton);
+		$('.editSpans').each((idx, e) => $(e).html('변경'));
+		$('#span_' + id).html('확인');
+		pfedit(id);
+	}
 
+
+}
+
+function pfedit(id) {
+	$('.editableH2s').each((idx, e) => $(e).attr("contenteditable", "false"));
+	$('.editablePs').each((idx, e) => $(e).attr("contenteditable", "false"));
 
 	let h2 = $('#h2_' + id);
 	let p = $('#p_' + id);
-	if ($('#span_' + id).attr('data-clicked') == 'true') {
-		$('#span_' + id).attr('data-clicked', 'false');
-		$('#span_' + id).html('정보변경');
-		h2.attr("contenteditable", "false");
-		p.attr("contenteditable", "false");
-		return;
-	} else {
-		$('#span_' + id).attr('data-clicked', 'true');
-		$('#span_' + id).html('확인');
-		h2.attr("contenteditable", "true");
-		p.attr("contenteditable", "true");
-	}
+	$('#span_' + id).attr('data-clicked', 'true');
+	h2.attr("contenteditable", "true");
+	p.attr("contenteditable", "true");
 	let originalH2 = $("#h2_" + id).text();
 	let originalP = $("#p_" + id).text();
 	let editedH2;
@@ -197,8 +222,6 @@ function smallCardClicked(id) {
 			return;
 		} else {
 			$('#' + id).attr('data-clicked', 'true');
-			$('#' + id).children().css('border', '1px solid black');
-			console.log($('#' + id).children());
 			attatchPortfolioInfo(id);
 			return;
 		}
@@ -209,8 +232,8 @@ function smallCardClicked(id) {
 			detatchAll();
 			$('#' + id).attr('data-clicked', 'false');
 		} else {
-			$('#' + id).attr('data-clicked', 'false');
 			detatchAll();
+			$('#' + id).attr('data-clicked', 'false');
 		}
 		return;
 	}
@@ -225,16 +248,17 @@ function smallCardClicked(id) {
 		if (id == 'addCard') {
 			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
 			$('#' + id).attr('data-clicked', 'true');
+
 			detatchAll();
+
 			addCardClicked();
 		} else {
 			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
 			detatchAll();
 			$('#' + id).attr('data-clicked', 'true');
-			$('#' + id).children().css('border', '1px solid black');
 			attatchPortfolioInfo(id);
 		}
-		$('#' + id).attr('data-clicked', 'true');
+		//$('#' + id).attr('data-clicked', 'true');
 		return;
 	}
 }
@@ -254,15 +278,27 @@ function attatchPortfolioInfo(id) {
 	})
 }
 
-function setPortfolioInfo(data) {
+async function setPortfolioInfo(data) {
 	console.log(data);
+	let sellMoney = 0;
+	if (data.sellMoney != null) {
+		sellMoney = data.sellMoney;
+	}
+	let stockTotalAmount = 0;
+	for (let i = 0; i < data.stockList.length; i++) {
+		let nowprice = await $.get('portfolio/getNowPrice/' + data.stockList[i].companyCode, function(data) {
+		})
+		stockTotalAmount += data.stockList[i].amount * nowprice;
+	}
+	let rorData = ((stockTotalAmount + sellMoney - data.totalAsset) / data.totalAsset) * 100;
+	console.log(rorData);
 	let portfolioInfoWrapper = $('<div id = "portfolioInfoWrapper" style = "width : 100%; height :90%;background-color:whitesmoke;margin:auto">');
 	$('#portfolioInfo').append(portfolioInfoWrapper);
 
 	let titleDivWrapper = $('<div style = "height : 10%; background-Color :white; display:flex;">' + data.title + '</div>');
 	let dsDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + data.discription + '</div>');
-	let totalAssetDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + data.totalAsset + '</div>');
-	let ror = $('<div style = "height : 15%;background-Color : white; display:flex;font-size:xx-large;color : red;font-weight : bold;">ROR : -99%</div>');
+	let totalAssetDivWrapper = $('<div style = "height : 10%;background-Color : white; display:flex;">' + stockTotalAmount + '</div>');
+	let ror = $('<div style = "height : 15%;background-Color : white; display:flex;font-size:xx-large;color : red;font-weight : bold;">' + rorData.toFixed(2) + '%</div>');
 
 	portfolioInfoWrapper.append(titleDivWrapper);
 	portfolioInfoWrapper.append(dsDivWrapper);
@@ -273,9 +309,6 @@ function setPortfolioInfo(data) {
 // info 관련 모든 정보를 detatch
 function detatchAll() {
 	console.log('실행됨');
-	for (let i = 1; i < 4; i++) {
-		$('#smallCard_' + i).parent().css('border', 'none');
-	}
 	if ($('#portfolioInfoWrapper').length > 0 && $('#donutChartBody').children().length > 0 && $('#myStockCardTable').children().length > 0 && $('#assetBody').children().length > 0) {
 		console.log('detatchInfoWrapper')
 		$('#portfolioInfoWrapper').remove();
@@ -308,11 +341,17 @@ function detatchAll() {
 //addCard 가 아닌 다른 smallCards 가 클릭될 시 실행된다.
 
 function setDonutChart(data) {
-	console.log(data.pid);
-	$.get('/portfolio/getStockList/' + data.pid, function(data) {
+	/*$.get('/portfolio/getStockList/' + data.pid, function(data) {
 		console.log(data);
-	})
+	})*/
 	$('#donutChartBody').append($('<canvas id="doChart"></canvas>'));
+	let stockNameList = [];
+	let amountList = [];
+	data.stockList.forEach(stock => {
+		stockNameList.push(stock.companyName);
+		amountList.push(stock.amount * stock.price);
+		console.log(stock.amount * stock.price);
+	});
 	console.log(stockNameList);
 	let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5"];
 	let doughnut = document.getElementById("doChart");
@@ -325,7 +364,7 @@ function setDonutChart(data) {
 					{
 						label: stockNameList,
 						data: amountList,
-						backgroundColor: colorList,
+						backgroundColor: colorList.slice(0, stockNameList.length),
 						borderWidth: 1
 						// borderColor: ['#88aaf3','#29cc97','#8061ef','#fec402']
 						// hoverBorderColor: ['#88aaf3', '#29cc97', '#8061ef', '#fec402']
@@ -360,8 +399,8 @@ function setDonutChart(data) {
 			}
 		});
 	}
-	console.log(totalAsset);
-	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + totalAsset + '</div>'));
+	console.log(data.totalAsset);
+	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + data.totalAsset + '</div>'));
 }
 
 function setRanking() {
@@ -496,13 +535,10 @@ function setMonthlyAssetChart() {
 }
 
 
-function setMyStock(initialData, stockList, amountList, portfolioId) {
-	//table header
-	console.log(initialData.stockList);
-
+function setMyStock(data) {
+	let headArr = ['주식명', '가격'];
 	let thead = $('<thead>');
-	//console.log(Object.keys(stockList[0]));
-	Object.keys(stockList[0]).forEach(e => {
+	headArr.forEach(e => {
 		let th = $('<th>' + e + '</th>');
 		thead.append(th);
 	})
@@ -520,29 +556,43 @@ function setMyStock(initialData, stockList, amountList, portfolioId) {
 	//table body
 	let tbody = $('<tbody>');
 
-	stockList.forEach((e, idx) => {
-		let values = Object.values(e);
-		let tr = $('<tr>')
-		collength = values.length + 5; // buy sell totalAmount
-		for (let i = 0; i < values.length; i++) {
-			tr.append($('<td>' + values[i] + '</td>'))
-		}
-		$.get('portfolio/getStock/' + stockList[idx].id, function(data) {
-			tr.append($('<td>' + (initialData.stockList[idx].amount).toFixed(2) + '</td>'));
-			tr.append($('<td>' + data.price + '</td>'));
-			tr.append($('<td>' + ifPlus(calculatePercentageChange(stockList[idx].price, data.price, tr).toFixed(2)) + '</td>'));
-
-			let totalStocksTd = $('<td>' + (initialData.stockList[idx].amount * data.price).toFixed(0) + '</td>');
-			let buyTd = $('<td style="cursor:pointer"id = addBtn>buy</td>');
-			let sellTd = $('<td style="cursor:pointer" id = sellBtn>sell</td>');
-			tr.append(totalStocksTd);
-			tr.append(buyTd);
-			tr.append(sellTd);
-			buyTd.on('click', () => buyClicked(portfolioId, e.id, e.name));
-			sellTd.on('click', () => sellClicked(portfolioId, e.id, e.name));
-			tbody.append(tr);
+	data.stockList.forEach(e => console.log(e));
+	data.stockList.forEach(async e => {
+		let tr = $('<tr>');
+		let td = $('<td>' + e.companyName + '</td>');
+		let td2 = $('<td>' + e.price + '</td>');
+		let td3 = $('<td>' + e.amount + '</td>');
+		let nowprice = await $.get('portfolio/getNowPrice/' + e.companyCode, function(data) {
+			console.log(data);
 		});
-	})
+		let td4 = $('<td>' + nowprice + '</td>');
+		let td5 = $('<td>' + ifPlus(calculatePercentageChange(e.price, nowprice, tr).toFixed(2)) + '</td>');
+		let td6 = $('<td>' + (e.amount * nowprice).toFixed(0) + '</td>');
+
+		let buyTd = $('<td style="cursor:pointer"id = addBtn>buy</td>');
+		let sellTd = $('<td style="cursor:pointer" id = sellBtn>sell</td>');
+
+		tr.append(td, td2, td3, td4, td5, td6, buyTd, sellTd);
+		buyTd.on('click', () => buyClicked(e.pid, e.companyCode, e.companyName));
+		sellTd.on('click', () => sellClicked(e.pid, e.companyCode, e.companyName));
+		tbody.append(tr);
+	});
+	//tr.append($('<td>' + values[i] + '</td>'))
+	/*$.get('portfolio/getStock/' + stockList[idx].id, function(data) {
+		tr.append($('<td>' + (initialData.stockList[idx].amount).toFixed(2) + '</td>'));
+		tr.append($('<td>' + data.price + '</td>'));
+		tr.append($('<td>' + ifPlus(calculatePercentageChange(stockList[idx].price, data.price, tr).toFixed(2)) + '</td>'));
+		let totalStocksTd = $('<td>' + (initialData.stockList[idx].amount * data.price).toFixed(0) + '</td>');
+		let buyTd = $('<td style="cursor:pointer"id = addBtn>buy</td>');
+		let sellTd = $('<td style="cursor:pointer" id = sellBtn>sell</td>');
+		tr.append(totalStocksTd);
+		tr.append(buyTd);
+		tr.append(sellTd);
+		buyTd.on('click', () => buyClicked(portfolioId, e.id, e.name));
+		sellTd.on('click', () => sellClicked(portfolioId, e.id, e.name));
+		tbody.append(tr);
+	});
+})*/
 
 	/*let addTr = $('<tr>');
 	addTr.append($('<td colspan = "' + collength + '"style="cursor:pointer;width:100%;text-align:center">+</td>'));
@@ -657,6 +707,7 @@ async function confrimBtnClicked(stockName, stockAmount) {
 		data: JSON.stringify(data),
 		success: (data) => {
 			console.log(data);
+			window.location.reload;
 		},
 	});
 
@@ -690,6 +741,7 @@ function saveStockIntoPortfolio(stockId) {
 
 
 function newWindow(pId, stockId, type, stockname) {
+	console.log(pId, stockId, type, stockname);
 	var newWindow = window.open(
 		"portfolio/popUpPage",
 		"_blank",
@@ -709,12 +761,16 @@ function newWindow(pId, stockId, type, stockname) {
 					url: "portfolio/buySell/" + type,
 					method: "post",
 					contentType: "application/json",
-					data: JSON.stringify({ 'potfolioId': pId, 'stockId': stockId, 'amount': inputData }),
+					data: JSON.stringify({ 'portfolioId': pId, 'stockId': stockId, 'amount': inputData,'companyName' : stockname }),
 					success: (data) => {
 						console.log(data);
 					},
 				});
 				newWindow.close();
+				setTimeout(function() {
+					$('#smallCardC_' + pId).click();
+					$('#smallCardC_' + pId).click();
+				}, 1000); // 1000ms (1초) 후에 클릭 이벤트 발생
 			});
 	};
 }

@@ -1,8 +1,10 @@
 package com.green.greenstock;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.green.greenstock.service.PortfolioService;
 import com.green.greenstock.dto.Pagination;
 import com.green.greenstock.dto.PagingDto;
 
@@ -10,6 +12,8 @@ import com.green.greenstock.dto.PagingDto;
 class GreenStockApplicationTests {
 	
 
+	@Autowired
+	PortfolioService portfolioService;
 
 	private int endPage;
 	private int countData;

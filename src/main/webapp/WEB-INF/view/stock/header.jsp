@@ -101,7 +101,7 @@
 	                <!-- Ec Header Logo Start -->
 	  <div class="align-self-center">
 	      <div class="header-logo">
-	          <a href="index.html"><img src="/resources/images/logo/logo.png" alt="Site Logo" /><img
+	          <a href="index.html"><img src="/resources/img/G_logo.jpg" alt="Site Logo" /><img
 	                  class="dark-logo" src="/resources/images/logo/dark-logo.png" alt="Site Logo"
 	                  style="display: none;" /></a>
 	      </div>

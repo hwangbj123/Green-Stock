@@ -48,7 +48,7 @@
 
 	<update id="buySellStock">
 		UPDATE myPortfolio
-		SET sell_money = #{sellMoney}, totalAsset = #{totalAsset}
+		SET sell_money = #{sellMoney}, totalAsset = #{totalAsset}, ror = #{ror}
 		WHERE p_id = #{pId}
 	</update>
 
