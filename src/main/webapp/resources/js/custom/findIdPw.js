@@ -19,9 +19,9 @@ let findIdPw = {
         $('#checkEmail').on('click', () => {
             this.checkEmail();
         });
-        $('#emconfirm').on('keyup', () => {
+/*        $('#emconfirm').on('keyup', () => {
             this.chkEmailConfirm();
-        });
+        });*/
         $('.signUpForm').on('submit', () => {
             this.submitForm();
         });
@@ -104,6 +104,7 @@ let findIdPw = {
 
                     startTime = new Date().getTime() + 5 * 60 * 1000;
                     interval = setInterval(updateTimer, 1000);
+                    chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
                     console.log(interval);
                 } else {
                     alert("일치하는 정보의 유저가 없습니다. \n확인부탁드립니다.");
@@ -143,48 +144,6 @@ let findIdPw = {
             return false;
         }
     },
-
-    chkEmailConfirm: function (data) {
-        $email.prop("readonly", true);
-        $email.css("background", "#f3f3f3");
-        if ($("#timer2").text() === "시간 종료") {
-            $emailconfirmTxt.html("<span id='emconfirmchk'>시간이 초과되었습니다</span>");
-            $("#emconfirmchk").css({
-                "color": "#FA3E3E",
-                "font-weight": "bold",
-                "font-size": "12px"
-            });
-            $("#timer2").css({
-                "color": "white",
-            });
-            clearInterval(interval);
-            return false;
-        }
-        if (data != $emailconfirm.val()) {
-            $emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>");
-            $("#emconfirmchk").css({
-                "color": "#FA3E3E",
-                "font-weight": "bold",
-                "font-size": "12px"
-            });
-        } else {
-            clearInterval(interval);
-            $emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>");
-            $("#emconfirmchk").css({
-                "color": "#0D6EFD",
-                "font-weight": "bold",
-                "font-size": "12px"
-            });
-            $("#timer2").css({
-                "display": "none"
-            });
-            $emailconfirm.prop("disabled", true);
-            $emailconfirm.css("background", "#f3f3f3");
-            $checkEmail.prop("disabled", true);
-            $checkEmail.css("background", "#f3f3f3");
-            emailCheck = true;
-        }
-    },
 }
 
 findIdPw.init();
@@ -212,6 +171,56 @@ function updateTimer() {
 		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 		$("#timer2").text(minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
 	}
+}
+
+function chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt) {
+	$emailconfirm.on("keyup", function() {
+		$("#email").prop("readonly", true);
+		$("#email").css("background", "#f3f3f3");
+		if ($("#timer2").text() === "시간 종료") {
+			$emailconfirmTxt.html("<span id='emconfirmchk'>시간이 초과되었습니다</span>");
+			$("#emconfirmchk").css({
+				"color": "#FA3E3E",
+				"font-weight": "bold",
+				"font-size": "12px"
+			});
+			$("#timer2").css({
+				"color": "white",
+			});
+			clearInterval(interval);
+			$("#pwEmail").prop("disabled", false);
+			$("#pwEmial").css("background", "#f3f3f3");
+			$("#checkEmail").prop("disabled", false);
+			$("#checkEmail").css("background", "#f3f3f3");
+			$("#pwUserName").prop("disabled", false);
+			$("#pwUserName").css("background", "#f3f3f3");
+			return false;
+		}
+		if (data != $emailconfirm.val()) {
+			$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>");
+			$("#emconfirmchk").css({
+				"color": "#FA3E3E",
+				"font-weight": "bold",
+				"font-size": "12px"
+			});
+		} else {
+			clearInterval(interval);
+			$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>");
+			$("#emconfirmchk").css({
+				"color": "#0D6EFD",
+				"font-weight": "bold",
+				"font-size": "12px"
+			});
+			$("#timer2").css({
+				"display": "none"
+			});
+			$("#emconfirm").prop("disabled", true);
+			$("#emconfirm").css("background", "#f3f3f3");
+			$password.css('display', '');
+			$cpassword.css('display', '');
+			emailCheck = true;
+		}
+	});
 }
 
 /*//아이디 찾기

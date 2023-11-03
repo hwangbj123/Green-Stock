@@ -13,14 +13,15 @@ import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.User;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -81,6 +82,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
 	public void deleteUser(Integer id) {
 		int result = userRepository.deleteUser(id);
 		if(result != 1) {
@@ -98,6 +100,10 @@ public class UserService {
 
 	public List<User> findSearchUser(String search, PagingDto paging) {
 		return userRepository.findSearchUser(search, paging);
+	}
+
+	public List<User> findAdminMainUserList() {
+		return userRepository.findAdminMainUserList();
 	}
 	
 }
