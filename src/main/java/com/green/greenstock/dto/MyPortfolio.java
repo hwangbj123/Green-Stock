@@ -122,11 +122,19 @@ public class MyPortfolio {
 	}
 	
 	public void setror() {
-		System.out.println(this.sellMoney);
-		System.out.println(this.totalAsset);
-		System.out.println((((double)this.sellMoney / (double)this.totalAsset) * 100));
+		System.out.println("asdf");
+		int stockTotalAmount = 0;
+		for (int i = 0; i < stockList.size(); i++) {
+			stockTotalAmount += stockList.get(i).getAmount() * stockList.get(i).getPrice();
+		}
+		System.out.println(stockTotalAmount);
+		System.out.println(sellMoney);
+		System.out.println(totalAsset);
+		
 		DecimalFormat df = new DecimalFormat("0.00");
-		String formatedData = df.format(((this.sellMoney / this.totalAsset) * 100));
+		String formatedData = df.format((((double)this.sellMoney / (double)this.totalAsset)));
+
+		System.out.println(formatedData);
 		this.ror =  formatedData + "%";
 	}
 	

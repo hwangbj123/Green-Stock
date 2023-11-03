@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.greenstock.dto.BuySellDTO;
-import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.MyPortfolio;
 import com.green.greenstock.dto.MyStocks;
-import com.green.greenstock.dto.PortfolioInfoDTO;
 import com.green.greenstock.dto.Stock;
 import com.green.greenstock.dto.TradeLogDTO;
 import com.green.greenstock.repository.interfaces.MyStocksRepository;
@@ -46,17 +44,22 @@ public class TestRestController2 {
 	@Autowired
 	private TradeRepository tradeRepository;
 
-	@GetMapping("/getMyPortfolioList")
-	public List<MyPortfolio> test() {
-		System.out.println(portfolioRepository.findByuserId(1));
-		List<MyPortfolio> list = portfolioRepository.findByuserId(1);
+	@GetMapping("/getMyPortfolioList/{id}")
+	public List<MyPortfolio> test(@PathVariable int id) {
+		List<MyPortfolio> list = portfolioRepository.findByuserId(id);
 		return list;
+	}
+	
+	@GetMapping("/getUserid")
+	public int getUserId() {
+		return 1;
 	}
 
 	@PostMapping("/addPortfolio")
-	public void postExample(@RequestBody MyPortfolio pf) {
+	public int postExample(@RequestBody MyPortfolio pf) {
 		// pf null 처리 해야됨.
 		portfolioRepository.savePortfolio(pf, 1);
+		return 1;
 	}
 
 	@GetMapping("/getMyPortfolioInfo/{id}")
@@ -74,13 +77,14 @@ public class TestRestController2 {
 		return stock;
 	}
 	
-
+	// companyCode 로 현재가를 구한다.
 	@GetMapping("/getNowPrice/{companyCode}")
 	public int getNowPrice(@PathVariable String companyCode) {
 		return Integer.parseInt(dataRestController.getStockDetailJson(companyCode).getStckPrpr());
 	}
 	
 	
+	// MyStock 정보 세팅용
 	@GetMapping("/getAllDataInfo/{id}")
 	public MyPortfolio getAllDataInfo(@PathVariable int id) {
 		MyPortfolio mp = portfolioService.findAllDatasByPortfolioId(id);
@@ -89,7 +93,7 @@ public class TestRestController2 {
 	}
 	
 	@PostMapping("/buySell/{type}")
-	public void buySell(@PathVariable String type, @RequestBody BuySellDTO buySellDto) {
+	public int buySell(@PathVariable String type, @RequestBody BuySellDTO buySellDto) {
 		// 포트폴리오 상태 업데이트
 		System.out.println(buySellDto);
 		MyPortfolio mp = portfolioRepository.findByPortfolioId(buySellDto.getPortfolioId());
@@ -147,8 +151,7 @@ public class TestRestController2 {
 				mystocksRepository.deleteMyStocks(ms.getCompanyCode());
 			}
 		}
-		
-		
+		return 1;
 	}
 
 	@GetMapping("/getMonthlyAsset")
@@ -160,12 +163,6 @@ public class TestRestController2 {
 		return list;
 	}
 
-	@GetMapping("/getRanking")
-	public List<MyPortfolio> getRanking() {
-		List<MyPortfolio> list = new ArrayList<>();
-
-		return list;
-	}
 
 	// 자동완성 -------------------------------------------------------
 	@GetMapping("/getAutoCompleteData")
@@ -173,11 +170,22 @@ public class TestRestController2 {
 		return stockRepository.getAutoCompleteData();
 	}
 
-	
+	@GetMapping("/updateVisible/{pid}")
+	public int updateVisible(@PathVariable int pid) {
+		MyPortfolio mp = portfolioRepository.findByPortfolioId(pid);
+		if(mp.isVisible()) {
+			System.out.println("asdf");
+			System.out.println(mp.isVisible());
+			mp.setVisible(false);
+		}else {
+			System.out.println(mp.isVisible());
+			mp.setVisible(true);
+		}
+		return portfolioRepository.updateVisibility(mp);
+	}
 	
 	
 	// test용----------------------------------------------------------
-
 	@PostMapping("/testCode123/{type}")
 	public String testCode(@PathVariable String type, @RequestBody MyPortfolio mp) {
 		System.out.println("------------------");
@@ -191,6 +199,15 @@ public class TestRestController2 {
 			portfolioRepository.updateDiscription(mp);
 		}
 		return "asdf";
+	}
+	
+	@GetMapping("/getTradeLog/{pid}")
+	public List<TradeLogDTO> getTradeLog(@PathVariable int pid){
+		List<TradeLogDTO> list = tradeRepository.findAllTradeLogByPortfolioId(pid);
+		list.forEach(e -> {
+			e.setDateTime();
+		});
+		return list;
 	}
 
 	@GetMapping("/getStockByStockName/{stockname}")
@@ -211,6 +228,11 @@ public class TestRestController2 {
 		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
 		
 		System.out.println(mp);
+	}
+	
+	@GetMapping("/getRanking")
+	public List<MyPortfolio> getRanking() {
+		return portfolioRepository.findAllPortfolioDescRor();
 	}
 
 }
