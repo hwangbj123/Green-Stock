@@ -17,9 +17,12 @@ import com.green.greenstock.dto.MyPortfolio;
 import com.green.greenstock.dto.MyStocks;
 import com.green.greenstock.dto.PortfolioInfoDTO;
 import com.green.greenstock.dto.Stock;
+import com.green.greenstock.dto.TradeLogDTO;
 import com.green.greenstock.repository.interfaces.MyStocksRepository;
 import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.interfaces.StockRepository;
+import com.green.greenstock.repository.interfaces.TradeRepository;
+import com.green.greenstock.service.PortfolioService;
 
 @RestController
 @RequestMapping("/portfolio")
@@ -36,6 +39,12 @@ public class TestRestController2 {
 	
 	@Autowired
 	private MyStocksRepository mystocksRepository;
+	
+	@Autowired
+	private PortfolioService portfolioService;
+	
+	@Autowired
+	private TradeRepository tradeRepository;
 
 	@GetMapping("/getMyPortfolioList")
 	public List<MyPortfolio> test() {
@@ -56,13 +65,6 @@ public class TestRestController2 {
 		System.out.println(portfolioRepository.findByPortfolioId(id));
 		return portfolioRepository.findByPortfolioId(id);
 	}
-	
-	@GetMapping("/getAllDataInfo/{id}")
-	public PortfolioInfoDTO getAllDataInfo(@PathVariable int id) {
-		System.out.println("실행됨");
-		System.out.println(portfolioRepository.findByPortfolioId(id));
-		return portfolioRepository.findAllDataByPortfolioId(id);
-	}
 
 	@GetMapping("/getStock/{id}")
 	public Stock getStock(@PathVariable String id) {
@@ -73,10 +75,17 @@ public class TestRestController2 {
 	}
 	
 
-	@GetMapping("/test")
-	public void abc() {
-		//000640
-		System.out.println(dataRestController.getStockDetailJson("000640").getStckPrpr());
+	@GetMapping("/getNowPrice/{companyCode}")
+	public int getNowPrice(@PathVariable String companyCode) {
+		return Integer.parseInt(dataRestController.getStockDetailJson(companyCode).getStckPrpr());
+	}
+	
+	
+	@GetMapping("/getAllDataInfo/{id}")
+	public MyPortfolio getAllDataInfo(@PathVariable int id) {
+		MyPortfolio mp = portfolioService.findAllDatasByPortfolioId(id);
+		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
+		return mp;
 	}
 	
 	@PostMapping("/buySell/{type}")
@@ -84,9 +93,13 @@ public class TestRestController2 {
 		// 포트폴리오 상태 업데이트
 		System.out.println(buySellDto);
 		MyPortfolio mp = portfolioRepository.findByPortfolioId(buySellDto.getPortfolioId());
+		System.out.println(mp);
+		// List<MyStocks> 을 set하는 과정이 없다 지금.
+		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
+		System.out.println(mp);
 		System.out.println("--------------------");
 		
-		int price = Integer.parseInt(dataRestController.getStockDetailJson(buySellDto.getStockId().toString()).getStckPrpr());
+		int price = Integer.parseInt(dataRestController.getStockDetailJson(buySellDto.getStockId()).getStckPrpr());
 		System.out.println("--------------------");
 		MyStocks ms = new MyStocks();
 		ms.setAmount(buySellDto.getAmount());
@@ -94,15 +107,29 @@ public class TestRestController2 {
 		stock.setCompanyCode(buySellDto.getStockId());
 		stock.setCompanyName(buySellDto.getCompanyName());
 		ms.setPrice(price);
-		ms.setStock(stock);
+		ms.setCompanyCode(stock.getCompanyCode());
+		ms.setCompanyName(stock.getCompanyName());
 		ms.setPId(buySellDto.getPortfolioId());
 		mp.buySell(ms, type);
+		mp.setror();
+		System.out.println(mp);
+		System.out.println("--------------");
 		portfolioRepository.buySellStock(mp);
+		TradeLogDTO td = new TradeLogDTO();
+		td.setPId(ms.getPId());
+		td.setAmount(ms.getAmount());
+		td.setPrice(ms.getPrice());
+		td.setQuantity(ms.getAmount() * ms.getPrice());
+		td.setStockCode(ms.getCompanyCode());
+		td.setStockName(ms.getCompanyName());
+		td.setTradeType(type);
+		tradeRepository.insertTradeLog(td);
+		
 		if(type.equals("buy")) {
 			if(mp.isStockExist()) {
 				System.out.println(mp.isStockExist());
 				System.out.println("buy mystockExist");
-				mystocksRepository.updateMyStocks(ms);
+				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
 			}else {
 				System.out.println(mp.isStockExist());
 				System.out.println("buy myStockDoesntExist");
@@ -110,9 +137,14 @@ public class TestRestController2 {
 			}
 		}else {
 			if(mp.isStockExist()) {
-				mystocksRepository.updateMyStocks(ms);
+				System.out.println(mp.isStockExist());
+				System.out.println("stockExist");
+				System.out.println(mp.getMyStocks(ms.getCompanyCode()));
+				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
 			}else {
-				mystocksRepository.deleteMyStocks(ms.getStock().getCompanyCode());
+				System.out.println(mp.isStockExist());
+				System.out.println("stockDoesn'tExist");
+				mystocksRepository.deleteMyStocks(ms.getCompanyCode());
 			}
 		}
 		
@@ -135,10 +167,16 @@ public class TestRestController2 {
 		return list;
 	}
 
+	// 자동완성 -------------------------------------------------------
 	@GetMapping("/getAutoCompleteData")
 	public List<String> autocomplete() {
 		return stockRepository.getAutoCompleteData();
 	}
+
+	
+	
+	
+	// test용----------------------------------------------------------
 
 	@PostMapping("/testCode123/{type}")
 	public String testCode(@PathVariable String type, @RequestBody MyPortfolio mp) {
@@ -168,10 +206,11 @@ public class TestRestController2 {
 	}
 
 	@GetMapping("/getTestData")
-	public DomesticStockCurrentPriceOutput bcd() {
-		DomesticStockCurrentPriceOutput a = dataRestController.getStockDetailJson("000040");
-		System.out.println(a.getStckPrpr());
-		return a;
+	public void bcd() {
+		MyPortfolio mp = portfolioService.findAllDatasByPortfolioId(3);
+		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
+		
+		System.out.println(mp);
 	}
 
 }

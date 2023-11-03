@@ -6,6 +6,7 @@ import com.green.greenstock.repository.model.User;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserRepository {
@@ -28,4 +29,6 @@ public interface UserRepository {
 	public int countUser();
 
 	public List<User> findBySuspended(boolean b);
+
+	public List<User> findSearchUser(@Param("search")String search, @Param("paging")PagingDto paging);
 }

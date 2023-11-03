@@ -59,7 +59,6 @@ public class AdminController {
 	
 	@GetMapping("/user")
 	public String AdminUser(Model model, PagingDto paging) {
-		
 		List<User> userList = userService.findAllUser(paging);
 		int total = userService.countUser();
 		Pagination pagination = new Pagination(total, paging);
@@ -79,5 +78,15 @@ public class AdminController {
 			e.printStackTrace();
 		}
 		return "redirect:/admin/user";
+	}
+	
+	@GetMapping("/search-user")
+	public String searchUser(String search, PagingDto paging, Model model) {
+		List<User> userList = userService.findSearchUser(search ,paging);
+		int total = 1;
+		Pagination pagination = new Pagination(total, paging);
+		model.addAttribute("userList", userList);
+		model.addAttribute("page", pagination);
+		return "admin/adminUser";
 	}
 }

@@ -1,5 +1,13 @@
-$(document).ready(function() {
-	$('#signInBtn').click(function() {
+let verifyUser = {
+	version: 1,
+	
+	init: function() {
+		$('#signInBtn').on('click', () => {
+			this.verifyUser();
+		});
+	},
+
+	verifyUser: function() {
 		//유효성
 		let idval = $('#userName').val();
 		let pwval = $('#password').val();
@@ -34,5 +42,7 @@ $(document).ready(function() {
 				alert('서버 에러입니다.');
 			}
 		});
-	});
-});
+	}
+}
+
+verifyUser.init();

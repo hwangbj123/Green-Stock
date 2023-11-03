@@ -82,7 +82,7 @@
 		                </div>
 		                
 		            	<div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="bDate" placeholder="Birthdate Ex : 1994-04-26" name="birthDate" value="${principal.birthDate}">
+		                  <input type="text" class="form-control" id="bDate" placeholder="Birthdate Ex : 1994-04-26" name="birthDate" value="<fmt:formatDate value="${principal.birthDate}" pattern="yyyy-MM-dd" />"></input>
 		                </div>
 		                
 		                <div class="col-md-12 row">

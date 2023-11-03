@@ -1,5 +1,6 @@
 package com.green.greenstock.service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,13 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.DomesticStockCode;
@@ -32,8 +37,12 @@ import com.green.greenstock.repository.model.AccessTokenInfo;
 import com.green.greenstock.repository.model.WebSocketKeyInfo;
 import com.green.greenstock.utils.Pagination;
 
+import io.netty.channel.ChannelOption;
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.WriteTimeoutHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.netty.http.client.HttpClient;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,7 +61,8 @@ public class StockApiService {
 	private final OverseasStockCodeRepository overseasStockCodeRepository;
 	private final DomesticStockCodeRepository domesticStockCodeRepository; 
 	private final WebSocketKeyRepository webSocketKeyRepository;
-
+	
+	
 	private static final String APP_KEY = "appkey";
 	private static final String APP_SECRET= "appsecret";
 	private static final String CONTENT_TYPE= "content-type";
@@ -369,10 +379,19 @@ public class StockApiService {
 	/* 통신 시작 */
 	// 웹클라이언트(http통신 생성)
 	private WebClient buildWebClient() {
+		HttpClient httpClient = HttpClient.create()
+				  .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+				  .responseTimeout(Duration.ofMillis(5000))
+				  .doOnConnected(conn -> 
+				    conn.addHandlerFirst(new ReadTimeoutHandler(5000, TimeUnit.MILLISECONDS))
+				      .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS)));
+		
 		return WebClient
 						.builder()
 						.baseUrl("https://openapivts.koreainvestment.com:29443")
 						.defaultHeader(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						.clientConnector(new ReactorClientHttpConnector(httpClient)) // 응답시간 초과시 설정
+						.codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(2 * 1024 * 1024)) // 메모리 늘리기
 						.build();
 	}
 	/* 통신 끝 */

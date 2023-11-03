@@ -1,6 +1,14 @@
-$(document).ready(function() {
-	$('#signInBtn').click(function() {
-		//유효성
+let signIn = {
+	version: 1,
+	
+	init: function() {
+		$('#signInBtn').on('click', () => {
+			this.signIn();
+		});
+	},
+
+	signIn: function() {
+				//유효성
 		let idval = $('#userName').val();
 		let pwval = $('#password').val();
 		let idvalcheck = /^[a-z0-9]+$/;
@@ -37,5 +45,7 @@ $(document).ready(function() {
 				alert('서버 에러입니다.');
 			}
 		});
-	});
-});
+	}
+}
+
+signIn.init();

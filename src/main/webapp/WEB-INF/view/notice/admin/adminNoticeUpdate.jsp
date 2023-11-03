@@ -198,8 +198,7 @@
             <tr>                
                 <td>
                 	<input type="hidden" value="${notice.id}" name="id">
-                	<input type="hidden" value="${notice.userId}" name="userId">
-                	
+                	<input type="hidden" value="${notice.userId}" name="userId">                	
                 	제목 :
                     <input type="text" value="${notice.noticeTitle}" name="noticeTitle" required>
                     작성글

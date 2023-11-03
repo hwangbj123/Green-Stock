@@ -19,12 +19,12 @@ public class Pagination {
 	public Pagination(int totalCount, int currentPage) {
 		this.start = ((currentPage - 1) * 10) + 1;
 		this.end = totalCount < (currentPage * 10) ? totalCount : (currentPage * 10);
-		int blockCount = (int) Math.ceil(totalCount / 10.0);
+		int totalPageGroup = (int) Math.ceil(totalCount / 10.0);
 		this.currentPageGroup = (int)Math.ceil(currentPage / 5.0);
-		this.nextPageGroup = (blockCount > 5) && (currentPage < blockCount);
-		this.prevPageGroup = (blockCount > 5) && (currentPageGroup > 1);
+		this.nextPageGroup = (totalPageGroup > 5) && (totalPageGroup > (currentPageGroup)  * 5);
+		this.prevPageGroup = (totalPageGroup > 5) && (currentPageGroup > 1);
 		this.startPageGroup = ((currentPageGroup - 1) * 5) + 1;
-		this.endPageGroup = (blockCount / 10) < (currentPageGroup * 5) ? blockCount : (currentPageGroup * 5);
+		this.endPageGroup = (totalCount / 10) < (currentPageGroup * 5) ? totalPageGroup : (currentPageGroup * 5);
 		this.totalCount = totalCount;
 		this.currentPage = currentPage;
 	}

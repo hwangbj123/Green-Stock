@@ -12,6 +12,10 @@
   	<select id="findAllUser" resultType="User">
 		select * from user_tb order by id desc limit #{offset}, #{recordSize}
 	</select>
+	
+	<select id="findSearchUser" resultType="User">
+		select * from user_tb where user_name = #{search} order by id desc limit #{paging.offset}, #{paging.recordSize}
+	</select>
   	
   	<select id="findUserByUserName" parameterType="com.green.greenstock.repository.model.User" resultType="User">
 		select * from user_tb where user_name = #{userName}
