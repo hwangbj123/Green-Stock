@@ -145,7 +145,7 @@ public class AdminController {
 		return "admin/adminChatList";
 	}
 	@PostMapping("/chat-delete")
-	public String chatDelete(int id, int code, HttpServletRequest request) {
+	public String chatDelete(int id, String code, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("principal");
 		int userId = user.getId();
@@ -157,4 +157,20 @@ public class AdminController {
 		return "redirect:/chat?companyCode="+code+"&userId="+userId;
 	}
 	
+
+	/*
+		전문가 등급 관리
+	 */ 
+	// 신청 목록 페이지
+	// 심사중 기능
+	// 심사완료 등급업 기능
+	// 전문가 이력 추가 페이지
+	// 전문가 이력 추가 기능
+	// 전문가 이력 관리 페이지
+	// 전문가 이력 관리 기능
+
+
+
 }
+
+

@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	setSmallCard();
+	setModal();
 });
 
 // 로그인한 유저의 portfolio 를 표시해주는 smallCard 를 set. 
@@ -47,7 +48,7 @@ function makeSmallCard(data) {
 			let infoWrapper = $('<div id = "infoWrpper">')
 			let h2 = $('<h2 class = "editableH2s" id = "h2_' + pid + '" class="mb-1">'); // CardLayout header
 			let p = $('<p class = "editablePs" id = "p_' + pid + '">') // CardLayout body
-			let span = $('<span data-clicked="false" class = "editSpans" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer; font-size: smaller">변경</span>');
+			let span = $('<span data-clicked="false" class = "editSpans" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer; font-size: smaller;line-height: 250%;">수정</span>');
 			span.on('click', (event) => {
 				event.stopImmediatePropagation();
 				editClicked(pid);
@@ -207,7 +208,7 @@ async function setPortfolioInfo(data) {
 	$('#portfolioInfo').append(portfolioInfoWrapper);
 	let keyArr = ['title', 'dis', 'Asset', 'sellAmount', 'TotalAsset', 'totalStock', 'ROR'];
 	keyArr.forEach((e, idx) => {
-		let div = $('<div id="infoRows_' + idx + '" style="width : 100%;display: flex; height: 10%;">');
+		let div = $('<div id="infoRows_' + idx + '" style="margin-bottom : 5%;width : 100%;display: flex; height: 10%;">');
 		if (e == "ROR") { div.css('heigth', '20%') }
 		div.append($('<div style = "width : 50%;height:100%;">' + e + '</div>'));
 		portfolioInfoWrapper.append(div);
@@ -292,34 +293,44 @@ function setDonutChart(data) {
 
 function setRanking() {
 	$.get('portfolio/getRanking', function(data) {
-		let width = $('#user-acquisition').css('width');
-		let table = $('<table id = "rankingTable" style = "width : 100%;" class = "table card-table table-responsive table-responsive-large">');
-		let thead = $('<thead>');
-		let tbody = $('<tbody>');
+		console.log(data);
+		//let width = $('#user-acquisition').css('width');
+		let rankingWrapper = $('<div id = "rankingBodyInner" style = "display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
+		$('#rankingBody').append(rankingWrapper);
 		let thArr = ['rank', 'userid', 'title', 'ROR'];
 		thArr.forEach(e => {
-			let th = $('<th>' + e + '</th>');
-			thead.append(th);
-		})
-		table.append(thead);
-		data.forEach((e, idx) => {
-			let rankingTd = $('<td style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + (idx + 1) + '</td>');
-			let idTd = $('<td style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + e.userId + '</td>');
-			let titleTd = $('<td style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + e.title + '</td>');
-			let rorTd = $('<td style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + e.ror + '</td>');
-			let tdTr = $('<tr>');
-			tdTr.append(rankingTd, idTd, titleTd, rorTd);
-			tbody.append(tdTr);
+			rankingWrapper.append($('<div class="ths" style = "text-align:center;">' + e + '</div>'));
 		});
-		table.append(tbody);
-		$('#rankingBody').append(table);
+		data.forEach((e, idx) => {
+			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + (idx + 1) + '</div>');
+			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.userId + '</div>');
+			let title = $('<div data-bs-toggle="modal" data-bs-target="#modalContact" class="view-detail" style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis; cursor : pointer">' + e.title + '</div>')
+			rankingWrapper.append(title);
+			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '</div>');
+			title.on('click', () => titleClicked(e.pid));
+		});
 	});
+}
+
+function titleClicked(pid) {
+	$.get('portfolio/getMyPortfolioInfo/' + pid, function(data) {
+		console.log(data);
+	})
 }
 
 function setMonthlyAssetChart() {
 	/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
 	//<canvas id="monthlyAsset" class="chartjs"></canvas>
-	$.get('portfolio/getMonthlyAsset', function(data) {
+	$.get('portfolio/getMonthlyGrowthData', function(data) {
+		let logDateArr = [];
+		let rorArr = [];
+		for (let i = 0; i < 6; i++) {
+			logDateArr.push(data[i].logDate.slice(5, 10));
+		}
+		for (let i = 0; i < 6; i++) {
+			rorArr.push(data[i].ror);
+		}
+
 		console.log(data);
 		$('#assetBody').append($('<canvas style = "height : 300px" id="monthlyAsset" class="chartjs"></canvas>'))
 		var activity = document.getElementById("monthlyAsset");
@@ -329,21 +340,13 @@ function setMonthlyAssetChart() {
 				type: "line",
 				// The data for our dataset
 				data: {
-					labels: [
-						"4 Jan",
-						"5 Jan",
-						"6 Jan",
-						"7 Jan",
-						"8 Jan",
-						"9 Jan",
-						"10 Jan"
-					],
+					labels: logDateArr,
 					datasets: [
 						{
 							label: "Monthly Asset",
 							backgroundColor: "transparent",
 							borderColor: "rgba(82, 136, 255, .8)",
-							data: data,
+							data: rorArr,
 							lineTension: 0,
 							pointRadius: 5,
 							pointBackgroundColor: "rgba(255,255,255,1)",
@@ -443,7 +446,6 @@ function setMonthlyAssetChart() {
 
 
 async function setMyStock(data) {
-	getStockNowPrice();
 	console.log(data);
 	let headArr = ['주식명', '가격'];
 	let thead = $('<thead>');
@@ -464,7 +466,7 @@ async function setMyStock(data) {
 	let nowPriceArr = [];
 	const promises = data.stockList.map(async e => {
 		return new Promise((resolve, reject) => {
-			$.get('portfolio/getNowPrice/' + e.companyCode, function(data) {
+			$.get('portfolio/getNowPriceWithCompanyCode/' + e.companyCode, function(data) {
 				// 요청이 완료되면 데이터를 arr 배열에 추가
 				nowPriceArr.push(data);
 				resolve();
@@ -472,7 +474,7 @@ async function setMyStock(data) {
 		});
 	});
 	await Promise.all(promises);
-	
+
 	console.log('-------------------')
 	console.log(nowPriceArr);
 	console.log(data);
@@ -490,9 +492,9 @@ async function setMyStock(data) {
 		let td2 = $('<td>' + numberWithCommas(e.price) + '</td>');
 		let td3 = $('<td>' + numberWithCommas(e.amount) + '</td>');
 
-		let td4 = $('<td>' + numberWithCommas(nowPriceArr[idx]) + '</td>');
-		let td5 = $('<td>' + ifPlus(calculatePercentageChange(e.price, nowPriceArr[idx], tr).toFixed(2)) + '</td>');
-		let td6 = $('<td>' + numberWithCommas((e.amount * nowPriceArr[idx]).toFixed(0)) + '</td>');
+		let td4 = $('<td>' + numberWithCommas(nowPriceSetter(nowPriceArr, e)) + '</td>');
+		let td5 = $('<td>' + ifPlus(calculatePercentageChange(e.price, nowPriceSetter(nowPriceArr, e), tr).toFixed(2)) + '</td>');
+		let td6 = $('<td>' + numberWithCommas((e.amount * nowPriceSetter(nowPriceArr, e)).toFixed(0)) + '</td>');
 
 		let buyTd = $('<td style="cursor:pointer"id = addBtn>buy</td>');
 		let sellTd = $('<td style="cursor:pointer" id = sellBtn>sell</td>');
@@ -503,6 +505,18 @@ async function setMyStock(data) {
 		tbody.append(tr);
 	});
 	$('#myStockCardTable').append(tbody);
+}
+
+function nowPriceSetter(nowPriceArr, stock) {
+	// stock.companyCode 가 nowPriceArr 의 /[0] 과 같을 경우 [1] 을 반환.
+	let nowPrice;
+	nowPriceArr.forEach(e => {
+		let arr = e.split("/");
+		if (arr[0] == stock.companyCode) {
+			nowPrice = arr[1];
+		}
+	});
+	return nowPrice;
 }
 
 async function setTradeLog(data) {
@@ -523,7 +537,7 @@ async function setTradeLog(data) {
 	let tbody = $('<tbody>');
 
 	tradeData.forEach(e => console.log(e));
-	tradeData.forEach(async (e,idx) => {
+	tradeData.forEach(async (e, idx) => {
 		let tr = $('<tr>');
 		if (idx % 2 == 0) {
 			tr.css('background-color', 'rgb(249, 249, 249)');
@@ -586,10 +600,54 @@ function privacyClicked(pid) {
 
 // editBtnCLicked
 // 변경 버튼 클릭시 동작.
+function setModal() {
+	console.log($('.mdi.mdi-pencil'));
+	$('#closeButton').on('click', () => {
+
+	});
+	$('.mdi.mdi-pencil').on('click', () => {
+		console.log('clicked');
+		//  <button class = "btn btn-primary btn-pill my-4">저장</button>
+		// 	<button class = "btn btn-primary btn-pill my-4">삭제</button>
+		if ($('.btn.btn-primary.btn-pill.my-4.buttons').length > 0) {
+			refreshModal();
+		} else {
+			let infoSaveButton = $('<button class = "btn btn-primary btn-pill my-4 buttons">저장</button>');
+			let infoCancelButton = $('<button class = "btn btn-primary btn-pill my-4 buttons">취소</button>');
+			infoCancelButton.css('margin-left', '5%');
+			$('#modal-portfolio-info').append(infoSaveButton);
+			$('#modal-portfolio-info').append(infoCancelButton);
+			$('#visible_toggle').append($('<i id = "visibleToggleButton" style = "cursor : pointer;margin-left : 10%;" class = "mdi mdi-reload"></i>'))
+			$('#visibleToggleButton').on('click', () => changeVisible());
+			$('#pfName').attr('contenteditable', 'true');
+			$('#pfDisc').attr('contenteditable', 'true');
+			$('#pfName').focus();
+		}
+	});
+
+	function refreshModal() {
+		$('.btn.btn-primary.btn-pill.my-4.buttons').each((idx, e) => {
+			e.remove();
+		});
+		$('#visibleToggleButton').remove();
+		$('#pfName').attr('contenteditable', 'false');
+		$('#pfDisc').attr('contenteditable', 'false');
+	}
+
+	function changeVisible() {
+		if ($('#visibleText').text() == "public") {
+			$('#visibleText').html("private");
+		} else {
+			$('#visibleText').html("public");
+		}
+	}
+}
+
+
 function editClicked(id) {
 	let eles = $('.editSpans');
 	let checker = new Checker('span_' + id, eles);
-	let delButton = $('<div class = "delButtons"style=  "position : absolute; z-index : 999; bottom : 90%; left : 97%; background : url(\'/resources/img/icons/x.png\');background-size: cover;background-repeat : no-repeat; height : 20%;width : 10%;">');
+	let delButton = $('<div class = "delButtons"style=  "position : absolute; z-index : 1; bottom : 90%; left : 95%; background : url(\'/resources/img/icons/x.png\');background-size: cover;background-repeat : no-repeat; height : 20%;width : 13%;">');
 	delButton.on('click', (e) => {
 		e.stopPropagation();
 		delButtonClicked(id);
@@ -600,7 +658,7 @@ function editClicked(id) {
 		console.log('실행됨');
 		$('#span_' + id).attr('data-clicked', 'true');
 		$('#' + id).children().append(delButton);
-		$('.editSpans').each((idx, e) => $(e).html('변경'));
+		$('.editSpans').each((idx, e) => $(e).html('수정'));
 		$('#span_' + id).html('확인');
 		pfedit(id);
 		return;
@@ -608,7 +666,7 @@ function editClicked(id) {
 	if (checker.checkSelfClicked()) { // 내가 체크되있음
 		console.log('실행됨');
 		$('#span_' + id).attr('data-clicked', 'false');
-		$('#span_' + id).html('변경');
+		$('#span_' + id).html('수정');
 		$('.delButtons').each((idx, e) => $(e).remove());
 		return;
 	}
@@ -618,7 +676,7 @@ function editClicked(id) {
 		$('#span_' + id).children().append(delButton);
 		$('#span_' + id).attr('data-clicked', 'true');
 		$('#' + id).children().append(delButton);
-		$('.editSpans').each((idx, e) => $(e).html('변경'));
+		$('.editSpans').each((idx, e) => $(e).html('수정'));
 		$('#span_' + id).html('확인');
 		pfedit(id);
 	}
@@ -717,7 +775,7 @@ function delButtonClicked(id) {
 // small 카드를 눌렀을 시 실행된 함수로 append 된 tag 들이 모두 사라진다.
 function detatchAll() {
 	console.log('실행됨');
-	if ($('#portfolioInfoWrapper').length > 0 && $('#donutChartBody').children().length > 0 && $('#myStockCardTable').children().length > 0 && $('#assetBody').children().length > 0) {
+	if ($('#portfolioInfoWrapper').length > 0 || $('#donutChartBody').children().length > 0 || $('#myStockCardTable').children().length > 0 || $('#assetBody').children().length > 0) {
 		console.log('detatchInfoWrapper')
 		$('#portfolioInfoWrapper').remove();
 		$('#donutChartBody').children().each((idx, e) => {
@@ -743,8 +801,8 @@ function detatchAll() {
 		})
 		console.log('실행');
 	}
-	if ($('#rankingTable').length > 0) {
-		$('#rankingTable').remove();
+	if ($('#rankingBodyInner').length > 0) {
+		$('#rankingBodyInner').remove();
 	}
 	if ($('#myTradeLogTable').children().length > 0) {
 		$('#myTradeLogTable').children().remove();
@@ -770,11 +828,13 @@ function newWindow(pId, stockId, type, stockname) {
 			.querySelector("#submitButton")
 			.addEventListener("click", function() {
 				var inputData = contentDiv.querySelector("#inputField").value;
-				if (!Number.isInteger(inputData) || inputData <= 0) {
+				if (!Number.isInteger(parseInt(inputData)) || parseInt(inputData) < 1) {
 					newWindow.close();
-					alert('양수인 정수만 가능합니다.')
+					alert('양수인 정수만 가능합니다.');
 					return;
 				}
+
+
 				$.ajax({
 					url: "portfolio/buySell/" + type,
 					method: "post",

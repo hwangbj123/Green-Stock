@@ -365,19 +365,12 @@
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="javascript:void(0)">Elements</a>
+                <a href="javascript:void(0)">전문가</a>
                 <ul class="sub-menu">
-                  <li><a href="elemets-products.html">Products</a></li>
-                  <li><a href="elemets-typography.html">Typography</a></li>
-                  <li><a href="elemets-title.html">Titles</a></li>
-                  <li><a href="elemets-categories.html">Categories</a></li>
-                  <li><a href="elemets-buttons.html">Buttons</a></li>
-                  <li><a href="elemets-tabs.html">Tabs</a></li>
-                  <li><a href="elemets-accordions.html">Accordions</a></li>
-                  <li><a href="elemets-blog.html">Blogs</a></li>
+                  <li><a href="/advisor/list">전문가 목록</a></li>
+                  <li><a href="/advisor/register">전문가 신청하기</a></li>
                 </ul>
               </li>
-              <li><a href="offer.html">Hot Offers</a></li>
             </ul>
           </div>
         </div>

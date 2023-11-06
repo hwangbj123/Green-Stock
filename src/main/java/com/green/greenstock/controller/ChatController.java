@@ -27,7 +27,7 @@ public class ChatController {
 	ChattingService chattingService;
 
 	@GetMapping("/chat")
-	public String chatMain(int companyCode, int userId, Model model, HttpServletRequest request) {
+	public String chatMain(String companyCode, int userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("principal");
 		int roleTypeId = user.getRoletypeId();
@@ -44,26 +44,26 @@ public class ChatController {
 
 	@RequestMapping("/subCheck")
 	@ResponseBody
-	public String subCheck(int companyCode, int userId) {
+	public String subCheck(String companyCode, int userId) {
 		System.out.println("controller subCheck companyCode = "+companyCode);
 		String res = chattingService.subCheck(companyCode, userId);
 		return res;
 	}
 	
 	@GetMapping("/subscribe")
-	public String subscribe(int companyCode, int userId) {
+	public String subscribe(String companyCode, int userId) {
 		chattingService.subscribe(companyCode, userId);
 		return "redirect:product/"+companyCode;
 	}
 	
 	@GetMapping("/un-subscribe")
-	public String unSubscribe(int companyCode, int userId) {
+	public String unSubscribe(String companyCode, int userId) {
 		chattingService.unSubscribe(companyCode, userId);
 		return "redirect:product/"+companyCode;
 	}
 	
     @GetMapping("product/{companyCode}")
-    public String product(@PathVariable("companyCode") int companyCode,HttpServletRequest request, Model model) {
+    public String product(@PathVariable("companyCode") String companyCode,HttpServletRequest request, Model model) {
     	
     	HttpSession session =  request.getSession();
     	

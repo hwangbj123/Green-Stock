@@ -19,5 +19,8 @@ public interface PortfolioRepository {
 	int deleteByPortfolioId(Integer id);
 	void buySellStock(MyPortfolio mp);
 	List<MyPortfolio> findAllPortfolioDescRor();
+	List<MyPortfolio> findAllPortfolio();
 	int updateVisibility(MyPortfolio mp);
+	void updateRor(MyPortfolio mp);
+	
 }

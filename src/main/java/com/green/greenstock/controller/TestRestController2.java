@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.greenstock.dto.BuySellDTO;
+import com.green.greenstock.dto.GrowthLogDTO;
 import com.green.greenstock.dto.MyPortfolio;
 import com.green.greenstock.dto.MyStocks;
 import com.green.greenstock.dto.Stock;
 import com.green.greenstock.dto.TradeLogDTO;
+import com.green.greenstock.repository.interfaces.GrowthLogRepository;
 import com.green.greenstock.repository.interfaces.MyStocksRepository;
 import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.interfaces.StockRepository;
@@ -43,6 +45,9 @@ public class TestRestController2 {
 	
 	@Autowired
 	private TradeRepository tradeRepository;
+	
+	@Autowired
+	GrowthLogRepository growthLogRepository;
 
 	@GetMapping("/getMyPortfolioList/{id}")
 	public List<MyPortfolio> test(@PathVariable int id) {
@@ -64,9 +69,19 @@ public class TestRestController2 {
 
 	@GetMapping("/getMyPortfolioInfo/{id}")
 	public MyPortfolio abc(@PathVariable int id) {
-		System.out.println("실행됨");
-		System.out.println(portfolioRepository.findByPortfolioId(id));
-		return portfolioRepository.findByPortfolioId(id);
+		MyPortfolio mp = portfolioRepository.findByPortfolioId(id);
+		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(id));
+		if (mp.getStockList() != null) {
+			mp.getStockList().forEach(stock -> {
+				stock.setNowPrice(Integer
+						.parseInt(dataRestController.getStockDetailJson(stock.getCompanyCode()).getStckPrpr()));
+				mp.setNowTotalAsset();
+			});
+		} else {
+			System.out.println("else");
+		}
+		System.out.println(mp);
+		return mp;
 	}
 
 	@GetMapping("/getStock/{id}")
@@ -82,6 +97,13 @@ public class TestRestController2 {
 	public int getNowPrice(@PathVariable String companyCode) {
 		return Integer.parseInt(dataRestController.getStockDetailJson(companyCode).getStckPrpr());
 	}
+	
+	@GetMapping("/getNowPriceWithCompanyCode/{companyCode}")
+	public String getNowPriceWithCompanyCode(@PathVariable String companyCode) {
+		return companyCode + "/" + dataRestController.getStockDetailJson(companyCode).getStckPrpr();
+	}
+	
+	
 	
 	
 	// MyStock 정보 세팅용
@@ -115,7 +137,6 @@ public class TestRestController2 {
 		ms.setCompanyName(stock.getCompanyName());
 		ms.setPId(buySellDto.getPortfolioId());
 		mp.buySell(ms, type);
-		mp.setror();
 		System.out.println(mp);
 		System.out.println("--------------");
 		portfolioRepository.buySellStock(mp);
@@ -154,13 +175,17 @@ public class TestRestController2 {
 		return 1;
 	}
 
-	@GetMapping("/getMonthlyAsset")
-	public List<Integer> getMonthlyAsset() {
-		List<Integer> list = new ArrayList<>();
-		for (int i = 0; i < 7; i++) {
-			list.add(i * 100000);
-		}
-		return list;
+	@GetMapping("/getMonthlyGrowthData")
+	public List<GrowthLogDTO> getMonthlyAsset() {
+		List<GrowthLogDTO> glist = new ArrayList<>();
+		List<Double> list = new ArrayList<>();
+		glist = growthLogRepository.findGrowthLogByPid(31);
+		System.out.println(glist);
+		glist.forEach(e -> {
+			//e.set(e.getLogDate().replace("%",""));
+			e.setRor(e.getRor().replace("%",""));
+		});
+		return glist;
 	}
 
 
@@ -219,20 +244,20 @@ public class TestRestController2 {
 	@GetMapping("/deletePortfolio/{pfId}")
 	public int deletePortfolio(@PathVariable int pfId) {
 		System.out.println(pfId);
+		mystocksRepository.deleteMyStockByPid(pfId);
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
 
 	@GetMapping("/getTestData")
 	public void bcd() {
-		MyPortfolio mp = portfolioService.findAllDatasByPortfolioId(3);
-		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
-		
-		System.out.println(mp);
+		System.out.println(growthLogRepository.findAllGrowthLog());
 	}
 	
 	@GetMapping("/getRanking")
 	public List<MyPortfolio> getRanking() {
 		return portfolioRepository.findAllPortfolioDescRor();
 	}
+	
+	
 
 }

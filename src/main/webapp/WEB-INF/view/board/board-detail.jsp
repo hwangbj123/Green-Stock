@@ -839,7 +839,8 @@
 				<input type="hidden" id="thumb-check" value="">
 			</c:otherwise>
 		</c:choose>
-		<img src="/resources/img/favicon.png" onclick="boardDetailInit.thumbFnc(${board.id}, ${principal.id})" style="width: 30px; height: 30px; cursor: pointer;">
+		<button type="button" id="thumb-btn" onclick="boardDetailInit.thumbFnc(${board.id}, ${principal.id})">
+		게시글<br>추천</button>
 	</div>
 	
     <!-- Ec Blog page -->

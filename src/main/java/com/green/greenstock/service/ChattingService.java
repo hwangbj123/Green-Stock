@@ -21,15 +21,15 @@ public class ChattingService {
 		return chattingRepository.createChattingRoom(chattingRoom);
 	}
 
-	public int subscribe(int companyCode, int userId) {
+	public int subscribe(String companyCode, int userId) {
 		return chattingRepository.subscribe(companyCode, userId);
 	}
 	
-	public int unSubscribe(int companyCode, int userId) {
+	public int unSubscribe(String companyCode, int userId) {
 		return chattingRepository.unSubscribe(companyCode, userId);
 	}
 	
-	public String subCheck(int companyCode, int userId) {
+	public String subCheck(String companyCode, int userId) {
 		System.out.println("subCheck Service ");
 		String res = chattingRepository.subCheck(companyCode, userId);
 		System.out.println("userId : "+res);
@@ -44,7 +44,7 @@ public class ChattingService {
 		return chattingRepository.deleteMessage(id);
 	}
 
-	public List<ChatMessage> selectMessageList(int companyCode, int userId, int roleTypeId) {
+	public List<ChatMessage> selectMessageList(String companyCode, int userId, int roleTypeId) {
 		return chattingRepository.selectMessageList(companyCode, userId, roleTypeId);
 	}
 	
@@ -52,7 +52,7 @@ public class ChattingService {
 		return chattingRepository.findUserById(userId);
 	}
 	
-	public List<User> selectUserListByCode(int companyCode){
+	public List<User> selectUserListByCode(String companyCode){
 		return chattingRepository.selectUserListByCode(companyCode);
 	}
 	
@@ -62,5 +62,9 @@ public class ChattingService {
 	
 	public int countChatList(PagingDto paging) {
 		return chattingRepository.countChatList(paging);
+	}
+	
+	public List<ChattingRoom> selectChatListNotPaging() {
+		return chattingRepository.selectChatListNotPaging();
 	}
 }
