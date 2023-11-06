@@ -53,33 +53,34 @@ public class BoardController {
 	@GetMapping("/list")
 	public String boardList(PagingDto paging, Model model) {
 		List<String> cate = boardService.findCategoryList();
-		List<Board> list = boardService.selectBoardListAll(paging);
-		int total = boardService.selectBoardCount(paging);
-		Pagination pagination = new Pagination(total, paging);
-		
-		model.addAttribute("cate", cate);
-		model.addAttribute("list", list);
-		model.addAttribute("page", pagination);
-		System.out.println("page : "+pagination);
-		return "board/board-list";
-	}
-	
-	@GetMapping("/search")
-	public String boardSearchList(PagingDto paging, Model model) {
-		List<String> cate = boardService.findCategoryList();
-		int total = boardService.selectBoardCount(paging);
-		Pagination pagination = new Pagination(total, paging);
 		List<Board> list = boardService.selectBoardSearchList(paging);
-		
-		System.out.println("board search - page : "+pagination);
-		System.out.println("board search - paging : "+paging);
+		int total = boardService.selectBoardCount(paging);
+		Pagination pagination = new Pagination(total, paging);
 		
 		model.addAttribute("cate", cate);
 		model.addAttribute("list", list);
 		model.addAttribute("page", pagination);
 		model.addAttribute("paging", paging);
-		return "board/board-search";
+		System.out.println("page : "+pagination);
+		return "board/board-list";
 	}
+	
+//	@GetMapping("/search")
+//	public String boardSearchList(PagingDto paging, Model model) {
+//		List<String> cate = boardService.findCategoryList();
+//		int total = boardService.selectBoardCount(paging);
+//		Pagination pagination = new Pagination(total, paging);
+//		List<Board> list = boardService.selectBoardSearchList(paging);
+//		
+//		System.out.println("board search - page : "+pagination);
+//		System.out.println("board search - paging : "+paging);
+//		
+//		model.addAttribute("cate", cate);
+//		model.addAttribute("list", list);
+//		model.addAttribute("page", pagination);
+//		model.addAttribute("paging", paging);
+//		return "board/board-search";
+//	}
 	
 	@GetMapping("/detail")
 	public String boardDetail(ReplyPagingDto paging, HttpServletRequest request,HttpServletResponse response, Model model) {
@@ -144,8 +145,6 @@ public class BoardController {
 	@PostMapping("/board-delete")
 	public String boardDelete(Board board, HttpServletRequest request) {
 		boardService.deleteBoard(board, request);
-		System.out.println("board delete request : "+request);
-		System.out.println("board delete success");
 		return "redirect:/board/list";
 	}
 

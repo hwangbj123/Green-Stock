@@ -7,6 +7,12 @@ let chatInit = {
     document.getElementById('send-btn').addEventListener('click', () => {
 	  this.sendMessage();
 	});
+	document.getElementById('message').addEventListener('keypress', (event) => {
+	    if (event.key === "Enter") {
+	        event.preventDefault();
+	        this.sendMessage();
+	    }
+	});
   },
 
   scrollToBottom: function() {
@@ -15,12 +21,12 @@ let chatInit = {
   },
 
   connect: function() {
-    let roomId = document.getElementById("hd-roomId").value;
+    let companyCode = document.getElementById("hd-companyCode").value;
     let userName = document.getElementById("hd-userName").value;
     this.stompClient = Stomp.over(new SockJS('/chat'));
 
     this.stompClient.connect({}, () => {
-      this.stompClient.subscribe(`/topic/${roomId}`, function(message) {
+      this.stompClient.subscribe(`/topic/${companyCode}`, function(message) {
         var messageBody = JSON.parse(message.body);
         var messageDate = new Date(messageBody.date);
 
@@ -55,7 +61,7 @@ let chatInit = {
   },
 
   sendMessage: async function() {
-    let roomId = document.getElementById("hd-roomId").value;
+    let companyCode = document.getElementById("hd-companyCode").value;
     let userId = document.getElementById("hd-userId").value;
     let userName = document.getElementById("hd-userName").value;
     let message = document.getElementById("message");
@@ -70,16 +76,23 @@ let chatInit = {
       return false;
     }
 
-    await this.stompClient.send(`/app/chat/${roomId}`, {}, JSON.stringify({
+    await this.stompClient.send(`/app/chat/${companyCode}`, {}, JSON.stringify({
       userId: userId,
       userName: userName,
-      roomId: roomId,
+      companyCode: companyCode,
       content: message.value,
       date: new Date()
     }));
     message.value = '';
     message.focus();
-  }
+  },
+  
+  deleteMessage: function(id){
+	  if(confirm("해당 메시지를 삭제하시겠습니까?")){
+		  document.getElementById(`delete-form-${id}`).submit();
+	  }
+  },
+  
 };
 
 chatInit.init();

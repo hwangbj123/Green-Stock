@@ -17,5 +17,7 @@ public interface MyStocksRepository{
 	int deleteMyStocks(String companyCode);
 	
 	List<MyStocks> findMyStocksByPortfolioId(int id);
+
+	void deleteMyStockByPid(int pfId);
 	
 }

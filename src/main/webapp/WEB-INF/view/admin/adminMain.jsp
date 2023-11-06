@@ -99,22 +99,58 @@
 					<div class="no-gutters">
 						<div>
 							<div class="card-header justify-content-between">
-								<h2>User Activity</h2>
-								<div class="date-range-report ">
-									<span></span>
-								</div>
+								<h2>Board List</h2>
 							</div>
 							<div class="card-body">
-								<div class="tab-content" id="userActivityContent">
-									<div class="tab-pane fade show active" id="user"
-										role="tabpanel">
-										<canvas id="activity" class="chartjs"></canvas>
-									</div>
+								<div class="table-responsive">
+									<table id="responsive-data-table" class="table centered-table">
+										<thead>
+											<tr>
+												<th style="max-width: 50px;">id</th>
+												<th style="max-width: 50px;">cate</th>
+												<th style="min-width: 150px;">title</th>
+												<th>user</th>
+												<th>date</th>
+												<th style="max-width: 50px;">views</th>
+												<th style="max-width: 50px;">rec</th>
+											</tr>
+										</thead>
+		
+										<tbody>
+											<c:forEach var="board" items="${boardList}">
+													<tr>
+														<td>${board.id}</td>
+														<td>${board.categoryId}</td>
+														<td><a href="/board/detail?boardId=${board.id}">
+															${board.title}</a>
+														</td>
+														<td>${board.userName}</td>
+														<td><fmt:formatDate value="${board.date}"
+																pattern="MM-dd HH:mm:ss" /></td>
+														<td>${board.views}</td>
+														<td>${board.recommand}</td>
+													</tr>
+											</c:forEach>
+											<tr>
+												<td colspan="7" style="text-align: center;">
+													<a href="/board/list">게시판 더 보기</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
-							<div class="card-footer d-flex flex-wrap bg-white border-top">
-								<a href="#" class="text-uppercase py-3">In-Detail Overview</a>
-							</div>
+<!-- 							<div class="card-body"> -->
+<!-- 								<div class="tab-content" id="userActivityContent"> -->
+<!-- 									<div class="tab-pane fade show active" id="user" -->
+<!-- 										role="tabpanel"> -->
+<!-- 										<canvas id="activity" class="chartjs"></canvas> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="card-footer d-flex flex-wrap bg-white border-top"> -->
+<!-- 								<a href="#" class="text-uppercase py-3">In-Detail Overview</a> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

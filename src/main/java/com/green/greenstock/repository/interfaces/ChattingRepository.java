@@ -7,17 +7,23 @@ import org.apache.ibatis.annotations.Param;
 
 import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
+import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.repository.model.User;
 
 @Mapper
 public interface ChattingRepository {
 	public int createChattingRoom(ChattingRoom chattingRoom);
-	public List<ChattingRoom> findChattingRoomAll();
-	public int subscribe(@Param("roomId") int roomId, @Param("userId") int userId);
-	public int unSubscribe(@Param("roomId") int roomId, @Param("userId") int userId);
-	public String subCheck(@Param("roomId") int roomId, @Param("userId") int userId);
+	public int subscribe(@Param("companyCode") String companyCode, @Param("userId") int userId);
+	public int unSubscribe(@Param("companyCode") String companyCode, @Param("userId") int userId);
+	public String subCheck(@Param("companyCode") String companyCode, @Param("userId") int userId);
 	public int insertMessage(ChatMessage message);
-	public List<ChatMessage> selectMessageList(@Param("roomId") int roomId, @Param("userId") int userId);
+	public int deleteMessage(int id);
+	public List<ChatMessage> selectMessageList(@Param("companyCode") String companyCode, 
+											   @Param("userId") int userId, 
+											   @Param("roleTypeId") int roleTypeId);
 	public User findUserById(int userId);
-	public List<User> selectUserListByRoomId(int roomId);
+	public List<User> selectUserListByCode(String companyCode);
+	public List<ChattingRoom> selectChatListAll(PagingDto paging);
+	public int countChatList(PagingDto paging);
+	public List<ChattingRoom> selectChatListNotPaging();
 }

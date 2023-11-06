@@ -835,12 +835,48 @@
     			<tr>
 					<td><button type="button" class="btn btn-primary" style="background-color: white;" onclick='location.href="/board/list"' >전체</button></td>
 					<c:forEach var="c" items="${cate}" varStatus="status">
-						<td><button type="button" class="btn btn-primary" id="category-btn-${status.count}" style="background-color: white;" onclick='location.href="/board/search?categoryId=${status.count}"' >${c}</button></td>
+						<td><button type="button" class="btn btn-primary" id="category-btn-${status.count}" style="background-color: white;" onclick='location.href="/board/list?categoryId=${status.count}"' >${c}</button></td>
 					</c:forEach>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<!------검색 상태 표시 -->
+						<c:if test="${not empty paging.orderType}">
+							<c:if test="${paging.orderType eq 'views'}">
+									<c:out value='[조회순] '/>
+							</c:if>
+							<c:if test="${paging.orderType eq 'recommand'}">
+									<c:out value='[추천순] '/>
+							</c:if>
+							<c:if test="${paging.orderType eq 'reply'}">
+									<c:out value='[댓글순] '/>
+							</c:if>
+						</c:if>
+						<c:if test="${not empty paging.searchType}">
+							<c:if test="${paging.searchType eq 'title'}">
+									<c:out value='[제목]'/>
+							</c:if>
+							<c:if test="${paging.searchType eq 'content'}">
+									<c:out value='[내용]'/>
+							</c:if>
+							<c:if test="${paging.searchType eq 'userName'}">
+									<c:out value='[작성자]'/>
+							</c:if>
+						</c:if>
+						<c:if test="${not empty paging.searchWord}">
+									<c:out value='[\"${paging.searchWord}\"]'/>
+						</c:if>
+						<c:if test="${not empty paging.orderType ||
+									  not empty paging.searchType ||
+									  not empty paging.searchWord}">
+									  에 대한 검색 결과
+						</c:if>
+					</td>
 				</tr>
     	</table>
 <!------리스트 div -->
     	<div class="board-div">
+					
 	    	<table class="board-tb">
 	    		<tr>
 	    			<td style="width: 5%;">번호</td>
@@ -878,7 +914,7 @@
 		    	</c:forEach>
 	    	</table>
 <!----------검색 div	    	 -->
-			<form action="/board/search" id="search-frm">
+			<form action="/board/list" id="search-frm">
 	    	<div id="listopt-div">
 	    		<div id="search-div">
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">

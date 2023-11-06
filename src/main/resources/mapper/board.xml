@@ -121,9 +121,9 @@
 				 	where deleted != 1
 					group by board_id) r
 		on b.id = r.board_id
-		where 
-		 <if test='categoryId!="0"'>
-			category_id = #{categoryId}
+		<where>
+		<if test='categoryId!="0"'>
+		category_id = #{categoryId}
 		 </if>
 		 <if test='categoryId!="0" and searchWord!=null'>
 		 	and
@@ -140,22 +140,25 @@
 		 	</if>
 			 like concat('%',#{searchWord},'%')
 		 </if>
-		<if test="orderType != null">
+		</where>
+		 <if test="orderType != null">
 	 		order by 
 			<if test='orderType == "id"'>
-				id
+				id desc
 			</if>
 			<if test='orderType == "views"'>
-				views
+				views desc, id desc
 			</if>
 			<if test='orderType == "recommand"'>
-				recommand
+				recommand desc, id desc
 			</if>
 			<if test='orderType == "reply"'>
-				reply
+				reply desc, id desc
 			</if>
-			desc
-		</if>
+		 </if>
+		 <if test="orderType==null">
+		 	order by id desc
+		 </if>
 		limit #{offset}, #{recordSize}
 	</select>
 	

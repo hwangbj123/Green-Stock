@@ -24,6 +24,7 @@ public class MyPortfolio {
 	private String discription;
 	private Integer sellMoney;
 	private Integer totalAsset;
+	private Integer nowTotalAsset;
 	private String ror;
 	private boolean isVisible;
 	private boolean stockExist;
@@ -61,16 +62,14 @@ public class MyPortfolio {
 				this.sellMoney = (int) mystock.getAmount() * mystock.getPrice();
 				System.out.println("다 팔렸습니다.");
 				this.setStockExist(false);
-				setTotalAsset();
 			} else {
 				stockList.stream().filter(e -> e.getCompanyCode().equals(mystock.getCompanyCode())).forEach(stock -> {
 					this.sellMoney += (int) stock.getAmount() * stock.getPrice()
 							+ operation * (int) (mystock.getPrice() * mystock.getAmount());
-					stock.setAmount( stock.getAmount() - mystock.getAmount());
+					stock.setAmount(stock.getAmount() - mystock.getAmount());
 				});
-				
+
 				this.setStockExist(true);
-				setTotalAsset();
 			}
 		} else { // buy
 			boolean isMatchingStockExists = stockList.stream()
@@ -99,10 +98,12 @@ public class MyPortfolio {
 
 	public void setTotalAsset() {
 		Integer asset = 0;
+
+		System.out.println(this.sellMoney);
 		for (int i = 0; i < this.stockList.size(); i++) {
 			asset += (int) this.stockList.get(i).getAmount() * this.stockList.get(i).getPrice();
 		}
-		if (this.sellMoney != 0) {
+		if (this.sellMoney != null && this.sellMoney != 0) {
 			asset += this.sellMoney;
 		}
 		this.totalAsset = asset;
@@ -111,31 +112,33 @@ public class MyPortfolio {
 	public void addStockList(MyStocks stock) {
 		this.stockList.add(stock);
 	}
-	
+
 	public MyStocks getMyStocks(String companyCode) {
-		MyStocks myStock = this.stockList.stream()
-			    .filter(e -> e.getCompanyCode().equals(companyCode))
-			    .findFirst() // 또는 .findAny()
-			    .orElse(null);
+		MyStocks myStock = this.stockList.stream().filter(e -> e.getCompanyCode().equals(companyCode)).findFirst() // 또는
+																													// .findAny()
+				.orElse(null);
 		System.out.println(myStock);
 		return myStock;
 	}
-	
-	public void setror() {
-		System.out.println("asdf");
-		int stockTotalAmount = 0;
-		for (int i = 0; i < stockList.size(); i++) {
-			stockTotalAmount += stockList.get(i).getAmount() * stockList.get(i).getPrice();
-		}
-		System.out.println(stockTotalAmount);
-		System.out.println(sellMoney);
-		System.out.println(totalAsset);
-		
-		DecimalFormat df = new DecimalFormat("0.00");
-		String formatedData = df.format((((double)this.sellMoney / (double)this.totalAsset)));
 
-		System.out.println(formatedData);
-		this.ror =  formatedData + "%";
+	public void setNowTotalAsset() {
+		Integer asset = 0;
+		
+		for (int i = 0; i < this.stockList.size(); i++) {
+			asset += (int) this.stockList.get(i).getAmount() * this.stockList.get(i).getNowPrice();
+		}
+		if (this.sellMoney != null && this.sellMoney != 0) {
+			asset += this.sellMoney;
+		}
+		this.nowTotalAsset = asset;
+		setRor();
 	}
 	
+	public void setRor() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		double roi = (((double)this.nowTotalAsset - (double)this.totalAsset) / this.totalAsset) * 100;
+		String formatedData = df.format(roi);
+		this.ror = formatedData + "%";
+	}
+
 }

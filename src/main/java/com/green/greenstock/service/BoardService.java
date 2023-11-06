@@ -62,8 +62,8 @@ public class BoardService {
 		User user = (User) session.getAttribute("principal");
 		if(user==null) {
 			throw new CustomRestfulException("로그인이 필요한 서비스입니다", HttpStatus.BAD_REQUEST);
-		}else if(board.getUserId()==user.getId()) {
-			throw new CustomRestfulException("해당정보의 유저가 없습니다.", HttpStatus.BAD_REQUEST);
+		}else if(board.getUserId()!=user.getId()&&user.getRoletypeId()!=0) {
+			throw new CustomRestfulException("유저 정보가 일치하지 않습니다", HttpStatus.BAD_REQUEST);
 		}
 		return boardRepository.deleteBoard(board);
 	}

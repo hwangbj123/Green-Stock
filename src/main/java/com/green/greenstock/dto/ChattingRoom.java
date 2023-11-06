@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class ChattingRoom {
-    private int roomId;
-	private String roomNumber;
-    private String roomName;
+    private String companyCode;
+	private String companyName;
+    private String type;
     private int userId;
+    private int countUser;
 }

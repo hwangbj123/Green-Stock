@@ -28,6 +28,12 @@
 		where visible = true
 		order by ror desc limit 5
 	</select>
+	
+	<select id="findAllPortfolio"
+		resultType="com.green.greenstock.dto.MyPortfolio">
+		select *
+		from myPortfolio
+	</select>
 
 	<select id="findByuserId"
 		resultType="com.green.greenstock.dto.MyPortfolio">
@@ -63,6 +69,12 @@
 	<update id="updateVisibility">
 		UPDATE myPortfolio
 		SET visible = #{isVisible}
+		WHERE p_id = #{pId}
+	</update>
+	
+	<update id="updateRor">
+		UPDATE myPortfolio
+		SET ror = #{ror}
 		WHERE p_id = #{pId}
 	</update>
 

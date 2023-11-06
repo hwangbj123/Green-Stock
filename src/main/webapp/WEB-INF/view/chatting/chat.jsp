@@ -14,12 +14,10 @@
 	    <h3>
 	    	Chat Room
 	    	<br>
-	    	<c:if test="${not empty roomId}">
-	<%--     		roomId : ${roomId} --%>
-	    		<input type="hidden" id="hd-roomId" value="${roomId}">
+	    	<c:if test="${not empty companyCode}">
+	    		<input type="hidden" id="hd-companyCode" value="${companyCode}">
 	    	</c:if>
 	    	<c:if test="${not empty principal}">
-	<%--     		user : ${principal.id}, ${principal.userName} --%>
 	    		<input type="hidden" id="hd-userId" value="${principal.id}">
 	    		<input type="hidden" id="hd-userName" value="${principal.userName}">
 	    	</c:if>
@@ -37,6 +35,13 @@
 		    				${message.content}
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
+		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${message.id}">
+		    				<input type="hidden" name="code" value="${companyCode}">
+		    				<c:if test="${principal.roletypeId eq 0}">
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
+		    				</c:if>
+		    			</form>
 		    		</div>
    				</c:when>
    				<c:otherwise>
@@ -48,6 +53,13 @@
 		    				${message.content}
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
+		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${message.id}">
+		    				<input type="hidden" name="code" value="${companyCode}">
+		    				<c:if test="${principal.roletypeId eq 0}">
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
+		    				</c:if>
+		    			</form>
 		    		</div>
    				</c:otherwise>
    			</c:choose>
@@ -56,7 +68,7 @@
     <form id="chat-form">
     	<div class="submit-div">
 	        <input type="text" id="message" style="width: 100%; height: 45px;" placeholder="Enter your message">
-	        <button type="button" class="btn btn-primary" id="send-btn">Send</button>
+	        <button type="button" class="send-btn" id="send-btn">Send</button>
     	</div>
     </form>
     <br>
