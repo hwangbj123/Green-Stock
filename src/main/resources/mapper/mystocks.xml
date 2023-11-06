@@ -34,6 +34,11 @@
 		WHERE companyCode =
 		#{companyCode}
 	</delete>
+	
+	<delete id="deleteMyStockByPid">
+		DELETE from mystocks
+		WHERE p_id = #{pfId}
+	</delete>
 
 
 

@@ -61,7 +61,8 @@
 				<div class="ec-content-wrapper" style="width: 50%; margin: auto;">
 					<div class="content">
 						<!-- Top Statistics -->
-						<div id="smallCardOuterWrapper" class="row"></div>
+						<H2>My Portfolios</H2>
+						<div style="margin-top: 3%" id="smallCardOuterWrapper" class="row"></div>
 
 						<div class="row">
 							<div class="col-xl-4 col-md-12 p-b-15">
@@ -118,7 +119,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 							<div class="col-12 p-b-15">
 								<!-- trade log table -->
@@ -128,7 +129,8 @@
 									<div class="card-header justify-content-between">
 										<h2>Trade log</h2>
 									</div>
-									<div class="card-body pt-0 pb-5" style="overflow : auto; height : 300px;">
+									<div class="card-body pt-0 pb-5"
+										style="overflow: auto; height: 300px;">
 										<table id="myTradeLogTable"
 											class="table card-table table-responsive table-responsive-large"
 											style="width: 100%">
@@ -150,7 +152,7 @@
 									<div class="no-gutters">
 										<div>
 											<div class="card-header justify-content-between">
-												<h2>Monthly Asset</h2>
+												<h2>Daily Growth</h2>
 												<!-- <div class="date-range-report ">
 												<span></span>
 											</div> -->
@@ -199,6 +201,72 @@
 				</p>
 			</div>
 		</footer> -->
+		</div>
+	</div>
+	<div class="modal fade modal-contact-detail" id="modalContact"
+		tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header justify-content-end border-bottom-0">
+					<button id="closeButton" type="button" class="btn-close-icon"
+						data-bs-dismiss="modal">
+						<i class="mdi mdi-close"></i>
+					</button>
+				</div>
+				<div class="modal-body pt-0">
+					<div class="row no-gutters">
+						<div class="col-md-6">
+							<div class="profile-content-left px-4">
+								<div class="text-center widget-profile px-0 border-0">
+								<!-- 	<div class="card-img mx-auto rounded-circle">
+										 <img src="assets/img/user/u6.jpg" alt="user image"> 
+									</div> -->
+
+									<div class="card-body">
+										<div class="card-img mx-auto rounded-circle">
+											<img src="assets/img/user/u6.jpg" alt="user image">
+										</div>
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between ">
+									<div class="text-center pb-4">
+										<h6 class="text-dark pb-2">Ranking</h6>
+										<p>12</p>
+									</div>
+
+									<div class="text-center pb-4">
+										<h6 class="text-dark pb-2">ROR</h6>
+										<p>11.33 %</p>
+									</div>
+
+									<div class="text-center pb-4">
+										<div id="visible_toggle" style="display: flex;">
+											<h6 class="text-dark pb-2">visible</h6>
+										</div>
+										<p id="visibleText">public</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div id="modal-portfolio-info" class="contact-info px-4">
+								<h4 class="text-dark mb-1">Portfolio Detail</h4>
+								<p class="text-dark font-weight-medium pt-4 mb-2">pfName</p>
+								<p id="pfName">My Test Portfolio</p>
+								<p class="text-dark font-weight-medium pt-4 mb-2">pfDisc</p>
+								<p id="pfDisc">portfolio for Test</p>
+								<p class="text-dark font-weight-medium pt-4 mb-2">RegDate</p>
+								<p>2023-11-03</p>
+								<!-- <button class = "btn btn-primary btn-pill my-4">저장</button>
+												<button class = "btn btn-primary btn-pill my-4">삭제</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
