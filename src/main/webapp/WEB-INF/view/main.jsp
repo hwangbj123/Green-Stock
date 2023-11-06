@@ -42,7 +42,7 @@
 				width: 20%;
 			}
 			.chat-div{
-				width: 80%;
+				width: 90%;
 				height: 400px;
 				border-radius: 15px;
 				margin: 20px auto;
@@ -64,7 +64,6 @@
 			.chat-list{
 				height: 300px;
  				overflow: auto;
-				background-color: rgba(52,116,212,0.2); 
 			}
 			.chat-tb{
 				width: 100%;
@@ -152,7 +151,11 @@
 									<td>${board.id}</td>
 									<td>${board.categoryId}</td>
 									<td><a href="/board/detail?boardId=${board.id}">
-										${board.title}</a>
+										${board.title}
+										<c:if test="${board.reply ne 0}">
+					    					<span style="color: #bbb;">[${board.reply}]</span>
+					    				</c:if>
+										</a>
 									</td>
 									<td>${board.userName}</td>
 									<td><fmt:formatDate value="${board.date}"
@@ -176,8 +179,16 @@
 			
 <!--------- 채팅 리스트 ------------>
 			<div class="chat-div">
-				<h4>My Chatting</h4>
-				<div class="chat-list">
+				<h6 style="margin-bottom: 15px;">My Chatting</h6>
+				<c:choose>
+					<c:when test="${not empty chatList}">
+						<div class="chat-list" style="background-color: rgba(52,116,212,0.2)">
+					</c:when>
+					<c:otherwise>
+						<div class="chat-list" style="background-color: rgb(70,70,70)">
+					</c:otherwise>
+				</c:choose>
+					<input type="hidden" id="chatDisplay" value="${chatList}">
 					<table class="chat-tb">
 						<c:if test="${not empty chatList}">
 							<c:forEach var="chat" items="${chatList}">
@@ -205,8 +216,5 @@
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
 		
-		<script>
-			
-		</script>
 	</body>
 </html>

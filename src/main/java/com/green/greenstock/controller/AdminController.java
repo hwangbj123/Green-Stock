@@ -145,7 +145,7 @@ public class AdminController {
 		return "admin/adminChatList";
 	}
 	@PostMapping("/chat-delete")
-	public String chatDelete(int id, int code, HttpServletRequest request) {
+	public String chatDelete(int id, String code, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("principal");
 		int userId = user.getId();

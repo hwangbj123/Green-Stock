@@ -39,7 +39,7 @@
 		    				<input type="hidden" name="id" value="${message.id}">
 		    				<input type="hidden" name="code" value="${companyCode}">
 		    				<c:if test="${principal.roletypeId eq 0}">
-			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">Delete</button>
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
 		    				</c:if>
 		    			</form>
 		    		</div>
@@ -51,12 +51,15 @@
 		    		<div class="message-div">
 		    			<div class="message-content">
 		    				${message.content}
-		    			<button type="button" id="message-delete-btn">X</button>
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
-	    				<c:if test="${principal.roletypeId eq 0}">
-			    			<button type="button" class="delete-btn" id="message-delete-btn">X</button>
-		    			</c:if>
+		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${message.id}">
+		    				<input type="hidden" name="code" value="${companyCode}">
+		    				<c:if test="${principal.roletypeId eq 0}">
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
+		    				</c:if>
+		    			</form>
 		    		</div>
    				</c:otherwise>
    			</c:choose>
@@ -65,7 +68,7 @@
     <form id="chat-form">
     	<div class="submit-div">
 	        <input type="text" id="message" style="width: 100%; height: 45px;" placeholder="Enter your message">
-	        <button type="button" class="btn btn-primary" id="send-btn">Send</button>
+	        <button type="button" class="send-btn" id="send-btn">Send</button>
     	</div>
     </form>
     <br>

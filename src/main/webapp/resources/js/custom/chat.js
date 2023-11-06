@@ -7,6 +7,12 @@ let chatInit = {
     document.getElementById('send-btn').addEventListener('click', () => {
 	  this.sendMessage();
 	});
+	document.getElementById('message').addEventListener('keypress', (event) => {
+	    if (event.key === "Enter") {
+	        event.preventDefault();
+	        this.sendMessage();
+	    }
+	});
   },
 
   scrollToBottom: function() {
@@ -85,7 +91,8 @@ let chatInit = {
 	  if(confirm("해당 메시지를 삭제하시겠습니까?")){
 		  document.getElementById(`delete-form-${id}`).submit();
 	  }
-  }
+  },
+  
 };
 
 chatInit.init();
