@@ -20,8 +20,8 @@ public class PageCriteriation {
         this.total =total;
         this.pageCriteriaDto = pageCriteriaDto;
         this.endPage = (int)Math.ceil((total-1)/10)+1;
-        this.prev = pageCriteriaDto.getPageNum()>10?true:false;	//현재 페이지가 10 이상이면 true
-        this.next = pageCriteriaDto.getPageNum()<endPage-10?true:false;  //end페이지가 10 이상 작으면 true
+        this.prev = pageCriteriaDto.getPage()>10?true:false;	//현재 페이지가 10 이상이면 true
+        this.next = pageCriteriaDto.getPage()<endPage-10?true:false;  //end페이지가 10 이상 작으면 true
     }
 }
 
