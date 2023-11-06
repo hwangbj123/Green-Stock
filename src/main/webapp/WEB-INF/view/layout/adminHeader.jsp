@@ -68,12 +68,20 @@
 						<!-- Dashboard -->
 						<li class="active"><a class="sidenav-item-link"
 							href="/admin/main"> <i class="mdi mdi-view-dashboard-outline"></i>
-								<span class="nav-text">Admian Main</span>
+								<span class="nav-text">Admin Main</span>
 						</a>
 							<hr></li>
 						<!-- Reviews -->
 						<li><a class="sidenav-item-link" href="/admin/user">
 								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">회원 관리</span>
+						</a></li>
+						<!-- Board -->
+						<li><a class="sidenav-item-link" href="/admin/board">
+								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">게시판 관리</span>
+						</a></li>
+						<!-- Chatting -->
+						<li><a class="sidenav-item-link" href="/admin/chat">
+								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">채팅 관리</span>
 						</a></li>
 						<!-- Category -->
 						<li class="has-sub"><a class="sidenav-item-link"

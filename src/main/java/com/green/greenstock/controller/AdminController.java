@@ -2,6 +2,7 @@ package com.green.greenstock.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.dto.Pagination;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.handler.exception.UnSearchedException;
+import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.BoardService;
+import com.green.greenstock.service.ChattingService;
 import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SuspensionService;
 import com.green.greenstock.service.UserService;
@@ -35,6 +40,10 @@ public class AdminController {
 	private final SuspensionService suspensionService;
 	
 	private final MailSendService mailSendService;
+	
+	private final BoardService boardService;
+	
+	private final ChattingService chattingService;
 	
 	@Autowired
 	HttpSession session;
@@ -55,6 +64,13 @@ public class AdminController {
 		
 		List<User> userList = userService.findAdminMainUserList();
 		model.addAttribute("userList", userList);
+		
+		// board 가져오기
+		PagingDto paging = new PagingDto();
+		List<Board> boardList = boardService.selectBoardListAll(paging);
+		System.out.println("paging : "+paging);
+		System.out.println("board : "+boardList.get(0));
+		model.addAttribute("boardList", boardList);
 		
 		return "admin/adminMain";
 	}
@@ -93,4 +109,52 @@ public class AdminController {
 		model.addAttribute("page", pagination);
 		return "admin/adminUser";
 	}
+	
+	@GetMapping("/board")
+	public String adminBoard(PagingDto paging, Model model) {
+		List<String> cate = boardService.findCategoryList();
+		List<Board> list = boardService.selectBoardSearchList(paging);
+		int total = boardService.selectBoardCount(paging);
+		Pagination pagination = new Pagination(total, paging);
+		
+		model.addAttribute("cate", cate);
+		model.addAttribute("list", list);
+		model.addAttribute("page", pagination);
+		model.addAttribute("paging", paging);
+		System.out.println("page : "+pagination);
+		return "admin/adminBoard";
+	}
+	@PostMapping("/board-delete")
+	public String boardDelete(Board board, HttpServletRequest request) {
+		System.out.println("admin delete board : "+board);
+		boardService.deleteBoard(board, request);
+		System.out.println("admin delete success");
+		return "redirect:/admin/board";
+	}
+	
+	@GetMapping("/chat")
+	public String adminChatList(PagingDto paging, Model model) {
+		List<ChattingRoom> list = chattingService.selectChatListAll(paging);
+		int total = chattingService.countChatList(paging);
+		Pagination pagination = new Pagination(total, paging);
+
+		model.addAttribute("page", pagination);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+		System.out.println("list : "+list);
+		return "admin/adminChatList";
+	}
+	@PostMapping("/chat-delete")
+	public String chatDelete(int id, int code, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("principal");
+		int userId = user.getId();
+		if(user.getRoletypeId()!=0) {
+			throw new UnAuthorizedException("권한있는 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
+		}else {
+			chattingService.deleteMessage(id);
+		}
+		return "redirect:/chat?companyCode="+code+"&userId="+userId;
+	}
+	
 }

@@ -29,22 +29,24 @@
 	display: flex;
 }
 .my-message-user{
-	width:100%;
+	width:50%;
+	float: right;
 	text-align: right;
-	padding-right: 5px;
+	padding-right: 10px;
 	overflow: hidden;
 }
 .message-user{
-	width:100%;
+	width:50%;
+	float: left;
 	text-align: left;
-	padding-left: 5px;
+	padding-left: 10px;
 	overflow: hidden;
 }
 .my-message-div .message-content{
 	width: 60%;
 	min-height: 45px;
 	border-radius: 5px;
-	margin: -2px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
 	padding: 5px;
 	background-color: rgb(246,224,17);
 	box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
@@ -53,7 +55,7 @@
 	width: 60%;
 	min-height: 45px;
 	border-radius: 5px;
-	margin: -2px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
 	padding: 5px;
 	background-color: white;
 	box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
@@ -68,4 +70,13 @@
 	margin: 5px;
 	padding: 15px;
 	overflow: auto;
+}
+.delete-btn{
+	height: 40px;
+	margin: 10px;
+	padding: 0px 7px;
+	border: none;
+	color: white;
+	box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+	background-color: #e55;
 }

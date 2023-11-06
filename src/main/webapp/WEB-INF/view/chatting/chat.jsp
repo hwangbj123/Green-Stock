@@ -14,12 +14,10 @@
 	    <h3>
 	    	Chat Room
 	    	<br>
-	    	<c:if test="${not empty roomId}">
-	<%--     		roomId : ${roomId} --%>
-	    		<input type="hidden" id="hd-roomId" value="${roomId}">
+	    	<c:if test="${not empty companyCode}">
+	    		<input type="hidden" id="hd-companyCode" value="${companyCode}">
 	    	</c:if>
 	    	<c:if test="${not empty principal}">
-	<%--     		user : ${principal.id}, ${principal.userName} --%>
 	    		<input type="hidden" id="hd-userId" value="${principal.id}">
 	    		<input type="hidden" id="hd-userName" value="${principal.userName}">
 	    	</c:if>
@@ -37,6 +35,11 @@
 		    				${message.content}
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
+		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${message.id}">
+		    				<input type="hidden" name="code" value="${companyCode}">
+		    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">Delete</button>
+		    			</form>
 		    		</div>
    				</c:when>
    				<c:otherwise>
@@ -46,8 +49,10 @@
 		    		<div class="message-div">
 		    			<div class="message-content">
 		    				${message.content}
+		    			<button type="button" id="message-delete-btn">X</button>
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
+		    			<button type="button" class="delete-btn" id="message-delete-btn">X</button>
 		    		</div>
    				</c:otherwise>
    			</c:choose>

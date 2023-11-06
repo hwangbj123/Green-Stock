@@ -1143,13 +1143,13 @@
 	                        		<button class="btn btn-primary" style="width: 100%; font-size: 12px; font-weight: bold;" onclick="location.href='/user/sign-in'">채팅 서비스 ( 로그인 필요 )</button>
 	                        	</c:when>
 	                        	<c:when test="${subCheck eq principal.id}">
-	                        		<button type="button" id="unSubscribe-btn" onclick="subscribeInit.subscribe(${roomId}, ${principal.id})">
+	                        		<button type="button" id="unSubscribe-btn" onclick="subscribeInit.subscribe(${companyCode}, ${principal.id})">
 	                        			구독 해제
 	                        		</button>
-		                        	<jsp:include page="/chat?roomId=${roomId}&userId=${principal.id}" />
-	                        	</c:when>
+									<button type="button" id="openChat" onclick="window.open('/chat?companyCode=${companyCode}&userId=${principal.id}', '_black', 'width= 480; height= 720;');">채팅창 열기</button>
+								</c:when>									
 	                        	<c:otherwise>
-	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribeInit.subscribe(${roomId},${principal.id})">채팅창 열기</button>
+	                        		<button class="btn btn-primary" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribeInit.subscribe(${companyCode},${principal.id})">채팅창 열기</button>
 	                        	</c:otherwise>
 							</c:choose>
 <!------------------------- 채팅창 include 부분 끝 -->

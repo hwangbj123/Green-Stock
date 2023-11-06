@@ -2,12 +2,12 @@ package com.green.greenstock.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.greenstock.dto.ChatMessage;
 import com.green.greenstock.dto.ChattingRoom;
+import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.repository.interfaces.ChattingRepository;
 import com.green.greenstock.repository.model.User;
 
@@ -20,22 +20,18 @@ public class ChattingService {
 	public int createChattingRoom(ChattingRoom chattingRoom) {
 		return chattingRepository.createChattingRoom(chattingRoom);
 	}
-	
-	public List<ChattingRoom> findChattingRoomAll() {
-		return chattingRepository.findChattingRoomAll();
-	}
 
-	public int subscribe(int roomId, int userId) {
-		return chattingRepository.subscribe(roomId, userId);
+	public int subscribe(int companyCode, int userId) {
+		return chattingRepository.subscribe(companyCode, userId);
 	}
 	
-	public int unSubscribe(int roomId, int userId) {
-		return chattingRepository.unSubscribe(roomId, userId);
+	public int unSubscribe(int companyCode, int userId) {
+		return chattingRepository.unSubscribe(companyCode, userId);
 	}
 	
-	public String subCheck(int roomId, int userId) {
+	public String subCheck(int companyCode, int userId) {
 		System.out.println("subCheck Service ");
-		String res = chattingRepository.subCheck(roomId, userId);
+		String res = chattingRepository.subCheck(companyCode, userId);
 		System.out.println("userId : "+res);
 		return res;
 	}
@@ -43,16 +39,28 @@ public class ChattingService {
 	public int insertMessage(ChatMessage message) {
 		return chattingRepository.insertMessage(message);
 	}
+	
+	public int deleteMessage(int id) {
+		return chattingRepository.deleteMessage(id);
+	}
 
-	public List<ChatMessage> selectMessageList(int roomId, int userId) {
-		return chattingRepository.selectMessageList(roomId, userId);
+	public List<ChatMessage> selectMessageList(int companyCode, int userId, int roleTypeId) {
+		return chattingRepository.selectMessageList(companyCode, userId, roleTypeId);
 	}
 	
 	public User findUserById(int userId) {
 		return chattingRepository.findUserById(userId);
 	}
 	
-	public List<User> selectUserListByRoomId(int roomId){
-		return chattingRepository.selectUserListByRoomId(roomId);
+	public List<User> selectUserListByCode(int companyCode){
+		return chattingRepository.selectUserListByCode(companyCode);
+	}
+	
+	public List<ChattingRoom> selectChatListAll(PagingDto paging) {
+		return chattingRepository.selectChatListAll(paging);
+	}
+	
+	public int countChatList(PagingDto paging) {
+		return chattingRepository.countChatList(paging);
 	}
 }
