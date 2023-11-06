@@ -58,7 +58,7 @@
 </head>
 <body>
 <div class ="container">
-<textarea id="summernote" name="content"></textarea>
+
 
 <script>
     

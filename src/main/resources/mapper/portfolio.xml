@@ -20,6 +20,14 @@
 		on ms.p_id = p.p_id
 		where ms.p_id = #{pId}
 	</select>
+	
+	<select id="findAllPortfolioDescRor"
+		resultType="com.green.greenstock.dto.MyPortfolio">
+		select *
+		from myPortfolio
+		where visible = true
+		order by ror desc limit 5
+	</select>
 
 	<select id="findByuserId"
 		resultType="com.green.greenstock.dto.MyPortfolio">
@@ -49,6 +57,12 @@
 	<update id="buySellStock">
 		UPDATE myPortfolio
 		SET sell_money = #{sellMoney}, totalAsset = #{totalAsset}, ror = #{ror}
+		WHERE p_id = #{pId}
+	</update>
+	
+	<update id="updateVisibility">
+		UPDATE myPortfolio
+		SET visible = #{isVisible}
 		WHERE p_id = #{pId}
 	</update>
 
