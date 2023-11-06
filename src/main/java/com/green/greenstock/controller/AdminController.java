@@ -93,4 +93,20 @@ public class AdminController {
 		model.addAttribute("page", pagination);
 		return "admin/adminUser";
 	}
+
+	/*
+		전문가 등급 관리
+	 */ 
+	// 신청 목록 페이지
+	// 심사중 기능
+	// 심사완료 등급업 기능
+	// 전문가 이력 추가 페이지
+	// 전문가 이력 추가 기능
+	// 전문가 이력 관리 페이지
+	// 전문가 이력 관리 기능
+
+
+
 }
+
+
