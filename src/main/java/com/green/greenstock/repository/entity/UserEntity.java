@@ -15,7 +15,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.green.greenstock.repository.model.AdvisorBoard;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +27,9 @@ import lombok.Data;
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserEntity {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String userName;
 	private String password;
@@ -41,13 +40,13 @@ public class UserEntity {
 	private Timestamp regDate;
 	private Integer roletypeId;
 	private boolean suspended;
-    private Date suspensionEndDate;
-    
+	private Date suspensionEndDate;
+
 	public UserEntity() {
 		this.suspended = false;
 	}
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<AdvisorBoard> advisorBoards;
-    
+	@OneToMany(mappedBy = "userEntity")
+	private List<AdvisorBoardEntity> advisorBoards;
+
 }

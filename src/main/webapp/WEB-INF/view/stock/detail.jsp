@@ -48,7 +48,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="/resources/js/main.js"></script>
 
     <!-- kjh -->
-    <link rel="stylesheet" href="/css/stock/detail.css">
+    <link rel="stylesheet" href="/css/stock/detail.css" />
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
@@ -370,7 +370,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <!-- End Content Wrapper -->
 
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
-    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
   </body>
   <!-- kjh -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

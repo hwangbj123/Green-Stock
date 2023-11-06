@@ -25,9 +25,7 @@ import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.service.StockApiService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/stock")
 @Controller
