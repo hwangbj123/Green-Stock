@@ -144,18 +144,17 @@
 		 <if test="orderType != null">
 	 		order by 
 			<if test='orderType == "id"'>
-				id
+				id desc
 			</if>
 			<if test='orderType == "views"'>
-				views
+				views desc, id desc
 			</if>
 			<if test='orderType == "recommand"'>
-				recommand
+				recommand desc, id desc
 			</if>
 			<if test='orderType == "reply"'>
-				reply
+				reply desc, id desc
 			</if>
-			desc
 		 </if>
 		 <if test="orderType==null">
 		 	order by id desc

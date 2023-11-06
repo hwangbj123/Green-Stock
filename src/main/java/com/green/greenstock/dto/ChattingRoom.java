@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChattingRoom {
-    private int companyCode;
+    private String companyCode;
 	private String companyName;
     private String type;
     private int userId;

@@ -38,7 +38,9 @@
 		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
 		    				<input type="hidden" name="id" value="${message.id}">
 		    				<input type="hidden" name="code" value="${companyCode}">
-		    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">Delete</button>
+		    				<c:if test="${principal.roletypeId eq 0}">
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">Delete</button>
+		    				</c:if>
 		    			</form>
 		    		</div>
    				</c:when>
@@ -52,7 +54,9 @@
 		    			<button type="button" id="message-delete-btn">X</button>
 		    			</div>
 		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
-		    			<button type="button" class="delete-btn" id="message-delete-btn">X</button>
+	    				<c:if test="${principal.roletypeId eq 0}">
+			    			<button type="button" class="delete-btn" id="message-delete-btn">X</button>
+		    			</c:if>
 		    		</div>
    				</c:otherwise>
    			</c:choose>
