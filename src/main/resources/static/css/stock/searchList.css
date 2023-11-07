@@ -1,0 +1,25 @@
+* {
+  font-family: 'Pretendard-Regular';
+}
+.stockSearchList .primaryColorRed{
+  color: #ff909d;
+}
+.stockSearchList .primaryColorBlue{
+  color: #3474d4;
+}
+.stockSearchList .searchList .tag{
+  background-color: #1c8855;
+  box-shadow: 0px 0px 5px 0px #ccc;
+}
+.stockSearchList .searchList > tbody > tr > td:nth-child(n+2){
+  padding-right: 38px;
+}
+.stockSearchList .searchList .badge{
+  padding: 3.6px 3.4px;
+  font-size: 0.65rem;
+}
+.stockSearchList .findResult::before {
+    content: '\f002';
+  font: var(--fa-font-solid);
+  margin-right: 5px;
+}

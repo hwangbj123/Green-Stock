@@ -24,7 +24,6 @@ let stockWebSocketInit = {
           // 오프 버튼을 누른 경우 (실행하기)
           this.setupWebSocket();
           webSocketInterval = setInterval(() => {
-            console.log(this.receivedData);
             if (this.receivedData != null) {
               this.updateElements(this.receivedData);
             }
@@ -104,7 +103,6 @@ let stockWebSocketInit = {
   // 웹소켓 메시지 파싱
   handleWebSocketMessage: function (event, originElements) {
     const data = event.data;
-    console.log(data);
     if (data[0] === '0' || data[0] === '1') {
       const strArray = data.split('|'); // | 로 나누기
       const trid = strArray[1]; // 2번째 값 trid
@@ -118,20 +116,7 @@ let stockWebSocketInit = {
       this.receivedData.originElements = originElements;
       this.receivedData.changeElementArray = changeElementArray;
       this.receivedData.vrssNum = Number(prdy_vrss_sign);
-
-      // 3초 마다 갱신
-      //this.updateElements(originElements, changeElementArray, Number(prdy_vrss_sign));
     }
-    /* else 
-    {
-      if (JSON.parse(data).header.tr_id == 'PINGPONG'){
-    	
-      }
-      // 통신이 실패하거나 장마감시간이거나 정상적인 데이터가 오지 않을때 
-      console.log('CONNECT CLOSE');
-      console.log(e.data);
-      socket.close();
-    }*/
   },
 
   // 엘리먼트 변경

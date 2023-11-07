@@ -7,10 +7,14 @@
 	
 	<!-- 공지사항 리스트 (페이징 추가)  -->
 	<select id = "findAll" resultType = "com.green.greenstock.repository.model.Noticeboard" >
-	SELECT  *
-	FROM noticeboard
-    ORDER BY id DESC
-	LIMIT #{offset},#{perPage}; 			
+	SELECT id ,user_id ,notice_title, notice_updated, hit_count
+    FROM (
+        SELECT id, notice_title,user_id, notice_updated, hit_count
+        FROM noticeboard
+        ORDER BY id DESC 
+    ) AS noticeboard
+    ORDER BY id ASC
+    LIMIT #{offset},#{perPage}; 			
 </select>
 	
 	<!-- 공지사항 작성 -->
@@ -58,5 +62,5 @@
 	<select id ="listCount" resultType="int" >
 	SELECT COUNT(*) FROM noticeboard;
 	
-	</select>
+	</select>	
 </mapper>

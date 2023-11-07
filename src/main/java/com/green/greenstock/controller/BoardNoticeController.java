@@ -22,11 +22,9 @@ import com.green.greenstock.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 //공지사항 컨트롤러 생성
 @Controller
-@RequestMapping("/notice")
+@RequestMapping(value="/notice")
 @RequiredArgsConstructor
 public class BoardNoticeController {	
 
@@ -38,10 +36,10 @@ public class BoardNoticeController {
 	/**
 	 * 
 	 * @param 어드민 상태 일때 보이는 공지사항 목록
-	 * @return
+	 * 추가사항: 페이징 기능 추가 
+	 * @return adminNoticeList
 	 */
-	//공지사랑 목록 (어드민)
-	
+	//공지사랑 목록 (어드민)	
 	@GetMapping("/admin/list")
 	public String adminListNotice(Model model, PageCriteriaDto pageCriteriaDto){	
 		//공지사항 목록을 불러오는 부분 	
@@ -50,6 +48,7 @@ public class BoardNoticeController {
 		PageCriteriation pageCriteriation = new PageCriteriation(total, pageCriteriaDto);			
 		model.addAttribute("page",pageCriteriation);
 		System.out.println("tdddd :" + total);
+		System.out.println("asdasd" + pageCriteriaDto);
 		if(listNotice.isEmpty()) {
 			model.addAttribute("noticeList",null);
 		}else {
@@ -61,21 +60,24 @@ public class BoardNoticeController {
 	/**
 	 * 
 	 * @param 일반 사용자한태 보여지는 공지사항 목록 
-	 * @return
+	 * @return noticeList
 	 */
 	//공지사항 목록 리스트(일반)
-//	@GetMapping("/list")
-//	public String listNotice(Model model){	
-//		//공지사항 목록을 불러오는 부분 
-//		List<Noticeboard> listNotice = boardNoticeService.noticeListService();
-//		if(listNotice.isEmpty()) {
-//			model.addAttribute("noticeList",null);
-//		}else {
-//			model.addAttribute("noticeList", listNotice);
-//		}
-//		return "notice/noticeList"; 
-//		
-//	}
+	@GetMapping("/list")
+	public String listNotice(Model model, PageCriteriaDto pageCriteriaDto){	
+		//공지사항 목록을 불러오는 부분 
+		List<Noticeboard> listNotice = boardNoticeService.noticeListService(pageCriteriaDto);
+		int total =  boardNoticeService.noticeListCount(pageCriteriaDto);
+		PageCriteriation pageCriteriation = new PageCriteriation(total, pageCriteriaDto);			
+		model.addAttribute("page",pageCriteriation);		
+		if(listNotice.isEmpty()) {
+			model.addAttribute("noticeList",null);
+		}else {
+			model.addAttribute("noticeList", listNotice);
+		}
+		return "notice/noticeList"; 
+		
+	}
 	
 	//공지사항 작성된것을 보내는 주소 
 	@GetMapping("/admin/write")

@@ -59,9 +59,7 @@
 	<div class="content">
 		<div class="breadcrumb-wrapper">
 			<div>
-				<h4>검색목록</h4>
-				<p class="breadcrumbs mb-3 findResult"><span>&quot;${responseDomesticStockSearchDto.searchData}&quot;</span>
-					<span><i class="mdi mdi-chevron-right"></i></span>검색결과 ${responseDomesticStockSearchDto.pagination.totalCount} 건</p>
+				<h4>전문가명 상담게시판</h4>
 			</div>
 		</div>
 		<div class="row">
@@ -69,51 +67,33 @@
 				<div class="card card-default">
 					<div class="card-body">
 						<div class="table-responsive">
-							<c:choose>
-								<c:when test="${empty responseDomesticStockSearchDto.domesticStockCurrentPriceList}">
-									<table id="responsive-data-table" class="table searchList" style="width:100%">
-									<tbody>
-										<tr>
-											<td>'${responseDomesticStockSearchDto.searchData}' 에 대한 정보가 없습니다.</td>
-										</tr>
-									</tbody>
-									</table>
-								</c:when>
-								<c:otherwise>
-									<table id="responsive-data-table" class="table searchList" style="width:100%">
-									<thead>
-										<tr class="text-center">
-											<th>종목명</th>
-											<th>현재가</th>
-											<th>전일대비</th>
-											<th>등락율</th>
-											<th>매도호가</th>
-											<th>매수호가</th>
-											<th>거래량</th>
-											<th>거래대금(백만)</th>
-										</tr>
-									</thead>
-	
-									<tbody>
-										<c:forEach var="item" items="${responseDomesticStockSearchDto.domesticStockCurrentPriceList}">
-											<tr class="text-end pe-3">
-												<td class="text-start"><a href="/stock/domestic/${item.companyCode}">${item.companyName}</a><span class="badge badge-primary ms-2 tag">${fn:toUpperCase(item.type)}</span></td>
-												<td><fmt:formatNumber value="${item.stckPrpr}"/></td>
-												<td class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-													${item.prdyVrssSign < 3 ? '▲' : '▼'} 
-													<fmt:formatNumber value="${item.prdyVrss}"/></td>
-												<td class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-													${item.prdyVrssSign < 3 ? '+' += item.prdyCtrt : item.prdyCtrt} %</td>
-												<td><fmt:formatNumber value="${item.stckHgpr}"/></td>
-												<td><fmt:formatNumber value="${item.stckLwpr}"/></td>
-												<td><fmt:formatNumber value="${item.acmlVol}"/></td>
-												<td><fmt:formatNumber value="${item.acmlTrPbmnMillion}"/></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-									</table>
-								</c:otherwise>
-							</c:choose>
+							<table id="responsive-data-table" class="table searchList" style="width:100%">
+								<thead>
+									<tr>
+										<th style="width: 10%;">번호</th>
+										<th style="width: 40%;">제목</th>
+										<th style="width: 20%;">아이디</th>
+										<th style="width: 20%;">작성일자</th>
+										<td style="width: 10%;">상태</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td><a href="/advisor/nickname">제목입니다.제목입니다.</a></td>
+										<td>아이디아이디아이디</td>
+										<td>2023-11-06</td>
+										<td>완료</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td><a href="#">제목입니다.제목입니다.</a></td>
+										<td>아이디아이디아이디</td>
+										<td>2023-11-06</td>
+										<td>답변대기중</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<!-- 페이징 영역 -->
 						<div class="ec-pro-pagination">
