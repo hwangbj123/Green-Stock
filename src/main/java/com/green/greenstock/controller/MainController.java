@@ -37,7 +37,9 @@ public class MainController {
 		PagingDto paging = new PagingDto();
 		paging.setOrderType("recommand");
 		List<Board> boardList = boardService.selectBoardSearchList(paging);
+		List<String> cate = boardService.findCategoryList();
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("cate", cate);
 		
 //		회원일 때 처리
 		if(user!=null) {

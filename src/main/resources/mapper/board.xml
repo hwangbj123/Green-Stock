@@ -141,24 +141,17 @@
 			 like concat('%',#{searchWord},'%')
 		 </if>
 		</where>
-		 <if test="orderType != null">
-	 		order by 
-			<if test='orderType == "id"'>
-				id desc
-			</if>
-			<if test='orderType == "views"'>
-				views desc, id desc
-			</if>
-			<if test='orderType == "recommand"'>
-				recommand desc, id desc
-			</if>
-			<if test='orderType == "reply"'>
-				reply desc, id desc
-			</if>
-		 </if>
-		 <if test="orderType==null">
-		 	order by id desc
-		 </if>
+ 		order by 
+		<if test='orderType == "views"'>
+			views desc,
+		</if>
+		<if test='orderType == "recommand"'>
+			recommand desc,
+		</if>
+		<if test='orderType == "reply"'>
+			reply desc,
+		</if>
+		 	id desc
 		limit #{offset}, #{recordSize}
 	</select>
 	

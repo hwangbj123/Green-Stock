@@ -67,7 +67,7 @@
     </div>
     <form id="chat-form">
     	<div class="submit-div">
-	        <input type="text" id="message" style="width: 100%; height: 45px;" placeholder="Enter your message">
+	        <input type="text" id="message" style="width: 100%; height: 44px;" placeholder="Enter your message">
 	        <button type="button" class="send-btn" id="send-btn">Send</button>
     	</div>
     </form>

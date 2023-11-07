@@ -27,6 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 //		registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/customerservice/inquiry/**").addPathPatterns("/user/my-info/**").addPathPatterns("/user/payList/**").addPathPatterns("/user/ticketList/**").addPathPatterns("/user/rentalList/**").addPathPatterns("/show/apply*")
 //				.excludePathPatterns("/show/applyIntro").excludePathPatterns("/payment/cancel");
 //		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
-		registry.addInterceptor(authInterceptor).addPathPatterns("/board/write").addPathPatterns("/board/update/*").addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*");
+		registry.addInterceptor(authInterceptor).addPathPatterns("/board/write").addPathPatterns("/board/update/*").addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*")
+				.addPathPatterns("/chat*");
 	}
 }

@@ -48,110 +48,12 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="/resources/js/main.js"></script>
 
     <!-- kjh -->
-    <!-- @font-face { font-family: 'Pretendard-Regular'; src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); font-weight:
-    400; font-style: normal; } -->
-    <style>
-      * {
-        font-family: 'Pretendard-Regular';
-      }
-
-      .stockDetail {
-        margin-bottom: 0;
-      }
-      .stockDetail h2 {
-        font-weight: 600;
-      }
-      .stockDetail span {
-        font-weight: 600;
-        margin-bottom: 0;
-      }
-      .stockDetail .btn-green {
-        font-weight: 800;
-        line-height: normal;
-        height: 40px;
-        border-radius: 10px;
-        background: #a0d833;
-      }
-      .stockDetail .btnTab {
-        width: 120px;
-        margin-right: 20px;
-      }
-      .stockDetail .btnTab > a {
-        text-decoration: none;
-        font-weight: 800;
-      }
-      .stockDetail .btnTab > a:hover {
-        color: #000;
-      }
-      .stockDetail .areaTab {
-        width: 100%;
-      }
-      .stockDetail .h2ComapnyName {
-        font-weight: 600;
-        margin-bottom: 0;
-      }
-      .stockDetail .primaryColorRed {
-        color: #ff3149;
-      }
-      .stockDetail .primaryColorBlue {
-        color: #3474d4;
-      }
-      .stockDetail .primaryColorNone {
-        color: #212121;
-      }
-      .stockDetail .divWebSocket {
-        position: static;
-        height: auto;
-        width: auto;
-      }
-      .stockDetail .divWebSocket > div {
-        height: 100%;
-        width: 100%;
-      }
-      .stockDetail .divCompanyName {
-        background-color: #fafff1;
-        padding: 15px;
-      }
-      .stockDetail .divCompanyName > div {
-        justify-content: space-between;
-      }
-      .stockDetail .divComapnyStockInfo {
-        padding: 15px;
-      }
-      .stockDetail .divComapnyStockInfo > div {
-        margin-bottom: 20px;
-      }
-
-      .stockDetail .colCompanyStockInfo {
-        height: 30px;
-      }
-      .stockDetail table {
-        font-size: 12px;
-      }
-      .stockDetail tr {
-        line-height: 23px;
-      }
-      .stockDetail table > caption {
-        caption-side: top;
-      }
-      .stockDetail .divVolumeRank {
-        height: 440px;
-      }
-      .stockDetail .tableVolumeRank {
-        margin-bottom: 0;
-      }
-      .stockDetail .tableVolumeRank > caption > h6 {
-        font-weight: 600;
-      }
-      .footer-bottom {
-        margin-top: auto;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/stock/detail.css" />
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
     <!-- CONTENT WRAPPER -->
-    <div class="ec-content-wrapper container stockDetail mt-4 mb-4">
+    <div class="ec-content-wrapper container mt-4 mb-4 stockDetail">
       <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-wrapper-2 typography row">
           <div class="col-4 divCompanyNameInfo">
@@ -166,6 +68,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                       <div class="ec-fullscreen-off btnGetWebSocketData">Off</div>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <button class="btn btn-green" id="chatIn" data-companycode="${companyCode}">채팅방</button>
                 </div>
               </div>
               <div>
@@ -465,10 +370,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <!-- End Content Wrapper -->
 
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
   </body>
+  <!-- kjh -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="/js/stock/chart.js"></script>
   <script src="/js/stock/websocket.js"></script>
   <script src="/js/stock/tab.js"></script>
+  <script src="/js/stock/chatting.js"></script>
 </html>

@@ -50,36 +50,12 @@
 	    <script src="/resources/js/main.js"></script>
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-	    <style>
-	    	.primaryColorRed{
-	    		color: #ff909d;
-	    	}
-	    	.primaryColorBlue{
-	    		color: #3474d4;
-	    	}
-	    	.searchList{}
-	    	.searchList .tag{
-	    		background-color: #1c8855;
-	    		box-shadow: 0px 0px 5px 0px #ccc;
-	    	}
-	    	.searchList > tbody > tr > td:nth-child(n+2){
-	    		padding-right: 38px;
-	    	}
-	    	.searchList .badge{
-		    	padding: 3.6px 3.4px;
-    			font-size: 0.65rem;
-	    	}
-	    	.findResult::before {
-	    	    content: '\f002';
-    			font: var(--fa-font-solid);
-    			margin-right: 5px;
-	    	}
-	    </style>
+		<link rel="stylesheet" href="/css/stock/searchList.css">
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->
-<div class="ec-content-wrapper container mb-5">
+<div class="ec-content-wrapper container mb-5 stockSearchList">
 	<div class="content">
 		<div class="breadcrumb-wrapper">
 			<div>

@@ -60,7 +60,6 @@
 
 </head>
 <body>
-
 	<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -165,6 +164,7 @@
 				</div>
 			</div>
 		</div>
+		</header>
 		<!-- Ec Header Top  End -->
 		<!-- Ec Header Bottom  Start -->
 		<div class="ec-header-bottom d-none d-lg-block">
@@ -216,7 +216,8 @@
 								<a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
 									<div class="header-icon">
 										<i class="fi-rr-heart"></i>
-									</div> <span class="ec-header-count">4</span>
+										<span class="ec-header-count">4</span>
+									</div> 
 								</a>
 								<!-- Header wishlist End -->
 								<!-- Header Cart Start -->
@@ -546,24 +547,29 @@
 			<div
 				class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
 				<div class="font-size">
-					<p class="breadcrumbs">
+					<p class="breadcrumbs"></p>
 						<i class="mdi mdi-chevron-right"> </i>
 					<h3 style="width: 300px;">공지사항</h3>
+					
 				</div>
 				<!-- 검색페이지 시작 -->
 				<div class="container">
 					<div class="row">
-						<form method="post" name="notice-search" action="">
+						<form method="post" name="notice-search" action="">							
 							<table class="pull-right">
-								<tr>
+								<tr>								
 									<td><select class="form-control" name="searchField">
 											<option value="0">선택</option>
-											<option value="bbsTitle">제목</option>
+											<option value="searchTitle">제목</option>
 											<option value="userID">작성자</option>
 									</select></td>
-									<td><input type="text" class="form-control"
-										placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-									<td><button type="submit" class="btn btn-success">검색</button></td>
+									<td>
+									<input type="text" class="form-control"
+										placeholder="검색어 입력" name="searchText" maxlength="100">
+									</td>
+									<td>
+									<button type="submit" class="btn btn-success">검색</button>
+									</td>
 								</tr>
 
 							</table>
@@ -644,45 +650,50 @@
 											<div class="dataTables_info" id="responsive-data-table_info"
 												role="status" aria-live="polite">Showing 1 to 20 of 57
 												entries</div>																					
-											<div class="dataTables_paginate paging_simple_numbers"
-												id="responsive-data-table_paginate">												
+					
+												<c:set var="prev" value="${endPage}" />																				
+												<c:set var="nowPage" value="${page.pageCriteriaDto.page}" />
+												<c:set var="startPage" value="${page.startPage}" />
+												<c:set var="endPage" value="${page.endPage}" />		
 												
-
-												  <!-- 이전  페이지 번호 설정 -->
-												<c:set var="totalPages" value="${endPage}" />												
-												
-												<ul class="pagination">
-												  <li class="paginate_button page-item previous ${currentPage == 1 ? 'disabled' : ''}" id="responsive-data-table_previous">
-												    <a href="#" aria-controls="responsive-data-table" data-dt-idx="0" tabindex="0" class="page-link">이전</a>
-												  </li>
-												  
-												  
-													<!--페이지 번호 반복문  -->
-												<c:set var="currentPage" value="${startPage}" />
-												<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
-												   <c:choose>
-												      <c:when test="${total.pageCriteriaDto eq currentPage}">
-												         <li class="paginate_button page-item ${currentPage == pageNum ? 'active' : ''}">
-												            <a href="/notice/admin/list?page=${pageNum}" aria-controls="responsive-data-table" data-dt-idx="${pageNum}" tabindex="0" class="page-link">
-												               <c:out value="${pageNum}" />
-												            </a>
-												         </li>
-												      </c:when>
-												   </c:choose>
-												</c:forEach>
-											    													
+												<div class = "pageing" style="text-align: center">																			
+												<div class="pagination mx-auto">	
+												<!-- 이전페이지 기능 -->											 		
+														<c:if test="${page.endPage > startPage -1}">
+													    <c:choose>
+													        <c:when test="${page.endPage > page.pageCriteriaDto.page -1}">
+		 														 <a href="list?page=${page.pageCriteriaDto.page -1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">이전</a>
+													        </c:when>													        											        								     
+													    </c:choose>
+													</c:if>
+													<!-- 페이지 반복  -->
+												    <c:forEach begin="${startPage +1}" end="${endPage}" var="pageNum">
+												        <c:choose>
+												            <c:when test="${nowPage eq pageNum}">
+												                <li class="page-item active">
+												                    <span class="page-link">${pageNum}</span>
+												                </li>
+												            </c:when>
+												            <c:otherwise>
+												                <li class="page-item">
+												                    <a class="page-link" href="/notice/admin/list?page=${pageNum}" aria-controls="responsive-data-table" tabindex="10">
+												                        <c:out value="${pageNum}" />
+												                    </a>
+												                </li>
+												            </c:otherwise>
+												        </c:choose>
+												    </c:forEach>																							    								
 												<!-- 다음 페이지  -->																																	      																										    													    													  																																															    		
-												<c:if test="${total.endPage > startPage + 10}">
+												<c:if test="${page.endPage > startPage + 1}">
 											    <c:choose>
-											        <c:when test="${total.endPage > total.pageCriteriaDto.pageNum + 10}">
-											            <a href="admin/list?page=${total.pageCriteriaDto.pageNum + 10}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
-											        </c:when>
-											    </c:choose>
-											</c:if>
-												  <li class="paginate_button page-item next ${currentPage == total ? 'disabled' : ''}" id="responsive-data-table_next">
-												    <a href="#" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
-												  </li>
-												</ul>																																
+											        <c:when test="${page.endPage > page.pageCriteriaDto.page + 1}">
+											            <a href="list?page=${page.pageCriteriaDto.page + 1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" 
+											            class="page-link">다음</a>
+											        </c:when>																	       				        											        								    
+											    </c:choose>											    
+												</c:if>												  
+												</div>																									
+												</div>																																								
 											</div>
 										</div>
 									</div>	
@@ -692,4 +703,6 @@
 					</div>
 				</div>
 			</div>
-			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+		</body>
+	</html>
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>

@@ -624,36 +624,60 @@
 												</tr>
 											</c:forEach>
 										</tbody>
-									</table>																		
+									</table>																											
+										<div id = "paging">
+									<!-- 페이징 시작 -->
 										<div class="row justify-content-between bottom-information">
 											<div class="dataTables_info" id="responsive-data-table_info"
 												role="status" aria-live="polite">Showing 1 to 20 of 57
-												entries</div>
+												entries</div>																					
 											<div class="dataTables_paginate paging_simple_numbers"
-												id="responsive-data-table_paginate">
-												<ul class="pagination">
-													<li class="paginate_button page-item previous disabled"
-														id="responsive-data-table_previous"><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="0"
-														tabindex="0" class="page-link">Previous</a></li>
-													<li class="paginate_button page-item active"><a
-														href="#" aria-controls="responsive-data-table"
-														data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-													<li class="paginate_button page-item "><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="2"
-														tabindex="0" class="page-link">2</a></li>
-													<li class="paginate_button page-item "><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="3"
-														tabindex="0" class="page-link">3</a></li>
-														
-													<li class="paginate_button page-item next"
-														id="responsive-data-table_next"><a href="#"
-														aria-controls="responsive-data-table" data-dt-idx="4"
-														tabindex="0" class="page-link">Next</a></li>
-												</ul>
+												id="responsive-data-table_paginate">												
+
+												<c:set var="value" value="${endPage}" />																				
+												<c:set var="nowPage" value="${page.pageCriteriaDto.page}" />
+												<c:set var="startPage" value="${page.startPage}" />
+												<c:set var="endPage" value="${page.endPage}" />												
+												<ul class="pagination">	
+												<!-- 이전페이지 기능 -->											 		
+														<c:if test="${page.endPage > startPage -1}">
+													    <c:choose>
+													        <c:when test="${page.endPage > page.pageCriteriaDto.page -1}">
+		 														 <a href="list?page=${page.pageCriteriaDto.page -1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">이전</a>
+													        </c:when>													        											        								     
+													    </c:choose>
+													</c:if>
+													<!-- 다음페이지 기능  -->
+												    <c:forEach begin="${startPage+1}" end="${endPage}" var="pageNum">
+												        <c:choose>
+												            <c:when test="${nowPage eq pageNum}">
+												                <li class="page-item active">
+												                    <span class="page-link">${pageNum}</span>
+												                </li>
+												            </c:when>
+												            <c:otherwise>
+												                <li class="page-item">
+												                    <a class="page-link" href="/notice/list?page=${pageNum}" aria-controls="responsive-data-table" tabindex="10">
+												                        <c:out value="${pageNum}" />
+												                    </a>
+												                </li>
+												            </c:otherwise>
+												        </c:choose>
+												    </c:forEach>
+																							    										
+												<!-- 다음 페이지  -->																																	      																										    													    													  																																															    		
+												<c:if test="${page.endPage > startPage + 1}">
+											    <c:choose>
+											        <c:when test="${page.endPage > page.pageCriteriaDto.page + 1}">
+											            <a href="list?page=${page.pageCriteriaDto.page + 1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" 
+											            class="page-link">다음</a>
+											        </c:when>													        											        								     
+											    </c:choose>
+												</c:if>												  
+												</ul>																																
 											</div>
 										</div>
-										<div class="clear"></div>
+									</div>
 									</div>
 								</div>
 							</div>
