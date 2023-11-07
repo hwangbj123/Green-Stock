@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import com.green.greenstock.dto.KakaoProfile;
 import com.green.greenstock.dto.NaverResponse;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
+import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SocialLoginService;
@@ -462,5 +465,13 @@ public class UserController {
 		session.invalidate();
 		userService.deleteUser(id);
 		return "redirect:/user/signIn";
+	}
+	
+	@GetMapping("/payment")
+	public String UserPayment(Model model) {
+		User user = (User)session.getAttribute("principal");
+		List<Pay> payList = userService.findUserPayment(user.getId());
+		model.addAttribute("payList", payList);
+		return "user/payment";
 	}
 }

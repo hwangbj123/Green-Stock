@@ -15,7 +15,7 @@
 
 
 	<insert id="insertMyStocks">
-		INSERT INTO myStocks(p_id, amount, price,
+		INSERT INTO mystocks(p_id, amount, price,
 		companyCode)
 		VALUES (#{pId}, #{amount}, #{price},#{companyCode})
 	</insert>

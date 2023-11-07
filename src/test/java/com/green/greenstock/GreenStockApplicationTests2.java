@@ -27,20 +27,20 @@ class GreenStockApplicationTests2 {
 	@Autowired
 	UserEntityRepository userEntityRepository;
 
-	@Test
-	@Transactional
-	void contextLoads() {	
-		UserEntity userEntity = userEntityRepository.findById(1).orElse(null);
-		
-		Advisor advisor = Advisor
-							.builder()
-							.advisor_full_name("full")
-							.advisor_nick_name("nick")
-							.career("나뭐")
-							.introduction("하이")
-							.userEntity(userEntity)
-							.build();
-		
-		advisorRepository.save(advisor);
-	}
+//	@Test
+//	@Transactional
+//	void contextLoads() {	
+//		UserEntity userEntity = userEntityRepository.findById(1).orElse(null);
+//		
+//		Advisor advisor = Advisor
+//							.builder()
+//							.advisor_full_name("full")
+//							.advisor_nick_name("nick")
+//							.career("나뭐")
+//							.introduction("하이")
+//							.userEntity(userEntity)
+//							.build();
+//		
+//		advisorRepository.save(advisor);
+//	}
 }

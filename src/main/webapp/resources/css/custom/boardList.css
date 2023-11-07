@@ -10,6 +10,11 @@
 	margin: auto;
 	text-align: center;
 }
+.board-tb tr:first-child{
+	background-color: #f7f7f7; 
+	height: 50px; 
+	border-bottom: 1px solid lightgrey;
+}
 .board-tb td{
 	height: 50px;
 }
@@ -28,8 +33,12 @@
 	 display: flex;
 	 justify-content: center;
 }
+#write-btn {
+	border-radius: 5px;
+}
 #listopt-div{
-	 width: 100%; 
+	 width: 100%;
+	 min-width: 755px; 
 	 margin: auto; 
 	 text-align: center; 
 	 margin-top: 50px;
@@ -37,22 +46,23 @@
 	 display: flex;
 	 justify-content: space-between;
 }
-#listopt-div button{
-	width: 100px;
-}
 #search-div {
-	width: 600px;
+	width: 570px;
 	display: flex;
 	justify-content: space-between;
 }
 #search-div select{
 	height: 43px;
-	width: 60px;
+	width: 58px;
 	text-align: center;
 }
 #search-div input{
 	width: 330px;
 	height: 45px;
+}
+#search-btn{
+	width: 80px;
+	border-radius: 5px;
 }
 #category-tb {
 	width: 65%;

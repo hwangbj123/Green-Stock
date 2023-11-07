@@ -2,8 +2,8 @@ package com.green.greenstock.repository.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.green.greenstock.repository.model.AdvisorBoard;
+import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 
-public interface AdvisorBoardRepository extends JpaRepository<AdvisorBoard, Integer>{
-    
+public interface AdvisorBoardRepository extends JpaRepository<AdvisorBoardEntity, Integer> {
+
 }
