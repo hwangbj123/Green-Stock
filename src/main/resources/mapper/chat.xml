@@ -68,14 +68,14 @@
 	<select id="selectChatListNotPaging" resultType="com.green.greenstock.dto.ChattingRoom">
 		select v.companyCode, v.companyName, count(user_id) countUser
 		from subscribe s
-		join views v on s.companyCode = v.companyCode
+		join domestic_stock_code v on s.companyCode = v.companyCode
 		group by companyCode, companyName
 	</select>
 
 	<select id="selectChatListAll" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.dto.ChattingRoom">
 		select v.companyCode, v.companyName, count(user_id) countUser
 		from subscribe s
-		join views v on s.companyCode = v.companyCode
+		join domestic_stock_code v on s.companyCode = v.companyCode
 		<if test='searchWord!=null'>
 			where companyName like concat('%',#{searchWord},'%')
 		</if>
@@ -86,7 +86,7 @@
 	<select id="countChatList" parameterType="com.green.greenstock.dto.PagingDto">
 		select count(distinct s.companyCode)
 		from subscribe s
-		join views v on s.companyCode = v.companyCode
+		join domestic_stock_code v on s.companyCode = v.companyCode
         <if test='searchWord != null'>
 			where companyName like concat('%', #{searchWord}, '%')
         </if>
