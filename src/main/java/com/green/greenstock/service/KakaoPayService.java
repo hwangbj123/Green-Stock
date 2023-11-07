@@ -156,4 +156,9 @@ public class KakaoPayService {
 	public void modifyPayInfo(Pay pay) {
 		payRepository.modifyPayInfo(pay);
 	}
+
+	public Pay findPayInfoById(Integer id) {
+		
+		return payRepository.findPayInfoById(id);
+	}
 }

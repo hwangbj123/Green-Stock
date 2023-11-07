@@ -1,6 +1,7 @@
 package com.green.greenstock.repository.interfaces;
 
 import com.green.greenstock.dto.PagingDto;
+import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.User;
 
 import java.util.List;
@@ -33,4 +34,6 @@ public interface UserRepository {
 	public List<User> findSearchUser(@Param("search")String search, @Param("paging")PagingDto paging);
 
 	public List<User> findAdminMainUserList();
+
+	public List<Pay> findUserPayment(Integer id);
 }
