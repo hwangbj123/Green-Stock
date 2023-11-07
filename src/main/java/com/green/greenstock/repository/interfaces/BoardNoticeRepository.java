@@ -4,10 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.green.greenstock.dto.PageCriteriation;
-import com.green.greenstock.dto.NoticeUpdateDto;
-import com.green.greenstock.dto.NoticeWriteDto;
-import com.green.greenstock.dto.PageCriteriaDto;
 import com.green.greenstock.repository.model.Noticeboard;
 
 
@@ -19,7 +15,7 @@ public interface BoardNoticeRepository {
 	 * 공지사항 목록
 	 * @return
 	 */
-	public List<Noticeboard>findAll(PageCriteriaDto criteriaDto);
+	public List<Noticeboard>findAll(int offset);
 	
 	
 	/**
@@ -64,7 +60,7 @@ public interface BoardNoticeRepository {
 	 * @param id
 	 * @return
 	 */
-	public int listCount(PageCriteriaDto criteriaDto);
+	public int listCount( );
 	
 	
 	

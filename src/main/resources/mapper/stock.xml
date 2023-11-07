@@ -6,12 +6,12 @@
 
 	<select id="getAutoCompleteData" resultType="String">
 		select companyName
-		from stockList
+		from stocklist
 	</select>
 	
 	<select id="getStockByStockName" resultType="com.green.greenstock.dto.Stock">
 		select *
-		from stockList
+		from stocklist
 		where companyName = #{companyName}
 	</select>
 	

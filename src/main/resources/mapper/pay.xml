@@ -5,12 +5,16 @@
 <mapper namespace="com.green.greenstock.repository.interfaces.PayRepository">
  
 	<insert id="insertPayInfo">
-	  	insert into pay_tb(aid, tid, cid, sid, amountTotal, created_at, approved_at, user_id)
-	  	values(#{aid}, #{tid}, #{cid}, #{sid}, #{amountTotal}, #{created_at}, #{approved_at}, #{userId})
+	  	insert into pay_tb(aid, tid, cid, sid, item_name, amountTotal, created_at, approved_at, user_id)
+	  	values(#{aid}, #{tid}, #{cid}, #{sid}, #{itemName}, #{amountTotal}, #{createdAt}, #{approvedAt}, #{userId})
   	</insert>
   	
   	<update id="modifyPayInfo">
-		update pay_tb set amount_total = #{amountTotal} where id = #{id}
+		update pay_tb set amountTotal = #{amountTotal} where id = #{id}
 	</update>
+	
+	<select id="findPayInfoById" resultType="Pay">
+		select * from pay_tb where id = #{id}
+	</select>
   	
 </mapper>

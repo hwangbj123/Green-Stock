@@ -17,6 +17,7 @@ public class DataRestController {
 
 	private final StockApiService stockApiService;
 
+	
 	public String abc() {
 		return "abc";
 	}
@@ -37,5 +38,6 @@ public class DataRestController {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.convertValue(resInfo.getOutput(), DomesticStockCurrentPriceOutput.class);
 	}
-
+	
+	
 }

@@ -3,7 +3,6 @@ package com.green.greenstock.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.green.greenstock.dto.PageCriteriation;
 import com.green.greenstock.dto.NoticeUpdateDto;
-import com.green.greenstock.dto.PageCriteriaDto;
-import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.repository.model.Noticeboard;
 import com.green.greenstock.service.BoardNoticeService;
 import com.green.greenstock.service.UserService;
+import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +30,8 @@ public class BoardNoticeController {
 	@Autowired
 	private final BoardNoticeService boardNoticeService;
 
+	
+
 	/**
 	 * 
 	 * @param 어드민 상태 일때 보이는 공지사항 목록
@@ -41,14 +40,24 @@ public class BoardNoticeController {
 	 */
 	//공지사랑 목록 (어드민)	
 	@GetMapping("/admin/list")
-	public String adminListNotice(Model model, PageCriteriaDto pageCriteriaDto){	
+	public String adminListNotice(Model model, @RequestParam (defaultValue = "1") int page){	
 		//공지사항 목록을 불러오는 부분 	
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService(pageCriteriaDto);
-		int total =  boardNoticeService.noticeListCount(pageCriteriaDto);
-		PageCriteriation pageCriteriation = new PageCriteriation(total, pageCriteriaDto);			
-		model.addAttribute("page",pageCriteriation);
-		System.out.println("tdddd :" + total);
-		System.out.println("asdasd" + pageCriteriaDto);
+		int total =  boardNoticeService.noticeListCount();
+		Pagination paginaion =  new Pagination(total,page,10);		
+		int offset = paginaion.getStart();
+		System.out.println(offset);
+		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset);
+		
+		
+		
+		
+		model.addAttribute("pagination",paginaion);
+//		PageCriteriation pageCriteriation = new PageCriteriation(total, );			
+//		model.addAttribute("page",pageCriteriation);
+//		System.out.println("전체 데이터 갯수 :" + total);
+//		System.out.println("전체 페이지수 :" + listNotice(model, pageCriteriaDto));
+		
+		//System.out.println("asdasd" + pageCriteriaDto);
 		if(listNotice.isEmpty()) {
 			model.addAttribute("noticeList",null);
 		}else {
@@ -63,21 +72,20 @@ public class BoardNoticeController {
 	 * @return noticeList
 	 */
 	//공지사항 목록 리스트(일반)
-	@GetMapping("/list")
-	public String listNotice(Model model, PageCriteriaDto pageCriteriaDto){	
-		//공지사항 목록을 불러오는 부분 
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService(pageCriteriaDto);
-		int total =  boardNoticeService.noticeListCount(pageCriteriaDto);
-		PageCriteriation pageCriteriation = new PageCriteriation(total, pageCriteriaDto);			
-		model.addAttribute("page",pageCriteriation);		
-		if(listNotice.isEmpty()) {
-			model.addAttribute("noticeList",null);
-		}else {
-			model.addAttribute("noticeList", listNotice);
-		}
-		return "notice/noticeList"; 
-		
-	}
+	
+	/*
+	 * @GetMapping("/list") public String listNotice(Model model, @RequestParam
+	 * (defaultValue = "1") int page ){ //공지사항 목록을 불러오는 부분 List<Noticeboard>
+	 * listNotice = boardNoticeService.noticeListService(pageCriteriaDto); int total
+	 * = boardNoticeService.noticeListCount(pageCriteriaDto); PageCriteriation
+	 * pageCriteriation = new PageCriteriation(total, pageCriteriaDto);
+	 * model.addAttribute("page",pageCriteriation); if(listNotice.isEmpty()) {
+	 * model.addAttribute("noticeList",null); }else {
+	 * model.addAttribute("noticeList", listNotice); } return "notice/noticeList";
+	 * 
+	 * }
+	 */
+	 
 	
 	//공지사항 작성된것을 보내는 주소 
 	@GetMapping("/admin/write")
@@ -118,7 +126,6 @@ public class BoardNoticeController {
 		
 		int result = boardNoticeService.noticeUpdateService(noticeupdateDto);				
 		System.out.println(result);
-		
 		return "redirect:/notice/admin/list";
 		
 	}

@@ -78,7 +78,7 @@
 								<!-- Doughnut Chart -->
 								<div class="card card-default" style="height: 100%">
 									<div class="card-header justify-content-center">
-										<h2>Orders Overview</h2>
+										<h2>Stocks Overview</h2>
 									</div>
 									<div id="donutChartBody" class="card-body"></div>
 								</div>
@@ -87,7 +87,7 @@
 								<!-- Sales Graph -->
 								<div id="user-acquisition" class="card card-default">
 									<div class="card-header">
-										<h2>Ranking</h2>
+										<h2 id = "modal_ranking">Ranking</h2>
 									</div>
 									<div id="rankingBody" style="overflow: auto" class="card-body">
 										<div class="tab-content" id="rankingWrapper"></div>
@@ -223,22 +223,22 @@
 										 <img src="assets/img/user/u6.jpg" alt="user image"> 
 									</div> -->
 
-									<div class="card-body">
-										<div class="card-img mx-auto rounded-circle">
+									<div id = "modal_canvasWrapper" class="card-body">
+										<!-- <div class="card-img mx-auto rounded-circle">
 											<img src="assets/img/user/u6.jpg" alt="user image">
-										</div>
+										</div> -->
 									</div>
 								</div>
 
-								<div class="d-flex justify-content-between ">
+								<div class="d-flex justify-content-between" style=  "margin-top : 10%">
 									<div class="text-center pb-4">
 										<h6 class="text-dark pb-2">Ranking</h6>
-										<p>12</p>
+										<p id = "user_rank">12</p>
 									</div>
 
 									<div class="text-center pb-4">
 										<h6 class="text-dark pb-2">ROR</h6>
-										<p>11.33 %</p>
+										<p id = "modal_ror">11.33 %</p>
 									</div>
 
 									<div class="text-center pb-4">
@@ -255,11 +255,11 @@
 							<div id="modal-portfolio-info" class="contact-info px-4">
 								<h4 class="text-dark mb-1">Portfolio Detail</h4>
 								<p class="text-dark font-weight-medium pt-4 mb-2">pfName</p>
-								<p id="pfName">My Test Portfolio</p>
+								<p id="modal_pfName">My Test Portfolio</p>
 								<p class="text-dark font-weight-medium pt-4 mb-2">pfDisc</p>
-								<p id="pfDisc">portfolio for Test</p>
+								<p id="modal_pfDisc">portfolio for Test</p>
 								<p class="text-dark font-weight-medium pt-4 mb-2">RegDate</p>
-								<p>2023-11-03</p>
+								<p id = "modal_pfReg">2023-11-03</p>
 								<!-- <button class = "btn btn-primary btn-pill my-4">저장</button>
 												<button class = "btn btn-primary btn-pill my-4">삭제</button> -->
 							</div>

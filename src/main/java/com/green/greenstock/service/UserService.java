@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.UserRepository;
+import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.User;
 
 import lombok.RequiredArgsConstructor;
@@ -104,6 +105,11 @@ public class UserService {
 
 	public List<User> findAdminMainUserList() {
 		return userRepository.findAdminMainUserList();
+	}
+
+	public List<Pay> findUserPayment(Integer id) {
+		
+		return userRepository.findUserPayment(id);
 	}
 	
 }

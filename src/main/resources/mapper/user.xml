@@ -41,6 +41,10 @@
 		select * from user_tb order by id desc limit 10
 	</select>
 	
+	<select id="findUserPayment" resultType="Pay">
+		select * from pay_tb where user_id = #{id} order by id desc
+	</select>
+	
 	<update id="modifyUserPw">
 		update user_tb set password = #{password} where user_name = #{userName}
 	</update>

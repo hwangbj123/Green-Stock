@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <%-- <%@ include file="/WEB-INF/view/layout/header.jsp" %> --%>
 <!DOCTYPE html>
 
@@ -62,9 +61,11 @@
 <body>
 	<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(document).on(function() {
 			$("#write").hide();
 		});
+		
+	
 	</script>
 	<header class="ec-header">
 		<!--Ec Header Top Start -->
@@ -546,35 +547,38 @@
 		<div class="content container">
 			<div
 				class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
-				<div class="font-size">
-					<p class="breadcrumbs"></p>
-						<i class="mdi mdi-chevron-right"> </i>
-					<h3 style="width: 300px;">공지사항</h3>
-					
-				</div>
+				
 				<!-- 검색페이지 시작 -->
 				<div class="container">
-					<div class="row">
-						<form method="post" name="notice-search" action="">							
-							<table class="pull-right">
-								<tr>								
-									<td><select class="form-control" name="searchField">
-											<option value="0">선택</option>
-											<option value="searchTitle">제목</option>
-											<option value="userID">작성자</option>
-									</select></td>
-									<td>
-									<input type="text" class="form-control"
-										placeholder="검색어 입력" name="searchText" maxlength="100">
-									</td>
-									<td>
-									<button type="submit" class="btn btn-success">검색</button>
-									</td>
-								</tr>
-
-							</table>
+					<div class="row">					
+						<form method="post" name="notice-search" action="">		
+										<div class="font-size">
+							<p class="breadcrumbs"></p>
+								<i class="mdi mdi-chevron-right"> </i>
+									</div>	
+							<h2 style="width: 100%; text-align: center;">공지사항</h2>
+							<div class="search-container" style="
+							text-align: center;
+							margin: 0 auto;							
+							height: 100px;
+							width: 600px;
+							display: flex;
+							justify-content: center;
+							align-items: center;">						
+							    <select class="custom-select" style="width: 150px">
+							    <option value="" disabled selected>선택</option>
+							    <option value="searchTitle">제목</option>
+							    <option value="writer">작성자</option>
+								</select>	
+														   
+							    <input type="text" class="form-control" placeholder="검색어 입력" name="searchText" maxlength="100" style="margin-right: 10px;">
+							    <button type="submit" class="btn btn-success" style="
+							    text-align: center;
+							    width: 100px;
+							    height: 50px;">검색</button>
+							</div>
 						</form>
-					</div>
+					</div>	
 				</div>
 				<!-- 검색페이지 종료 -->
 			</div>
@@ -639,70 +643,101 @@
 									</table>
 									
 									
-									<div class="write">	
+									<div class="write" style="text-align: right">	
 										<a href="/notice/admin/write" class="btn btn-primary"
-											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																		
-										<div class="clear"></div>
-									</div>
-									<div id = "paging">
-									<!-- 페이징 시작 -->
-										<div class="row justify-content-between bottom-information">
-											<div class="dataTables_info" id="responsive-data-table_info"
+											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																												
+												<%-- <div id = "paging">
+												<div class="dataTables_info" id="responsive-data-table_info"
 												role="status" aria-live="polite">Showing 1 to 20 of 57
 												entries</div>																					
 					
-												<c:set var="prev" value="${endPage}" />																				
-												<c:set var="nowPage" value="${page.pageCriteriaDto.page}" />
-												<c:set var="startPage" value="${page.startPage}" />
-												<c:set var="endPage" value="${page.endPage}" />		
-												
+												<c:set var="prevPage" value="${page.prev}" />																																																				
+												<c:set var="nowPage" value="${page.pageCriteriaDto.page}" />																									
+												<c:set var="pageSize" value="10" />
 												<div class = "pageing" style="text-align: center">																			
-												<div class="pagination mx-auto">	
-												<!-- 이전페이지 기능 -->											 		
-														<c:if test="${page.endPage > startPage -1}">
-													    <c:choose>
-													        <c:when test="${page.endPage > page.pageCriteriaDto.page -1}">
-		 														 <a href="list?page=${page.pageCriteriaDto.page -1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">이전</a>
-													        </c:when>													        											        								     
+												<div class="pagination mx-auto">																																 																																																											
+												<c:set var="nowPage" value="${page.pageCriteriaDto.page}" />
+
+									
+												<!-- 이전 기능 -->
+												<c:if test="${page.endPage > startPage - pageSize}">
+												    <c:choose>
+												        <c:when test="${nowPage > 1}">
+												            <a href="list?page=${nowPage - 1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">이전</a>
+												        </c:when>
+												        <c:otherwise>												           
+												            <a href="list?page=${nowPage - 1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link" hidden>이전</a>
+												        </c:otherwise>
+												    </c:choose>
+												</c:if>
+												
+												<!-- 페이지 반복 -->																							
+												<c:set var="startPage" value="${(nowPage - 1) - ((nowPage - 1) % pageSize) + 1}" />
+												 <c:set var="endPage" value="${startPage + pageSize - 1}" />
+												
+												
+												<div>
+													<p>${page.startPage}</p>
+												    
+												</div>
+												
+												<c:forEach begin="${page.startPage}" end="${page.endPage}" var="pageNum">
+												    <c:choose>
+												        <c:when test="${nowPage eq pageNum}">
+												            <li class="page-item active">
+												                <span class="page-link">${nowPage}</span>
+												            </li>
+												        </c:when>
+												        <c:otherwise>
+												            <li class="page-item">
+												                <a class="page-link" href="/notice/admin/list?page=${pageNum}" aria-controls="responsive-data-table" tabindex="10">
+												                    <c:out value="${pageNum}" />	
+												                </a>
+												            </li>
+												        </c:otherwise>
 													    </c:choose>
-													</c:if>
-													<!-- 페이지 반복  -->
-												    <c:forEach begin="${startPage +1}" end="${endPage}" var="pageNum">
-												        <c:choose>
-												            <c:when test="${nowPage eq pageNum}">
-												                <li class="page-item active">
-												                    <span class="page-link">${pageNum}</span>
-												                </li>
-												            </c:when>
-												            <c:otherwise>
-												                <li class="page-item">
-												                    <a class="page-link" href="/notice/admin/list?page=${pageNum}" aria-controls="responsive-data-table" tabindex="10">
-												                        <c:out value="${pageNum}" />
-												                    </a>
-												                </li>
-												            </c:otherwise>
-												        </c:choose>
-												    </c:forEach>																							    								
-												<!-- 다음 페이지  -->																																	      																										    													    													  																																															    		
-												<c:if test="${page.endPage > startPage + 1}">
-											    <c:choose>
-											        <c:when test="${page.endPage > page.pageCriteriaDto.page + 1}">
-											            <a href="list?page=${page.pageCriteriaDto.page + 1}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" 
-											            class="page-link">다음</a>
-											        </c:when>																	       				        											        								    
-											    </c:choose>											    
-												</c:if>												  
-												</div>																									
+												</c:forEach>        
+																									
+												<!-- 다음 버튼  -->
+												<c:if test="${page.endPage > startPage + pageSize - 1}">
+												    <c:choose>
+												        <c:when test="${page.endPage > nowPage + pageSize - 1}">
+												            <a href="list?page=${nowPage + pageSize}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
+												        </c:when>	
+												        <c:otherwise>
+												        	<a href="list?page=${page.endPage}" aria-controls="responsive-data-table" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
+												        </c:otherwise>												        					
+												    </c:choose>
+												</c:if>
+												<!--  --> --%>
+												
+												<!-- 페이징 영역 -->
+						<div class="ec-pro-pagination">
+                            <span>Showing ${pagination.start}-${pagination.end} of ${pagination.totalCount} 개</span>
+                            <ul class="ec-pro-pagination-inner">
+                                <c:if test="${pagination.prevPageGroup}">
+                                	<li><a class="next" href="/notice/admin/list?page=${pagination.currentPage - 1}">Prev <i class="ecicon eci-angle-left"></i></a></li>
+                               	</c:if>
+                            
+                            	<c:forEach var="num" begin="${pagination.startPageGroup}" end="${pagination.endPageGroup}">
+                                <li><a class="${num eq pagination.currentPage ? 'active' : ''}" href="/notice/admin/list?page=${num}">${num}</a></li>
+                                </c:forEach>
+                                <c:if test="${pagination.nextPageGroup}">
+                                	<li><a class="next" href="/notice/admin/list?page=${pagination.currentPage + 1}">Next <i class="ecicon eci-angle-right"></i></a></li>
+                               	</c:if>
+                            </ul>
+                        </div>
+
+										<div class="row justify-content-between bottom-information">
 												</div>																																								
-											</div>
-										</div>
+											</div>										
 									</div>	
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>			
 		</body>
 	</html>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

@@ -5,10 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
-import com.green.greenstock.dto.PageCriteriaDto;
-import com.green.greenstock.dto.Pagination;
-import com.green.greenstock.dto.PagingDto;
-import com.green.greenstock.dto.PageCriteriation;
 import com.green.greenstock.repository.interfaces.BoardNoticeRepository;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.Noticeboard;
@@ -28,8 +24,8 @@ public class BoardNoticeService {
 	 * @return noticeList
 	 * 
 	 */	
-	public List<Noticeboard> noticeListService(PageCriteriaDto pageCriteriaDto) {
-		return noticeRepository.findAll(pageCriteriaDto);
+	public List<Noticeboard> noticeListService(int offset) {
+		return noticeRepository.findAll(offset);
 
 	}
 	
@@ -96,10 +92,17 @@ public class BoardNoticeService {
 	/**
 	 * 페이징 
 	 */
-	public int noticeListCount(PageCriteriaDto pageCriteriaDto) {
-		System.out.println(pageCriteriaDto);
-		return noticeRepository.listCount(pageCriteriaDto);
+	public int noticeListCount( ) {
+		
+		return noticeRepository.listCount();
 		
 	}
 	
+	/**
+	 * 실시간 데이터 목록
+	 * 
+	 */
+	public int noticeLiveListCount( ) {
+		return noticeRepository.listCount();
+	}
 }

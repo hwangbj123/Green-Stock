@@ -26,6 +26,7 @@ public class MyPortfolio {
 	private Integer totalAsset;
 	private Integer nowTotalAsset;
 	private String ror;
+	private String regDate;
 	private boolean isVisible;
 	private boolean stockExist;
 	private List<MyStocks> stockList;

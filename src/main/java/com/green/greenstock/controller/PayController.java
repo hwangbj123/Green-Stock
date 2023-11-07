@@ -52,12 +52,23 @@ public class PayController {
 		pay.setCid(kakaoPayApproval.getCid());
 		pay.setTid(kakaoPayApproval.getTid());
 		pay.setSid(kakaoPayApproval.getSid());
+		pay.setItemName(kakaoPayApproval.getItem_name());
 		pay.setAmountTotal(kakaoPayApproval.getAmount().getTotal());
-		pay.setCreated_at(kakaoPayApproval.getCreated_at());
-		pay.setApproved_at(kakaoPayApproval.getApproved_at());
+		pay.setCreatedAt(kakaoPayApproval.getCreated_at());
+		pay.setApprovedAt(kakaoPayApproval.getApproved_at());
 		pay.setUserId(user.getId());
 		kakaoPayService.insertPayInfo(pay);
 		model.addAttribute("payInfo", kakaoPayApproval);
 		return "/paySuccess_test";
+	}
+	
+	@GetMapping("/refund")
+	public String Refund(@RequestParam("id") Integer id) {
+		
+		Pay pay = kakaoPayService.findPayInfoById(id);
+		
+		kakaoPayService.KakaoPayCancel(pay, 1);
+		
+		return "redirect:/user/payment";
 	}
 }
