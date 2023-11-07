@@ -8,11 +8,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -25,43 +22,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Table(name = "image")
 @Entity
-@Table(name = "advisor_board")
 @EntityListeners(AuditingEntityListener.class)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdvisorBoardEntity {
+public class ImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int advisorBoardId;
-    // private int advisorId;
-    // private int userId;
-    
+    private int imgId;
+
     @Column(nullable = false)
-    private String title;
-   
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
-    private int parent;
-
-    @Builder.Default
-    @ColumnDefault(value = "0")
-    private int status = 0;
+    private String imgName;
 
     @CreatedDate
     @Column(columnDefinition = "DATETIME(0) default CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private UserEntity userEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "advisorId", referencedColumnName = "advisorId")
-    private AdvisorEntity advisor;
 
 }

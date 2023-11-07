@@ -87,40 +87,42 @@
 <div class="container mt-4 mb-4 advisorDetail">
 	<div class="row">
 		<div class="col-6">
-			<img src="https://via.placeholder.com/600" alt="">
+			<img src="/upload/${advisor.image}" alt="">
 		</div>
 		<div class="col-6">
 			<div class="section-title text-center">
-				<h3>주식 전문가</h3>
+				<h3>전문가</h3>
 			</div>
 			<div class="table-responsive">
 				<table class="table w-100">
 					<tbody>
 						<tr>
-							<th>이름</th><td>김철수</td>
-							
+							<th>닉네임</th><td>${advisor.nickName}</td>
 						</tr>
 						<tr>
-							<th>분야</th><td>국내주식</td>
+							<th>이름</th><td>${advisor.fullName}</td>
+						</tr>
+						<tr>
+							<th>분야</th><td>${advisor.strSpecialization}</td>
 						</tr>
 						<tr>
 							<th>이력</th>
 							<td>
-								<textarea name="career" id="advisorCareer" readonly>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas debitis ab vel, consectetur magni doloremque rem at, praesentium dolorum laudantium ex non. Accusamus eum accusantium officia aperiam ipsum cumque dicta.</textarea>
+								<textarea name="career" id="advisorCareer" readonly>${advisor.career}</textarea>
 							</td>
 						</tr>
 						<tr>
 							<th>자기소개</th>
 							<td>
-								<textarea name="career" id="advisorIntroduction" readonly>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint, excepturi corrupti a est aperiam eaque nobis quos perferendis mollitia adipisci ea totam dignissimos, placeat vitae error? Reiciendis non commodi ea..</textarea>
+								<textarea name="career" id="advisorIntroduction" readonly>${advisor.introduction}</textarea>
 							</td>
 						</tr>
 						<tr class="text-center">
-							<td colspan="2"><button class="btn btn-primary" id="btnAdvisorSub">결제하기</button></td>
+							<td colspan="2"><button class="btn btn-primary" id="btnAdvisorSub" data-id="${advisor.advisorId}">결제하기</button></td>
 						</tr>
 						<tr class="text-center">
-							<td colspan="2"><button class="btn btn-info me-4" id="btnAdvisorBoard">전문가 상담게시판</button>
-								<button class="btn btn-info" id="btnAdvisorChat">전문가 실시간채팅</button></td>
+							<td colspan="2"><button class="btn btn-info me-4" id="btnAdvisorBoard" data-id="${advisor.advisorId}">전문가 상담게시판</button>
+								<button class="btn btn-info" id="btnAdvisorChat" data-id="${advisor.advisorId}">전문가 실시간채팅</button></td>
 						</tr>
 					</tbody>
 				</table>
