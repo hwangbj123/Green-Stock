@@ -307,14 +307,80 @@ function setRanking() {
 			let title = $('<div data-bs-toggle="modal" data-bs-target="#modalContact" class="view-detail" style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis; cursor : pointer">' + e.title + '</div>')
 			rankingWrapper.append(title);
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '</div>');
-			title.on('click', () => titleClicked(e.pid));
+			title.on('click', () => titleClicked(e.pid, idx+1));
 		});
 	});
 }
 
-function titleClicked(pid) {
+function titleClicked(pid,rank) {
 	$.get('portfolio/getMyPortfolioInfo/' + pid, function(data) {
 		console.log(data);
+		$('#user_rank').html(rank);
+		$('#modal_pfName').html(data.title);
+		$('#modal_pfDisc').html(data.discription);
+		$('#modal_ror').html(data.ror);
+		$('#modal_pfReg').html(data.regDate.slice(0,10));
+		
+		if ($('#rankingDoChart').length > 0) {
+			$('#rankingDoChart').remove();
+		}
+		$('#modal_canvasWrapper').append($('<canvas id="rankingDoChart">'));
+		let stockNameList = [];
+		let amountList = [];
+		data.stockList.forEach(stock => {
+			stockNameList.push(stock.companyName);
+			amountList.push(stock.amount * stock.price);
+			console.log(stock.amount * stock.price);
+		});
+		console.log(stockNameList);
+		let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5"];
+		let doughnut = document.getElementById("rankingDoChart");
+		if (doughnut !== null) {
+			let rankingDoChart = new Chart(doughnut, {
+				type: "doughnut",
+				data: {
+					labels: stockNameList,
+					datasets: [
+						{
+							label: stockNameList,
+							data: amountList,
+							backgroundColor: colorList.slice(0, stockNameList.length),
+							borderWidth: 1
+							// borderColor: ['#88aaf3','#29cc97','#8061ef','#fec402']
+							// hoverBorderColor: ['#88aaf3', '#29cc97', '#8061ef', '#fec402']
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					cutoutPercentage: 75,
+					tooltips: {
+						callbacks: {
+							title: function(tooltipItem, data) {
+								return "Order : " + data["labels"][tooltipItem[0]["index"]];
+							},
+							label: function(tooltipItem, data) {
+								return data["datasets"][0]["data"][tooltipItem["index"]];
+							}
+						},
+						titleFontColor: "#888",
+						bodyFontColor: "#555",
+						titleFontSize: 12,
+						bodyFontSize: 14,
+						backgroundColor: "rgba(256,256,256,0.95)",
+						displayColors: true,
+						borderColor: "rgba(220, 220, 220, 0.9)",
+						borderWidth: 2
+					}
+				}
+			});
+		}
+		console.log(data.totalAsset);
+		$('#rankingDoChart').append($('<div id="donutCenterText" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + numberWithCommas(data.totalAsset) + '</div>'));
 	})
 }
 
@@ -600,7 +666,7 @@ function privacyClicked(pid) {
 
 // editBtnCLicked
 // 변경 버튼 클릭시 동작.
-function setModal() {
+/*function setModal() {
 	console.log($('.mdi.mdi-pencil'));
 	$('#closeButton').on('click', () => {
 
@@ -641,7 +707,7 @@ function setModal() {
 			$('#visibleText').html("public");
 		}
 	}
-}
+}*/
 
 
 function editClicked(id) {

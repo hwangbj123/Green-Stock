@@ -54,6 +54,10 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto'
 	
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// jsoup	
+	implementation 'org.jsoup:jsoup:1.13.1'
+	
 	
 	//implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
