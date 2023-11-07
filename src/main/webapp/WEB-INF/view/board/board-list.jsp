@@ -217,9 +217,23 @@
 		    			<td>${board.id}</td>
 		    			<td>
 		    				<c:forEach var="c" items="${cate}" varStatus="status">
-           						<c:if test="${board.categoryId eq status.count}">
-           							${c}
-           						</c:if>
+           						<c:choose>
+	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 1}">
+	           							<span style="border: 1px solid skyblue; padding: 3px 5px; border-radius: 5px; color: skyblue;">
+	           								${c}
+           								</span>
+	           						</c:when>
+	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
+	           							<span style="border: 1px solid orange; padding: 3px 5px; border-radius: 5px; color: orange;">
+	           								${c}
+           								</span>
+	           						</c:when>
+	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
+	           							<span style="border: 1px solid green; padding: 3px 5px; border-radius: 5px; color: green;">
+	           								${c}
+           								</span>
+	           						</c:when>
+           						</c:choose>
            					</c:forEach>
 						</td>
 		    			<td style="text-align: left;">

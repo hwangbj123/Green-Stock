@@ -23,17 +23,18 @@
 		<!-- FAVICON -->
 		<link href="/resources/img/favicon.png" rel="shortcut icon" />
 		
+		<!-- Custom CSS -->
+		
 		<style>
 			.main-content-div {
 				width: 100%;
 				display: flex;
 				justify-content: center;
-				margin: 60px 0px;
 			}
 			.main-div{
 				min-width: 300px;
 				min-height: 800px;
-				border: 1px solid black;
+ 				border: 1px solid black;
 			}
 			.content-center{
 				width: 50%;			
@@ -44,11 +45,12 @@
 			.chat-div{
 				width: 90%;
 				height: 400px;
-				border-radius: 15px;
+/* 				border-radius: 15px; */
 				margin: 20px auto;
 				padding: 15px;
 				text-align: center;
-				box-shadow: 0 1px 5px 1px rgba(0,0,0,0.3);
+				border: 1px solid lightgrey;
+				box-shadow: 0 1px 5px 1px rgba(0,0,0,0.1);
 			}
 			
 			.chat-list::-webkit-scrollbar {
@@ -97,13 +99,14 @@
 			}
 			
 			.board-div{
-				width: 90%;
-				height: 510px;
-				border-radius: 15px;
+				width: 95%;
+				height: 550px;
+/* 				border-radius: 15px; */
 				margin: 20px auto;
 				padding: 20px;
 				text-align: center;
-				box-shadow: 0 1px 5px 1px rgba(0,0,0,0.3);
+				border: 1px solid lightgrey;
+				box-shadow: 0 1px 5px 1px rgba(0,0,0,0.1);
 			}
 			.centered-table tr:first-child{
 				background-color: #f7f7f7;
@@ -115,13 +118,32 @@
 			    overflow: hidden;
 			    text-overflow: ellipsis; 
 			}
+			
+ 			.ad-slider{
+ 				width: 90%;
+/*  				height: 250px;  */
+ 				border: 1px solid black; 
+ 				margin: 50px auto;
+ 			} 
 		</style>
 	</head>
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
+    <div class="ad-slider">
+        <div class="ad-wrapper">
+          <div class="item" style="width: 100%; height: 250px; background-color: lightgrey;">ad 1</div>
+          <div class="item" style="width: 100%; height: 250px; background-color: lightblue;">ad 2</div>
+          <div class="item" style="width: 100%; height: 250px; background-color: lightpink;">ad 3</div>
+          <div class="item" style="width: 100%; height: 250px; background-color: lightgreen;">ad 4</div>
+          <div class="item" style="width: 100%; height: 250px; background-color: lightyellow;">ad 5</div>
+        </div>
+	</div>
+	
 	<div class="main-content-div">
+	
+	
 <!----- 좌측 사이드 div ------------>
 		<div class="main-div content-left"></div>
 <!----- 중앙 사이드 div ------------>
@@ -129,16 +151,16 @@
 		
 <!--------- 게시판 리스트 ------------>
 			<div class="board-div">
+				<h6 style="margin-bottom: 15px;">Board</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
-							<th style="max-width: 50px;">id</th>
-							<th style="max-width: 50px;">cate</th>
-							<th style="min-width: 180px;">title</th>
-							<th>user</th>
-							<th>date</th>
-							<th style="max-width: 40px;">views</th>
-							<th style="max-width: 40px;">rec</th>
+							<th style="width: 50px;">id</th>
+							<th colspan="2" style="min-width: 150px;">title</th>
+							<th style="width: 100px;">user</th>
+							<th style="width: 100px;">date</th>
+							<th style="width: 50px;">views</th>
+							<th style="width: 40px;">rec</th>
 						</tr>
 					</thead>
 
@@ -153,11 +175,25 @@
 								</c:otherwise>
 							</c:choose>
 									<td>${board.id}</td>
-									<td>
+									<td style="width: 70px; text-align: right;">
 										<c:forEach var="c" items="${cate}" varStatus="status">
-			           						<c:if test="${board.categoryId eq status.count}">
-			           							${c}
-			           						</c:if>
+			           						<c:choose>
+				           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 1}">
+				           							<span style="border: 1px solid skyblue; padding: 3px 5px; border-radius: 5px; color: skyblue;">
+				           								${c}
+			           								</span>
+				           						</c:when>
+				           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
+				           							<span style="border: 1px solid orange; padding: 3px 5px; border-radius: 5px; color: orange;">
+				           								${c}
+			           								</span>
+				           						</c:when>
+				           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
+				           							<span style="border: 1px solid green; padding: 3px 5px; border-radius: 5px; color: green;">
+				           								${c}
+			           								</span>
+				           						</c:when>
+			           						</c:choose>
 			           					</c:forEach>
 									</td>
 									<td style="text-align: left;">
@@ -190,7 +226,7 @@
 			
 <!--------- 채팅 리스트 ------------>
 			<div class="chat-div">
-				<h6 style="margin-bottom: 15px;">My Chatting</h6>
+				<h6 style="margin-bottom: 15px;">Chatting</h6>
 				<c:choose>
 					<c:when test="${not empty chatList}">
 						<div class="chat-list" style="background-color: rgba(52,116,212,0.2)">
@@ -226,6 +262,9 @@
 	
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
+		
+		<!-- Custom Js -->
+    
 		<script>
 // 			테이블 td->tr 배경 효과
 			let tds = document.getElementsByClassName("centered-table")[0].getElementsByTagName("td");
@@ -239,6 +278,14 @@
 					});
 				}
 			}
+			$(function(){
+				$('.ad-wrapper').slick({
+				  slidesToShow: 1,
+				  slidesToScroll: 1,
+				  autoplay: true,
+				  autoplaySpeed: 2000,
+				});
+			})
 		</script>
 	</body>
 </html>
