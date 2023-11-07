@@ -9,4 +9,6 @@ public interface PayRepository {
 	public int insertPayInfo(Pay pay);
 
 	public int modifyPayInfo(Pay pay);
+
+	public Pay findPayInfoById(Integer id);
 }
