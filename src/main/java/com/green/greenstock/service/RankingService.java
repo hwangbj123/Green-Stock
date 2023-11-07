@@ -27,7 +27,6 @@ public class RankingService {
 	@Autowired
 	GrowthLogRepository growthLogRepository;
 
-<<<<<<< HEAD
 	/*
 	 * @Scheduled(fixedDelay = 10000) // 10초마다 실행 public void refreshROR() {
 	 * List<MyPortfolio> list = portfolioRepository.findAllPortfolio();
@@ -40,7 +39,6 @@ public class RankingService {
 	 * portfolioRepository.updateRor(e); } else { System.out.println("else"); } });
 	 * }
 	 */
-=======
 //	@Scheduled(fixedDelay = 10000) // 1초마다 실행
 	public void refreshROR() {
 		List<MyPortfolio> list = portfolioRepository.findAllPortfolio();
@@ -60,7 +58,6 @@ public class RankingService {
 			}
 		});
 	}
->>>>>>> fa40e61c061f3a9c4e631341c730342d8f71d1cf
 
 	@Scheduled(cron = "0 0 0 * * ?") // 매일 오전 12시에 실행
 	public void growthLog() {

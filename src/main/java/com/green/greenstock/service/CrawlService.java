@@ -35,7 +35,7 @@ public class CrawlService {
 		}
 	}
 	
-	public void newsCrawl() {
+	public List<NewsCrawlDTO> newsCrawl() {
 		try {
 			Document doc = Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get();
 			//System.out.println(doc.select(".newsList"));
@@ -55,9 +55,11 @@ public class CrawlService {
 			});
 			System.out.println(newsCrawlList.size());
 			System.out.println(newsCrawlList.toString());
+			return newsCrawlList;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 }
