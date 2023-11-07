@@ -161,6 +161,21 @@
 	border: 1px solid black;
 	margin: 50px auto;
 }
+.content-left > h6{
+	text-align: center;
+}
+.divVolumeRank{
+	font-size: 12px;
+}
+.divVolumeRank .primaryColorRed {
+    color: #ff3149;
+}
+.divVolumeRank .primaryColorBlue {
+	color: #3474d4;
+}
+.divVolumeRank .primaryColorNone {
+	color: #212121;
+}
 </style>
 </head>
 
@@ -191,7 +206,21 @@
 
 
 		<!----- 좌측 사이드 div ------------>
-		<div class="main-div content-left"></div>
+		<div class="main-div content-left">
+			<h6>거래량 순위</h6>
+			<div class="table-responsive divVolumeRank">
+                <table class="table table-borederd tableVolumeRank">
+                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
+                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+                      <td>${item.stckPrpr}</td>
+                      <td>${item.prdyVrss}</td>
+                      <td class="text-end">${item.prdyCtrt}%</td>
+                    </tr>
+                  </c:forEach>
+                </table>
+              </div>
+		</div>
 		<!----- 중앙 사이드 div ------------>
 		<div class="main-div content-center">
 

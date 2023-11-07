@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
+import com.green.greenstock.dto.InquireInvestorResDto;
+import com.green.greenstock.dto.InquireMemberResDto;
 import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
@@ -38,7 +40,7 @@ public class StockApiController {
 	public String getStockDetail(Model model, @PathVariable String companyCode) {
 
 		if (companyCode == null || companyCode.isEmpty()) {
-			companyCode = "005930";
+			throw new CustomRestfulException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		// 종목 코드로 api 정보 가져오기
@@ -66,11 +68,23 @@ public class StockApiController {
 				new TypeReference<List<DomesticStockVolumeRankOutPut>>() {
 				}).subList(0, 10);
 
+		// 주식현재가 회원사
+		ResponseApiInfo<?> resInfo4 = stockApiService.getInquireMember(companyCode);
+		InquireMemberResDto inquireMemberResDto = mapper.convertValue(resInfo4.getOutput(), InquireMemberResDto.class);
+
+		// 주식현재가 투자자
+		ResponseApiInfoList<?> resInfo5 = stockApiService.getInquireInvestor(companyCode);
+		List<InquireInvestorResDto> inquireInvestorResDto = mapper.convertValue(resInfo5.getOutput(),
+				new TypeReference<List<InquireInvestorResDto>>() {
+				}).subList(0, 3);
+
 		model.addAttribute("stockCurrentPrice", outputPrice);
 		model.addAttribute("askingSellingPrice", ouputAsking);
 		model.addAttribute("companyName", companyName);
 		model.addAttribute("companyCode", companyCode);
 		model.addAttribute("rankOutPut", rankOutPut);
+		model.addAttribute("inquireMember", inquireMemberResDto);
+		model.addAttribute("inquireInvestors", inquireInvestorResDto);
 
 		return "/stock/detail";
 	}
@@ -132,4 +146,5 @@ public class StockApiController {
 		}
 		return stockApiService.getDailyitemchartprice(companyCode, date);
 	}
+
 }
