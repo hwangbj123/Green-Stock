@@ -188,7 +188,7 @@ public class StockApiService {
 
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		domesticStockSearchDto.setPagination(new Pagination(total, page)); // 페이지 네이션
+		domesticStockSearchDto.setPagination(new Pagination(total, page,5)); // 페이지 네이션
 
 		log.debug("total {}", total);
 		log.debug("start {}", start);

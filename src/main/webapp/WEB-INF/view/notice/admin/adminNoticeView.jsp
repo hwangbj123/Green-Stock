@@ -182,18 +182,20 @@
         <!-- Ec Main Menu End -->	
 	<div class="content container" style="width : 50%;">
 		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
+			
 			<div>
-				<p class="breadcrumbs">					
-					
+				<p class="breadcrumbs">										
 					<i class="mdi mdi-chevron-right">
 					</i>
-					<h3>뷰 페이지</h3>
-			</div>					
+					<h2 style="width: 900px; text-align: center;">뷰페이지</h2>
+					<div class="search-container" >					
+				</div>					
+			</div>			
 		</div>
-		<div class="row">
+			<div class="row">
 			<div class="col-12">
-				<div class="card card-default">
-					<div class="card-body">
+				<div class="card card-default" style="width: 900px">
+					<div class="card-body" style="width:900px">
 						<h4>제목 :${view.noticeTitle}</h4> 
 						<p>작성자 :${view.userId}</p>  
 						<p style="">${view.noticeCreated}</p>	
@@ -209,7 +211,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>	
 		</div>	
 	</header>
 	</body>
