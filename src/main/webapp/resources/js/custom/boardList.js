@@ -3,11 +3,16 @@ let boardListInit = {
 	init: function(){
 		this.keepCategory();
 		this.nowCategory();
+		this.tdHoverEvent();
 		document.getElementById('search-word').addEventListener('keypress', (event) => {
 		    if (event.key === "Enter") {
 		        event.preventDefault();
 		        this.searchValid();
 		    }
+		});
+		document.getElementById("orderType").addEventListener("change", function() {
+			let orderType = document.getElementById("orderType").value;
+			location.href=`/board/list?orderType=${orderType}`;
 		});
 	},
 	toSignIn: function(){
@@ -61,6 +66,18 @@ let boardListInit = {
 	        console.log("해당 ID를 가진 카테고리 버튼을 찾을 수 없습니다.");
 	    }
 	},
+	
+	tdHoverEvent: function(){
+		let tds = document.getElementsByClassName("board-tb")[0].getElementsByTagName("td");
+		for(let i = 0; i<tds.length; i++){
+			tds[i].addEventListener("mouseover", function() {
+			  this.parentNode.style.backgroundColor = "#f7f7f7";
+			});
+			tds[i].addEventListener("mouseout", function() {
+			  this.parentNode.style.backgroundColor = "";
+			});
+		}
+	}
 };
 
 boardListInit.init();

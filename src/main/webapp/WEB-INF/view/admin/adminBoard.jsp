@@ -27,9 +27,14 @@
 
 .board-tb{
 	width: 100%;
-	min-height: 400px;
+	min-height: 500px;
 	text-align: center;
 	margin: 20px auto;
+}
+.board-tb tr:first-child{
+	background-color: #f7f7f7; 
+	height: 50px; 
+	border-bottom: 1px solid lightgrey;
 }
 .input-group select{
 	border: 1px solid #ddd;

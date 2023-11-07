@@ -105,6 +105,10 @@
 				text-align: center;
 				box-shadow: 0 1px 5px 1px rgba(0,0,0,0.3);
 			}
+			.centered-table tr:first-child{
+				background-color: #f7f7f7;
+				border-bottom: 1px solid lightgrey;
+			}
 			.centered-table td{
 				max-width: 200px;
 				white-space: nowrap;
@@ -130,11 +134,11 @@
 						<tr>
 							<th style="max-width: 50px;">id</th>
 							<th style="max-width: 50px;">cate</th>
-							<th style="min-width: 150px;">title</th>
+							<th style="min-width: 180px;">title</th>
 							<th>user</th>
 							<th>date</th>
-							<th style="max-width: 50px;">views</th>
-							<th style="max-width: 50px;">rec</th>
+							<th style="max-width: 40px;">views</th>
+							<th style="max-width: 40px;">rec</th>
 						</tr>
 					</thead>
 
@@ -149,13 +153,20 @@
 								</c:otherwise>
 							</c:choose>
 									<td>${board.id}</td>
-									<td>${board.categoryId}</td>
-									<td><a href="/board/detail?boardId=${board.id}">
-										${board.title}
-										<c:if test="${board.reply ne 0}">
-					    					<span style="color: #bbb;">[${board.reply}]</span>
-					    				</c:if>
-										</a>
+									<td>
+										<c:forEach var="c" items="${cate}" varStatus="status">
+			           						<c:if test="${board.categoryId eq status.count}">
+			           							${c}
+			           						</c:if>
+			           					</c:forEach>
+									</td>
+									<td style="text-align: left;">
+											<a href="/board/detail?boardId=${board.id}">
+											${board.title}
+											<c:if test="${board.reply ne 0}">
+						    					<span style="color: #bbb;">[${board.reply}]</span>
+						    				</c:if>
+											</a>
 									</td>
 									<td>${board.userName}</td>
 									<td><fmt:formatDate value="${board.date}"
@@ -215,6 +226,19 @@
 	
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
-		
+		<script>
+// 			테이블 td->tr 배경 효과
+			let tds = document.getElementsByClassName("centered-table")[0].getElementsByTagName("td");
+			for(let i = 0; i<tds.length; i++){
+				if (tds[i].parentNode.style.backgroundColor != "rgb(255, 238, 238)"){
+					tds[i].addEventListener("mouseover", function() {
+					  this.parentNode.style.backgroundColor = "#f7f7f7";
+					});
+					tds[i].addEventListener("mouseout", function() {
+					  this.parentNode.style.backgroundColor = "";
+					});
+				}
+			}
+		</script>
 	</body>
 </html>

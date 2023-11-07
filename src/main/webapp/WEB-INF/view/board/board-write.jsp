@@ -599,7 +599,7 @@
     <!-- Feature tools end -->
 
     <!-- Vendor JS -->
-    <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="/resources/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/vendor/popper.min.js"></script>
     <script src="/resources/js/vendor/bootstrap.min.js"></script>
     <script src="/resources/js/vendor/jquery-migrate-3.3.0.min.js"></script>
@@ -620,9 +620,10 @@
     <script src="/resources/js/main.js"></script>
     
     <!-- Summernote -->
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.css">
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.js"></script>
     
+    <!-- Custom Js -->
     <script src="/resources/js/custom/boardWrite.js"></script>
 </body>
 

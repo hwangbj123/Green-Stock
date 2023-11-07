@@ -27,7 +27,7 @@ public class RankingService {
 	@Autowired
 	GrowthLogRepository growthLogRepository;
 
-	@Scheduled(fixedDelay = 10000) // 1초마다 실행
+//	@Scheduled(fixedDelay = 10000) // 1초마다 실행
 	public void refreshROR() {
 		List<MyPortfolio> list = portfolioRepository.findAllPortfolio();
 		list.forEach(e -> {
