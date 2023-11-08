@@ -8,10 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,17 @@ import org.springframework.web.multipart.MultipartFile;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
+import com.green.greenstock.handler.exception.PageNotFoundException;
 import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
+import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
+import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorBoardEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
+import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
+import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
 
 import lombok.RequiredArgsConstructor;
@@ -40,19 +47,22 @@ public class AdvisorService {
     private final AdvisorBoardEntityRepository advisorBoardEntityRepository;
     private final ImageEntityRepository imageEntityRepository;
     private final AdvisorRepository advisorRepository;
+    private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String filePath;
 
     /**
      * 전문가 리스트 가져오기(승인(2)된 유저만)
+     * 
      * @param status
      * @return 전문가리스트
      */
     public List<AdvisorResDto> findByStatusAuth(int status) {
         List<AdvisorEntity> advisorEntities = advisorEntityRepository.findByStatus(status);
         List<AdvisorResDto> advisorResDtos = new ArrayList<>();
-        for(AdvisorEntity advisorEntity : advisorEntities){
+        for (AdvisorEntity advisorEntity : advisorEntities) {
             AdvisorResDto dto = new AdvisorResDto();
             advisorResDtos.add(dto.fromEntity(advisorEntity));
         }
@@ -62,17 +72,23 @@ public class AdvisorService {
 
     /**
      * 닉네임으로 전문가 한명 가져오기
+     * 
      * @param nickName
      * @return 전문가 한명
      */
+    @Transactional
     public AdvisorResDto findByAdvisorNickName(String nickName) {
         AdvisorResDto advisorResDto = new AdvisorResDto();
-        AdvisorEntity advisorEntity= advisorEntityRepository.findByAdvisorNickName(nickName);
+        AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
+        if (advisorEntity == null) {
+            throw new PageNotFoundException("전문가를 찾을 수 없습니다.", "/advisor/list");
+        }
         return advisorResDto.fromEntity(advisorEntity);
     }
 
     /**
      * 전문가 신청하기
+     * 
      * @param advisorReqDto
      */
     @Transactional
@@ -83,7 +99,7 @@ public class AdvisorService {
 
         // 이미지 저장
         MultipartFile multipartFile = advisorReqDto.getProfilePhoto();
-                
+
         // 이미지 업로드
         ImageEntity imageEntity = uploadImage(multipartFile);
 
@@ -96,9 +112,9 @@ public class AdvisorService {
 
     }
 
-
     /**
      * 이미지 업로드
+     * 
      * @param multipartFile
      * @return ImageEntity
      */
@@ -135,18 +151,47 @@ public class AdvisorService {
         log.info("저장된 이미지경로와 이름: {}", newImagePathAndName);
 
         // 이미지 테이블에 저장
-        ImageEntity imageEntity = imageEntityRepository.save(
+        return imageEntityRepository.save(
                 ImageEntity
                         .builder()
                         .imgName(newImagePathAndName)
                         .build());
-
-        return imageEntity;
     }
 
-	public Advisor findAdvisorById(int advisorId) {
-		return advisorRepository.findById(advisorId);
-		
-	}
+    public Advisor findAdvisorById(int advisorId) {
+        return advisorRepository.findById(advisorId);
+
+    }
+
+    /**
+     * 전문가 구독하기 기능
+     * 
+     * @param advisorId
+     * @param userId
+     */
+    public void saveSubscribeToAdvisor(int advisorId, int userId) {
+        AdvisorEntity advisorEntity = advisorEntityRepository.findById(advisorId)
+                .orElseThrow(() -> new CustomRestfulException("존재하지 않는 전문가입니다.", HttpStatus.BAD_REQUEST));
+        UserEntity userEntity = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new CustomRestfulException("존재하지 않는 사용자입니다.", HttpStatus.BAD_REQUEST));
+
+        SubscribeToAdvisorEntity entity = SubscribeToAdvisorEntity
+                .builder()
+                .advisorEntity(advisorEntity)
+                .userEntity(userEntity)
+                .build();
+
+        subscribeToAdvisorEntityRepository.save(entity);
+
+    }
+
+    public boolean validateSubscribeToAdvisor(int advisorId, int userId) {
+        SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
+                .findByAdvisorEntityAndUserEntity(
+                        AdvisorEntity.builder().advisorId(advisorId).build(),
+                        UserEntity.builder().id(userId).build());
+
+        return subscribeToAdvisorEntity != null;
+    }
 
 }
