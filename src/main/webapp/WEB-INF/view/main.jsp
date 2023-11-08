@@ -133,7 +133,7 @@
 	width: 95%;
 	height: 550px;
 	margin: 20px auto;
-	padding: 20px;
+	padding: 10px;
 	text-align: center;
 }
 
@@ -147,6 +147,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+/* 	font-size: 0.8em; */
 }
 
 .ad-slider {
@@ -188,6 +189,10 @@
 	margin-top: 30px;
 	overflow: auto;
 }
+.ad-wrapper img{
+	width: 100%;
+	height: 250px;
+}
 </style>
 </head>
 
@@ -196,21 +201,11 @@
 	<!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
 	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightgrey;">ad
-				1</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightblue;">ad
-				2</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightpink;">ad
-				3</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightgreen;">ad
-				4</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightyellow;">ad
-				5</div>
+				<img src="https://picsum.photos/id/10/1500/250">	
+				<img src="https://picsum.photos/id/30/1500/250">	
+				<img src="https://picsum.photos/id/50/1500/250">	
+				<img src="https://picsum.photos/id/70/1500/250">	
+				<img src="https://picsum.photos/id/90/1500/250">	
 		</div>
 	</div>
 
@@ -265,11 +260,10 @@
 				<table class="table centered-table">
 					<thead>
 						<tr>
-							<th style="width: 50px;">id</th>
-							<th colspan="2" style="min-width: 150px;">title</th>
+							<th colspan="2" style="min-width: 100px;">title</th>
 							<th style="width: 100px;">user</th>
-							<th style="width: 100px;">date</th>
-							<th style="width: 50px;">views</th>
+							<th style="width: 50px;">date</th>
+							<th style="width: 40px;">view</th>
 							<th style="width: 40px;">rec</th>
 						</tr>
 					</thead>
@@ -284,7 +278,6 @@
 									<tr>
 								</c:otherwise>
 							</c:choose>
-							<td>${board.id}</td>
 							<td style="width: 70px; text-align: right;"><c:forEach
 									var="c" items="${cate}" varStatus="status">
 									<c:choose>
@@ -316,13 +309,13 @@
 							</a></td>
 							<td>${board.userName}</td>
 							<td><fmt:formatDate value="${board.date}"
-									pattern="MM-dd HH:mm" /></td>
+									pattern="MM-dd" /></td>
 							<td>${board.views}</td>
 							<td>${board.recommand}</td>
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="7" style="text-align: center;"><a
+							<td colspan="6" style="text-align: center;"><a
 								href="/board/list">게시판 더 보기</a></td>
 						</tr>
 					</tbody>
@@ -397,6 +390,7 @@
 				slidesToScroll : 1,
 				autoplay : true,
 				autoplaySpeed : 2000,
+				arrows : false
 			});
 		})
 	</script>
