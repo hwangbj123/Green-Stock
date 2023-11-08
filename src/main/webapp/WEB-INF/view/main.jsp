@@ -30,14 +30,16 @@
 <!-- Custom CSS -->
 
 <style>
+.gstock-div{
+	border: 1px solid lightgrey;
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
 #news-div {
 	width: 95%;
 	height: 350px;
 	margin: 20px auto;
 	padding: 20px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 #preview{
@@ -55,15 +57,17 @@
 
 .main-div {
 	min-width: 300px;
-	min-height: 800px;
-	border: 1px solid black;
+	height: 1000px;
 }
 
 .content-center {
-	width: 50%;
+	width: 40%;
 }
 
-.content-left, .content-right {
+.content-left {
+	width: 30%;
+}
+.content-right {
 	width: 20%;
 }
 
@@ -74,22 +78,15 @@
 	margin: 20px auto;
 	padding: 15px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .chat-list::-webkit-scrollbar {
-	width: 10px;
+	width: 7px;
 }
 
 .chat-list::-webkit-scrollbar-thumb {
 	background-color: rgba(10, 10, 10, 0.2);
 	border-radius: 15px;
-}
-
-.chat-list::-webkit-scrollbar-track {
-	/* 			    background-color: rgba(10,10,10,0.1); */
-	
 }
 
 .chat-list {
@@ -135,12 +132,9 @@
 .board-div {
 	width: 95%;
 	height: 550px;
-	/* 				border-radius: 15px; */
 	margin: 20px auto;
-	padding: 20px;
+	padding: 10px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .centered-table tr:first-child {
@@ -153,13 +147,51 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+/* 	font-size: 0.8em; */
 }
 
 .ad-slider {
 	width: 90%;
-	/*  				height: 250px;  */
-	border: 1px solid black;
 	margin: 50px auto;
+}
+.content-left > h6{
+	text-align: center;
+}
+.divVolumeRank{
+	font-size: 12px;
+}
+.divVolumeRank .primaryColorRed {
+    color: #ff3149;
+}
+.divVolumeRank .primaryColorBlue {
+	color: #3474d4;
+}
+.divVolumeRank .primaryColorNone {
+	color: #212121;
+}
+.ranking-div {
+	width: 95%;
+	height: 92%;
+	margin: 20px auto;
+	padding: 20px;
+	text-align: center;
+}
+.divVolumeRank::-webkit-scrollbar {
+	display: none;
+}
+
+.divVolumeRank::-webkit-scrollbar-thumb {
+	background-color: rgba(10, 10, 10, 0.2);
+	border-radius: 15px;
+}
+.divVolumeRank {
+	height: 92%;
+	margin-top: 30px;
+	overflow: auto;
+}
+.ad-wrapper img{
+	width: 100%;
+	height: 250px;
 }
 </style>
 </head>
@@ -167,23 +199,13 @@
 <body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
 	<!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
-	<div class="ad-slider">
+	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightgrey;">ad
-				1</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightblue;">ad
-				2</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightpink;">ad
-				3</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightgreen;">ad
-				4</div>
-			<div class="item"
-				style="width: 100%; height: 250px; background-color: lightyellow;">ad
-				5</div>
+				<img src="https://picsum.photos/id/10/1500/250">	
+				<img src="https://picsum.photos/id/30/1500/250">	
+				<img src="https://picsum.photos/id/50/1500/250">	
+				<img src="https://picsum.photos/id/70/1500/250">	
+				<img src="https://picsum.photos/id/90/1500/250">	
 		</div>
 	</div>
 
@@ -191,12 +213,28 @@
 
 
 		<!----- 좌측 사이드 div ------------>
-		<div class="main-div content-left"></div>
+		<div class="main-div content-left">
+			<div class="gstock-div ranking-div">
+				<h6>거래량 순위</h6>
+				<div class="table-responsive divVolumeRank">
+	                <table class="table table-borederd tableVolumeRank">
+	                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
+	                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+	                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+	                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
+	                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
+	                      <td class="text-end">${item.prdyCtrt}%</td>
+	                    </tr>
+	                  </c:forEach>
+	                </table>
+	              </div>
+            </div>
+		</div>
 		<!----- 중앙 사이드 div ------------>
 		<div class="main-div content-center">
 
 			<!--------- 뉴스 리스트 ------------>
-			<div id="news-div" style="font-weight: bold;">
+			<div class="gstock-div" id="news-div" style="font-weight: bold;">
 				<h6 style="margin-bottom: 15px;">Today's News</h6>
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
@@ -217,16 +255,15 @@
 				</div>
 			</div>
 			<!--------- 게시판 리스트 ------------>
-			<div class="board-div">
+			<div class="gstock-div board-div">
 				<h6 style="margin-bottom: 15px;">Board</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
-							<th style="width: 50px;">id</th>
-							<th colspan="2" style="min-width: 150px;">title</th>
+							<th colspan="2" style="min-width: 100px;">title</th>
 							<th style="width: 100px;">user</th>
-							<th style="width: 100px;">date</th>
-							<th style="width: 50px;">views</th>
+							<th style="width: 50px;">date</th>
+							<th style="width: 40px;">view</th>
 							<th style="width: 40px;">rec</th>
 						</tr>
 					</thead>
@@ -241,7 +278,6 @@
 									<tr>
 								</c:otherwise>
 							</c:choose>
-							<td>${board.id}</td>
 							<td style="width: 70px; text-align: right;"><c:forEach
 									var="c" items="${cate}" varStatus="status">
 									<c:choose>
@@ -273,13 +309,13 @@
 							</a></td>
 							<td>${board.userName}</td>
 							<td><fmt:formatDate value="${board.date}"
-									pattern="MM-dd HH:mm" /></td>
+									pattern="MM-dd" /></td>
 							<td>${board.views}</td>
 							<td>${board.recommand}</td>
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="7" style="text-align: center;"><a
+							<td colspan="6" style="text-align: center;"><a
 								href="/board/list">게시판 더 보기</a></td>
 						</tr>
 					</tbody>
@@ -291,7 +327,7 @@
 		<div class="main-div content-right">
 
 			<!--------- 채팅 리스트 ------------>
-			<div class="chat-div">
+			<div class="gstock-div chat-div">
 				<h6 style="margin-bottom: 15px;">Chatting</h6>
 				<c:choose>
 					<c:when test="${not empty chatList}">
@@ -354,6 +390,7 @@
 				slidesToScroll : 1,
 				autoplay : true,
 				autoplaySpeed : 2000,
+				arrows : false
 			});
 		})
 	</script>

@@ -1,9 +1,8 @@
 package com.green.greenstock.repository.interfaces;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
-import com.green.greenstock.repository.entity.AdvisorBoardEntity;
-
-public interface AdvisorBoardRepository extends JpaRepository<AdvisorBoardEntity, Integer> {
-
+@Mapper
+public interface AdvisorBoardRepository {
+    
 }

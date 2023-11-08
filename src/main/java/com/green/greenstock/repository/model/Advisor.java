@@ -21,7 +21,10 @@ public class Advisor {
     private String advisor_nick_name;
     private String career;
     private String introduction;
+    private int subscriptionCost;
+    private int status;
     private LocalDateTime createdAt;
     private int userId;
+    private int imgId;
 
 }

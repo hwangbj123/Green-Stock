@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,9 +22,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.AskingSellingPriceOutputDto;
 import com.green.greenstock.dto.DomesticStockCurrentPriceOutput;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
+import com.green.greenstock.dto.InquireInvestorResDto;
+import com.green.greenstock.dto.InquireMemberResDto;
 import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
+import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.ChattingService;
 import com.green.greenstock.service.StockApiService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,22 +39,40 @@ import lombok.RequiredArgsConstructor;
 public class StockApiController {
 
 	private final StockApiService stockApiService;
+	
+	private final ChattingService chattingService;
 
 	// 국내주식 현재가 조회
 	@GetMapping("/domestic/{companyCode}")
-	public String getStockDetail(Model model, @PathVariable String companyCode) {
+	public String getStockDetail(Model model, @PathVariable String companyCode, String companyName, HttpServletRequest request) {
+		HttpSession session =  request.getSession();
+    	
+    	model.addAttribute("companyCode", companyCode);
+    	System.out.println("companyCode : "+companyCode);
 
+    	User principal = (User) session.getAttribute("principal");
+
+    	if(principal!=null) {
+    		System.out.println("principal : "+principal);
+    		String subCheck = chattingService.subCheck(companyCode, principal.getId());
+    		model.addAttribute("subCheck", subCheck);
+    		System.out.println("subCheck : "+subCheck);
+    	}
+    	
 		if (companyCode == null || companyCode.isEmpty()) {
-			companyCode = "005930";
+			throw new CustomRestfulException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		// 종목 코드로 api 정보 가져오기
 		ResponseApiInfo<?> resInfo = stockApiService.getApiDomesticStockCurrentPrice(companyCode);
 
 		// 종목 코드로 회사 이름 가져오기
-		String companyName = stockApiService.getCompanyName(companyCode);
+		String findCompanyName = stockApiService.getCompanyName(companyCode);
+		if(findCompanyName == null){
+			findCompanyName = companyName;
+		}
 
-		if (resInfo == null || companyName == null || companyName.isEmpty()) {
+		if (resInfo == null) {
 			throw new CustomRestfulException("입력하신 정보가 없습니다.", HttpStatus.BAD_REQUEST);
 		}
 		// 제네릭 타입 확정
@@ -66,11 +91,27 @@ public class StockApiController {
 				new TypeReference<List<DomesticStockVolumeRankOutPut>>() {
 				}).subList(0, 10);
 
+		// 주식현재가 회원사
+		ResponseApiInfo<?> resInfo4 = stockApiService.getInquireMember(companyCode);
+		InquireMemberResDto inquireMemberResDto = mapper.convertValue(resInfo4.getOutput(), InquireMemberResDto.class);
+
+		// 주식현재가 투자자
+		ResponseApiInfoList<?> resInfo5 = stockApiService.getInquireInvestor(companyCode);
+		List<InquireInvestorResDto> inquireInvestorResDto = mapper.convertValue(resInfo5.getOutput(),
+				new TypeReference<List<InquireInvestorResDto>>() {
+				});
+
+		if(inquireInvestorResDto.size() >= 3){
+			inquireInvestorResDto = inquireInvestorResDto.subList(0, 3);
+		}
+		
 		model.addAttribute("stockCurrentPrice", outputPrice);
 		model.addAttribute("askingSellingPrice", ouputAsking);
-		model.addAttribute("companyName", companyName);
+		model.addAttribute("companyName", findCompanyName);
 		model.addAttribute("companyCode", companyCode);
 		model.addAttribute("rankOutPut", rankOutPut);
+		model.addAttribute("inquireMember", inquireMemberResDto);
+		model.addAttribute("inquireInvestors", inquireInvestorResDto);
 
 		return "/stock/detail";
 	}
@@ -79,7 +120,7 @@ public class StockApiController {
 	@ResponseBody
 	@GetMapping("/domestic/data/{companyCode}")
 	public DomesticStockCurrentPriceOutput getStockDetailJson(@PathVariable String companyCode) {
-
+		
 		if (companyCode == null || companyCode.isEmpty()) {
 			companyCode = "005930";
 		}
@@ -132,4 +173,5 @@ public class StockApiController {
 		}
 		return stockApiService.getDailyitemchartprice(companyCode, date);
 	}
+
 }

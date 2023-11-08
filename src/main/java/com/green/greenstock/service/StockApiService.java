@@ -69,10 +69,15 @@ public class StockApiService {
 	public String getCompanyName(String companyCode) {
 		// 종목코드
 		DomesticStockCode domesticStockCode = domesticStockCodeRepository.findByCompanyCode(companyCode);
+		
+		//log.debug("companyName : {}", domesticStockCode.getCompanyName());
+		//log.debug("companyCode : {}", companyCode);
 
-		log.debug("companyName : {}", domesticStockCode.getCompanyName());
-		log.debug("companyCode : {}", companyCode);
-		return domesticStockCode.getCompanyName();
+		if(domesticStockCode == null){
+			return null;
+		}else{
+			return domesticStockCode.getCompanyName();
+		}
 	}
 
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
@@ -188,7 +193,7 @@ public class StockApiService {
 
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		domesticStockSearchDto.setPagination(new Pagination(total, page,5)); // 페이지 네이션
+		domesticStockSearchDto.setPagination(new Pagination(total, page, 5)); // 페이지 네이션
 
 		log.debug("total {}", total);
 		log.debug("start {}", start);
@@ -267,6 +272,68 @@ public class StockApiService {
 				.block();
 	}
 
+	// 주식현재가 회원사
+	public ResponseApiInfo<?> getInquireMember(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-member";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010600"; // 거래ID
+
+		WebClient webClient = buildWebClient();
+
+		return webClient
+				.get()
+				.uri(uribuilder -> uribuilder
+						.path(uri)
+						.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+						.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+						.build())
+				.header(CONTENT_TYPE, contentType)
+				.header(AUTHORIZATION, auth)
+				.header(APP_KEY, appKey)
+				.header(APP_SECRET, appSecret)
+				.header(TR_ID, trId)
+				.retrieve()
+				.bodyToMono(ResponseApiInfo.class)
+				.block();
+	}
+
+	// 주식현재가 투자자
+	public ResponseApiInfoList<?> getInquireInvestor(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-investor";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010900"; // 거래ID
+
+		WebClient webClient = buildWebClient();
+
+		return webClient
+				.get()
+				.uri(uribuilder -> uribuilder
+						.path(uri)
+						.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+						.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+						.build())
+				.header(CONTENT_TYPE, contentType)
+				.header(AUTHORIZATION, auth)
+				.header(APP_KEY, appKey)
+				.header(APP_SECRET, appSecret)
+				.header(TR_ID, trId)
+				.retrieve()
+				.bodyToMono(ResponseApiInfoList.class)
+				.block();
+	}
+
 	// 날짜 반환
 	public String[] setDateArr(String date) {
 		LocalDate now = LocalDate.now();
@@ -282,7 +349,7 @@ public class StockApiService {
 			selectedDateData = beforeMonthDate;
 		} else if (date.equals("year")) {
 			selectedDateData = beforeYearDate;
-			log.info("selectedDateData : {}", selectedDateData);
+			log.debug("selectedDateData : {}", selectedDateData);
 		} else {
 			selectedDateData = beforeWeekDate;
 		}

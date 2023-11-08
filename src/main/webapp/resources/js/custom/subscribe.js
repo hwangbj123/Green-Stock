@@ -1,6 +1,11 @@
 let subscribeInit = {
 	version: 1,
 	init: function(){},
+	toSignIn: function(){
+		if(confirm("로그인이 필요한 서비스입니다\n로그인 화면으로 이동하시겠습니까?")){
+			location.href="/user/sign-in";
+		}
+	},
 	subscribe: async function(companyCode, userId){
 		try {
 		    const response = await fetch(`/subCheck?companyCode=${companyCode}&userId=${userId}`);

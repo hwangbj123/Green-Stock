@@ -66,6 +66,11 @@
 			.advisorList .pro-hidden-block{
 				visibility: hidden;
 			}
+			.advisorList img{
+				width: 280px;
+				height: 280px;
+				object-fit: cover;
+			}
 	    </style>
 	</head>
 <body>
@@ -75,8 +80,8 @@
 	<div class="row">
 		<div class="col-md-12 section-title-block">
 			<div class="section-title text-center">
-				<h2 class="ec-title">Featured Products</h2>
-				<h6 class="ec-sub-title">Lorem Ipsum is simply dummy text of the printing</h6>
+				<h2 class="ec-title">전문가 목록</h2>
+				<h6 class="ec-sub-title">전문가와 상담하고 실시간 채팅을 할 수 있습니다.</h6>
 
 			</div>
 		</div>
@@ -85,222 +90,44 @@
 		<div class="col">
 			<div class="tab-content">
 				<div class="row">
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/1">
-									<img src="https://via.placeholder.com/600" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
+					<c:forEach var="advisor" items="${advisorResDtos}">
+						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
+							<div class="card">
+								<div class="mb-2">
+									<a href="/advisor/${advisor.nickName}">
+										<img src="/upload/${advisor.image}" alt="">
+									</a>
 								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
+								<div class="ec-pro-content text-center">
+									<h5 class="ec-pro-title"><a href="/advisor/${advisor.nickName}">${advisor.nickName}</a></h5>
+									<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">${advisor.strSpecialization}</a></h6>
+									<div class="ec-pro-rat-price">
+										<div class="ec-pro-rat-pri-inner">
+											<span class="ec-price">
+												<span class="new-price">&#8361; ${advisor.formatSubscriptionCost}</span>
+											</span>
+											<!-- <span class="ec-pro-rating">
+												<i class="ecicon eci-star fill"></i>
+												<i class="ecicon eci-star fill"></i>
+												<i class="ecicon eci-star fill"></i>
+												<i class="ecicon eci-star-o"></i>
+												<i class="ecicon eci-star-o"></i>
+											</span> -->
+										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/${advisor.advisorId}">
-									<img src="https://via.placeholder.com/800" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
-								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
+									<div class="pro-hidden-block">
+										<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
+										<div class="ec-pro-actions">
+											<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
+											<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
+												Cart</button>
+											<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/${advisor.advisorId}">
-									<img src="https://via.placeholder.com/800" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
-								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/1">
-									<img src="https://via.placeholder.com/800" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
-								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/${advisor.advisorId}">
-									<img src="https://via.placeholder.com/800" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
-								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
-						<div class="card">
-							<div class="mb-2">
-								<a href="/advisor/${advisor.advisorId}">
-									<img src="https://via.placeholder.com/800" alt="">
-								</a>
-							</div>
-							<div class="ec-pro-content text-center">
-								<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorId}">전문가 OOO</a></h5>
-								<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">국내주식</a></h6>
-								<div class="ec-pro-rat-price">
-									<div class="ec-pro-rat-pri-inner">
-										<span class="ec-price">
-											<span class="new-price">&#8361; 15,900</span>
-										</span>
-										<!-- <span class="ec-pro-rating">
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star fill"></i>
-											<i class="ecicon eci-star-o"></i>
-											<i class="ecicon eci-star-o"></i>
-										</span> -->
-									</div>
-								</div>
-								<div class="pro-hidden-block">
-									<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-									<div class="ec-pro-actions">
-										<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-										<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-											Cart</button>
-										<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

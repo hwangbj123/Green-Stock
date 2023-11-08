@@ -92,11 +92,11 @@
 					</span>
 					<span class="ec-register-wrap">
 						<label>이력</label>
-						<textarea name="career" id="" cols="30" rows="10" required></textarea>
+						<textarea name="career" id="career" cols="30" rows="10" required></textarea>
 					</span>
 					<span class="ec-register-wrap">
 						<label>자기소개</label>
-						<textarea name="introduction" id="" cols="30" rows="10" required></textarea>
+						<textarea name="introduction" id="introduction" cols="30" rows="10" required></textarea>
 					</span>
 					<span class="ec-register-wrap">
 						<label>전문분야</label>

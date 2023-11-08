@@ -42,117 +42,10 @@
      <link rel="stylesheet" href="/resources/css/custom/boardList.css" />
  </head>
 <body>
-    <div id="ec-overlay">
-        <div class="ec-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
     
 <!--Header -->
     <%@include file="/WEB-INF/view/layout/header.jsp"%>
 
-    <!-- ekka Cart Start -->
-    <div class="ec-side-cart-overlay"></div>
-    <div id="ec-side-cart" class="ec-side-cart">
-        <div class="ec-cart-inner">
-            <div class="ec-cart-top">
-                <div class="ec-cart-title">
-                    <span class="cart_title">My Cart</span>
-                    <button class="ec-close">Ã</button>
-                </div>
-                <ul class="eccart-pro-items">
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/6_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">T-shirt For Women</a>
-                            <span class="cart-price"><span>$76.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/12_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Women Leather Shoes</a>
-                            <span class="cart-price"><span>$64.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/3_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Girls Nylon Purse</a>
-                            <span class="cart-price"><span>$59.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="ec-cart-bottom">
-                <div class="cart-sub-total">
-                    <table class="table cart-table">
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Sub-Total :</td>
-                                <td class="text-right">$300.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">VAT (20%) :</td>
-                                <td class="text-right">$60.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Total :</td>
-                                <td class="text-right primary-color">$360.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="cart_btn">
-                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                    <a href="checkout.html" class="btn btn-secondary">Checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ekka Cart End -->
-
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Multi Vendor</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Multi Vendor</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
 
     <div class="section-space-p">
 <!------카테고리 div	    	 -->
@@ -224,12 +117,12 @@
            								</span>
 	           						</c:when>
 	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
-	           							<span style="border: 1px solid orange; padding: 3px 5px; border-radius: 5px; color: orange;">
+	           							<span style="border: 1px solid #ffc107; padding: 3px 5px; border-radius: 5px; color: #ffc107;">
 	           								${c}
            								</span>
 	           						</c:when>
 	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
-	           							<span style="border: 1px solid green; padding: 3px 5px; border-radius: 5px; color: green;">
+	           							<span style="border: 1px solid #2ab674; padding: 3px 5px; border-radius: 5px; color: #2ab674;">
 	           								${c}
            								</span>
 	           						</c:when>
@@ -257,14 +150,6 @@
 	    	<div id="listopt-div">
 	    		<div id="search-div">
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
-		    			<select id="orderType" name="orderType">
-		    				<option value="id">기본</option>
-		    				<option value="views">조회순</option>
-		    				<option value="recommand">추천순</option>
-		    				<option value="reply">댓글순</option>
-		    			</select>
-	    			</div>
-	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
 		    			<select name="searchType">
 		    				<option value="title">제목</option>
 		    				<option value="content">내용</option>
@@ -273,18 +158,41 @@
 	    			</div>
 		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
 		    		<button type="button" class="btn btn-primary" id="search-btn" onclick="boardListInit.searchValid()">검색</button>
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+		    			<select id="orderType" name="orderType">
+		    				<option selected="selected" disabled="disabled">정렬</option>
+		    				<option value="id">기본</option>
+		    				<option value="views">조회순</option>
+		    				<option value="recommand">추천순</option>
+		    				<option value="reply">댓글순</option>
+		    			</select>
+	    			</div>
 	    		</div>
 	    		<c:choose>
 	    			<c:when test="${not empty principal}">
 			    		<a class="btn btn-primary" id="write-btn" href="/board/write">글 작성</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a class="btn btn-primary" id="write-btn" onclick="toSignIn()">글 작성</a>
+	    				<a class="btn btn-primary" id="write-btn" onclick="boardListInit.toSignIn()">글 작성</a>
 	    			</c:otherwise>
 	    		</c:choose>
 	    	</div>
 			</form>
 <!----------페이징 div -->
+				<!----------페이징 function -->
+				<c:set var="search" value="/board/list?"/>
+				<c:if test="${not empty paging.categoryId}">
+					<c:set var="search" value="${search}${'categoryId='}${paging.categoryId}&"/>
+				</c:if>
+				<c:if test="${not empty paging.searchType}">
+					<c:set var="search" value="${search}${'searchType='}${paging.searchType}&"/>
+				</c:if>
+				<c:if test="${not empty paging.searchWord}">
+					<c:set var="search" value="${search}${'searchWord='}${paging.searchWord}&"/>
+				</c:if>
+				<c:if test="${not empty paging.orderType}">
+					<c:set var="search" value="${search}${'orderType='}${paging.orderType}&"/>
+				</c:if>
 	    	<div id="page">
 <!-- 	    		시작 페이지 -->
 	    		<c:choose>
@@ -308,7 +216,7 @@
 
 <!-- 	    		이전 버튼 -->
 	    		<c:if test="${startPage ne 1}">
-	    			<a class="page-a" href="list?page=${page.paging.page-5}">
+	    			<a class="page-a" href="${search}page=${page.paging.page-5}">
 	    				prev
 	    			</a>
 	    		</c:if>
@@ -322,7 +230,7 @@
 	    					</p>
 	    				</c:when>
 	    				<c:otherwise>
-	    					<a class="page-a" href="list?page=${nowPage}">
+	    					<a class="page-a" href="${search}page=${nowPage}">
 				    			<c:out value="${nowPage}"/>
 	    					</a>
 	    				</c:otherwise>
@@ -333,12 +241,12 @@
 	    		<c:if test="${page.endPage > startPage+9}">
 	    			<c:choose>
 	    				<c:when test="${page.endPage > page.paging.page+5}">
-			    			<a class="page-a" href="list?page=${page.paging.page+5}">
+			    			<a class="page-a" href="${search}page=${page.paging.page+5}">
 			    				next
 			    			</a>
 	    				</c:when>
 	    				<c:otherwise>
-			    			<a class="page-a" href="list?page=${page.endPage}">
+			    			<a class="page-a" href="${search}page=${page.endPage}">
 			    				next
 			    			</a>
 	    				</c:otherwise>

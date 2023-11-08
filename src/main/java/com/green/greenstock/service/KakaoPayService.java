@@ -21,6 +21,7 @@ import com.green.greenstock.dto.KakaoPayApproval;
 import com.green.greenstock.dto.KakaoPayReady;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.PayRepository;
+import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
 
 @Slf4j
@@ -30,12 +31,22 @@ public class KakaoPayService {
 	
 	public final PayRepository payRepository;
 	
+	public final AdvisorService advisorService;
+	
     private static final String HOST = "https://kapi.kakao.com";
     
     KakaoPayReady kakaoPayReady;
     KakaoPayApproval kakaoPayApproval;
     
-    public String kakaoPayReady() {
+    String itemName;
+	String subCost;
+    
+    public String kakaoPayReady(int advisorId) {
+    	
+    	Advisor advisor = advisorService.findAdvisorById(advisorId);
+    	
+    	itemName = Integer.toString(advisor.getAdvisorId());
+    	subCost = Integer.toString(advisor.getSubscriptionCost());
  
         RestTemplate restTemplate = new RestTemplate();
  
@@ -48,10 +59,10 @@ public class KakaoPayService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", "gorany");
-        params.add("item_name", "상품명");
+        params.add("partner_user_id", "Gstock");
+        params.add("item_name", itemName);
         params.add("quantity", "1");
-        params.add("total_amount", "2");
+        params.add("total_amount", subCost);
         params.add("tax_free_amount", "1");
         params.add("approval_url", "http://localhost/pay/kakaoPaySuccess");
         params.add("cancel_url", "http://localhost/pay/kakaoPayCancel");
@@ -90,9 +101,9 @@ public class KakaoPayService {
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReady.getTid());
         params.add("partner_order_id", "1001");
-        params.add("partner_user_id", "gorany");
+        params.add("partner_user_id", "Gstock");
         params.add("pg_token", pg_token);
-        params.add("total_amount", "2");
+        params.add("total_amount", subCost);
         
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         
@@ -158,7 +169,6 @@ public class KakaoPayService {
 	}
 
 	public Pay findPayInfoById(Integer id) {
-		
 		return payRepository.findPayInfoById(id);
 	}
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.greenstock.repository.interfaces.AdvisorRepository"> 
+
+	<select id="findById" resultType="Advisor">
+		select * from advisor where advisor_id = #{advisorId}
+	</select>
+	
+</mapper>

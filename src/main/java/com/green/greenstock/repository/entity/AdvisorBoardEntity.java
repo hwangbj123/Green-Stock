@@ -12,12 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.green.greenstock.repository.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,15 +39,22 @@ public class AdvisorBoardEntity {
     private int advisorBoardId;
     // private int advisorId;
     // private int userId;
+    
     @Column(nullable = false)
     private String title;
+   
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
     private int parent;
+
     @Builder.Default
+    @ColumnDefault(value = "0")
     private int status = 0;
+
     @CreatedDate
-    private LocalDateTime createAt;
+    @Column(columnDefinition = "DATETIME(0) default CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

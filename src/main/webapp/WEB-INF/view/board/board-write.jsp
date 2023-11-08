@@ -43,14 +43,6 @@
      
  </head>
 <body class="blog_page">
-    <div id="ec-overlay">
-        <div class="ec-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
 
 <!--Header -->
     <%@include file="/WEB-INF/view/layout/header.jsp"%>
@@ -384,18 +376,6 @@
     </div>
     <!-- Footer navigation panel for responsive display end -->
 
-    <!-- Recent Purchase Popup  -->
-    <div class="recent-purchase">
-        <img src="/resources/images/product-image/1.jpg" alt="payment image">
-        <div class="detail">
-            <p>Someone in new just bought</p>
-            <h6>stylish baby shoes</h6>
-            <p>10 Minutes ago</p>
-        </div>
-        <a href="javascript:void(0)" class="icon-btn recent-close">Ã</a>
-    </div>
-    <!-- Recent Purchase Popup end -->
-
     <!-- Cart Floating Button -->
     <div class="ec-cart-float">
         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
@@ -518,85 +498,9 @@
             </div>
         </div>
         <!--/ End Floating Panel Container -->
-        <!-- Start Right Floating Button-->
-        <div class="ec-right-bottom">
-            <div class="ec-box">
-                <div class="ec-button rotateBackward">
-                    <img class="whatsapp" src="/resources/images/common/whatsapp.png" alt="whatsapp icon" />
-                </div>
-            </div>
-        </div>
-        <!--/ End Right Floating Button-->
     </div>
     <!-- Whatsapp end -->
 
-    <!-- Feature tools -->
-    <div class="ec-tools-sidebar-overlay"></div>
-    <div class="ec-tools-sidebar">
-        <div class="tool-title">
-            <h3>Features</h3>
-        </div>
-        <a href="#" class="ec-tools-sidebar-toggle in-out">
-            <img alt="icon" src="/resources/images/common/settings.png">
-        </a>
-        <div class="ec-tools-detail">
-            <div class="ec-tools-sidebar-content ec-change-color ec-color-desc">
-                <h3>Color Scheme</h3>
-                <ul class="bg-panel">
-                    <li class="active" data-color="01"><a href="#" class="colorcode1"></a></li>
-                    <li data-color="02"><a href="#" class="colorcode2"></a></li>
-                    <li data-color="03"><a href="#" class="colorcode3"></a></li>
-                    <li data-color="04"><a href="#" class="colorcode4"></a></li>
-                    <li data-color="05"><a href="#" class="colorcode5"></a></li>
-                </ul>
-            </div>
-            <div class="ec-tools-sidebar-content">
-                <h3>Backgrounds</h3>
-                <ul class="bg-panel">
-                    <li class="bg"><a class="back-bg-1" id="bg-1">Background-1</a></li>
-                    <li class="bg"><a class="back-bg-2" id="bg-2">Background-2</a></li>
-                    <li class="bg"><a class="back-bg-3" id="bg-3">Background-3</a></li>
-                    <li class="bg"><a class="back-bg-4" id="bg-4">Default</a></li>
-                </ul>
-            </div>
-            <div class="ec-tools-sidebar-content">
-                <h3>Full Screen mode</h3>
-                <div class="ec-fullscreen-mode">
-                    <div class="ec-fullscreen-switch">
-                        <div class="ec-fullscreen-btn">Mode</div>
-                        <div class="ec-fullscreen-on">On</div>
-                        <div class="ec-fullscreen-off">Off</div>
-                    </div>
-                </div>
-            </div>
-            <div class="ec-tools-sidebar-content">
-                <h3>Dark mode</h3>
-                <div class="ec-change-mode">
-                    <div class="ec-mode-switch">
-                        <div class="ec-mode-btn">Mode</div>
-                        <div class="ec-mode-on">On</div>
-                        <div class="ec-mode-off">Off</div>
-                    </div>
-                </div>
-            </div>
-            <div class="ec-tools-sidebar-content">
-                <h3>RTL mode</h3>
-                <div class="ec-change-rtl">
-                    <div class="ec-rtl-switch">
-                        <div class="ec-rtl-btn">Rtl</div>
-                        <div class="ec-rtl-on">On</div>
-                        <div class="ec-rtl-off">Off</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ec-tools-sidebar-content">
-                <h3>Clear local storage</h3>
-                <a class="clear-cach" href="javascript:void(0)">Clear Cache & Default</a>
-            </div>
-        </div>
-    </div>
-    <!-- Feature tools end -->
 
     <!-- Vendor JS -->
     <script src="/resources/js/vendor/jquery-3.6.0.min.js"></script>

@@ -50,6 +50,8 @@
 					where companyCode = #{companyCode}
 					and user_id = #{userId})
 		</if>
+		order by id desc
+		limit 20
 	</select>
 	
 	<insert id="deleteMessage">
