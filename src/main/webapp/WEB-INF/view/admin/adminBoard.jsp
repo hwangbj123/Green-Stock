@@ -83,9 +83,23 @@
 						    			<td>${board.id}</td>
 						    			<td>
 						    				<c:forEach var="c" items="${cate}" varStatus="status">
-				           						<c:if test="${board.categoryId eq status.count}">
-				           							${c}
-				           						</c:if>
+				           						<c:choose>
+					           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 1}">
+					           							<span style="border: 1px solid skyblue; padding: 3px 5px; border-radius: 5px; color: skyblue;">
+					           								${c}
+				           								</span>
+					           						</c:when>
+					           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
+					           							<span style="border: 1px solid #ffc107; padding: 3px 5px; border-radius: 5px; color: #ffc107;">
+					           								${c}
+				           								</span>
+					           						</c:when>
+					           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
+					           							<span style="border: 1px solid #2ab674; padding: 3px 5px; border-radius: 5px; color: #2ab674;">
+					           								${c}
+				           								</span>
+					           						</c:when>
+				           						</c:choose>
 				           					</c:forEach>
 										</td>
 						    			<td>
@@ -174,7 +188,7 @@
 							    				<option value="content">내용</option>
 							    				<option value="userName">작성자</option>
 							    			</select>
-							    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
+							    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord" style="border: 1px solid #ddd;">
 										<button type="button" id="search-btnn" onclick="adminBoardInit.searchValid()"
 											class="btn btn-flat" style="border: 1px solid #ddd;">
 											<i class="mdi mdi-magnify"></i>

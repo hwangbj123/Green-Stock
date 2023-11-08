@@ -224,12 +224,12 @@
            								</span>
 	           						</c:when>
 	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
-	           							<span style="border: 1px solid orange; padding: 3px 5px; border-radius: 5px; color: orange;">
+	           							<span style="border: 1px solid #ffc107; padding: 3px 5px; border-radius: 5px; color: #ffc107;">
 	           								${c}
            								</span>
 	           						</c:when>
 	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
-	           							<span style="border: 1px solid green; padding: 3px 5px; border-radius: 5px; color: green;">
+	           							<span style="border: 1px solid #2ab674; padding: 3px 5px; border-radius: 5px; color: #2ab674;">
 	           								${c}
            								</span>
 	           						</c:when>
@@ -257,14 +257,6 @@
 	    	<div id="listopt-div">
 	    		<div id="search-div">
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
-		    			<select id="orderType" name="orderType">
-		    				<option value="id">기본</option>
-		    				<option value="views">조회순</option>
-		    				<option value="recommand">추천순</option>
-		    				<option value="reply">댓글순</option>
-		    			</select>
-	    			</div>
-	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
 		    			<select name="searchType">
 		    				<option value="title">제목</option>
 		    				<option value="content">내용</option>
@@ -273,13 +265,22 @@
 	    			</div>
 		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
 		    		<button type="button" class="btn btn-primary" id="search-btn" onclick="boardListInit.searchValid()">검색</button>
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+		    			<select id="orderType" name="orderType">
+		    				<option selected="selected" disabled="disabled">정렬</option>
+		    				<option value="id">기본</option>
+		    				<option value="views">조회순</option>
+		    				<option value="recommand">추천순</option>
+		    				<option value="reply">댓글순</option>
+		    			</select>
+	    			</div>
 	    		</div>
 	    		<c:choose>
 	    			<c:when test="${not empty principal}">
 			    		<a class="btn btn-primary" id="write-btn" href="/board/write">글 작성</a>
 	    			</c:when>
 	    			<c:otherwise>
-	    				<a class="btn btn-primary" id="write-btn" onclick="toSignIn()">글 작성</a>
+	    				<a class="btn btn-primary" id="write-btn" onclick="boardListInit.toSignIn()">글 작성</a>
 	    			</c:otherwise>
 	    		</c:choose>
 	    	</div>

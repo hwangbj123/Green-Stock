@@ -61,7 +61,6 @@ public class BoardController {
 		model.addAttribute("list", list);
 		model.addAttribute("page", pagination);
 		model.addAttribute("paging", paging);
-		System.out.println("page : "+pagination);
 		return "board/board-list";
 	}
 	
@@ -104,9 +103,7 @@ public class BoardController {
 		User user = (User) session.getAttribute("principal");
 		if(user!=null) {
 			int thumb = boardService.thumbCheck(paging.getBoardId(), user.getId());
-			System.out.println("thumb : "+thumb);
 			List<Integer> replyUser = replyService.replyUserCheck(user.getId(), paging.getBoardId());
-			System.out.println("replyUser : "+replyUser);
 			
 			model.addAttribute("thumb", thumb);
 			model.addAttribute("replyUser",replyUser);
@@ -115,12 +112,6 @@ public class BoardController {
 		}
 		
 		boardService.viewCountUpFnc(paging.getBoardId(), request, response);
-		
-		System.out.println("detail - reply : "+reply);
-		System.out.println("detail - maxRef : "+maxRef);
-		System.out.println("detail - paging : "+paging);
-		System.out.println("detail - page : "+pagination);
-//		System.out.println("user : "+user);
 		
 		return "board/board-detail";
 	}
@@ -152,15 +143,10 @@ public class BoardController {
 	public String postReplyWrite(Reply reply) {
 		System.out.println("reply-write board : "+reply);
 		int step = replyService.getStep(reply);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@ set step : "+step);
 		if(step==0) {
-			System.out.println("update reply 2 step : "+reply.getStep());
 			replyService.updateReply(reply);
 		}else {
-			System.out.println("update reply step : "+reply.getStep());
-			System.out.println("update reply level : "+reply.getLevel());
 			int maxStep = replyService.maxStep(reply);
-			System.out.println("update reply max step : "+maxStep);
 			reply.setStep(maxStep);
 			replyService.updateReply(reply);
 		}
@@ -170,7 +156,6 @@ public class BoardController {
 	}
 	@GetMapping("/reply-delete")
 	public String postReplyDelete(Reply reply) {
-		System.out.println("reply-delete board : "+reply);
 		replyService.deleteReply(reply);
 		replyService.deleteReplyRecommand(reply);
 		int boardId = reply.getBoardId();
@@ -181,7 +166,6 @@ public class BoardController {
 	@ResponseBody
 	public int thumbCheck(int boardId, int userId) {
 		int check = boardService.thumbCheck(boardId, userId);
-		System.out.println("thumb check : "+check);
 		if(check==0) {
 			boardService.thumbUp(boardId, userId);
 			check = 1;
@@ -195,7 +179,6 @@ public class BoardController {
 	@ResponseBody
 	public int replyThumbCheck(int replyId, int userId) {
 		int check = replyService.replyThumbCheck(replyId, userId);
-		System.out.println("thumb check : "+check);
 		if(check==0) {
 			replyService.replyThumbUp(replyId, userId);
 			check = 1;

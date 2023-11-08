@@ -40,6 +40,7 @@
      
      <!-- Custom css -->
      <link rel="stylesheet" href="/resources/css/custom/boardDetail.css" />
+     
  </head>
 <body class="blog_page">
 <!--Header -->
@@ -467,6 +468,7 @@
 					$("#reply-thumb-btn-"+value).css("background-color","#f77");
 				});
 			}
+	    	
 	    })
     </script>
 </body>
