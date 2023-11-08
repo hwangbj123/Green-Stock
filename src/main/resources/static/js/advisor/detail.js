@@ -16,7 +16,9 @@ const advisorDetailInit = {
   },
 
   subscribe: function () {
-    alert("구독!");
+	let subBtn = document.getElementById("btnAdvisorSub");
+	let advisorId = subBtn.getAttribute("data-id");
+    location.href = '/pay/kakao?advisorId=' + advisorId;
   },
 
   enterBoard: function () {
