@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,8 @@ import com.green.greenstock.dto.InquireMemberResDto;
 import com.green.greenstock.dto.ResponseApiInfo;
 import com.green.greenstock.dto.ResponseApiInfoList;
 import com.green.greenstock.handler.exception.CustomRestfulException;
+import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.ChattingService;
 import com.green.greenstock.service.StockApiService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,11 +39,26 @@ import lombok.RequiredArgsConstructor;
 public class StockApiController {
 
 	private final StockApiService stockApiService;
+	
+	private final ChattingService chattingService;
 
 	// 국내주식 현재가 조회
 	@GetMapping("/domestic/{companyCode}")
-	public String getStockDetail(Model model, @PathVariable String companyCode, String companyName) {
+	public String getStockDetail(Model model, @PathVariable String companyCode, String companyName, HttpServletRequest request) {
+		HttpSession session =  request.getSession();
+    	
+    	model.addAttribute("companyCode", companyCode);
+    	System.out.println("companyCode : "+companyCode);
 
+    	User principal = (User) session.getAttribute("principal");
+
+    	if(principal!=null) {
+    		System.out.println("principal : "+principal);
+    		String subCheck = chattingService.subCheck(companyCode, principal.getId());
+    		model.addAttribute("subCheck", subCheck);
+    		System.out.println("subCheck : "+subCheck);
+    	}
+    	
 		if (companyCode == null || companyCode.isEmpty()) {
 			throw new CustomRestfulException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
 		}
@@ -100,7 +120,7 @@ public class StockApiController {
 	@ResponseBody
 	@GetMapping("/domestic/data/{companyCode}")
 	public DomesticStockCurrentPriceOutput getStockDetailJson(@PathVariable String companyCode) {
-
+		
 		if (companyCode == null || companyCode.isEmpty()) {
 			companyCode = "005930";
 		}
