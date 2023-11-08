@@ -36,4 +36,6 @@ public interface UserRepository {
 	public List<User> findAdminMainUserList();
 
 	public List<Pay> findUserPayment(Integer id);
+
+	public User findById(Integer id);
 }

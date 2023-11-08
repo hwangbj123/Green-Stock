@@ -111,5 +111,9 @@ public class UserService {
 		
 		return userRepository.findUserPayment(id);
 	}
+
+	public User findById(Integer id){
+		return userRepository.findById(id);
+	}
 	
 }

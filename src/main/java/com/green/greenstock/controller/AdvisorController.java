@@ -19,6 +19,7 @@ import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
+import com.green.greenstock.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class AdvisorController {
     private final HttpSession httpSession;
 
     private final AdvisorService advisorService;
+    private final UserService userService;
 
     // 목록
     @GetMapping("/list")
@@ -84,45 +86,52 @@ public class AdvisorController {
     }
 
     // 전문가 상담게시판 목록 페이지
-    @GetMapping("/board/{advisorId}")
-    public String advisorBoardList(@PathVariable String advisorId) {
+    @GetMapping("/board/{advisorNickName}")
+    public String advisorBoardList(@PathVariable String advisorNickName) {
+        // User user = (User) httpSession.getAttribute("principal");
+        // if(user == null){
+        //     throw new UnAuthorizedException("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
+        // }
+
+        
+        
         return "advisor/advisorBoardList";
     }
 
     // 전문가 상담게시판 글 보기 페이지
-    @GetMapping("/board/{advisorId}/{advisorBoardId}")
-    public String advisorBoard(@PathVariable String advisorId, @PathVariable int advisorBoardId) {
+    @GetMapping("/board/{advisorNickName}/{advisorBoardId}")
+    public String advisorBoard(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
         return "advisor/advisorBoard";
     }
 
     // 전문가 상담게시판 글 쓰기 페이지
-    @GetMapping("/board/{advisorId}/write")
+    @GetMapping("/board/{advisorNickName}/write")
     public String advisorBoardWrite() {
 
         return "advisor/";
     }
 
     // 전문가 상담게시판 글 쓰기 기능
-    @PostMapping("/board/{advisorId}/write")
-    public String advisorBoardWriteProc(@PathVariable String advisorId) {
+    @PostMapping("/board/{advisorNickName}/write")
+    public String advisorBoardWriteProc(@PathVariable String advisorNickName) {
         int advisorBoardId = 1;
-        advisorId = "tom";
-        return "redirect:/advisor/board/" + advisorId + "/" + advisorBoardId;
+        advisorNickName = "tom";
+        return "redirect:/advisor/board/" + advisorNickName + "/" + advisorBoardId;
     }
 
     // 전문가 상담게시판 글 수정 기능
-    @PutMapping("/board/{advisorId}/{advisorBoardId}")
-    public Map<String, String> advisorBoardUpdateProc(@PathVariable String advisorId,
+    @PutMapping("/board/{advisorNickName}/{advisorBoardId}")
+    public Map<String, String> advisorBoardUpdateProc(@PathVariable String advisorNickName,
             @PathVariable int advisorBoardId) {
 
         return null;
     }
 
     // 전문가 상담게시판 글 삭제 기능
-    @GetMapping("/board/{advisorId}/{advisorBoardId}/delete")
-    public String advisorBoardDelete(@PathVariable String advisorId, @PathVariable int advisorBoardId) {
+    @GetMapping("/board/{advisorNickName}/delete/{advisorBoardId}")
+    public String advisorBoardDelete(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
 
-        return "redirect:/advisor/advisorBoard/" + advisorId;
+        return "redirect:/advisor/advisorBoard/" + advisorNickName;
     }
 
 }
