@@ -176,7 +176,7 @@
 	text-align: center;
 }
 .divVolumeRank::-webkit-scrollbar {
-	width: 7px;
+	display: none;
 }
 
 .divVolumeRank::-webkit-scrollbar-thumb {
