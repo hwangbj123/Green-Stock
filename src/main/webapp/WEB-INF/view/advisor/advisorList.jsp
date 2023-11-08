@@ -80,8 +80,8 @@
 	<div class="row">
 		<div class="col-md-12 section-title-block">
 			<div class="section-title text-center">
-				<h2 class="ec-title">Featured Products</h2>
-				<h6 class="ec-sub-title">Lorem Ipsum is simply dummy text of the printing</h6>
+				<h2 class="ec-title">전문가 목록</h2>
+				<h6 class="ec-sub-title">전문가와 상담하고 실시간 채팅을 할 수 있습니다.</h6>
 
 			</div>
 		</div>

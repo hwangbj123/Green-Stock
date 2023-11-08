@@ -31,6 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 //		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
 		registry.addInterceptor(authInterceptor).addPathPatterns("/board/write").addPathPatterns("/board/update/*").addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*")
 				.addPathPatterns("/chat*");
+		registry.addInterceptor(authInterceptor).addPathPatterns("/advisor/board/**").addPathPatterns("/advisor/register");
 	}
 
 
