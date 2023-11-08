@@ -1,86 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ include file="/WEB-INF/view/layout/header.jsp" %> 
+<%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 
+<style>
+.centered-table td, .centered-table th {
+	vertical-align: middle;
+}
+
+#customPageA {
+	display: inline-block;
+	border: 1px solid lightgrey;
+	padding: 4px 12px;
+	margin: 1px;
+	border-radius: 5px;
+}
+
+#customPagenation {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	margin-top: 0px;
+	display: flex;
+	justify-content: center;
+}
+
+.board-tb{
+	width: 100%;
+	min-height: 500px;
+	text-align: center;
+	margin: 20px auto;
+}
+.board-tb tr:first-child{
+	background-color: #f7f7f7; 
+	height: 50px; 
+	border-bottom: 1px solid lightgrey;
+}
+.input-group select{
+	border: 1px solid #ddd;
+}
+.input-group select:first-child{
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+.delete-btn{
+	width: 100%; 
+/* 	background-color: rgba(226,24,17,0.7); */
+	border: 1px solid rgba(226,24,17,0.7); 
+	border-radius: 5px; 
+	color: rgba(226,24,17,0.7);
+}
+</style> 
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-	 <link rel = "stylesheet" href="/"/>
-     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
-     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
-     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
- 
-     <!-- css Icon Font -->
-     <link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
- 
-     <!-- css All Plugins Files -->
-     <link rel="stylesheet" href="/resources/css/plugins/animate.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
- 
-     <!-- Main Style -->
-     <link rel="stylesheet" href="/resources/css/style.css" />
-     <link rel="stylesheet" href="/resources/css/responsive.css" />
- 
-     <!-- Background css -->
-     <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-         <!-- Vendor JS -->
-    <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
-    <script src="/resources/js/vendor/popper.min.js"></script>
-    <script src="/resources/js/vendor/bootstrap.min.js"></script>
-    <script src="/resources/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/resources/js/vendor/modernizr-3.11.2.min.js"></script>
-
-    <!--Plugins JS-->
-    <script src="/resources/js/plugins/swiper-bundle.min.js"></script>
-    <script src="/resources/js/plugins/countdownTimer.min.js"></script>
-    <script src="/resources/js/plugins/scrollup.js"></script>
-    <script src="/resources/js/plugins/jquery.zoom.min.js"></script>
-    <script src="/resources/js/plugins/slick.min.js"></script>
-    <script src="/resources/js/plugins/infiniteslidev2.js"></script>
-    <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
-    <script src="/resources/js/plugins/jquery.stxicky-sidebar.js"></script>
-
-    <!-- Main Js -->
-    <script src="/resources/js/vendor/index.js"></script>
-    <script src="/resources/js/main.js"></script>
-    
-    <!--summernote  -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>		     
-</head>
 <body>
-<div class ="container">
-
-
-<script>
-    
-</script>
-
-	                     		           
-<div class="content container" style="width: 50%; ">
-		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between"
-		style="width :1000px ">					
+<div class="ec-content-wrapper">
+	<div class="content">
+		<div class="breadcrumb-wrapper breadcrumb-contacts">
 			<div>
-				<p class="breadcrumbs">										
-					<i class="mdi mdi-chevron-right">
-					</i>
-					</p><nav>
-					<h3>작성 페이지</h3>
-					</nav>
-					<label for="file">파일 올려주세요 
-					  <input type="file"
-					         id="profile"
-					         accept="image/png, image/jpeg">
-					</label>
-			</div>					
+				<h1>Notice Write</h1>
+				<p class="breadcrumbs">
+					<span><a href="/admin/main">Main</a></span> <span><i
+						class="mdi mdi-chevron-right"></i></span>Notice 
+						<span><i
+						class="mdi mdi-chevron-right"></i></span>Write
+				</p>
+			</div>
 		</div>
         <form action="/notice/admin/write" method="post">
         <div>
@@ -136,43 +120,8 @@
                                             class="ecicon eci-linkedin"></i></a></li>
                             </ul>
                         </div>
-                    </div>
-                    <!-- Header Top social End -->
-                    <!-- Header Top Message Start -->
-                    <div class="col text-center header-top-center">
-                        <div class="header-top-message text-upper">
-                            <span>Free Shipping</span>This Week Order Over - $75
-                        </div>
-                    </div>
-                    <!-- Header Top Message End -->
-                    <!-- Header Top Language Currency -->
-                    <div class="col header-top-right d-none d-lg-block">
-                        <div class="header-top-lan-curr d-flex justify-content-end">
-                            <!-- Currency Start -->
-                            <div class="header-top-curr dropdown">
-                                <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Currency <i
-                                        class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li class="active"><a class="dropdown-item" href="#">USD $</a></li>
-                                    <li><a class="dropdown-item" href="#">EUR €</a></li>
-                                </ul>
-                            </div>
-                            <!-- Currency End -->
-                            <!-- Language Start -->
-                            <div class="header-top-lan dropdown">
-                                <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Language <i
-                                        class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li class="active"><a class="dropdown-item" href="#">English</a></li>
-                                    <li><a class="dropdown-item" href="#">Italiano</a></li>
-                                </ul>
-                            </div>
-                            <!-- Language End -->
-
-                        </div>
-                    </div>
-                    <!-- Header Top Language Currency -->
-                    <!-- Header Top responsive Action -->
+                    </div>                
+           
                     <div class="col d-lg-none ">
                         <div class="ec-header-bottons">
                             <!-- Header User Start -->
@@ -216,7 +165,7 @@
             <div class="container position-relative">
                 <div class="row ">
 
-                    <!-- Ec Header Logo Start -->
+           
                     <div class="col">
                         <div class="header-logo">
                             <a href="index.html"><img src="/resources/images/logo/logo.png" alt="Site Logo" /><img
@@ -224,8 +173,7 @@
                                     style="display: none;" /></a>
                         </div>
                     </div>
-                    <!-- Ec Header Logo End -->
-                    <!-- Ec Header Search Start -->
+              
                     <div class="col">
                         <div class="header-search">
                             <form class="ec-btn-group-form" action="#">
@@ -234,15 +182,13 @@
                             </form>
                         </div>
                     </div>
-                    <!-- Ec Header Search End -->
+         
                 </div>
             </div>
         </div>
-        <!-- Header responsive Bottom  End -->        
-        <!-- Ec Main Menu End -->	     
-	
+   
 	</header>
 	</body>
 	</head>
 </html>
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+<%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>

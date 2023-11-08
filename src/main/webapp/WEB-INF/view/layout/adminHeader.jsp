@@ -82,6 +82,10 @@
 						<!-- Chatting -->
 						<li><a class="sidenav-item-link" href="/admin/chat">
 								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">채팅 관리</span>
+						</a></li>	
+						<!-- Notice  -->
+						<li><a class="sidenav-item-link" href="/notice/admin/list">
+								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">공지사항 관리</span>
 						</a></li>
 						<!-- Category -->
 						<li class="has-sub"><a class="sidenav-item-link"

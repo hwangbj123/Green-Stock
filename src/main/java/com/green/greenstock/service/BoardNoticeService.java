@@ -92,8 +92,7 @@ public class BoardNoticeService {
 	/**
 	 * 페이징 
 	 */
-	public int noticeListCount( ) {
-		
+	public int noticeListCount( ) {		
 		return noticeRepository.listCount();
 		
 	}
