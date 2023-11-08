@@ -1,5 +1,13 @@
 package com.green.greenstock.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +40,16 @@ public class PayController {
 	HttpSession session;
 	
 	@GetMapping("/kakao")
-	public String KakaoPay() {
+	public String KakaoPay(@RequestParam("advisorId") Integer advisorId, Model model) {
+		model.addAttribute("advisorId", advisorId);
 		return "/pay_test";
 	}
 	
 	@PostMapping("/kakao")
 	@ResponseBody
-	public String KakaoPayProc(KakaoPayDto kakaoPayDto) {
-		return kakaoPayService.kakaoPayReady();
+	public String KakaoPayProc(KakaoPayDto kakaoPayDto, Integer advisorId) {
+		log.info("advisorId : " + advisorId);
+		return kakaoPayService.kakaoPayReady(advisorId);
 	}
 	
 	@GetMapping("/kakaoPaySuccess")
@@ -67,7 +77,16 @@ public class PayController {
 		
 		Pay pay = kakaoPayService.findPayInfoById(id);
 		
-		kakaoPayService.KakaoPayCancel(pay, 1);
+		//기간에 따라 환불금액설정
+        LocalDateTime now = LocalDateTime.now();
+		java.util.Date utilDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+		java.util.Date approvedDate = pay.getApprovedAt();
+		long differenceInMillis = utilDate.getTime() - approvedDate.getTime();
+		long differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
+		double refundAmount = pay.getAmountTotal()*differenceInDays/30;
+		int amount = (int) (pay.getAmountTotal() - refundAmount);
+		
+		kakaoPayService.KakaoPayCancel(pay, amount);
 		
 		return "redirect:/user/payment";
 	}

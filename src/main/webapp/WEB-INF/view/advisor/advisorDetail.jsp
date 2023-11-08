@@ -118,7 +118,7 @@
 							</td>
 						</tr>
 						<tr class="text-center">
-							<td colspan="2"><button class="btn btn-primary" id="btnAdvisorSub" data-id="${advisor.advisorId}">결제하기</button></td>
+							<td colspan="2"><button class="btn btn-primary" id="btnAdvisorSub" data-id="${advisor.advisorId}">구독하기</button></td>
 						</tr>
 						<tr class="text-center">
 							<td colspan="2"><button class="btn btn-info me-4" id="btnAdvisorBoard" data-id="${advisor.advisorId}">전문가 상담게시판</button>

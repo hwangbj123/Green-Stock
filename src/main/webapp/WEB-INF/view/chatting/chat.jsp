@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 	<!-- Custom css -->
     <link rel="stylesheet" href="/resources/css/custom/chat.css" />
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 	<div style="width: 100%;">
 	    <h3>
 	    	Chat Room
@@ -24,40 +25,46 @@
 	   	</h3>
    	</div>
     <div id="chat-messages">
-    	<c:forEach var="message" items="${list}">
+    	<c:set var="listLength" value="${fn:length(list)}" />
+    	<c:forEach begin="1" end="${listLength}" varStatus="status">
+			<c:if test="${fn:substring(list[listLength - status.count].date, 0, 11) ne fn:substring(list[listLength - status.count + 1].date, 0, 11)}">
+    			<div class="date-messages">
+	    			<fmt:formatDate value="${list[listLength-status.count].date}" pattern="yyyy년 MM월 dd일"/>
+    			</div>
+			</c:if>
   			<c:choose>
-   				<c:when test="${message.userId eq principal.id}">
+   				<c:when test="${list[listLength-status.count].userId eq principal.id}">
 	    			<div class="my-message-user">
-		    			${message.userName}
+		    			${list[listLength-status.count].userName}
 	    			</div>
 		    		<div class="my-message-div">
 		    			<div class="message-content" style="background-color: rgb(246,224,17);">
-		    				${message.content}
+		    				${list[listLength-status.count].content}
 		    			</div>
-		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
-		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
-		    				<input type="hidden" name="id" value="${message.id}">
+		    			<fmt:formatDate value="${list[listLength-status.count].date}" pattern="HH:mm"/>
+		    			<form method="post" id="delete-form-${list[listLength-status.count].id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${list[listLength-status.count].id}">
 		    				<input type="hidden" name="code" value="${companyCode}">
 		    				<c:if test="${principal.roletypeId eq 0}">
-			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${list[listLength-status.count].id})">X</button>
 		    				</c:if>
 		    			</form>
 		    		</div>
    				</c:when>
    				<c:otherwise>
 	    			<div class="message-user">
-		    			${message.userName}
+		    			${list[listLength-status.count].userName}
 	    			</div>
 		    		<div class="message-div">
 		    			<div class="message-content">
-		    				${message.content}
+		    				${list[listLength-status.count].content}
 		    			</div>
-		    			<fmt:formatDate value="${message.date}" pattern="HH:mm"/>
-		    			<form method="post" id="delete-form-${message.id}" action="/admin/chat-delete">
-		    				<input type="hidden" name="id" value="${message.id}">
+		    			<fmt:formatDate value="${list[listLength-status.count].date}" pattern="HH:mm"/>
+		    			<form method="post" id="delete-form-${list[listLength-status.count].id}" action="/admin/chat-delete">
+		    				<input type="hidden" name="id" value="${list[listLength-status.count].id}">
 		    				<input type="hidden" name="code" value="${companyCode}">
 		    				<c:if test="${principal.roletypeId eq 0}">
-			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${message.id})">X</button>
+			    				<button type="button" class="delete-btn" onclick="chatInit.deleteMessage(${list[listLength-status.count].id})">X</button>
 		    				</c:if>
 		    			</form>
 		    		</div>
@@ -67,7 +74,7 @@
     </div>
     <form id="chat-form">
     	<div class="submit-div">
-	        <input type="text" id="message" style="width: 100%; height: 44px;" placeholder="Enter your message">
+	        <input type="text" id="message" style="width: 100%; height: 44px;" placeholder="Enter your message" autocomplete="off">
 	        <button type="button" class="send-btn" id="send-btn">Send</button>
     	</div>
     </form>

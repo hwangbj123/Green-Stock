@@ -47,19 +47,20 @@ public class ChatController {
 	public String subCheck(String companyCode, int userId) {
 		System.out.println("controller subCheck companyCode = "+companyCode);
 		String res = chattingService.subCheck(companyCode, userId);
+		System.out.println("controller subCheck res = "+res);
 		return res;
 	}
 	
 	@GetMapping("/subscribe")
 	public String subscribe(String companyCode, int userId) {
 		chattingService.subscribe(companyCode, userId);
-		return "redirect:product/"+companyCode;
+		return "redirect:stock/domestic/"+companyCode;
 	}
 	
 	@GetMapping("/un-subscribe")
 	public String unSubscribe(String companyCode, int userId) {
 		chattingService.unSubscribe(companyCode, userId);
-		return "redirect:product/"+companyCode;
+		return "redirect:stock/domestic/"+companyCode;
 	}
 	
     @GetMapping("product/{companyCode}")

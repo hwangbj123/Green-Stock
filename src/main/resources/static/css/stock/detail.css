@@ -75,7 +75,7 @@
   margin-bottom: 15px;
 }
 .stockDetail .divBtnTab {
-  align-items: baseline;
+  align-items: flex-start;
 }
 .stockDetail .colCompanyStockInfo {
   height: 30px;

@@ -267,11 +267,20 @@ public class PortfolioRestController {
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
 
+<<<<<<< HEAD
 	/*
 	 * @GetMapping("/getIndexData") public Map<String,String> bcd() {
 	 * System.out.println(crawlService.indexCrawl()); crawlService.newsCrawl();
 	 * return crawlService.indexCrawl(); }
 	 */
+=======
+//	@GetMapping("/getIndexData")
+//	public Map<String,String> bcd() {
+//		System.out.println(crawlService.indexCrawl());
+//		crawlService.newsCrawl();
+//		return crawlService.indexCrawl();
+//	}
+>>>>>>> cf61367e7746e3b886df0921cb9b3c7372c3894c
 
 	@GetMapping("/getRanking")
 	public List<MyPortfolio> getRanking() {
