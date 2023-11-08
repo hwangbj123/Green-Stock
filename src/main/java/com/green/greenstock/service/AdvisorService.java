@@ -24,7 +24,9 @@ import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
 import com.green.greenstock.repository.interfaces.AdvisorBoardEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
+import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
+import com.green.greenstock.repository.model.Advisor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,7 @@ public class AdvisorService {
     private final AdvisorEntityRepository advisorEntityRepository;
     private final AdvisorBoardEntityRepository advisorBoardEntityRepository;
     private final ImageEntityRepository imageEntityRepository;
+    private final AdvisorRepository advisorRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String filePath;
@@ -140,5 +143,10 @@ public class AdvisorService {
 
         return imageEntity;
     }
+
+	public Advisor findAdvisorById(int advisorId) {
+		return advisorRepository.findById(advisorId);
+		
+	}
 
 }

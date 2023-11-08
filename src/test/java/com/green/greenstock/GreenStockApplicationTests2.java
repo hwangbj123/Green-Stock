@@ -1,19 +1,14 @@
 package com.green.greenstock;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
-import com.green.greenstock.repository.model.Advisor;
 
 import lombok.extern.slf4j.Slf4j;
 
