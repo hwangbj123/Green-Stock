@@ -30,14 +30,16 @@
 <!-- Custom CSS -->
 
 <style>
+.gstock-div{
+	border: 1px solid lightgrey;
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
 #news-div {
 	width: 95%;
 	height: 350px;
 	margin: 20px auto;
 	padding: 20px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 #preview{
@@ -55,15 +57,17 @@
 
 .main-div {
 	min-width: 300px;
-	min-height: 800px;
-	border: 1px solid black;
+	height: 1000px;
 }
 
 .content-center {
-	width: 50%;
+	width: 40%;
 }
 
-.content-left, .content-right {
+.content-left {
+	width: 30%;
+}
+.content-right {
 	width: 20%;
 }
 
@@ -74,22 +78,15 @@
 	margin: 20px auto;
 	padding: 15px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .chat-list::-webkit-scrollbar {
-	width: 10px;
+	width: 7px;
 }
 
 .chat-list::-webkit-scrollbar-thumb {
 	background-color: rgba(10, 10, 10, 0.2);
 	border-radius: 15px;
-}
-
-.chat-list::-webkit-scrollbar-track {
-	/* 			    background-color: rgba(10,10,10,0.1); */
-	
 }
 
 .chat-list {
@@ -135,12 +132,9 @@
 .board-div {
 	width: 95%;
 	height: 550px;
-	/* 				border-radius: 15px; */
 	margin: 20px auto;
 	padding: 20px;
 	text-align: center;
-	border: 1px solid lightgrey;
-	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .centered-table tr:first-child {
@@ -157,8 +151,6 @@
 
 .ad-slider {
 	width: 90%;
-	/*  				height: 250px;  */
-	border: 1px solid black;
 	margin: 50px auto;
 }
 .content-left > h6{
@@ -176,13 +168,33 @@
 .divVolumeRank .primaryColorNone {
 	color: #212121;
 }
+.ranking-div {
+	width: 95%;
+	height: 92%;
+	margin: 20px auto;
+	padding: 20px;
+	text-align: center;
+}
+.divVolumeRank::-webkit-scrollbar {
+	width: 7px;
+}
+
+.divVolumeRank::-webkit-scrollbar-thumb {
+	background-color: rgba(10, 10, 10, 0.2);
+	border-radius: 15px;
+}
+.divVolumeRank {
+	height: 92%;
+	margin-top: 30px;
+	overflow: auto;
+}
 </style>
 </head>
 
 <body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
 	<!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
-	<div class="ad-slider">
+	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
 			<div class="item"
 				style="width: 100%; height: 250px; background-color: lightgrey;">ad
@@ -207,25 +219,27 @@
 
 		<!----- 좌측 사이드 div ------------>
 		<div class="main-div content-left">
-			<h6>거래량 순위</h6>
-			<div class="table-responsive divVolumeRank">
-                <table class="table table-borederd tableVolumeRank">
-                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
-                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
-                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
-                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
-                      <td class="text-end">${item.prdyCtrt}%</td>
-                    </tr>
-                  </c:forEach>
-                </table>
-              </div>
+			<div class="gstock-div ranking-div">
+				<h6>거래량 순위</h6>
+				<div class="table-responsive divVolumeRank">
+	                <table class="table table-borederd tableVolumeRank">
+	                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
+	                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
+	                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+	                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
+	                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
+	                      <td class="text-end">${item.prdyCtrt}%</td>
+	                    </tr>
+	                  </c:forEach>
+	                </table>
+	              </div>
+            </div>
 		</div>
 		<!----- 중앙 사이드 div ------------>
 		<div class="main-div content-center">
 
 			<!--------- 뉴스 리스트 ------------>
-			<div id="news-div" style="font-weight: bold;">
+			<div class="gstock-div" id="news-div" style="font-weight: bold;">
 				<h6 style="margin-bottom: 15px;">Today's News</h6>
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
@@ -246,7 +260,7 @@
 				</div>
 			</div>
 			<!--------- 게시판 리스트 ------------>
-			<div class="board-div">
+			<div class="gstock-div board-div">
 				<h6 style="margin-bottom: 15px;">Board</h6>
 				<table class="table centered-table">
 					<thead>
@@ -320,7 +334,7 @@
 		<div class="main-div content-right">
 
 			<!--------- 채팅 리스트 ------------>
-			<div class="chat-div">
+			<div class="gstock-div chat-div">
 				<h6 style="margin-bottom: 15px;">Chatting</h6>
 				<c:choose>
 					<c:when test="${not empty chatList}">

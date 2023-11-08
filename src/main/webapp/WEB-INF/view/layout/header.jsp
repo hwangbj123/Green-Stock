@@ -219,12 +219,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 -->
                   <li class="dropdown">
                     <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span>
-                    <a href="javascript:void(0)">Portfolio</a>
-                    <ul class="sub-menu">
-                      <li class="dropdown position-static">
-                        <a href="javascript:void(0)">Product page <i class="ecicon eci-angle-right"></i></a>
-                      </li>
-                    </ul>
+                    <a href="/portfolio">Portfolio</a>
                   </li>
                   <li class="dropdown">
                     <a href="javascript:void(0)">Advisor</a>

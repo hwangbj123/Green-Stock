@@ -33,45 +33,32 @@ public class CrawlService {
 	 * element2.get(3).text()); return map; } catch (IOException e) { // e 에는 thumb
 	 * 클래스와 a 가 있다. e.printStackTrace(); return null; } }
 	 * 
-	 * public List<NewsCrawlDTO> newsCrawl() { try { Document doc =
-	 * Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get(); //
-	 * System.out.println(doc.select(".newsList")); // dl 을 다 모은다. Elements newsList
-	 * = doc.select(".newsList"); Elements newsContents = newsList.select("dl");
-	 * List<NewsCrawlDTO> newsCrawlList = new ArrayList<>(); newsContents.forEach(e
-	 * -> { NewsCrawlDTO dto = new NewsCrawlDTO(); //
-	 * dto.setThumb(e.select(".thumb img").attr("src"));
-	 * dto.setAhref(e.select(".articleSubject a").attr("abs:href")); String imglink
-	 * = e.select(".articleSubject a").attr("abs:href"); try { Document redirectdoc
-	 * = Jsoup.connect(imglink).get(); Element scriptTag =
-	 * redirectdoc.select("script").first(); String scriptContent =
-	 * scriptTag.html(); // href 경로 추출 String href =
-	 * scriptContent.replace("top.location.href='", "").replace("';", "");
-	 * System.out.println(href); dto.setThumb(lazyLoadImg(href)); } catch
-	 * (IOException e1) { // TODO Auto-generated catch block e1.printStackTrace(); }
-	 * dto.setSubject(e.select(".articleSubject a").text());
-	 * dto.setSummary(e.select(".articleSummary").text());
-	 * dto.setCompany(e.select(".articleSummary .press").text());
-	 * dto.setRegdate(e.select(".articleSummary .wdate").text());
-	 * newsCrawlList.add(dto); }); System.out.println(newsCrawlList.size());
-	 * System.out.println(newsCrawlList.toString()); return newsCrawlList; } catch
-	 * (IOException e) { e.printStackTrace(); } return null; }
-	 * 
-	 * public String lazyLoadImg(String imgLink) {
-	 * //C:\workspace\teamPrj\Green-Stock
-	 * System.setProperty("webdriver.chrome.driver",
-	 * "c:/workspace/teamPrj/Green-Stock/chromedriver.exe"); ChromeOptions options =
-	 * new ChromeOptions(); options.addArguments("--remote-allow-origins=*");
-	 * options.addArguments("--headless"); // Headless 모드 활성화 WebDriver driver = new
-	 * ChromeDriver(options);
-	 * 
-	 * try { driver.get(imgLink); // 이미지 로딩을 위해 페이지를 불러옵니다.
-	 * 
-	 * // 이미지 URL 추출 WebElement imgElement =
-	 * driver.findElement(By.cssSelector("#img1")); String imgSrc =
-	 * imgElement.getAttribute("src"); System.out.println("이미지 URL: " + imgSrc);
-	 * return imgSrc; // 이미지 URL을 반환 } catch (Exception e) { e.printStackTrace();
-	 * return null; // 에러 발생 시 null 반환 } finally { driver.quit(); // WebDriver 종료 }
-	 * }
 	 */
+	public List<NewsCrawlDTO> newsCrawl() {
+        try {
+            Document doc = Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get();
+            //System.out.println(doc.select(".newsList"));
+            // dl 을 다 모은다.
+            Elements newsList = doc.select(".newsList");
+            Elements newsContents = newsList.select("dl");
+            List<NewsCrawlDTO> newsCrawlList = new ArrayList<>();
+            newsContents.forEach(e -> {
+                NewsCrawlDTO dto = new NewsCrawlDTO();
+                dto.setThumb(e.select(".thumb img").attr("src"));
+                dto.setAhref(e.select(".articleSubject a").attr("abs:href"));
+                dto.setSubject(e.select(".articleSubject a").text());
+                dto.setSummary(e.select(".articleSummary").text());
+                dto.setCompany(e.select(".articleSummary .press").text()); 
+                dto.setRegdate(e.select(".articleSummary .wdate").text()); 
+                newsCrawlList.add(dto);
+            });
+            System.out.println(newsCrawlList.size());
+            System.out.println(newsCrawlList.toString());
+            return newsCrawlList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

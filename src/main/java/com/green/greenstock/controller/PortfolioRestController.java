@@ -260,12 +260,12 @@ public class PortfolioRestController {
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
 
-	@GetMapping("/getIndexData")
-	public Map<String,String> bcd() {
-		System.out.println(crawlService.indexCrawl());
-		crawlService.newsCrawl();
-		return crawlService.indexCrawl();
-	}
+//	@GetMapping("/getIndexData")
+//	public Map<String,String> bcd() {
+//		System.out.println(crawlService.indexCrawl());
+//		crawlService.newsCrawl();
+//		return crawlService.indexCrawl();
+//	}
 
 	@GetMapping("/getRanking")
 	public List<MyPortfolio> getRanking() {
