@@ -48,6 +48,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="/resources/js/main.js"></script>
 
     <!-- kjh -->
+    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/stock/detail.css" />
   </head>
   <body>
@@ -404,7 +405,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                           </div>
                           <table class="table">
                             <thead>
-                              <tr>
+                              <tr class="text-center">
                                 <th>날짜</th>
                                 <th>종가</th>
                                 <th>전일비</th>
@@ -415,7 +416,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                             <tbody>
                               <c:forEach var="item" items="${inquireInvestors}">
                                 <tr>
-                                  <td>${item.stckBsopDate}</td>
+                                  <td class="text-center">${item.stckBsopDate}</td>
                                   <td class="text-end"><fmt:formatNumber value="${item.stckClpr}" /></td>
                                   <td class="text-end ${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.prdyVrss}" /></td>
                                   <td class="text-end ${item.frgnNtbyQty > 0 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.frgnNtbyQty}" /></td>
