@@ -64,6 +64,7 @@
 		                </div>
 		              </div>
 		              <input type="hidden" class="form-control" id="userId" name="id" value="${principal.id}">
+		              <input type="hidden" class="form-control" id="advisorId" name="advisorId" value="${advisorId}">
 		            </form>
 		          </div>
 		        </div>
@@ -87,19 +88,10 @@
 			$("#btn-kakao-pay").click(function(){
 				
 				// 필수입력값을 확인.
-				var name = $("#form-payment input[name='userName']").val();
-				var tel = $("#form-payment input[name='tel']").val();
-				var email = $("#form-payment input[name='email']").val();
-				
-/* 				if(name == ""){
-					$("#form-payment input[name='pay-name']").focus()
-				}
-				if(tel == ""){
-					$("#form-payment input[name='pay-tel']").focus()
-				}
-				if(email == ""){
-					$("#form-payment input[name='pay-email']").focus()
-				} */
+				let name = $("#form-payment input[name='userName']").val();
+				let tel = $("#form-payment input[name='tel']").val();
+				let email = $("#form-payment input[name='email']").val();
+				let advisorId = $("#advisorId").val();
 				
 				// 결제 정보를 form에 저장한다.
 				let totalPayPrice = parseInt($("#total-pay-price").text().replace(/,/g,''))
@@ -113,6 +105,7 @@
 						name: name
 						,tel:tel
 						,email:email
+						,advisorId:advisorId
 					},
 					success:function(response){
 						let Url = response;
