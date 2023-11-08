@@ -160,7 +160,23 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
           </div>
           <div class="col-1">
             <div>
-              <button class="btn btn-green" id="chatIn" data-companycode="${companyCode}">채팅방</button>
+              <%------------------------- 채팅창 include 부분 --%>
+				<c:choose>
+                      	<c:when test="${empty principal}">
+                      		<button class="btn btn-green" id="chatIn" style="width: 100%; font-size: 12px; font-weight: bold;" onclick="subscribeInit.toSignIn()">채팅창</button>
+                      	</c:when>
+                      	<c:when test="${subCheck eq principal.id}">
+                      		<button type="button" id="unSubscribe-btn" onclick="subscribeInit.subscribe(${companyCode}, ${principal.id})">
+                      			구독 해제
+                      		</button>
+							<button type="button" id="openChat" onclick="window.open('/chat?companyCode=${companyCode}&userId=${principal.id}', '_black', 'width= 480; height= 720;');">채팅창 열기</button>
+						</c:when>									
+                      	<c:when test="${subCheck ne principal.id}">
+                      		<h1>${subCheck} & ${principal.id}</h1>
+                      		<button class="btn btn-green" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribeInit.subscribe(${companyCode},${principal.id})">채팅창 구독</button>
+                      	</c:when>
+				</c:choose>
+				<!------------------------- 채팅창 include 부분 끝 -->
             </div>
           </div>
           <div class="col-4">
@@ -451,5 +467,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
   <script src="/js/stock/chart.js"></script>
   <script src="/js/stock/websocket.js"></script>
   <script src="/js/stock/tab.js"></script>
-  <script src="/js/stock/chatting.js"></script>
+<!--   <script src="/js/stock/chatting.js"></script> -->
+
+  <script src="/resources/js/custom/subscribe.js"></script>
 </html>

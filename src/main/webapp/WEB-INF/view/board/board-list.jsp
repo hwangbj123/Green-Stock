@@ -286,6 +286,20 @@
 	    	</div>
 			</form>
 <!----------페이징 div -->
+				<!----------페이징 function -->
+				<c:set var="search" value="/board/list?"/>
+				<c:if test="${not empty paging.categoryId}">
+					<c:set var="search" value="${search}${'categoryId='}${paging.categoryId}&"/>
+				</c:if>
+				<c:if test="${not empty paging.searchType}">
+					<c:set var="search" value="${search}${'searchType='}${paging.searchType}&"/>
+				</c:if>
+				<c:if test="${not empty paging.searchWord}">
+					<c:set var="search" value="${search}${'searchWord='}${paging.searchWord}&"/>
+				</c:if>
+				<c:if test="${not empty paging.orderType}">
+					<c:set var="search" value="${search}${'orderType='}${paging.orderType}&"/>
+				</c:if>
 	    	<div id="page">
 <!-- 	    		시작 페이지 -->
 	    		<c:choose>
@@ -309,7 +323,7 @@
 
 <!-- 	    		이전 버튼 -->
 	    		<c:if test="${startPage ne 1}">
-	    			<a class="page-a" href="list?page=${page.paging.page-5}">
+	    			<a class="page-a" href="${search}page=${page.paging.page-5}">
 	    				prev
 	    			</a>
 	    		</c:if>
@@ -323,7 +337,7 @@
 	    					</p>
 	    				</c:when>
 	    				<c:otherwise>
-	    					<a class="page-a" href="list?page=${nowPage}">
+	    					<a class="page-a" href="${search}page=${nowPage}">
 				    			<c:out value="${nowPage}"/>
 	    					</a>
 	    				</c:otherwise>
@@ -334,12 +348,12 @@
 	    		<c:if test="${page.endPage > startPage+9}">
 	    			<c:choose>
 	    				<c:when test="${page.endPage > page.paging.page+5}">
-			    			<a class="page-a" href="list?page=${page.paging.page+5}">
+			    			<a class="page-a" href="${search}page=${page.paging.page+5}">
 			    				next
 			    			</a>
 	    				</c:when>
 	    				<c:otherwise>
-			    			<a class="page-a" href="list?page=${page.endPage}">
+			    			<a class="page-a" href="${search}page=${page.endPage}">
 			    				next
 			    			</a>
 	    				</c:otherwise>
