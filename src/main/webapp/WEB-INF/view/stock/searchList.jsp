@@ -97,7 +97,7 @@
 									<tbody>
 										<c:forEach var="item" items="${responseDomesticStockSearchDto.domesticStockCurrentPriceList}">
 											<tr class="text-end pe-3">
-												<td class="text-start"><a href="/stock/domestic/${item.companyCode}">${item.companyName}</a><span class="badge badge-primary ms-2 tag">${fn:toUpperCase(item.type)}</span></td>
+												<td class="text-start"><a href="/stock/domestic/${item.companyCode}?companyName=${item.companyName}">${item.companyName}</a><span class="badge badge-primary ms-2 tag">${fn:toUpperCase(item.type)}</span></td>
 												<td><fmt:formatNumber value="${item.stckPrpr}"/></td>
 												<td class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
 													${item.prdyVrssSign < 3 ? '▲' : '▼'} 

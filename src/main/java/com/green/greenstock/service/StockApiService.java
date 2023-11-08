@@ -69,10 +69,15 @@ public class StockApiService {
 	public String getCompanyName(String companyCode) {
 		// 종목코드
 		DomesticStockCode domesticStockCode = domesticStockCodeRepository.findByCompanyCode(companyCode);
+		
+		//log.debug("companyName : {}", domesticStockCode.getCompanyName());
+		//log.debug("companyCode : {}", companyCode);
 
-		log.debug("companyName : {}", domesticStockCode.getCompanyName());
-		log.debug("companyCode : {}", companyCode);
-		return domesticStockCode.getCompanyName();
+		if(domesticStockCode == null){
+			return null;
+		}else{
+			return domesticStockCode.getCompanyName();
+		}
 	}
 
 	// https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations#L_07802512-4f49-4486-91b4-1050b6f5dc9d
@@ -344,7 +349,7 @@ public class StockApiService {
 			selectedDateData = beforeMonthDate;
 		} else if (date.equals("year")) {
 			selectedDateData = beforeYearDate;
-			log.info("selectedDateData : {}", selectedDateData);
+			log.debug("selectedDateData : {}", selectedDateData);
 		} else {
 			selectedDateData = beforeWeekDate;
 		}

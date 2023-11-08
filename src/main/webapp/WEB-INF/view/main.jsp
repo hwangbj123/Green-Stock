@@ -213,8 +213,8 @@
                   <c:forEach var="item" items="${volumeRank}" varStatus="status">
                     <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
                       <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
-                      <td>${item.stckPrpr}</td>
-                      <td>${item.prdyVrss}</td>
+                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
+                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
                       <td class="text-end">${item.prdyCtrt}%</td>
                     </tr>
                   </c:forEach>

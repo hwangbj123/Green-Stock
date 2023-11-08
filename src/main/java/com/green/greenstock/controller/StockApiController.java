@@ -37,7 +37,7 @@ public class StockApiController {
 
 	// 국내주식 현재가 조회
 	@GetMapping("/domestic/{companyCode}")
-	public String getStockDetail(Model model, @PathVariable String companyCode) {
+	public String getStockDetail(Model model, @PathVariable String companyCode, String companyName) {
 
 		if (companyCode == null || companyCode.isEmpty()) {
 			throw new CustomRestfulException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
@@ -47,9 +47,12 @@ public class StockApiController {
 		ResponseApiInfo<?> resInfo = stockApiService.getApiDomesticStockCurrentPrice(companyCode);
 
 		// 종목 코드로 회사 이름 가져오기
-		String companyName = stockApiService.getCompanyName(companyCode);
+		String findCompanyName = stockApiService.getCompanyName(companyCode);
+		if(findCompanyName == null){
+			findCompanyName = companyName;
+		}
 
-		if (resInfo == null || companyName == null || companyName.isEmpty()) {
+		if (resInfo == null) {
 			throw new CustomRestfulException("입력하신 정보가 없습니다.", HttpStatus.BAD_REQUEST);
 		}
 		// 제네릭 타입 확정
@@ -76,11 +79,15 @@ public class StockApiController {
 		ResponseApiInfoList<?> resInfo5 = stockApiService.getInquireInvestor(companyCode);
 		List<InquireInvestorResDto> inquireInvestorResDto = mapper.convertValue(resInfo5.getOutput(),
 				new TypeReference<List<InquireInvestorResDto>>() {
-				}).subList(0, 3);
+				});
 
+		if(inquireInvestorResDto.size() >= 3){
+			inquireInvestorResDto = inquireInvestorResDto.subList(0, 3);
+		}
+		
 		model.addAttribute("stockCurrentPrice", outputPrice);
 		model.addAttribute("askingSellingPrice", ouputAsking);
-		model.addAttribute("companyName", companyName);
+		model.addAttribute("companyName", findCompanyName);
 		model.addAttribute("companyCode", companyCode);
 		model.addAttribute("rankOutPut", rankOutPut);
 		model.addAttribute("inquireMember", inquireMemberResDto);
