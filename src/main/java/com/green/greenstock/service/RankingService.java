@@ -61,6 +61,7 @@ public class RankingService {
 
 	@Scheduled(cron = "0 0 0 * * ?") // 매일 오전 12시에 실행
 	public void growthLog() {
+		refreshROR();
 		List<MyPortfolio> list = portfolioRepository.findAllPortfolio();
 		list.forEach(e -> {
 			growthLogRepository.makeGrowthLog(e);

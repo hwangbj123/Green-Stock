@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	setSmallCard();
-	setModal();
+	//setModal();
 });
 
 // 로그인한 유저의 portfolio 를 표시해주는 smallCard 를 set. 
@@ -387,7 +387,8 @@ function titleClicked(pid,rank) {
 function setMonthlyAssetChart() {
 	/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
 	//<canvas id="monthlyAsset" class="chartjs"></canvas>
-	$.get('portfolio/getMonthlyGrowthData', function(data) {
+	$.get('portfolio/getdailyGrowthData', function(data) {
+		console.log(data);
 		let logDateArr = [];
 		let rorArr = [];
 		for (let i = 0; i < 6; i++) {

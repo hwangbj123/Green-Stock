@@ -35,7 +35,6 @@ public class CrawlService {
 	 * 
 	 */
 	public List<NewsCrawlDTO> newsCrawl() {
-<<<<<<< HEAD
 		try {
 			Document doc = Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get();
 			// System.out.println(doc.select(".newsList"));
@@ -61,32 +60,5 @@ public class CrawlService {
 		}
 		return null;
 	}
-=======
-        try {
-            Document doc = Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get();
-            //System.out.println(doc.select(".newsList"));
-            // dl 을 다 모은다.
-            Elements newsList = doc.select(".newsList");
-            Elements newsContents = newsList.select("dl");
-            List<NewsCrawlDTO> newsCrawlList = new ArrayList<>();
-            newsContents.forEach(e -> {
-                NewsCrawlDTO dto = new NewsCrawlDTO();
-                dto.setThumb(e.select(".thumb img").attr("src"));
-                dto.setAhref(e.select(".articleSubject a").attr("abs:href"));
-                dto.setSubject(e.select(".articleSubject a").text());
-                dto.setSummary(e.select(".articleSummary").text());
-                dto.setCompany(e.select(".articleSummary .press").text()); 
-                dto.setRegdate(e.select(".articleSummary .wdate").text()); 
-                newsCrawlList.add(dto);
-            });
-            System.out.println(newsCrawlList.size());
-            System.out.println(newsCrawlList.toString());
-            return newsCrawlList;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
->>>>>>> cf61367e7746e3b886df0921cb9b3c7372c3894c
 
 }
