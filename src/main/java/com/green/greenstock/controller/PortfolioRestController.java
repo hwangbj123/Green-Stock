@@ -2,6 +2,7 @@ package com.green.greenstock.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,12 @@ import com.green.greenstock.repository.interfaces.MyStocksRepository;
 import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.interfaces.StockRepository;
 import com.green.greenstock.repository.interfaces.TradeRepository;
+import com.green.greenstock.service.CrawlService;
 import com.green.greenstock.service.PortfolioService;
 
 @RestController
 @RequestMapping("/portfolio")
-public class TestRestController2 {
+public class PortfolioRestController {
 
 	@Autowired
 	private DataRestController dataRestController;
@@ -36,25 +38,28 @@ public class TestRestController2 {
 
 	@Autowired
 	private StockRepository stockRepository;
-	
+
 	@Autowired
 	private MyStocksRepository mystocksRepository;
-	
+
 	@Autowired
 	private PortfolioService portfolioService;
-	
+
 	@Autowired
 	private TradeRepository tradeRepository;
-	
+
 	@Autowired
 	GrowthLogRepository growthLogRepository;
+	
+	@Autowired
+	CrawlService crawlService;
 
 	@GetMapping("/getMyPortfolioList/{id}")
 	public List<MyPortfolio> test(@PathVariable int id) {
 		List<MyPortfolio> list = portfolioRepository.findByuserId(id);
 		return list;
 	}
-	
+
 	@GetMapping("/getUserid")
 	public int getUserId() {
 		return 1;
@@ -73,8 +78,8 @@ public class TestRestController2 {
 		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(id));
 		if (mp.getStockList() != null) {
 			mp.getStockList().forEach(stock -> {
-				stock.setNowPrice(Integer
-						.parseInt(dataRestController.getStockDetailJson(stock.getCompanyCode()).getStckPrpr()));
+				stock.setNowPrice(
+						Integer.parseInt(dataRestController.getStockDetailJson(stock.getCompanyCode()).getStckPrpr()));
 				mp.setNowTotalAsset();
 			});
 		} else {
@@ -91,29 +96,38 @@ public class TestRestController2 {
 		stock.setCompanyName("testSTock");
 		return stock;
 	}
-	
+
 	// companyCode 로 현재가를 구한다.
 	@GetMapping("/getNowPrice/{companyCode}")
 	public int getNowPrice(@PathVariable String companyCode) {
 		return Integer.parseInt(dataRestController.getStockDetailJson(companyCode).getStckPrpr());
 	}
-	
+
 	@GetMapping("/getNowPriceWithCompanyCode/{companyCode}")
 	public String getNowPriceWithCompanyCode(@PathVariable String companyCode) {
 		return companyCode + "/" + dataRestController.getStockDetailJson(companyCode).getStckPrpr();
 	}
-	
-	
-	
-	
+
 	// MyStock 정보 세팅용
 	@GetMapping("/getAllDataInfo/{id}")
 	public MyPortfolio getAllDataInfo(@PathVariable int id) {
 		MyPortfolio mp = portfolioService.findAllDatasByPortfolioId(id);
+
+		// 불러올 때 ROR 을 갱신해준다.
+		if (mp.getStockList() != null) {
+			mp.getStockList().forEach(stock -> {
+				stock.setNowPrice(
+						Integer.parseInt(dataRestController.getStockDetailJson(stock.getCompanyCode()).getStckPrpr()));
+				mp.setNowTotalAsset();
+			});
+			// ror update.
+			portfolioRepository.updateRor(mp);
+		}
+
 		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
 		return mp;
 	}
-	
+
 	@PostMapping("/buySell/{type}")
 	public int buySell(@PathVariable String type, @RequestBody BuySellDTO buySellDto) {
 		// 포트폴리오 상태 업데이트
@@ -124,7 +138,7 @@ public class TestRestController2 {
 		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
 		System.out.println(mp);
 		System.out.println("--------------------");
-		
+
 		int price = Integer.parseInt(dataRestController.getStockDetailJson(buySellDto.getStockId()).getStckPrpr());
 		System.out.println("--------------------");
 		MyStocks ms = new MyStocks();
@@ -149,24 +163,24 @@ public class TestRestController2 {
 		td.setStockName(ms.getCompanyName());
 		td.setTradeType(type);
 		tradeRepository.insertTradeLog(td);
-		
-		if(type.equals("buy")) {
-			if(mp.isStockExist()) {
+
+		if (type.equals("buy")) {
+			if (mp.isStockExist()) {
 				System.out.println(mp.isStockExist());
 				System.out.println("buy mystockExist");
 				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
-			}else {
+			} else {
 				System.out.println(mp.isStockExist());
 				System.out.println("buy myStockDoesntExist");
 				mystocksRepository.insertMyStocks(ms);
 			}
-		}else {
-			if(mp.isStockExist()) {
+		} else {
+			if (mp.isStockExist()) {
 				System.out.println(mp.isStockExist());
 				System.out.println("stockExist");
 				System.out.println(mp.getMyStocks(ms.getCompanyCode()));
 				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
-			}else {
+			} else {
 				System.out.println(mp.isStockExist());
 				System.out.println("stockDoesn'tExist");
 				mystocksRepository.deleteMyStocks(ms.getCompanyCode());
@@ -182,12 +196,11 @@ public class TestRestController2 {
 		glist = growthLogRepository.findGrowthLogByPid(31);
 		System.out.println(glist);
 		glist.forEach(e -> {
-			//e.set(e.getLogDate().replace("%",""));
-			e.setRor(e.getRor().replace("%",""));
+			// e.set(e.getLogDate().replace("%",""));
+			e.setRor(e.getRor().replace("%", ""));
 		});
 		return glist;
 	}
-
 
 	// 자동완성 -------------------------------------------------------
 	@GetMapping("/getAutoCompleteData")
@@ -198,18 +211,17 @@ public class TestRestController2 {
 	@GetMapping("/updateVisible/{pid}")
 	public int updateVisible(@PathVariable int pid) {
 		MyPortfolio mp = portfolioRepository.findByPortfolioId(pid);
-		if(mp.isVisible()) {
+		if (mp.isVisible()) {
 			System.out.println("asdf");
 			System.out.println(mp.isVisible());
 			mp.setVisible(false);
-		}else {
+		} else {
 			System.out.println(mp.isVisible());
 			mp.setVisible(true);
 		}
 		return portfolioRepository.updateVisibility(mp);
 	}
-	
-	
+
 	// test용----------------------------------------------------------
 	@PostMapping("/testCode123/{type}")
 	public String testCode(@PathVariable String type, @RequestBody MyPortfolio mp) {
@@ -225,9 +237,9 @@ public class TestRestController2 {
 		}
 		return "asdf";
 	}
-	
+
 	@GetMapping("/getTradeLog/{pid}")
-	public List<TradeLogDTO> getTradeLog(@PathVariable int pid){
+	public List<TradeLogDTO> getTradeLog(@PathVariable int pid) {
 		List<TradeLogDTO> list = tradeRepository.findAllTradeLogByPortfolioId(pid);
 		list.forEach(e -> {
 			e.setDateTime();
@@ -248,16 +260,16 @@ public class TestRestController2 {
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
 
-	@GetMapping("/getTestData")
-	public void bcd() {
-		System.out.println(growthLogRepository.findAllGrowthLog());
+	@GetMapping("/getIndexData")
+	public Map<String,String> bcd() {
+		System.out.println(crawlService.indexCrawl());
+		crawlService.newsCrawl();
+		return crawlService.indexCrawl();
 	}
-	
+
 	@GetMapping("/getRanking")
 	public List<MyPortfolio> getRanking() {
 		return portfolioRepository.findAllPortfolioDescRor();
 	}
-	
-	
 
 }

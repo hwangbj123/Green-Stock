@@ -25,6 +25,7 @@ public class Noticeboard {
 	private Timestamp noticeUpdated;	
 	private int noticeState;	
 	private int hitCount;
+	private int dataCount;
 	
 	
 

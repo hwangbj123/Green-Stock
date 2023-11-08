@@ -59,19 +59,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
           <div class="col-4 divCompanyNameInfo">
             <div class="divCompanyName">
               <div class="d-flex">
-                <h2 class="ec-fw-bold h2ComapnyName">${companyName}</h2>
-                <div class="ec-tools-sidebar divWebSocket">
-                  <div class="ec-fullscreen-mode">
-                    <div class="ec-fullscreen-switch">
-                      <div class="ec-fullscreen-btn">실시간</div>
-                      <div class="ec-fullscreen-on btnGetWebSocketData">On</div>
-                      <div class="ec-fullscreen-off btnGetWebSocketData">Off</div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <button class="btn btn-green" id="chatIn" data-companycode="${companyCode}">채팅방</button>
-                </div>
+                <p class="ec-fw-bold h2ComapnyName">${companyName}</p>
               </div>
               <div>
                 <p class="breadcrumbs" id="companyCode">
@@ -89,7 +77,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                   </h1>
                 </div>
               </div>
-
               <div class="col-lg-2 col-md-6 colCompanyStockInfo">
                 <div>
                   <p>전일</p>
@@ -154,11 +141,27 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
             </div>
           </div>
         </div>
-        <div class="mb-2 row">
-          <div class="col-8">
+        <div class="divBtnTab my-3 row">
+          <div class="col-6">
             <button class="btn btn-green btnChartDate" data-date="week">1W</button>
             <button class="btn btnChartDate" data-date="month">1M</button>
             <button class="btn btnChartDate" data-date="year">5M</button>
+          </div>
+          <div class="col-1">
+            <div class="ec-tools-sidebar divWebSocket">
+              <div class="ec-fullscreen-mode">
+                <div class="ec-fullscreen-switch">
+                  <div class="ec-fullscreen-btn">실시간</div>
+                  <div class="ec-fullscreen-on btnGetWebSocketData">On</div>
+                  <div class="ec-fullscreen-off btnGetWebSocketData">Off</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1">
+            <div>
+              <button class="btn btn-green" id="chatIn" data-companycode="${companyCode}">채팅방</button>
+            </div>
           </div>
           <div class="col-4">
             <div class="col-lg-3 d-flex areaTab">
@@ -336,7 +339,77 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                       </div>
                       <!-- 2nd Category tab end -->
                       <!-- 3rd Category tab start -->
-                      <div class="tab-pane fade divTab" id="divTab3" role="tabpanel">ccc</div>
+                      <div class="tab-pane fade divTab" id="divTab3" role="tabpanel">
+                        <div class="table-responsive">
+                          <table class="table" style="margin-bottom: 17px">
+                            <thead>
+                              <tr>
+                                <th>매도 상위</th>
+                                <th>거래량</th>
+                                <th>매수 상위</th>
+                                <th>거래량</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>${inquireMember.selnMbcrName1}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalSelnQty1}" /></td>
+                                <td>${inquireMember.shnuMbcrName1}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalShnuQty1}" /></td>
+                              </tr>
+                              <tr>
+                                <td>${inquireMember.selnMbcrName2}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalSelnQty2}" /></td>
+                                <td>${inquireMember.shnuMbcrName2}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalShnuQty2}" /></td>
+                              </tr>
+                              <tr>
+                                <td>${inquireMember.selnMbcrName3}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalSelnQty3}" /></td>
+                                <td>${inquireMember.shnuMbcrName3}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalShnuQty3}" /></td>
+                              </tr>
+                              <tr>
+                                <td>${inquireMember.selnMbcrName4}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalSelnQty4}" /></td>
+                                <td>${inquireMember.shnuMbcrName4}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalShnuQty4}" /></td>
+                              </tr>
+                              <tr>
+                                <td>${inquireMember.selnMbcrName5}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalSelnQty5}" /></td>
+                                <td>${inquireMember.shnuMbcrName5}</td>
+                                <td><fmt:formatNumber value="${inquireMember.totalShnuQty5}" /></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="text-center">
+                            <p>외국인 기관</p>
+                          </div>
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>날짜</th>
+                                <th>종가</th>
+                                <th>전일비</th>
+                                <th>외국인</th>
+                                <th>기관</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <c:forEach var="item" items="${inquireInvestors}">
+                                <tr>
+                                  <td>${item.stckBsopDate}</td>
+                                  <td class="text-end"><fmt:formatNumber value="${item.stckClpr}" /></td>
+                                  <td class="text-end ${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.prdyVrss}" /></td>
+                                  <td class="text-end ${item.frgnNtbyQty > 0 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.frgnNtbyQty}" /></td>
+                                  <td class="text-end ${item.orgnNtbyQty > 0 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.orgnNtbyQty}" /></td>
+                                </tr>
+                              </c:forEach>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                       <!-- 3rd Category tab end -->
                     </div>
                     <!-- Category Tab End -->
@@ -351,11 +424,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                     <h6>거래량 순위</h6>
                   </caption>
                   <c:forEach var="item" items="${rankOutPut}" varStatus="status">
-                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-                      <td>${status.count}. ${item.htsKorIsnm}</td>
-                      <td>${item.stckPrpr}</td>
-                      <td>${item.prdyVrss}</td>
-                      <td class="text-end">${item.prdyCtrt}%</td>
+                    <tr>
+                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+                      <td class="text-end ${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.stckPrpr}" /></td>
+                      <td class="text-end ${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}"><fmt:formatNumber value="${item.prdyVrss}" /></td>
+                      <td class="text-end ${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">${item.prdyCtrt}%</td>
                     </tr>
                   </c:forEach>
                 </table>

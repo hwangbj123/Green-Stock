@@ -1,107 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<header class="ec-header">
-  <!--Ec Header Top Start -->
-  <div class="header-top">
-    <div class="container">
-      <div class="row align-items-center">
-        <!-- Header Top social Start -->
-        <div class="col text-left header-top-left d-none d-lg-block">
-          <div class="header-top-social">
-            <span class="social-text text-upper">Follow us on:</span>
-            <ul class="mb-0">
-              <li class="list-inline-item">
-                <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
-              </li>
-              <li class="list-inline-item">
-                <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
-              </li>
-              <li class="list-inline-item">
-                <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
-              </li>
-              <li class="list-inline-item">
-                <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- Header Top social End -->
-        <!-- Header Top Message Start -->
-        <div class="col text-center header-top-center">
-          <div class="header-top-message text-upper"><span>Free Shipping</span>This Week Order Over - $75</div>
-        </div>
-        <!-- Header Top Message End -->
-        <!-- Header Top Language Currency -->
-        <div class="col header-top-right d-none d-lg-block">
-          <div class="header-top-lan-curr d-flex justify-content-end">
-            <!-- Currency Start -->
-            <div class="header-top-curr dropdown">
-              <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Currency <i class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-              <ul class="dropdown-menu">
-                <li class="active"><a class="dropdown-item" href="#">USD $</a></li>
-                <li><a class="dropdown-item" href="#">EUR €</a></li>
-              </ul>
-            </div>
-            <!-- Currency End -->
-            <!-- Language Start -->
-            <div class="header-top-lan dropdown">
-              <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Language <i class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-              <ul class="dropdown-menu">
-                <li class="active"><a class="dropdown-item" href="#">English</a></li>
-                <li><a class="dropdown-item" href="#">Italiano</a></li>
-              </ul>
-            </div>
-            <!-- Language End -->
-          </div>
-        </div>
-        <!-- Header Top Language Currency -->
-        <!-- Header Top responsive Action -->
-        <div class="col d-lg-none">
-          <div class="ec-header-bottons">
-            <!-- Header User Start -->
-            <div class="ec-header-user dropdown">
-              <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fi-rr-user"></i></button>
-              <ul class="dropdown-menu dropdown-menu-right">
-                <li><a class="dropdown-item" href="register.html">Register</a></li>
-                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                <li><a class="dropdown-item" href="login.html">Login</a></li>
-              </ul>
-            </div>
-            <!-- Header User End -->
-            <!-- Header Cart Start -->
-            <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
-              <div class="header-icon"><i class="fi-rr-heart"></i></div>
-              <span class="ec-header-count">4</span>
-            </a>
-            <!-- Header Cart End -->
-
-            <!-- Header menu Start -->
-            <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
-              <i class="fi fi-rr-menu-burger"></i>
-            </a>
-            <!-- Header menu End -->
-          </div>
-        </div>
-        <!-- Header Top responsive Action -->
-      </div>
-    </div>
-  </div>
-  <!-- Ec Header Top  End -->
-  <!-- Ec Header Bottom  Start -->
+<header class="ec-header" style="position: relative !important; z-index: 200 !important">
+  <!-- Header Start -->
   <div class="ec-header-bottom d-none d-lg-block">
     <div class="container position-relative">
       <div class="row">
         <div class="ec-flex">
-          <!-- Ec Header Logo Start -->
+          <!-- Header Logo Start -->
           <div class="align-self-center">
             <div class="header-logo">
-              <a href="index.html"
-                ><img src="/resources/img/G_logo.jpg" alt="Site Logo" /><img class="dark-logo" src="/resources/images/logo/dark-logo.png" alt="Site Logo" style="display: none"
-              /></a>
+              <a href="/main"><img src="/resources/img/G_logo.jpg" alt="/resources/img/G_logo.jpg" /></a>
             </div>
           </div>
-          <!-- Ec Header Logo End -->
+          <!-- Header Logo End -->
 
-          <!-- Ec Header Search Start -->
+          <!-- Header Search Start -->
           <div class="align-self-center">
             <div class="header-search">
               <form class="ec-btn-group-form" action="/stock/domestic" method="get">
@@ -110,33 +22,48 @@
               </form>
             </div>
           </div>
-          <!-- Ec Header Search End -->
+          <!-- Header Search End -->
 
-          <!-- Ec Header Button Start -->
+          <!-- Header Button Start -->
           <div class="align-self-center">
             <div class="ec-header-bottons">
               <!-- Header User Start -->
-              <div class="ec-header-user dropdown">
-                <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fi-rr-user"></i></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a class="dropdown-item" href="register.html">Register</a></li>
-                  <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                  <li><a class="dropdown-item" href="login.html">Login</a></li>
-                </ul>
-              </div>
-              <!-- Header User End -->
-              <!-- Header wishlist Start -->
-              <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
-                <div class="header-icon"><i class="fi-rr-heart"></i></div>
-                <span class="ec-header-count">4</span>
-              </a>
-              <!-- Header wishlist End -->
-              <!-- Header Cart Start -->
-              <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-                <div class="header-icon"><i class="fi-rr-shopping-bag"></i></div>
-                <span class="ec-header-count cart-count-lable">3</span>
-              </a>
-              <!-- Header Cart End -->
+              <c:if test="${empty principal}">
+                <li>
+                  <a href="http://localhost/user/sign-in" style="display: flex; align-items: center" class="login_btn"
+                    ><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Login</span></a
+                  >
+                </li>
+                <li>
+                  <a href="http://localhost/user/sign-up" class="signIn_button" style="display: flex; align-items: center"
+                    ><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a
+                  >
+                </li>
+              </c:if>
+              <c:if test="${principal.roletypeId == 1}">
+                <li>
+                  <a href="http://localhost/user/verify-user" style="display: flex; align-items: center" class="login_btn"
+                    ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">User-Info</span></a
+                  >
+                </li>
+                <li>
+                  <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
+                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+                  >
+                </li>
+              </c:if>
+              <c:if test="${principal.roletypeId == 0}">
+                <li>
+                  <a href="http://localhost/admin/main" style="display: flex; align-items: center" class="login_btn"
+                    ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Admin-Page</span></a
+                  >
+                </li>
+                <li>
+                  <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
+                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+                  >
+                </li>
+              </c:if>
             </div>
           </div>
         </div>
@@ -151,19 +78,26 @@
         <!-- Ec Header Logo Start -->
         <div class="col">
           <div class="header-logo">
-            <a href="index.html"
-              ><img src="/resources/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="/resources/images/logo/dark-logo.png" alt="Site Logo" style="display: none"
-            /></a>
+            <a href="index.html"><img src="/resources/img/G_logo.jpg" alt="Site Logo" /></a>
           </div>
         </div>
         <!-- Ec Header Logo End -->
         <!-- Ec Header Search Start -->
+        <div class="col d-flex justify-content-center align-items-center">
+          <div class="header-search">
+            <form class="ec-btn-group-form" action="#">
+              <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+              <button class="submit" type="submit"><i class="fi-rr-search"></i></button>
+            </form>
+          </div>
+        </div>
+        <!-- Ec Header Search End -->
       </div>
     </div>
   </div>
   <!-- Header responsive Bottom  End -->
   <!-- EC Main Menu Start -->
-  <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav">
+  <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav" style="z-index: 100 !important">
     <div class="container position-relative">
       <div class="row">
         <div class="col-md-12 align-self-center">
@@ -365,12 +299,19 @@
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="javascript:void(0)">전문가</a>
+                <a href="javascript:void(0)">Elements</a>
                 <ul class="sub-menu">
-                  <li><a href="/advisor/list">전문가 목록</a></li>
-                  <li><a href="/advisor/register">전문가 신청하기</a></li>
+                  <li><a href="elemets-products.html">Products</a></li>
+                  <li><a href="elemets-typography.html">Typography</a></li>
+                  <li><a href="elemets-title.html">Titles</a></li>
+                  <li><a href="elemets-categories.html">Categories</a></li>
+                  <li><a href="elemets-buttons.html">Buttons</a></li>
+                  <li><a href="elemets-tabs.html">Tabs</a></li>
+                  <li><a href="elemets-accordions.html">Accordions</a></li>
+                  <li><a href="elemets-blog.html">Blogs</a></li>
                 </ul>
               </li>
+              <li><a href="offer.html">Hot Offers</a></li>
             </ul>
           </div>
         </div>

@@ -188,7 +188,7 @@ public class StockApiService {
 
 		domesticStockSearchDto.setDomesticStockCurrentPriceList(dtoList); // API에서 불러온 데이터 넣기
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
-		domesticStockSearchDto.setPagination(new Pagination(total, page)); // 페이지 네이션
+		domesticStockSearchDto.setPagination(new Pagination(total, page, 5)); // 페이지 네이션
 
 		log.debug("total {}", total);
 		log.debug("start {}", start);
@@ -264,6 +264,68 @@ public class StockApiService {
 				.header(TR_ID, trId)
 				.retrieve()
 				.bodyToMono(String.class)
+				.block();
+	}
+
+	// 주식현재가 회원사
+	public ResponseApiInfo<?> getInquireMember(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-member";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010600"; // 거래ID
+
+		WebClient webClient = buildWebClient();
+
+		return webClient
+				.get()
+				.uri(uribuilder -> uribuilder
+						.path(uri)
+						.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+						.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+						.build())
+				.header(CONTENT_TYPE, contentType)
+				.header(AUTHORIZATION, auth)
+				.header(APP_KEY, appKey)
+				.header(APP_SECRET, appSecret)
+				.header(TR_ID, trId)
+				.retrieve()
+				.bodyToMono(ResponseApiInfo.class)
+				.block();
+	}
+
+	// 주식현재가 투자자
+	public ResponseApiInfoList<?> getInquireInvestor(String companyCode) {
+		// DB 조회해서 접근토큰 유효한지 보고 다시 가져올지 확인하기
+		AccessTokenInfo accessToken = validateAccessToken();
+		// URI
+		String uri = "/uapi/domestic-stock/v1/quotations/inquire-investor";
+		// parameter
+		// header
+		String contentType = "application/json";
+		String auth = accessToken.getTokenType().concat(" " + accessToken.getAccessToken());
+		String trId = "FHKST01010900"; // 거래ID
+
+		WebClient webClient = buildWebClient();
+
+		return webClient
+				.get()
+				.uri(uribuilder -> uribuilder
+						.path(uri)
+						.queryParam("FID_COND_MRKT_DIV_CODE", "J") // 조건 시장 분류 코드
+						.queryParam("FID_INPUT_ISCD", companyCode) // FID 입력 종목코드
+						.build())
+				.header(CONTENT_TYPE, contentType)
+				.header(AUTHORIZATION, auth)
+				.header(APP_KEY, appKey)
+				.header(APP_SECRET, appSecret)
+				.header(TR_ID, trId)
+				.retrieve()
+				.bodyToMono(ResponseApiInfoList.class)
 				.block();
 	}
 

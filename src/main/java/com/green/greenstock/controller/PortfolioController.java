@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class TestController {
+public class PortfolioController {
 	
 	@GetMapping("/test")
 	public String test() {

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,17 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Advisor {
-
-    private int advisorId;
-    private String advisor_full_name;
-    private String advisor_nick_name;
-    private String career;
-    private String introduction;
-    private int subscriptionCost;
-    private int status;
-    private LocalDateTime createdAt;
-    private int userId;
+public class Image {
+    
     private int imgId;
-
+    private String imgName;
+    private String parentName;
+    private int parent;
+    private LocalDateTime createdAt;
 }
