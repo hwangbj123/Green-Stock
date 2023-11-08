@@ -2,7 +2,8 @@ package com.green.greenstock.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.green.greenstock.repository.interfaces.MyStocksRepository;
 import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.interfaces.StockRepository;
 import com.green.greenstock.repository.interfaces.TradeRepository;
+import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.CrawlService;
 import com.green.greenstock.service.PortfolioService;
 
@@ -53,6 +55,9 @@ public class PortfolioRestController {
 	
 	@Autowired
 	CrawlService crawlService;
+	
+	@Autowired
+	HttpSession session;
 
 	@GetMapping("/getMyPortfolioList/{id}")
 	public List<MyPortfolio> test(@PathVariable int id) {
@@ -62,13 +67,15 @@ public class PortfolioRestController {
 
 	@GetMapping("/getUserid")
 	public int getUserId() {
-		return 1;
+		User user = (User) session.getAttribute("principal");
+		return user.getId(); 
 	}
 
 	@PostMapping("/addPortfolio")
 	public int postExample(@RequestBody MyPortfolio pf) {
 		// pf null 처리 해야됨.
-		portfolioRepository.savePortfolio(pf, 1);
+		User user = (User) session.getAttribute("principal");
+		portfolioRepository.savePortfolio(pf, user.getId());
 		return 1;
 	}
 
@@ -193,8 +200,8 @@ public class PortfolioRestController {
 	public List<GrowthLogDTO> getMonthlyAsset() {
 		List<GrowthLogDTO> glist = new ArrayList<>();
 		List<Double> list = new ArrayList<>();
-		glist = growthLogRepository.findGrowthLogByPid(31);
-		System.out.println(glist);
+		User user = (User) session.getAttribute("principal");
+		glist = growthLogRepository.findGrowthLogByPid(user.getId());
 		glist.forEach(e -> {
 			// e.set(e.getLogDate().replace("%",""));
 			e.setRor(e.getRor().replace("%", ""));
@@ -260,12 +267,11 @@ public class PortfolioRestController {
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}
 
-	@GetMapping("/getIndexData")
-	public Map<String,String> bcd() {
-		System.out.println(crawlService.indexCrawl());
-		crawlService.newsCrawl();
-		return crawlService.indexCrawl();
-	}
+	/*
+	 * @GetMapping("/getIndexData") public Map<String,String> bcd() {
+	 * System.out.println(crawlService.indexCrawl()); crawlService.newsCrawl();
+	 * return crawlService.indexCrawl(); }
+	 */
 
 	@GetMapping("/getRanking")
 	public List<MyPortfolio> getRanking() {
