@@ -18,4 +18,6 @@ public interface MailCreateService {
 
 	MimeMessage createUserIdMessage(String to, String userId) throws MessagingException, UnsupportedEncodingException;
 
+	// advisor 반려 메시지 송신 msg 에는 반려사유.
+	int createRefuseMessage(String to, String msg) throws MessagingException, UnsupportedEncodingException;
 }

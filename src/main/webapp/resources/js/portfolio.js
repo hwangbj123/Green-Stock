@@ -87,7 +87,7 @@ function makeAddPortfolioDiv() {
 	smallCardInnerWrapper.append(smallCard);
 	smallCard.append(cardBody);
 	cardBody.append(plusIcon);
-	smallCard.append($('<p style = "text-align:center">add your portfolio</p>'));
+	smallCard.append($('<p style = "text-align:center">포트폴리오 추가</p>'));
 	smallCard.on('click', () => smallCardClicked('addCard'));
 }
 
@@ -156,9 +156,7 @@ function smallCardClicked(id) {
 		if (id == 'addCard') {
 			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
 			$('#' + id).attr('data-clicked', 'true');
-
 			detatchAll();
-
 			addCardClicked();
 		} else {
 			elements.each((idx, e) => e.setAttribute("data-clicked", "false"));
@@ -206,7 +204,7 @@ async function setPortfolioInfo(data) {
 	console.log(rorData);
 	let portfolioInfoWrapper = $('<div id = "portfolioInfoWrapper" style = "width : 100%; height :90%;margin:auto">');
 	$('#portfolioInfo').append(portfolioInfoWrapper);
-	let keyArr = ['title', 'dis', 'Asset', 'sellAmount', 'TotalAsset', 'totalStock', 'ROR'];
+	let keyArr = ['제목', '설명', '현재자산', '판매금', '총자산', '보유주식량', '수익률'];
 	keyArr.forEach((e, idx) => {
 		let div = $('<div id="infoRows_' + idx + '" style="margin-bottom : 5%;width : 100%;display: flex; height: 10%;">');
 		if (e == "ROR") { div.css('heigth', '20%') }
@@ -297,7 +295,7 @@ function setRanking() {
 		//let width = $('#user-acquisition').css('width');
 		let rankingWrapper = $('<div id = "rankingBodyInner" style = "display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
 		$('#rankingBody').append(rankingWrapper);
-		let thArr = ['rank', 'userid', 'title', 'ROR'];
+		let thArr = ['랭킹', '아이디', '제목', '수익률'];
 		thArr.forEach(e => {
 			rankingWrapper.append($('<div class="ths" style = "text-align:center;">' + e + '</div>'));
 		});
@@ -306,21 +304,21 @@ function setRanking() {
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.userId + '</div>');
 			let title = $('<div data-bs-toggle="modal" data-bs-target="#modalContact" class="view-detail" style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis; cursor : pointer">' + e.title + '</div>')
 			rankingWrapper.append(title);
-			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '</div>');
-			title.on('click', () => titleClicked(e.pid, idx+1));
+			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '%</div>');
+			title.on('click', () => titleClicked(e.pid, idx + 1));
 		});
 	});
 }
 
-function titleClicked(pid,rank) {
+function titleClicked(pid, rank) {
 	$.get('portfolio/getMyPortfolioInfo/' + pid, function(data) {
 		console.log(data);
 		$('#user_rank').html(rank);
 		$('#modal_pfName').html(data.title);
 		$('#modal_pfDisc').html(data.discription);
 		$('#modal_ror').html(data.ror);
-		$('#modal_pfReg').html(data.regDate.slice(0,10));
-		
+		$('#modal_pfReg').html(data.regDate.slice(0, 10));
+
 		if ($('#rankingDoChart').length > 0) {
 			$('#rankingDoChart').remove();
 		}
@@ -520,10 +518,10 @@ async function setMyStock(data) {
 		let th = $('<th>' + e + '</th>');
 		thead.append(th);
 	})
-	let amount = $('<th>amount</th>');
-	let nowPriceTh = $('<th>nowPrice</th>')
-	let nowRor = $('<th>ROR</th>');
-	let totalAmountTh = $('<th>totalAmount</th>')
+	let amount = $('<th>보유량</th>');
+	let nowPriceTh = $('<th>현재가</th>')
+	let nowRor = $('<th>수익률</th>');
+	let totalAmountTh = $('<th>총합</th>')
 	thead.append(amount);
 	thead.append(nowPriceTh);
 	thead.append(nowRor);
@@ -591,7 +589,7 @@ async function setTradeLog(data) {
 		console.log(data);
 	})
 
-	let headArr = ['주식명', '주식코드', '거래타입', '갯수', '가격', '총량', '거래일'];
+	let headArr = ['주식명', '주식코드', '거래타입', '갯수', '가격', '총합', '거래일'];
 	let thead = $('<thead >');
 	headArr.forEach(e => {
 		let th = $('<th>' + e + '</th>');
@@ -634,11 +632,11 @@ function addCardClicked() {
 
 	let nameSpan = $('<span class="ec-register-wrap ec-register-half" >');
 	let titlelabel = $('<label style = "height : 5%;width : 100%">Title</label>');
-	let titleinput = $('<input id = "titleInput" type="text" placeholder="포트폴리오 제목을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;padding-left : 1%;"required="">');
+	let titleinput = $('<input id = "titleInput" type="text" placeholder="포트폴리오 제목." style = "width: 90% ;height : 50%;margin-top : 2%;padding-left : 1%;"required="">');
 
 	let dsSpan = $('<span style = "margin-top:10%" class="ec-register-wrap ec-register-half">');
 	let dslabel = $('<label style = "height : 5%;width : 100%">discription</label>');
-	let dsinput = $('<input id = "discriptionInput" type="text" placeholder="포트폴리오 설명을 입력하세요." style = "width: 90% ;height : 50%;margin-top : 2%;padding-left : 1%;"required="">');
+	let dsinput = $('<input id = "discriptionInput" type="text" placeholder="포트폴리오 설명." style = "width: 90% ;height : 50%;margin-top : 2%;padding-left : 1%;"required="">');
 
 	$('#portfolioInfo').append(portfolioRegDiv);
 	portfolioRegDiv.append(titleDiv);
@@ -841,39 +839,31 @@ function delButtonClicked(id) {
 // info 관련 모든 정보를 detatch
 // small 카드를 눌렀을 시 실행된 함수로 append 된 tag 들이 모두 사라진다.
 function detatchAll() {
-	console.log('실행됨');
-	if ($('#portfolioInfoWrapper').length > 0 || $('#donutChartBody').children().length > 0 || $('#myStockCardTable').children().length > 0 || $('#assetBody').children().length > 0) {
-		console.log('detatchInfoWrapper')
-		$('#portfolioInfoWrapper').remove();
-		$('#donutChartBody').children().each((idx, e) => {
-			$(e).remove();
-		});
-		$('#donutChartBody').children().each((idx, e) => {
-			$(e).remove();
-		});
-		$('#assetBody').children().each((idx, e) => {
-			$(e).remove();
-		});
-		console.log('실행');
-	}
-	if ($('#cardFooterWrapper').length > 0) {
-		$('#cardFooterWrapper').remove();
-	}
-	if ($('#portfolioRegWrapper').length > 0) {
-		$('#portfolioRegWrapper').remove();
-	}
-	if ($('#myStockCardTable').children().length > 0) {
-		$('#myStockCardTable').children().each((idx, e) => {
-			$(e).remove();
-		})
-		console.log('실행');
-	}
-	if ($('#rankingBodyInner').length > 0) {
-		$('#rankingBodyInner').remove();
-	}
-	if ($('#myTradeLogTable').children().length > 0) {
-		$('#myTradeLogTable').children().remove();
-	}
+	console.log($('#myStockCardTable').children().length);
+	$('#portfolioInfoWrapper').remove();
+	$('#donutChartBody').children().each((idx, e) => {
+		$(e).remove();
+	});
+	$('#donutChartBody').children().each((idx, e) => {
+		$(e).remove();
+	});
+	$('#assetBody').children().each((idx, e) => {
+		$(e).remove();
+	});
+	console.log('실행');
+	$('#cardFooterWrapper').remove();
+	$('#portfolioRegWrapper').remove();
+	$('#myStockCardTable').children().each((idx, e) => {
+		console.log('실행됨');
+		console.log(e);
+		$(e).remove();
+	})
+	$('#rankingBodyInner').remove();
+	$('#myTradeLogTable').children().each((idx, e) => {
+		console.log('실행됨');
+		console.log(e);
+		$(e).remove();
+	})
 }
 
 // 새 창을띄우고, placeholder 에 살 주식의 이름을 띄워준다.

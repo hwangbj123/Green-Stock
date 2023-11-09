@@ -68,7 +68,11 @@ public class PortfolioRestController {
 	@GetMapping("/getUserid")
 	public int getUserId() {
 		User user = (User) session.getAttribute("principal");
-		return user.getId(); 
+		if(user != null) {
+			return user.getId(); 
+		}else {
+			return (Integer) null;
+		}
 	}
 
 	@PostMapping("/addPortfolio")

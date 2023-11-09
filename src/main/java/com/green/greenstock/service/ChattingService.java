@@ -60,8 +60,8 @@ public class ChattingService {
 		return chattingRepository.countChatList(paging);
 	}
 	
-	public List<ChattingRoom> selectChatListNotPaging(int userId) {
-		return chattingRepository.selectChatListNotPaging(userId);
+	public List<ChattingRoom> selectChatListNotPaging(User user) {
+		return chattingRepository.selectChatListNotPaging(user);
 	}
 	
 	public List<ChattingRoom> advisorChatList(int userId) {

@@ -61,14 +61,14 @@
 				<div class="ec-content-wrapper" style="width: 50%; margin: auto;">
 					<div class="content">
 						<!-- Top Statistics -->
-						<H2>My Portfolios</H2>
+						<H2>내 포트폴리오</H2>
 						<div style="margin-top: 3%" id="smallCardOuterWrapper" class="row"></div>
 
 						<div class="row">
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<div class="card card-default" style="height: 100%">
 									<div class="card-header justify-content-center">
-										<h2>Portfolio Info</h2>
+										<h2>포트폴리오 정보</h2>
 									</div>
 									<div id="portfolioInfo" class="card-body"></div>
 									<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
@@ -78,7 +78,7 @@
 								<!-- Doughnut Chart -->
 								<div class="card card-default" style="height: 100%">
 									<div class="card-header justify-content-center">
-										<h2>Stocks Overview</h2>
+										<h2>주식 오버뷰</h2>
 									</div>
 									<div id="donutChartBody" class="card-body"></div>
 								</div>
@@ -86,8 +86,8 @@
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<!-- Sales Graph -->
 								<div id="user-acquisition" class="card card-default">
-									<div class="card-header">
-										<h2 id = "modal_ranking">Ranking</h2>
+									<div class="card-header justify-content-center">
+										<h2 id = "modal_ranking">랭킹</h2>
 									</div>
 									<div id="rankingBody" style="overflow: auto" class="card-body">
 										<div class="tab-content" id="rankingWrapper"></div>
@@ -102,7 +102,7 @@
 									class="card card-table-border-none card-default recent-orders"
 									id="recent-orders">
 									<div class="card-header justify-content-between">
-										<h2>My Stock</h2>
+										<h2>내 주식</h2>
 										<span id="addStock"
 											style="width: 5%; height: 100%; cursor: pointer"
 											class="mdi mdi-clipboard-plus"></span>
@@ -127,7 +127,7 @@
 									class="card card-table-border-none card-default recent-orders"
 									id="recent-orders">
 									<div class="card-header justify-content-between">
-										<h2>Trade log</h2>
+										<h2>거래 기록</h2>
 									</div>
 									<div class="card-body pt-0 pb-5"
 										style="overflow: auto; height: 300px;">
@@ -152,7 +152,7 @@
 									<div class="no-gutters">
 										<div>
 											<div class="card-header justify-content-between">
-												<h2>Daily Growth</h2>
+												<h2>포트폴리오 성장률</h2>
 												<!-- <div class="date-range-report ">
 												<span></span>
 											</div> -->
@@ -232,12 +232,12 @@
 
 								<div class="d-flex justify-content-between" style=  "margin-top : 10%">
 									<div class="text-center pb-4">
-										<h6 class="text-dark pb-2">Ranking</h6>
+										<h6 class="text-dark pb-2">랭킹</h6>
 										<p id = "user_rank">12</p>
 									</div>
 
 									<div class="text-center pb-4">
-										<h6 class="text-dark pb-2">ROR</h6>
+										<h6 class="text-dark pb-2">수익률</h6>
 										<p id = "modal_ror">11.33 %</p>
 									</div>
 

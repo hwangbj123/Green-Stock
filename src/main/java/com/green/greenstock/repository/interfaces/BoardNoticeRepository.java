@@ -3,6 +3,7 @@ package com.green.greenstock.repository.interfaces;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.green.greenstock.repository.model.Noticeboard;
 
@@ -14,10 +15,10 @@ public interface BoardNoticeRepository {
 	/**
 	 * 공지사항 목록
 	 * @return
-	 */
-	public List<Noticeboard>findAll(int offset);
-	
-	
+	 */	
+	public List<Noticeboard> findAll(@Param("offset")int offset ,
+			@Param("noticeState") String noticeState, 
+			@Param("noticeTitle")String noticeTitle );
 	/**
 	 * 공지사항 작성
 	 * @param noticeboard
@@ -54,9 +55,15 @@ public interface BoardNoticeRepository {
 	 */
 	public int noticeHitCount(int id);
 	
+	/**
+	 * 공개 비공개 처리
+	 * 
+	 */
+	public int noticeState(int id);
+	
 	
 	/**
-	 * 한페이지의 전체 글수 는 몇개인가?
+	 * 공개, 비공개
 	 * @param id
 	 * @return
 	 */
@@ -64,16 +71,8 @@ public interface BoardNoticeRepository {
 	
 	
 	
-	/**
-	 * 검색 기능
-	 */
-	
-	
-	
-	/**
-	 * 파일 올리기 기능 
-	 */
-	
+
+
 	
 	/**
 	 * 카테고리 기능

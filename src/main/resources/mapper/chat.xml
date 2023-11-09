@@ -68,7 +68,9 @@
 			  (select count(user_id) from subscribe where subscribe.companyCode = v.companyCode) countUser
 		from subscribe s
 		join domestic_stock_code v on s.companyCode = v.companyCode
-		where s.user_id = #{userId}
+		<if test="roletypeId == 1">
+			where s.user_id = #{id}
+		</if>
 		group by companyCode, companyName
 	</select>
 
