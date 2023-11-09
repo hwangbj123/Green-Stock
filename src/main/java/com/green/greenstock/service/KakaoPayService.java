@@ -23,6 +23,7 @@ import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.PayRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
+import com.green.greenstock.repository.model.PaySubscribe;
 
 @Slf4j
 @Service
@@ -147,6 +148,8 @@ public class KakaoPayService {
             pay.setAmountTotal(pay.getAmountTotal()-cancelAmount);
             
             modifyPayInfo(pay);
+            
+            deletePaySubscribe(pay.getTid());
         
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
@@ -170,5 +173,20 @@ public class KakaoPayService {
 
 	public Pay findPayInfoById(Integer id) {
 		return payRepository.findPayInfoById(id);
+	}
+	
+	private void deletePaySubscribe(String tid) {
+		payRepository.deletePaySubscribe(tid);		
+	}
+
+	public void insertPaySubscribeInfo(PaySubscribe paySubscribe) {
+		int result = payRepository.insertPaySubscribeInfo(paySubscribe);
+		if(result != 1) {
+			throw new CustomRestfulException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+		}	
+	}
+
+	public Pay findPayInfoByTid(String tid) {
+		return payRepository.findPayInfoByTid(tid);
 	}
 }

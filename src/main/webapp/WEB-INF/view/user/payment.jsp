@@ -64,7 +64,7 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>상품명</th>
+                                                    <th>구독명</th>
                                                     <th>결제번호</th>
                                                     <th>총액</th>
                                                     <th>결제시각</th>
@@ -75,27 +75,20 @@
                                             	<c:forEach var="pay" items="${payList}">
                                                 <tr>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.itemName}</span></td>
+                                                            class="amount">${pay.advisorNickName}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
                                                             class="amount">${pay.tid}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.amountTotal}</span></td>
+                                                            class="amount">${pay.amount}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.approvedAt}</span></td>
+                                                            class="amount">${pay.createdAt}</span></td>
                                                     <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="/pay/refund?id=${pay.id}" class="btn btn-danger" style="font-size: 10px; color: white; width:80px; padding: 0 8px;">환불하기</a>
+                                                        <a href="/pay/refund?tid=${pay.tid}" class="btn btn-danger" style="font-size: 10px; color: white; width:80px; padding: 0 8px;">환불하기</a>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="ec-cart-update-bottom">
-                                                <button class="btn btn-primary">Check Out</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -134,8 +127,8 @@
                                             </form>
                                         </div>
                                         <div class="ec-cart-summary-total">
-                                            <span class="text-left">총 구독료 : </span>
-                                            <span class="text-right">${totalAmount}</span>
+                                            <span class="text-left" style="color: #444444; font-size: 14px; line-height: 24px; letter-spacing: 0; font-weight: bolder;">총 구독료 : </span>
+                                            <span class="text-right" style="color: #555; font-size: 14px; line-height: 24px; font-weight: 500;">${totalAmount}원</span>
                                         </div>
                                     </div>
 

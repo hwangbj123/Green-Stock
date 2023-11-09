@@ -30,6 +30,7 @@ import com.green.greenstock.dto.NaverResponse;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.model.Pay;
+import com.green.greenstock.repository.model.PaySubscribe;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.MailSendService;
 import com.green.greenstock.service.SocialLoginService;
@@ -470,10 +471,10 @@ public class UserController {
 	@GetMapping("/payment")
 	public String UserPayment(Model model) {
 		User user = (User)session.getAttribute("principal");
-		List<Pay> payList = userService.findUserPayment(user.getId());
+		List<PaySubscribe> payList = userService.findUserPayment(user.getId());
 		int totalAmount = 0;
-		for (Pay pay : payList) {
-			totalAmount += pay.getAmountTotal();
+		for (PaySubscribe pay : payList) {
+			totalAmount += pay.getAmount();
 		}
 		model.addAttribute("payList", payList);
 		model.addAttribute("totalAmount", totalAmount);

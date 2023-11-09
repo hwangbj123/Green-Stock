@@ -9,6 +9,11 @@
 	  	values(#{aid}, #{tid}, #{cid}, #{sid}, #{itemName}, #{amountTotal}, #{createdAt}, #{approvedAt}, #{userId})
   	</insert>
   	
+  	<insert id="insertPaySubscribeInfo">
+	  	insert into pay_subscribe(tid ,advisor_id, advisor_nick_name, user_id, amount, created_at)
+	  	values(#{tid}, #{advisorId}, #{advisorNickName}, #{userId}, #{amount}, #{createdAt})
+  	</insert>
+  	
   	<update id="modifyPayInfo">
 		update pay_tb set amountTotal = #{amountTotal} where id = #{id}
 	</update>
@@ -16,5 +21,13 @@
 	<select id="findPayInfoById" resultType="Pay">
 		select * from pay_tb where id = #{id}
 	</select>
+	
+	<select id="findPayInfoByTid" resultType="Pay">
+		select * from pay_tb where tid = #{tid}
+	</select>
+	
+	<delete id="deletePaySubscribe">
+		delete from pay_subscribe where tid = #{tid}
+	</delete>
   	
 </mapper>

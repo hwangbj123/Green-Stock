@@ -39,13 +39,13 @@
 		            </div>
 		          </div>
 		          <div class="card-body p-5">
-		            <h4 class="text-dark mb-5">회원정보</h4>
+		            <h4 class="text-dark mb-5">회원 정보 수정</h4>
 		
 		            <form action="/user/modify-userInfo" method="post" class="signUpForm">
 		              <div class="row">
 		                <div class="form-group col-md-12 mb-4" style="margin-bottom:0px !important;">
 		                  <div class="input-group">
-		                  	<input type="text" class="form-control" id="userName" placeholder="Username" name="userName" value="${principal.userName}">
+		                  	<input type="text" class="form-control" id="userName" placeholder="아이디" name="userName" value="${principal.userName}">
 		                  	<div class="input-group-append">
 		                  		<input type="hidden" class="form-control" id="pName" value="${principal.userName}">
 		                  		<button class="btn btn-primary bg-primary" type="button" id="checkId">중복확인</button>
@@ -54,15 +54,15 @@
 		                </div>
 		                
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+		                  <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password">
 		                </div>
 		
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password">
+		                  <input type="password" class="form-control" id="cpassword" placeholder="비밀번호 확인">
 		                </div>
 		
 				        <div class="input-group" style="margin-bottom:0px !important;">
-			                <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="${principal.email}">
+			                <input type="text" class="form-control" id="email" placeholder="이메일" name="email" value="${principal.email}">
 			                <input type="hidden" class="form-control" id="pEmail" placeholder="Email" value="${principal.email}">
 			                <div class="input-group-append">
 			                	<button class="btn btn-primary bg-primary" type="button" id="checkEmail">이메일 확인</button>
@@ -78,11 +78,11 @@
 		                </div> -->
 		                		
 				        <div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="tel" placeholder="Phone" name="tel" value="${principal.tel}">
+		                  <input type="text" class="form-control" id="tel" placeholder="휴대전화" name="tel" value="${principal.tel}">
 		                </div>
 		                
 		            	<div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="bDate" placeholder="Birthdate Ex : 1994-04-26" name="birthDate" value="<fmt:formatDate value="${principal.birthDate}" pattern="yyyy-MM-dd" />"></input>
+		                  <input type="text" class="form-control" id="bDate" placeholder="생년월일 Ex : 1994-04-26" name="birthDate" value="<fmt:formatDate value="${principal.birthDate}" pattern="yyyy-MM-dd" />"></input>
 		                </div>
 		                
 		                <div class="col-md-12 row">

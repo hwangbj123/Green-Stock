@@ -39,13 +39,13 @@
 		            </div>
 		          </div>
 		          <div class="card-body p-5">
-		            <h4 class="text-dark mb-5">Register</h4>
+		            <h4 class="text-dark mb-5">회원가입</h4>
 		
 		            <form action="/user/sign-up" method="post" class="signUpForm">
 		              <div class="row">
 		                <div class="form-group col-md-12 mb-4" style="margin-bottom:0px !important;">
 		                  <div class="input-group">
-		                  	<input type="text" class="form-control" id="userName" placeholder="Username" name="userName">
+		                  	<input type="text" class="form-control" id="userName" placeholder="아이디" name="userName">
 		                  	<div class="input-group-append">
 		                  		<button class="btn btn-primary bg-primary" type="button" id="checkId">중복확인</button>
 		                  	</div>
@@ -53,15 +53,15 @@
 		                </div>
 		                
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+		                  <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password">
 		                </div>
 		
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password">
+		                  <input type="password" class="form-control" id="cpassword" placeholder="비밀번호 확인">
 		                </div>
 		
 				        <div class="input-group" style="margin-bottom:0px !important;">
-			                <input type="text" class="form-control" id="email" placeholder="Email" name="email">
+			                <input type="text" class="form-control" id="email" placeholder="이메일" name="email">
 			                <div class="input-group-append">
 			                	<button class="btn btn-primary bg-primary" type="button" id="checkEmail">이메일 확인</button>
 			                </div>
@@ -76,17 +76,17 @@
 		                </div> -->
 		                		
 				        <div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="tel" placeholder="Phone" name="tel">
+		                  <input type="text" class="form-control" id="tel" placeholder="휴대전화" name="tel">
 		                </div>
 		                
 		            	<div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="bDate" placeholder="Birthdate Ex : 1994-04-26" name="birthDate">
+		                  <input type="text" class="form-control" id="bDate" placeholder="생년월일 Ex : 1994-04-26" name="birthDate">
 		                </div>
 		                
 		                <div class="col-md-12">
-		                  <button type="submit" class="btn btn-primary btn-block mb-4 bg-primary">Register</button>
-		                  <p class="sign-upp">Already have an account?
-		                    <a class="text-blue" href="/user/sign-in">Sign in</a>
+		                  <button type="submit" class="btn btn-primary btn-block mb-4 bg-primary">회원가입</button>
+		                  <p class="sign-upp">이미 회원가입 하셨나요?
+		                    <a class="text-blue" href="/user/sign-in">로그인</a>
 		                  </p>
 		                </div>
 		              </div>
