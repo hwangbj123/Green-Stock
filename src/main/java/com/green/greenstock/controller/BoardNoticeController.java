@@ -34,19 +34,26 @@ public class BoardNoticeController {
 	/**
 	 * 
 	 * @param 어드민 상태 일때 보이는 공지사항 목록
-	 * @param 페이징 기능 추가 
+	 * @param 페이징 기능 추가 ,공개 비공개 추가 
 	 * @return adminNoticeList
 	 */
 	//공지사랑 목록 (어드민)	
 	@GetMapping("/admin/list")
-	public String adminListNotice(Model model, @RequestParam (defaultValue = "1") int page){	
+	public String adminListNotice(Model model, @RequestParam (defaultValue = "1") int page, String noticeState,
+		String noticeTitle){
+		//권한 있어야 접속 가능하게
+	
+		
 		//공지사항 목록을 불러오는 부분 	
 		int total =  boardNoticeService.noticeListCount();
-		Pagination paginaion =  new Pagination(total,page,10);		
-		int offset = paginaion.getStart();
-		System.out.println(offset);
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset);
+		Pagination paginaion =  new Pagination(total , page, 10);		
+		System.out.println(total);
+		int offset = paginaion.getStart();		
+		System.out.println(offset);		
+		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset, noticeState, noticeTitle);
+		System.out.println(listNotice);					
 		model.addAttribute("pagination",paginaion);
+		model.addAttribute("noticeTitle",noticeTitle);
 		if(listNotice.isEmpty()) {
 			model.addAttribute("noticeList",null);
 		}else {
@@ -55,6 +62,7 @@ public class BoardNoticeController {
 		return "notice/admin/adminNoticeList"; 
 		
 	}
+
 	/**
 	 * 
 	 * @param 일반 사용자한태 보여지는 공지사항 목록 
@@ -62,13 +70,14 @@ public class BoardNoticeController {
 	 * @return noticeList
 	 */
 	//공지사항 목록 리스트(일반)
-	 @GetMapping("/list") 
-	 public String listNotice(Model model, @RequestParam(defaultValue = "1") int page ){ //공지사항 목록을 불러오는 부분 List<Noticeboard>
+	 @GetMapping("/list")
+	 public String listNotice(Model model, @RequestParam(defaultValue = "1") int page, String noticeTitle){ //공지사항 목록을 불러오는 부분 List<Noticeboard>
 		 int total = boardNoticeService.noticeListCount(); 
 		 Pagination paginaion = new Pagination(total, page,10);
 		 int offset = paginaion.getStart();	
-		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset);
+		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset,"1", noticeTitle);
 		 model.addAttribute("pagination",paginaion);
+		 model.addAttribute("noticeTitle", noticeTitle);
 		 if(listNotice.isEmpty()) {
 			 model.addAttribute("noticeList",null);
 		 }else {
@@ -156,6 +165,10 @@ public class BoardNoticeController {
 		return "notice/noticeView";
 	}
 	
-	//파일올리기
+	
+
+	
+	
+	
 	
 }

@@ -2,55 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@ include file="/WEB-INF/view/layout/header.jsp" %> 
-
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-	 <link rel = "stylesheet" href="/"/>
-     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
-     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
-     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
- 
-     <!-- css Icon Font -->
-     <link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
- 
-     <!-- css All Plugins Files -->
-     <link rel="stylesheet" href="/resources/css/plugins/animate.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
- 
-     <!-- Main Style -->
-     <link rel="stylesheet" href="/resources/css/style.css" />
-     <link rel="stylesheet" href="/resources/css/responsive.css" />
- 
-     <!-- Background css -->
-     <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-         <!-- Vendor JS -->
-    <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
-    <script src="/resources/js/vendor/popper.min.js"></script>
-    <script src="/resources/js/vendor/bootstrap.min.js"></script>
-    <script src="/resources/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/resources/js/vendor/modernizr-3.11.2.min.js"></script>
-
-    <!--Plugins JS-->
-    <script src="/resources/js/plugins/swiper-bundle.min.js"></script>
-    <script src="/resources/js/plugins/countdownTimer.min.js"></script>
-    <script src="/resources/js/plugins/scrollup.js"></script>
-    <script src="/resources/js/plugins/jquery.zoom.min.js"></script>
-    <script src="/resources/js/plugins/slick.min.js"></script>
-    <script src="/resources/js/plugins/infiniteslidev2.js"></script>
-    <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
-    <script src="/resources/js/plugins/jquery.stxicky-sidebar.js"></script>
-
-    <!-- Main Js -->
-    <script src="/resources/js/vendor/index.js"></script>
-    <script src="/resources/js/main.js"></script>
-     
-</head>
 <body>
 
  <script type="text/javascript">
