@@ -88,6 +88,7 @@
 .chat-list {
 	height: 300px;
 	overflow: auto;
+	background-color: rgb(214, 227, 246); 
 }
 
 .chat-tb {
@@ -197,6 +198,7 @@
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
 }
+
 </style>
 </head>
 
@@ -243,14 +245,14 @@
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
 					<div id="news_left"
-						style="display: flex; width: 50%; height: 100%;">
+						style="width: 50%; height: 100%;">
 						<div style="width: 90%; height: 90%;">
 							<ul style="width: 100%;" id="news_left_list">
 							</ul>
 						</div>
 					</div>
 					<div id="news_right"
-						style="display: flex; width: 50%; height: 100%;">
+						style="width: 50%; height: 100%;">
 						<div style="width: 90%; height: 90%;">
 							<ul style="width: 100%;" id="news_right_list">
 							</ul>
@@ -333,15 +335,19 @@
 			<!--------- 채팅 리스트 ------------>
 			<div class="gstock-div chat-div">
 				<h6>채팅</h6>
-				<div style="display: flex;">
-					<div class="chat-category" id="chat-cate-stock">종목별</div>
-					<div class="chat-category" id="chat-cate-advisor">전문가</div>
-				</div>
 				<c:choose>
 					<c:when test="${not empty chatList}">
+						<div style="display: flex;">
+							<div class="chat-category" id="chat-cate-stock">종목별</div>
+							<div class="chat-category" id="chat-cate-advisor">전문가</div>
+						</div>
 						<div class="chat-list" id="chat-list">
 					</c:when>
 					<c:otherwise>
+						<div style="display: flex;">
+							<div id="chat-cate-stock"></div>
+							<div id="chat-cate-advisor"></div>
+						</div>
 						<div class="chat-list" style="background-color: rgb(70, 70, 70)">
 					</c:otherwise>
 				</c:choose>
@@ -416,7 +422,6 @@
 			document.getElementById("chat-advisor-tb").style.display="";
 			document.getElementById("chat-stock-tb").style.display="none";
 		}
-		chatCategoryStock();
 		document.getElementById("chat-cate-stock").addEventListener("click", function() {
 			chatCategoryStock();
 		});

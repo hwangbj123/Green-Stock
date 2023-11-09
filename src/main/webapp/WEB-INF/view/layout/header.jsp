@@ -35,8 +35,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       referrerpolicy="no-referrer"
     />
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    
-		
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Hi+Melody&display=swap" rel="stylesheet">
+	
     <!-- Vendor JS -->
     <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
     <script src="/resources/js/vendor/popper.min.js"></script>
@@ -59,9 +60,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
     <script src="/resources/js/main.js"></script>
     
     <style>
-	   	*:not(i), h5, h6{
-			font-family: 'Gowun Dodum', sans-serif !important;
-			font-weight: bolder;
+    	@font-face {
+		  font-family: "Dovemayo";
+		  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+		  font-weight: normal;
+		}
+	   	*:not(i), h5, h6, li{
+			font-family: 'Dovemayo', sans-serif !important;
+			font-weight: normal;
 		}
     </style>
   </head>
