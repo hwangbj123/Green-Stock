@@ -60,6 +60,9 @@
 					<td colspan="4" style="text-align: center;">
 						<!------검색 상태 표시 -->
 						<c:if test="${not empty paging.orderType}">
+							<c:if test="${paging.orderType eq 'id'}">
+									<c:out value='[번호순] '/>
+							</c:if>
 							<c:if test="${paging.orderType eq 'views'}">
 									<c:out value='[조회순] '/>
 							</c:if>
@@ -98,8 +101,7 @@
 	    	<table class="board-tb">
 	    		<tr>
 	    			<th style="width: 5%;">번호</th>
-	    			<th style="width: 10%;">카테고리</th>
-	    			<th style="width: 45%;">제목</th>
+	    			<th colspan="2" style="width: 55%;">제목</th>
 	    			<th style="width: 10%;">작성자</th>
 	    			<th style="width: 15%;">등록일</th>
 	    			<th style="width: 8%;">조회수</th>
@@ -108,7 +110,7 @@
 		    	<c:forEach var="board" items="${list}">
 		    		<tr>
 		    			<td>${board.id}</td>
-		    			<td>
+		    			<td style="text-align: right; padding-right: 15px;">
 		    				<c:forEach var="c" items="${cate}" varStatus="status">
            						<c:choose>
 	           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 1}">
