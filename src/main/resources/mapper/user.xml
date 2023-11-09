@@ -41,8 +41,8 @@
 		select * from user_tb order by id desc limit 10
 	</select>
 	
-	<select id="findUserPayment" resultType="Pay">
-		select * from pay_tb where user_id = #{id} order by id desc
+	<select id="findUserPayment" resultType="PaySubscribe">
+		select * from pay_subscribe where user_id = #{id} order by id desc
 	</select>
 	
 	<update id="modifyUserPw">

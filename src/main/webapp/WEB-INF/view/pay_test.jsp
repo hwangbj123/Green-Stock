@@ -48,7 +48,7 @@
 		                </div>
 
 				        <div class="input-group">
-			                <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="${principal.email}">
+			                <input type="text" class="form-control" id="email" placeholder="이메일" name="email" value="${principal.email}">
 			                <input type="hidden" class="form-control" id="pEmail" placeholder="Email" value="${principal.email}">
 		                </div>
 <!-- 				        <div class="form-group col-md-12 mb-4">
@@ -56,7 +56,7 @@
 		                </div> -->
 		                		
 				        <div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="tel" placeholder="Phone" name="tel" value="${principal.tel}">
+		                  <input type="text" class="form-control" id="tel" placeholder="휴대전화" name="tel" value="${principal.tel}">
 		                </div>
 		                
 		                <div class="col-md-12 row">

@@ -45,7 +45,7 @@
 		            <form action="/user/find-id" method="post" class="signUpForm" style="margin-top: 50px;">
 		              <div class="row">
 				        <div class="form-group col-md-12 mb-4">
-				            <input type="text" class="form-control" id="IdEmail" placeholder="Email" name="email">
+				            <input type="text" class="form-control" id="IdEmail" placeholder="이메일" name="email">
 		                </div>
 		                
 		                <div class="col-md-12" style="margin-top: 40px;">
@@ -73,11 +73,11 @@
 		            <form action="/user/modify-pw" method="post" class="signUpForm">
 		              <div class="row">
 		                <div class="form-group col-md-12 mb-4">
-		                  	<input type="text" class="form-control" id="pwUserName" placeholder="Username" name="userName">
+		                  	<input type="text" class="form-control" id="pwUserName" placeholder="아이디" name="userName">
 		                </div>
 		                
 				        <div class="input-group" style="margin-bottom:0px !important;">
-			                <input type="text" class="form-control" id="pwEmail" placeholder="Email" name="email">
+			                <input type="text" class="form-control" id="pwEmail" placeholder="이메일" name="email">
 			                <div class="input-group-append">
 			                	<button class="btn btn-primary bg-primary" type="button" id="checkEmail">이메일 확인</button>
 			                </div>
@@ -89,11 +89,11 @@
 		                </div>
 		                		                
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="password" placeholder="New Password" name="password" style="display: none;">
+		                  <input type="password" class="form-control" id="password" placeholder="새 비밀번호" name="password" style="display: none;">
 		                </div>
 		
 		                <div class="form-group col-md-12 mb-4">
-		                  <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" style="display: none;">
+		                  <input type="password" class="form-control" id="cpassword" placeholder="새 비밀번호 확인" style="display: none;">
 		                </div>
 		                
 		                <div class="col-md-12">

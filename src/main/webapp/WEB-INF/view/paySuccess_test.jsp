@@ -5,14 +5,15 @@
 <%@include file="/WEB-INF/view/layout/header.jsp"%>
 <div class="container d-flex align-items-center justify-content-center card-body" style="height:80vh;">
 	<div id="user-acquisition" class="card card-default d-flex align-items-center justify-content-center" style="width: 35%; padding: 40px;">
-		<div class="card-header bg-white" style="margin-bottom: 40px;">
-			<h2 class="text-dark">결제 완료</h2>
+		<div class="card-header bg-white" style="margin-bottom: 40px;  text-align: center;">
+			<img src="/resources/img/paycheck.png" style="width: 50px; display: block; margin: 0 auto;"></img>
+			<h2 class="text-dark" style="margin-top:20px;">결제 완료</h2>
 		</div>
 		<div class="card-body">
 			<p>결제 번호 : ${payInfo.tid}</p>
 			<p>결제 상품 : ${payInfo.item_name}</p>
 			<p>결제 총액 : ${payInfo.amount.total}</p>
-			<p>결제 승인 시각 : ${payInfo.approved_at} ${advisor.advisorNickName}</p>
+			<p>결제 승인 시각 : ${payInfo.approved_at}</p>
 		</div>
 		
 		<div>
