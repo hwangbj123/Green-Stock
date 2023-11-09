@@ -16,15 +16,16 @@ const advisorDetailInit = {
   },
 
   subscribe: function () {
-	let subBtn = document.getElementById("btnAdvisorSub");
-	let advisorId = subBtn.getAttribute("data-id");
+    let subBtn = document.getElementById("btnAdvisorSub");
+    let advisorId = subBtn.getAttribute("data-id");
     location.href = '/pay/kakao?advisorId=' + advisorId;
   },
 
   enterBoard: function () {
     // 권한 확인 
     // 게시판 이동
-    location.href = '/advisor/board';
+    const nickName = document.getElementById('advisorNickName');
+    location.href = `/advisor/sub/board/${nickName.textContent}`;
   },
 
   enterChat: function () {

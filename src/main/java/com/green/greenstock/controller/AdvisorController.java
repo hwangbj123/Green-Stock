@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
-import com.green.greenstock.handler.exception.UnAuthorizedException;
+import com.green.greenstock.handler.exception.PageNotFoundException;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.UserService;
@@ -37,7 +37,7 @@ public class AdvisorController {
     private final UserService userService;
 
     // 목록
-    @GetMapping("/list")
+    @GetMapping(value = { "/", "/list" })
     public String advisorList(Model model) {
         model.addAttribute("advisorResDtos", advisorService.findByStatusAuth(2));
         return "advisor/advisorList";
@@ -46,6 +46,10 @@ public class AdvisorController {
     // 세부사항
     @GetMapping("/{nickName}")
     public String advisorDetail(@PathVariable String nickName, Model model) {
+        if (nickName == null) {
+            throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
+        }
+
         model.addAttribute("advisor", advisorService.findByAdvisorNickName(nickName));
         return "advisor/advisorDetail";
     }
@@ -57,27 +61,22 @@ public class AdvisorController {
         return "advisor/advisorRegister";
     }
 
-    
     /**
      * 전문가 신청 기능
+     * 
      * @param advisorReqDto
      * @return 전문가 목록 페이지
      */
     @PostMapping("/register")
     public String advisorRegisterProc(AdvisorReqDto advisorReqDto) {
-        if(advisorReqDto == null){
+        if (advisorReqDto == null) {
             throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
         }
         // 유저 아이디 가져오기
-        // User user = (User) httpSession.getAttribute("principal");
-        
-        // if(user == null){
-        //     throw new UnAuthorizedException("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
-        // }
-        
+        User user = (User) httpSession.getAttribute("principal");
+
         // 유저 아이디 set
-        // advisorReqDto.setUserId(user.getId());
-        advisorReqDto.setUserId(1);
+        advisorReqDto.setUserId(user.getId());
 
         // 서비스 호출
         advisorService.saveAdvisor(advisorReqDto);
@@ -85,34 +84,33 @@ public class AdvisorController {
         return "redirect:/advisor/list";
     }
 
-    // 전문가 상담게시판 목록 페이지
-    @GetMapping("/board/{advisorNickName}")
-    public String advisorBoardList(@PathVariable String advisorNickName) {
-        // User user = (User) httpSession.getAttribute("principal");
-        // if(user == null){
-        //     throw new UnAuthorizedException("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
-        // }
+    @GetMapping("/sub")
+    public void sub() {
+        throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
+    }
 
-        
-        
+    // 전문가 상담게시판 목록 페이지
+    @GetMapping("/sub/board/{advisorNickName}")
+    public String advisorBoardList(@PathVariable String advisorNickName) {
+
         return "advisor/advisorBoardList";
     }
 
     // 전문가 상담게시판 글 보기 페이지
-    @GetMapping("/board/{advisorNickName}/{advisorBoardId}")
+    @GetMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public String advisorBoard(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
         return "advisor/advisorBoard";
     }
 
     // 전문가 상담게시판 글 쓰기 페이지
-    @GetMapping("/board/{advisorNickName}/write")
+    @GetMapping("/sub/board/{advisorNickName}/write")
     public String advisorBoardWrite() {
 
         return "advisor/";
     }
 
     // 전문가 상담게시판 글 쓰기 기능
-    @PostMapping("/board/{advisorNickName}/write")
+    @PostMapping("/sub/board/{advisorNickName}/write")
     public String advisorBoardWriteProc(@PathVariable String advisorNickName) {
         int advisorBoardId = 1;
         advisorNickName = "tom";
@@ -120,7 +118,7 @@ public class AdvisorController {
     }
 
     // 전문가 상담게시판 글 수정 기능
-    @PutMapping("/board/{advisorNickName}/{advisorBoardId}")
+    @PutMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public Map<String, String> advisorBoardUpdateProc(@PathVariable String advisorNickName,
             @PathVariable int advisorBoardId) {
 
@@ -128,7 +126,7 @@ public class AdvisorController {
     }
 
     // 전문가 상담게시판 글 삭제 기능
-    @GetMapping("/board/{advisorNickName}/delete/{advisorBoardId}")
+    @GetMapping("/sub/board/{advisorNickName}/delete/{advisorBoardId}")
     public String advisorBoardDelete(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
 
         return "redirect:/advisor/advisorBoard/" + advisorNickName;

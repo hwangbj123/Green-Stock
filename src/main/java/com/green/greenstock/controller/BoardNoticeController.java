@@ -31,11 +31,10 @@ public class BoardNoticeController {
 	private final BoardNoticeService boardNoticeService;
 
 	
-
 	/**
 	 * 
 	 * @param 어드민 상태 일때 보이는 공지사항 목록
-	 * 추가사항: 페이징 기능 추가 
+	 * @param 페이징 기능 추가 
 	 * @return adminNoticeList
 	 */
 	//공지사랑 목록 (어드민)	
@@ -47,17 +46,7 @@ public class BoardNoticeController {
 		int offset = paginaion.getStart();
 		System.out.println(offset);
 		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset);
-		
-		
-		
-		
 		model.addAttribute("pagination",paginaion);
-//		PageCriteriation pageCriteriation = new PageCriteriation(total, );			
-//		model.addAttribute("page",pageCriteriation);
-//		System.out.println("전체 데이터 갯수 :" + total);
-//		System.out.println("전체 페이지수 :" + listNotice(model, pageCriteriaDto));
-		
-		//System.out.println("asdasd" + pageCriteriaDto);
 		if(listNotice.isEmpty()) {
 			model.addAttribute("noticeList",null);
 		}else {
@@ -69,24 +58,26 @@ public class BoardNoticeController {
 	/**
 	 * 
 	 * @param 일반 사용자한태 보여지는 공지사항 목록 
+	 * @param 페이징 기능 추가 
 	 * @return noticeList
 	 */
 	//공지사항 목록 리스트(일반)
-	
-	/*
-	 * @GetMapping("/list") public String listNotice(Model model, @RequestParam
-	 * (defaultValue = "1") int page ){ //공지사항 목록을 불러오는 부분 List<Noticeboard>
-	 * listNotice = boardNoticeService.noticeListService(pageCriteriaDto); int total
-	 * = boardNoticeService.noticeListCount(pageCriteriaDto); PageCriteriation
-	 * pageCriteriation = new PageCriteriation(total, pageCriteriaDto);
-	 * model.addAttribute("page",pageCriteriation); if(listNotice.isEmpty()) {
-	 * model.addAttribute("noticeList",null); }else {
-	 * model.addAttribute("noticeList", listNotice); } return "notice/noticeList";
-	 * 
-	 * }
-	 */
-	 
-	
+	 @GetMapping("/list") 
+	 public String listNotice(Model model, @RequestParam(defaultValue = "1") int page ){ //공지사항 목록을 불러오는 부분 List<Noticeboard>
+		 int total = boardNoticeService.noticeListCount(); 
+		 Pagination paginaion = new Pagination(total, page,10);
+		 int offset = paginaion.getStart();	
+		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset);
+		 model.addAttribute("pagination",paginaion);
+		 if(listNotice.isEmpty()) {
+			 model.addAttribute("noticeList",null);
+		 }else {
+			 model.addAttribute("noticeList", listNotice);
+		 }
+		 return "notice/noticeList";
+	 }
+	 	 
+
 	//공지사항 작성된것을 보내는 주소 
 	@GetMapping("/admin/write")
 	public String writeNoticeForm() {			
@@ -95,8 +86,7 @@ public class BoardNoticeController {
 	
 	//공지사항 작성(받는주소)
 	@PostMapping("/admin/write")
-	public String writeNotice(Noticeboard noticeboard) {
-		System.out.println(noticeboard);
+	public String writeNotice(Noticeboard noticeboard) {		
 		
 		boardNoticeService.noticeWriteService(noticeboard);		
 		return "redirect:/notice/admin/list";
@@ -106,7 +96,7 @@ public class BoardNoticeController {
 	 *   
 	 * @param 수정할때 페이지로 보내주는 주소(어드민 상태일때만)
 	 * @param id
-	 * @return
+	 * @return adminNoticeUpdate
 	 */
 	@GetMapping("/admin/update/{id}")
 	public String updateNotice(Model model, @PathVariable int id) {
@@ -119,13 +109,11 @@ public class BoardNoticeController {
 	 * @param  공지사항 수정할때 받는 주소(어드민 상태일때만)
 	 * @return
 	 */
-	//공지사항 수정 받으면 주소
+	//공지사항 수정 받으면 주소 (어드민)
 	@PostMapping("/update")
 	public String updateNoticeProc(NoticeUpdateDto noticeupdateDto)   {		
-		System.out.println(noticeupdateDto);
-		
+
 		int result = boardNoticeService.noticeUpdateService(noticeupdateDto);				
-		System.out.println(result);
 		return "redirect:/notice/admin/list";
 		
 	}
@@ -142,13 +130,12 @@ public class BoardNoticeController {
 	}	
 	
 	/**
-	 * 
 	 * @param 공지사항 상세보기(어드민 페이지)
 	 * @return adminNoticeView
 	 */	
 	@GetMapping("/admin/view/{id}")
 	public String adminViewNotice(Model model, @PathVariable int id) {		
-		model.addAttribute("view", boardNoticeService.noticeViewService(id));		
+		model.addAttribute("view", boardNoticeService.noticeViewService(id));			
 		return "notice/admin/adminNoticeView";
 	}
 	
@@ -168,4 +155,7 @@ public class BoardNoticeController {
 		model.addAttribute("view", noticeboard);		
 		return "notice/noticeView";
 	}
+	
+	//파일올리기
+	
 }

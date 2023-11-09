@@ -65,54 +65,10 @@
                     <div class="col text-left header-top-left d-none d-lg-block">
                         <div class="header-top-social">
                             <span class="social-text text-upper">Follow us on:</span>
-                            <ul class="mb-0">
-                                <li class="list-inline-item"><a class="hdr-facebook" href="#"><i
-                                            class="ecicon eci-facebook"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-twitter" href="#"><i
-                                            class="ecicon eci-twitter"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-instagram" href="#"><i
-                                            class="ecicon eci-instagram"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-linkedin" href="#"><i
-                                            class="ecicon eci-linkedin"></i></a></li>
-                            </ul>
+                           
                         </div>
                     </div>
-                    <!-- Header Top social End -->
-                    <!-- Header Top Message Start -->
-                    <div class="col text-center header-top-center">
-                        <div class="header-top-message text-upper">
-                            <span>Free Shipping</span>This Week Order Over - $75
-                        </div>
-                    </div>
-                    <!-- Header Top Message End -->
-                    <!-- Header Top Language Currency -->
-                    <div class="col header-top-right d-none d-lg-block">
-                        <div class="header-top-lan-curr d-flex justify-content-end">
-                            <!-- Currency Start -->
-                            <div class="header-top-curr dropdown">
-                                <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Currency <i
-                                        class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li class="active"><a class="dropdown-item" href="#">USD $</a></li>
-                                    <li><a class="dropdown-item" href="#">EUR €</a></li>
-                                </ul>
-                            </div>
-                            <!-- Currency End -->
-                            <!-- Language Start -->
-                            <div class="header-top-lan dropdown">
-                                <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">Language <i
-                                        class="ecicon eci-caret-down" aria-hidden="true"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li class="active"><a class="dropdown-item" href="#">English</a></li>
-                                    <li><a class="dropdown-item" href="#">Italiano</a></li>
-                                </ul>
-                            </div>
-                            <!-- Language End -->
-
-                        </div>
-                    </div>
-                    <!-- Header Top Language Currency -->
-                    <!-- Header Top responsive Action -->
+                  
                     <div class="col d-lg-none ">
                         <div class="ec-header-bottons">
                             <!-- Header User Start -->
@@ -125,20 +81,16 @@
                                     <li><a class="dropdown-item" href="login.html">Login</a></li>
                                 </ul>
                             </div>
-                            <!-- Header User End -->
-                            <!-- Header Cart Start -->
+                       
                             <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
                                 <div class="header-icon"><i class="fi-rr-heart"></i></div>
                                 <span class="ec-header-count">4</span>
                             </a>
-                            <!-- Header Cart End -->
-                            <!-- Header Cart Start -->
+                        
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-bag"></i></div>
                                 <span class="ec-header-count cart-count-lable">3</span>
-                            </a>
-                            <!-- Header Cart End -->
-                            <!-- Header menu Start -->
+                            </a>                         
                             <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
                                 <i class="fi fi-rr-menu-burger"></i>
                             </a>
@@ -187,7 +139,7 @@
 					
 					<i class="mdi mdi-chevron-right">
 					</i>
-					<h3>뷰 페이지</h3>
+					<h3></h3>
 			</div>					
 		</div>
 		<div class="row">
