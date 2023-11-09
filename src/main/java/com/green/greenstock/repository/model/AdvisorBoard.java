@@ -21,8 +21,8 @@ public class AdvisorBoard {
     private int userId;
     private String title;
     private String content;
-    private int parent;
-    private int status;
+    private int parent; // 댓글여부
     private LocalDateTime createAt;
+    private int views; // 조회수
 
 }

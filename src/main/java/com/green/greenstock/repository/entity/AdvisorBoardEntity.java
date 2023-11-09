@@ -39,18 +39,18 @@ public class AdvisorBoardEntity {
     private int advisorBoardId;
     // private int advisorId;
     // private int userId;
-    
+
     @Column(nullable = false)
     private String title;
-   
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(columnDefinition = "int default 0")
     private int parent;
 
-    @Builder.Default
-    @ColumnDefault(value = "0")
-    private int status = 0;
+    @Column(columnDefinition = "int default 0")
+    private int views;
 
     @CreatedDate
     @Column(columnDefinition = "DATETIME(0) default CURRENT_TIMESTAMP")
@@ -62,6 +62,6 @@ public class AdvisorBoardEntity {
 
     @ManyToOne
     @JoinColumn(name = "advisorId", referencedColumnName = "advisorId")
-    private AdvisorEntity advisor;
+    private AdvisorEntity advisorEntity;
 
 }

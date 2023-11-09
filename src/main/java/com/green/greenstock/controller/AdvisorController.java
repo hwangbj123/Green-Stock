@@ -1,11 +1,14 @@
 package com.green.greenstock.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,15 +18,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
+import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.UserService;
+import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,20 +58,19 @@ public class AdvisorController {
     @GetMapping("/{nickName}")
     public String advisorDetail(@PathVariable String nickName, Model model) {
 
-        User user = (User)httpSession.getAttribute("principal");
-        if(user != null){
-            //log.info("id {}",user.getId());
+        User user = (User) httpSession.getAttribute("principal");
+        if (user != null) {
+            // log.info("id {}",user.getId());
             boolean validateResult = advisorService.validateSubscribeToAdvisor(nickName, user.getId());
             model.addAttribute("validate", validateResult);
         }
-        
-        
 
         if (nickName == null) {
             throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
         }
 
-        //boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId, id);
+        // boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId,
+        // id);
 
         model.addAttribute("advisor", advisorService.findByAdvisorNickName(nickName));
         return "advisor/advisorDetail";
@@ -107,8 +113,19 @@ public class AdvisorController {
 
     // 전문가 상담게시판 목록 페이지
     @GetMapping("/sub/board/{advisorNickName}")
-    public String advisorBoardList(@PathVariable String advisorNickName) {
+    public String advisorBoardList(Model model, @PathVariable String advisorNickName,
+            @RequestParam(defaultValue = "1") int page) {
+        int pageReq = page - 1;
+        PageRequest pageRequest = PageRequest.of(pageReq, 10);
+        Page<AdvisorBoardResDto> advisorBoardResDtos = advisorService.findByAdvisorEntityAndParent(advisorNickName, 0,
+                pageRequest);
+        Long result = advisorBoardResDtos.getTotalElements();
 
+        Pagination pagination = new Pagination(result.intValue(), page, advisorBoardResDtos.getSize());
+
+        model.addAttribute("page", advisorBoardResDtos);
+        model.addAttribute("pagination", pagination);
+        log.info("pageination {}", pagination);
         return "advisor/advisorBoardList";
     }
 
@@ -148,23 +165,24 @@ public class AdvisorController {
         return "redirect:/advisor/advisorBoard/" + advisorNickName;
     }
 
-
     // 구독한 사용자인지 체크
     // @ResponseBody
     // @GetMapping("/validate")
-    // public Map<String, Integer> validateSubscribeToAdvisor(int advisorId, int userId){
-    //     boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId, userId);
-    //     Map<String, Integer> resultMap = new HashMap<>();
+    // public Map<String, Integer> validateSubscribeToAdvisor(int advisorId, int
+    // userId){
+    // boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId,
+    // userId);
+    // Map<String, Integer> resultMap = new HashMap<>();
 
-    //     if(validateResult){
-    //         resultMap.put("result", 1);
-            
-    //     }else{
-    //         resultMap.put("result", 0);
+    // if(validateResult){
+    // resultMap.put("result", 1);
 
-    //     }
+    // }else{
+    // resultMap.put("result", 0);
 
-    //     return resultMap;
+    // }
+
+    // return resultMap;
 
     // }
 

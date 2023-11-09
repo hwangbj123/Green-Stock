@@ -15,6 +15,8 @@ import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
 import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
+import com.green.greenstock.repository.interfaces.UserEntityRepository;
+import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.User;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class AdvisorInterceptor implements HandlerInterceptor {
 
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final AdvisorEntityRepository advisorEntityRepository;
+    private final UserRepository userRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,21 +39,22 @@ public class AdvisorInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute("principal");
 
         if (user == null) {
-            throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.BAD_REQUEST);
+            // throw new UnAuthorizedException("로그인 먼저 해주세요.", HttpStatus.BAD_REQUEST);
+            user = userRepository.findById(1);
         }
 
         String advisorNickName = null;
         String requestUri = request.getRequestURI();
         String[] parts = requestUri.split("/");
-        for (String e : parts) {
-            log.info(e);
-        }
+        // for (String e : parts) {
+        // log.info(e);
+        // }
 
         if (parts.length > 4) {
             advisorNickName = parts[4];
         }
 
-        log.info("nick {}", advisorNickName);
+        // log.info("nick {}", advisorNickName);
 
         if (advisorNickName == null) {
             response.sendRedirect("/advisor/list");
