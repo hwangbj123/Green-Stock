@@ -471,7 +471,12 @@ public class UserController {
 	public String UserPayment(Model model) {
 		User user = (User)session.getAttribute("principal");
 		List<Pay> payList = userService.findUserPayment(user.getId());
+		int totalAmount = 0;
+		for (Pay pay : payList) {
+			totalAmount += pay.getAmountTotal();
+		}
 		model.addAttribute("payList", payList);
+		model.addAttribute("totalAmount", totalAmount);
 		return "user/payment";
 	}
 }

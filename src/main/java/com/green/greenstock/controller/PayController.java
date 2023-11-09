@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.KakaoPayApproval;
 import com.green.greenstock.dto.KakaoPayDto;
+import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.KakaoPayService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PayController {
 	
 	private final KakaoPayService kakaoPayService;
+	
+	private final AdvisorService advisorService;
 	
 	@Autowired
 	HttpSession session;
@@ -57,6 +61,8 @@ public class PayController {
 		log.info("pg_token : " + pg_token);
 		KakaoPayApproval kakaoPayApproval = kakaoPayService.KakaoPayInfo(pg_token);
 		User user = (User)session.getAttribute("principal");
+		
+		//결제 정보를 pay_tb에 저장
 		Pay pay = new Pay();
 		pay.setAid(kakaoPayApproval.getAid());
 		pay.setCid(kakaoPayApproval.getCid());
@@ -68,7 +74,15 @@ public class PayController {
 		pay.setApprovedAt(kakaoPayApproval.getApproved_at());
 		pay.setUserId(user.getId());
 		kakaoPayService.insertPayInfo(pay);
+		
+		//결제 정보를 subscribe_to_advisor에 저장
+		int advisorId = Integer.parseInt(pay.getItemName());
+		advisorService.saveSubscribeToAdvisor(advisorId, user.getId());
+		
+		Advisor advisor = advisorService.findAdvisorById(advisorId);
+		log.info("advisor : " + advisor);
 		model.addAttribute("payInfo", kakaoPayApproval);
+		model.addAttribute("advisor", advisor);
 		return "/paySuccess_test";
 	}
 	
@@ -85,7 +99,7 @@ public class PayController {
 		long differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
 		double refundAmount = pay.getAmountTotal()*differenceInDays/30;
 		int amount = (int) (pay.getAmountTotal() - refundAmount);
-		
+		log.info("amount : " + amount);
 		kakaoPayService.KakaoPayCancel(pay, amount);
 		
 		return "redirect:/user/payment";

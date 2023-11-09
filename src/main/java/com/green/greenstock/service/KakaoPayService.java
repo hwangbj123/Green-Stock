@@ -63,7 +63,7 @@ public class KakaoPayService {
         params.add("item_name", itemName);
         params.add("quantity", "1");
         params.add("total_amount", subCost);
-        params.add("tax_free_amount", "1");
+        params.add("tax_free_amount", "0");
         params.add("approval_url", "http://localhost/pay/kakaoPaySuccess");
         params.add("cancel_url", "http://localhost/pay/kakaoPayCancel");
         params.add("fail_url", "http://localhost/pay/kakaoPaySuccessFail");

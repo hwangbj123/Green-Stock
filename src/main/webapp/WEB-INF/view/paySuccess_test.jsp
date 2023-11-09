@@ -12,11 +12,11 @@
 			<p>결제 번호 : ${payInfo.tid}</p>
 			<p>결제 상품 : ${payInfo.item_name}</p>
 			<p>결제 총액 : ${payInfo.amount.total}</p>
-			<p>결제 승인 시각 : ${payInfo.approved_at}</p>
+			<p>결제 승인 시각 : ${payInfo.approved_at} ${advisor.advisorNickName}</p>
 		</div>
 		
 		<div>
-			<a class="btn btn-primary" style="margin-top:30px;">돌아가기</a>
+			<a href="/advisor/${advisor.advisorNickName}/" class="btn btn-primary" style="margin-top:30px;">돌아가기</a>
 		</div>
 	</div>
 </div>
