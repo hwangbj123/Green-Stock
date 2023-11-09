@@ -57,6 +57,8 @@
 	width: 58px;
 	text-align: center;
 	padding: 0px;
+	background: #fff url('/resources/img/arrow-down-light.png') no-repeat -100px 0px;
+    background-position-x: right;
 }
 #search-div input{
 	width: 330px;

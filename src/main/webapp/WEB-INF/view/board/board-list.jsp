@@ -101,7 +101,7 @@
 	    			<th style="width: 10%;">카테고리</th>
 	    			<th style="width: 45%;">제목</th>
 	    			<th style="width: 10%;">작성자</th>
-	    			<th style="width: 15%;">날짜</th>
+	    			<th style="width: 15%;">등록일</th>
 	    			<th style="width: 8%;">조회수</th>
 	    			<th style="width: 6%;">추천</th>
 	    		</tr>
@@ -138,7 +138,7 @@
 	    				</td>
 		    			<td>${board.userName}</td>
 		    			<td>
-		    				<fmt:formatDate value="${board.date}" pattern="MM-dd HH:mm:ss"/>
+		    				<fmt:formatDate value="${board.date}" pattern="MM-dd HH:mm"/>
 		   				</td>
 		    			<td>${board.views}</td>
 		    			<td>${board.recommand}</td>
@@ -161,7 +161,7 @@
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
 		    			<select id="orderType" name="orderType">
 		    				<option selected="selected" disabled="disabled">정렬</option>
-		    				<option value="id">기본</option>
+		    				<option value="id">번호순</option>
 		    				<option value="views">조회순</option>
 		    				<option value="recommand">추천순</option>
 		    				<option value="reply">댓글순</option>
