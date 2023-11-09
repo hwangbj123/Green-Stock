@@ -19,4 +19,8 @@
 	<select id="findByStatus" resultType="Advisor">
 		select * from advisor where status = #{status}
 	</select>
+	
+	<update id="updateStatus">
+		update advisor set status = #{status} where advisor_id = #{advisorId}
+	</update>
 </mapper>
