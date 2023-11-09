@@ -36,9 +36,15 @@
 		join user_tb on message.user_id = user_tb.id
 		where companyCode = #{companyCode}
 		<if test="roleTypeId == 1">
-		and date > (select date from subscribe
-					where companyCode = #{companyCode}
-					and user_id = #{userId})
+		and date > coalesce(
+			(select date from subscribe
+			where companyCode = #{companyCode}
+			and user_id = #{userId}),
+            (select subscribe_time
+            from subscribe_to_advisor
+            where companyCode = #{companyCode}
+            and user_id = #{userId})
+            )
 		</if>
 		order by id desc
 		limit 20
@@ -58,7 +64,8 @@
 	</select>
 	
 	<select id="selectChatListNotPaging" resultType="com.green.greenstock.dto.ChattingRoom">
-		select v.companyCode, v.companyName, count(user_id) countUser
+		select v.companyCode, v.companyName,
+			  (select count(user_id) from subscribe where subscribe.companyCode = v.companyCode) countUser
 		from subscribe s
 		join domestic_stock_code v on s.companyCode = v.companyCode
 		where s.user_id = #{userId}

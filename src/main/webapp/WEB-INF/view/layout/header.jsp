@@ -69,6 +69,33 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 			font-family: 'Dovemayo', sans-serif !important;
 			font-weight: normal;
 		}
+		#dropdownBtn {
+		    color: white;
+/* 		    padding: 10px 20px; */
+		    border: none;
+		    cursor: pointer;
+		}
+		
+		.submenu {
+		    display: none;
+		    position: absolute;
+		    background-color: #f9f9f9;
+		    min-width: 160px;
+		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		    transition: max-height 0.5s ease-in-out;
+		    overflow: hidden;
+		}
+		
+		.submenu a {
+		    padding: 12px 16px;
+		    text-decoration: none;
+		    display: block;
+		    transition: 0.3s;
+		}
+		
+		.submenu a:hover {
+		    background-color: #ddd;
+		}
     </style>
   </head>
   <body>
@@ -114,7 +141,17 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                     </li>
                   </c:if>
                   <c:if test="${principal.roletypeId == 1}">
-                    <li>
+					<div class="ec-main-menu">
+						<ul>
+							<li class="dropdown">
+								<a href="javascript:void(0)"><i class="fi-rr-user"></i></a>
+								<ul class="sub-menu" style="min-width: 120px;">
+									<li><a href="#">내 정보 수정</a></li>
+									<li><a href="#">구독 목록</a></li>
+								</ul>
+							</li>
+						</ul>
+  		            </div>
                       <a href="http://localhost/user/verify-user" style="display: flex; align-items: center" class="login_btn"
                         ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a
                       >
@@ -199,5 +236,18 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       </div>
       <!-- Ec Main Menu End -->
     </header>
+    <script>
+	    document.getElementById("dropdownBtn").addEventListener("click", function() {
+	        var dropdownContent = document.getElementById("dropdownContent");
+	        
+	        if (dropdownContent.style.display === "block") {
+	            dropdownContent.style.display = "none";
+	            dropdownContent.style.maxHeight = "0";
+	        } else {
+	            dropdownContent.style.display = "block";
+	            dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
+	        }
+	    });
+    </script>
   </body>
 </html>

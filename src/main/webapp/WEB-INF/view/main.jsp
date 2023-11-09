@@ -44,6 +44,9 @@
 	z-index:1;
 	position:absolute;
 }
+#news_left, #news_right {
+	padding: 10px;
+}
 
 .main-content-div {
 	width: 100%;
@@ -70,7 +73,7 @@
 .chat-div {
 	width: 90%;
 	height: 400px;
-	/* 				border-radius: 15px; */
+	border-radius: 20px;
 	margin: 20px auto;
 	padding: 15px;
 	text-align: center;
@@ -197,8 +200,12 @@
 	padding-top: 4px;
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
+	background-color: #f7f7f7;
+	cursor: pointer;
 }
-
+#chat-cate-all {
+	background-color: rgb(214, 227, 246);
+}
 </style>
 </head>
 
@@ -246,14 +253,14 @@
 					style="display: flex; height: 85%; width: 100%;">
 					<div id="news_left"
 						style="width: 50%; height: 100%;">
-						<div style="width: 90%; height: 90%;">
+						<div style="width: 100%; height: 90%;">
 							<ul style="width: 100%;" id="news_left_list">
 							</ul>
 						</div>
 					</div>
 					<div id="news_right"
 						style="width: 50%; height: 100%;">
-						<div style="width: 90%; height: 90%;">
+						<div style="width: 100%; height: 90%;">
 							<ul style="width: 100%;" id="news_right_list">
 							</ul>
 						</div>
@@ -338,6 +345,7 @@
 				<c:choose>
 					<c:when test="${not empty chatList}">
 						<div style="display: flex;">
+							<div class="chat-category" id="chat-cate-all">전체</div>
 							<div class="chat-category" id="chat-cate-stock">종목별</div>
 							<div class="chat-category" id="chat-cate-advisor">전문가</div>
 						</div>
@@ -347,6 +355,7 @@
 						<div style="display: flex;">
 							<div id="chat-cate-stock"></div>
 							<div id="chat-cate-advisor"></div>
+							<div id="chat-cate-all"></div>
 						</div>
 						<div class="chat-list" style="background-color: rgb(70, 70, 70)">
 					</c:otherwise>
@@ -410,23 +419,33 @@
 		
 		function chatCategoryStock(){
 			document.getElementById("chat-cate-stock").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-list").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-cate-advisor").style.backgroundColor = "white";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
 			document.getElementById("chat-stock-tb").style.display="";
 			document.getElementById("chat-advisor-tb").style.display="none";
 		}
 		function chatCategoryAdvisor(){
 			document.getElementById("chat-cate-advisor").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-list").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-cate-stock").style.backgroundColor = "white";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
 			document.getElementById("chat-advisor-tb").style.display="";
 			document.getElementById("chat-stock-tb").style.display="none";
+		}
+		function chatCategoryAll(){
+			document.getElementById("chat-cate-all").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-advisor-tb").style.display="";
+			document.getElementById("chat-stock-tb").style.display="";
 		}
 		document.getElementById("chat-cate-stock").addEventListener("click", function() {
 			chatCategoryStock();
 		});
 		document.getElementById("chat-cate-advisor").addEventListener("click", function() {
 			chatCategoryAdvisor();
+		});
+		document.getElementById("chat-cate-all").addEventListener("click", function() {
+			chatCategoryAll();
 		});
 		
 		$(function() {
