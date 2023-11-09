@@ -84,6 +84,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 		    transition: max-height 0.5s ease-in-out;
 		    overflow: hidden;
+		    z-index: 800 !important;
 		}
 		
 		.submenu a {
@@ -96,6 +97,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 		.submenu a:hover {
 		    background-color: #ddd;
 		}
+		
+ 		.sign-inup .container {
+ 			position: relative;
+ 			z-index: auto;
+		} 
     </style>
   </head>
   <body>
@@ -144,28 +150,24 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 					<div class="ec-main-menu">
 						<ul>
 							<li class="dropdown">
-								<a href="javascript:void(0)"><i class="fi-rr-user"></i></a>
-								<ul class="sub-menu" style="min-width: 120px; z-index: 9;">
+								<a href="javascript:void(0)" style="display: flex; align-items: center;"><i class="fa-solid fa-house-user"></i><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a>
+								<ul class="sub-menu" style="min-width: 120px;">
 									<li><a href="#">내 정보 수정</a></li>
 									<li><a href="#">구독 목록</a></li>
 								</ul>
 							</li>
 						</ul>
   		            </div>
-                      <a href="http://localhost/user/verify-user" style="display: flex; align-items: center" class="login_btn"
-                        ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a
-                      >
-                    </li>
-                    <li>
-                      <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
-                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
+                    <li style= "text-align: center; display: flex; align-items: center; margin-left:0px;">
+                      <a href="http://localhost/user/sign-out" style="display: flex; align-items: center;" class="signIn_button"
+                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
                       >
                     </li>
                   </c:if>
                   <c:if test="${principal.roletypeId == 0}">
                     <li>
                       <a href="http://localhost/admin/main" style="display: flex; align-items: center" class="login_btn"
-                        ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">관리자 페이지</span></a
+                        ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">관리자 페이지</span></a
                       >
                     </li>
                     <li>
@@ -207,7 +209,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       </div>
       <!-- Header responsive Bottom  End -->
       <!-- EC Main Menu Start -->
-      <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav" style="z-index: 100 !important">
+      <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav">
         <div class="container position-relative">
           <div class="row">
             <div class="col-md-12 align-self-center">
