@@ -17,10 +17,6 @@
 	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<link
-	href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css"
-	rel="stylesheet" />
-
 <!-- Ekka CSS -->
 <link id="ekka-css" rel="stylesheet" href="/resources/css/ekka.css" />
 
@@ -134,6 +130,7 @@
 	height: 550px;
 	margin: 20px auto;
 	padding: 10px;
+	padding-top: 20px;
 	text-align: center;
 }
 
@@ -220,7 +217,7 @@
 	                <table class="table table-borederd tableVolumeRank">
 	                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
 	                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-	                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+	                      <td class="text-start">${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
 	                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
 	                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
 	                      <td class="text-end">${item.prdyCtrt}%</td>
@@ -235,7 +232,7 @@
 
 			<!--------- 뉴스 리스트 ------------>
 			<div class="gstock-div" id="news-div" style="font-weight: bold;">
-				<h6 style="margin-bottom: 15px;">Today's News</h6>
+				<h6 style="margin-bottom: 15px;">금융 소식</h6>
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
 					<div id="news_left"
@@ -256,7 +253,7 @@
 			</div>
 			<!--------- 게시판 리스트 ------------>
 			<div class="gstock-div board-div">
-				<h6 style="margin-bottom: 15px;">Board</h6>
+				<h6 style="margin-bottom: 15px;">커뮤니티 게시판</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
@@ -328,7 +325,7 @@
 
 			<!--------- 채팅 리스트 ------------>
 			<div class="gstock-div chat-div">
-				<h6 style="margin-bottom: 15px;">Chatting</h6>
+				<h6 style="margin-bottom: 15px;">채팅</h6>
 				<c:choose>
 					<c:when test="${not empty chatList}">
 						<div class="chat-list"
