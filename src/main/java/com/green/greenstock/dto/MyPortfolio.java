@@ -1,5 +1,6 @@
 package com.green.greenstock.dto;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MyPortfolio {
 	private Integer sellMoney;
 	private Integer totalAsset;
 	private Integer nowTotalAsset;
-	private String ror;
+	private BigDecimal ror;
 	private String regDate;
 	private boolean isVisible;
 	private boolean stockExist;
@@ -136,10 +137,11 @@ public class MyPortfolio {
 	}
 	
 	public void setRor() {
-		DecimalFormat df = new DecimalFormat("0.00");
-		double roi = (((double)this.nowTotalAsset - (double)this.totalAsset) / this.totalAsset) * 100;
-		String formatedData = df.format(roi);
-		this.ror = formatedData + "%";
+	    double roi = (((double)this.nowTotalAsset - (double)this.totalAsset) / this.totalAsset) * 100;
+	    BigDecimal roiDecimal = new BigDecimal(roi);
+	    DecimalFormat df = new DecimalFormat("0.00");
+	    String formattedData = df.format(roiDecimal);
+	    this.ror = new BigDecimal(formattedData);
 	}
 
 }

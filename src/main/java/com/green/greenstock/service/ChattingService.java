@@ -17,10 +17,6 @@ public class ChattingService {
 	@Autowired
 	ChattingRepository chattingRepository;
 	
-	public int createChattingRoom(ChattingRoom chattingRoom) {
-		return chattingRepository.createChattingRoom(chattingRoom);
-	}
-
 	public int subscribe(String companyCode, int userId) {
 		return chattingRepository.subscribe(companyCode, userId);
 	}
@@ -64,7 +60,11 @@ public class ChattingService {
 		return chattingRepository.countChatList(paging);
 	}
 	
-	public List<ChattingRoom> selectChatListNotPaging() {
-		return chattingRepository.selectChatListNotPaging();
+	public List<ChattingRoom> selectChatListNotPaging(User user) {
+		return chattingRepository.selectChatListNotPaging(user);
+	}
+	
+	public List<ChattingRoom> advisorChatList(int userId) {
+		return chattingRepository.advisorChatList(userId);
 	}
 }

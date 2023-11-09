@@ -34,9 +34,11 @@
 			</c:if>
   			<c:choose>
    				<c:when test="${list[listLength-status.count].userId eq principal.id}">
-	    			<div class="my-message-user">
-		    			${list[listLength-status.count].userName}
-	    			</div>
+	    			<c:if test="${list[listLength - status.count].userName ne list[listLength - status.count + 1].userName}">
+		    			<div class="my-message-user">
+			    			${list[listLength-status.count].userName}
+		    			</div>
+		    		</c:if>	
 		    		<div class="my-message-div">
 		    			<div class="message-content" style="background-color: rgb(246,224,17);">
 		    				${list[listLength-status.count].content}
@@ -52,9 +54,11 @@
 		    		</div>
    				</c:when>
    				<c:otherwise>
-	    			<div class="message-user">
-		    			${list[listLength-status.count].userName}
-	    			</div>
+   					<c:if test="${list[listLength - status.count].userName ne list[listLength - status.count + 1].userName}">
+		    			<div class="message-user">
+			    			${list[listLength-status.count].userName}
+		    			</div>
+		    		</c:if>	
 		    		<div class="message-div">
 		    			<div class="message-content">
 		    				${list[listLength-status.count].content}
@@ -79,12 +83,14 @@
     	</div>
     </form>
     <br>
+    <c:if test="${not empty userList}">
    	<h3>구독자 목록</h3>
-    <div class="user-list-div">
-    	<c:forEach var="user" items="${userList}" varStatus="status">
-    		${user.userName}<br>
-    	</c:forEach>
-    </div>
+	    <div class="user-list-div">
+	    	<c:forEach var="user" items="${userList}" varStatus="status">
+	    		${user.userName}<br>
+	    	</c:forEach>
+	    </div>
+    </c:if>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

@@ -9,5 +9,9 @@ import com.green.greenstock.repository.entity.AdvisorEntity;
 public interface AdvisorEntityRepository extends JpaRepository<AdvisorEntity, Integer> {
 
     List<AdvisorEntity> findByStatus(int status);
+
     AdvisorEntity findByAdvisorNickName(String advisorNickName);
+
+    AdvisorEntity findByAdvisorId(int advisorId);
+
 }

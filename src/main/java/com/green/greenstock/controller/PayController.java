@@ -21,8 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.KakaoPayApproval;
 import com.green.greenstock.dto.KakaoPayDto;
+import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
+import com.green.greenstock.repository.model.PaySubscribe;
 import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.AdvisorService;
+import com.green.greenstock.service.ChattingService;
 import com.green.greenstock.service.KakaoPayService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +39,10 @@ import lombok.extern.slf4j.Slf4j;
 public class PayController {
 	
 	private final KakaoPayService kakaoPayService;
+	
+	private final AdvisorService advisorService;
+	
+	private final ChattingService chattingService;
 	
 	@Autowired
 	HttpSession session;
@@ -57,25 +65,59 @@ public class PayController {
 		log.info("pg_token : " + pg_token);
 		KakaoPayApproval kakaoPayApproval = kakaoPayService.KakaoPayInfo(pg_token);
 		User user = (User)session.getAttribute("principal");
+		
+		int amount = kakaoPayApproval.getAmount().getTotal();
+		Date createdAt = kakaoPayApproval.getCreated_at();
+		int userId = user.getId();
+		String tid = kakaoPayApproval.getTid();
+		
+		//결제 정보를 pay_tb에 저장
 		Pay pay = new Pay();
 		pay.setAid(kakaoPayApproval.getAid());
 		pay.setCid(kakaoPayApproval.getCid());
-		pay.setTid(kakaoPayApproval.getTid());
+		pay.setTid(tid);
 		pay.setSid(kakaoPayApproval.getSid());
 		pay.setItemName(kakaoPayApproval.getItem_name());
-		pay.setAmountTotal(kakaoPayApproval.getAmount().getTotal());
-		pay.setCreatedAt(kakaoPayApproval.getCreated_at());
+		pay.setAmountTotal(amount);
+		pay.setCreatedAt(createdAt);
 		pay.setApprovedAt(kakaoPayApproval.getApproved_at());
-		pay.setUserId(user.getId());
+		pay.setUserId(userId);
 		kakaoPayService.insertPayInfo(pay);
+		
+		//결제 정보를 subscribe_to_advisor에 저장
+		int advisorId = Integer.parseInt(pay.getItemName());
+		advisorService.saveSubscribeToAdvisor(advisorId, user.getId());
+		
+		Advisor advisor = advisorService.findAdvisorById(advisorId);
+		log.info("advisor : " + advisor);
+		
+		//결제 정보를 pay_subscribe에 저장
+		PaySubscribe paySubscribe = new PaySubscribe();
+		paySubscribe.setTid(tid);
+		paySubscribe.setAdvisorId(advisorId);
+		paySubscribe.setAdvisorNickName(advisor.getAdvisorNickName());
+		paySubscribe.setAmount(amount);
+		paySubscribe.setUserId(userId);
+		paySubscribe.setCreatedAt(createdAt);
+		kakaoPayService.insertPaySubscribeInfo(paySubscribe);
+		
+		//일대일 채팅 생성
+		String chattingCode = ""+advisorId+"@"+user.getId();
+		String subCheck = chattingService.subCheck(chattingCode, user.getId());
+		if(subCheck.equals("0")) {
+			chattingService.subscribe(chattingCode, advisorId);
+			chattingService.subscribe(chattingCode, user.getId());
+		}
+		
 		model.addAttribute("payInfo", kakaoPayApproval);
+		model.addAttribute("advisor", advisor);
 		return "/paySuccess_test";
 	}
 	
 	@GetMapping("/refund")
-	public String Refund(@RequestParam("id") Integer id) {
+	public String Refund(@RequestParam("tid") String tid) {
 		
-		Pay pay = kakaoPayService.findPayInfoById(id);
+		Pay pay = kakaoPayService.findPayInfoByTid(tid);
 		
 		//기간에 따라 환불금액설정
         LocalDateTime now = LocalDateTime.now();
@@ -85,7 +127,7 @@ public class PayController {
 		long differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
 		double refundAmount = pay.getAmountTotal()*differenceInDays/30;
 		int amount = (int) (pay.getAmountTotal() - refundAmount);
-		
+		log.info("amount : " + amount);
 		kakaoPayService.KakaoPayCancel(pay, amount);
 		
 		return "redirect:/user/payment";

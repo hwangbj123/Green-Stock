@@ -5,8 +5,9 @@
 <%@include file="/WEB-INF/view/layout/header.jsp"%>
 <div class="container d-flex align-items-center justify-content-center card-body" style="height:80vh;">
 	<div id="user-acquisition" class="card card-default d-flex align-items-center justify-content-center" style="width: 35%; padding: 40px;">
-		<div class="card-header bg-white" style="margin-bottom: 40px;">
-			<h2 class="text-dark">결제 완료</h2>
+		<div class="card-header bg-white" style="margin-bottom: 40px;  text-align: center;">
+			<img src="/resources/img/paycheck.png" style="width: 50px; display: block; margin: 0 auto;"></img>
+			<h2 class="text-dark" style="margin-top:20px;">결제 완료</h2>
 		</div>
 		<div class="card-body">
 			<p>결제 번호 : ${payInfo.tid}</p>
@@ -16,7 +17,7 @@
 		</div>
 		
 		<div>
-			<a class="btn btn-primary" style="margin-top:30px;">돌아가기</a>
+			<a href="/advisor/${advisor.advisorNickName}/" class="btn btn-primary" style="margin-top:30px;">돌아가기</a>
 		</div>
 	</div>
 </div>

@@ -2,6 +2,7 @@ package com.green.greenstock.repository.interfaces;
 
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.repository.model.Pay;
+import com.green.greenstock.repository.model.PaySubscribe;
 import com.green.greenstock.repository.model.User;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface UserRepository {
 
 	public List<User> findAdminMainUserList();
 
-	public List<Pay> findUserPayment(Integer id);
+	public List<PaySubscribe> findUserPayment(Integer id);
 
 	public User findById(Integer id);
 }

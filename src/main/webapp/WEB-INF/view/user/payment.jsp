@@ -64,7 +64,7 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>상품명</th>
+                                                    <th>구독명</th>
                                                     <th>결제번호</th>
                                                     <th>총액</th>
                                                     <th>결제시각</th>
@@ -75,28 +75,20 @@
                                             	<c:forEach var="pay" items="${payList}">
                                                 <tr>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.itemName}</span></td>
+                                                            class="amount">${pay.advisorNickName}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
                                                             class="amount">${pay.tid}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.amountTotal}</span></td>
+                                                            class="amount">${pay.amount}</span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span
-                                                            class="amount">${pay.approvedAt}</span></td>
+                                                            class="amount">${pay.createdAt}</span></td>
                                                     <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="/pay/refund?id=${pay.id}" class="btn btn-danger" style="font-size: 10px; color: white; width:80px; padding: 0 8px;">환불하기</a>
+                                                        <a href="/pay/refund?tid=${pay.tid}" class="btn btn-danger" style="font-size: 10px; color: white; width:80px; padding: 0 8px;">환불하기</a>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="ec-cart-update-bottom">
-                                                <a href="#">Continue Shopping</a>
-                                                <button class="btn btn-primary">Check Out</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -110,47 +102,11 @@
                         <!-- Sidebar Summary Block -->
                         <div class="ec-sidebar-block">
                             <div class="ec-sb-title">
-                                <h3 class="ec-sidebar-title">Summary</h3>
+                                <h3 class="ec-sidebar-title">요약</h3>
                             </div>
                             <div class="ec-sb-block-content">
-                                <h4 class="ec-ship-title">Estimate Shipping</h4>
+                                <h4 class="ec-ship-title">구독 정보</h4>
                                 <div class="ec-cart-form">
-                                    <p>Enter your destination to get a shipping estimate</p>
-                                    <form action="#" method="post">
-                                        <span class="ec-cart-wrap">
-                                            <label>Country *</label>
-                                            <span class="ec-cart-select-inner">
-                                                <select name="ec_cart_country" id="ec-cart-select-country"
-                                                    class="ec-cart-select">
-                                                    <option selected="" disabled="">United States</option>
-                                                    <option value="1">Country 1</option>
-                                                    <option value="2">Country 2</option>
-                                                    <option value="3">Country 3</option>
-                                                    <option value="4">Country 4</option>
-                                                    <option value="5">Country 5</option>
-                                                </select>
-                                            </span>
-                                        </span>
-                                        <span class="ec-cart-wrap">
-                                            <label>State/Province</label>
-                                            <span class="ec-cart-select-inner">
-                                                <select name="ec_cart_state" id="ec-cart-select-state"
-                                                    class="ec-cart-select">
-                                                    <option selected="" disabled="">Please Select a region, state
-                                                    </option>
-                                                    <option value="1">Region/State 1</option>
-                                                    <option value="2">Region/State 2</option>
-                                                    <option value="3">Region/State 3</option>
-                                                    <option value="4">Region/State 4</option>
-                                                    <option value="5">Region/State 5</option>
-                                                </select>
-                                            </span>
-                                        </span>
-                                        <span class="ec-cart-wrap">
-                                            <label>Zip/Postal Code</label>
-                                            <input type="text" name="postalcode" placeholder="Zip/Postal Code">
-                                        </span>
-                                    </form>
                                 </div>
                             </div>
 
@@ -158,16 +114,8 @@
                                 <div class="ec-cart-summary-bottom">
                                     <div class="ec-cart-summary">
                                         <div>
-                                            <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">$80.00</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">$80.00</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-left">Coupan Discount</span>
-                                            <span class="text-right"><a class="ec-cart-coupan">Apply Coupan</a></span>
+                                            <span class="text-left">구독중인 서비스 수 : </span>
+                                            <span class="text-right">${payList.size()}개</span>
                                         </div>
                                         <div class="ec-cart-coupan-content">
                                             <form class="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post"
@@ -179,8 +127,8 @@
                                             </form>
                                         </div>
                                         <div class="ec-cart-summary-total">
-                                            <span class="text-left">Total Amount</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-left" style="color: #444444; font-size: 14px; line-height: 24px; letter-spacing: 0; font-weight: bolder;">총 구독료 : </span>
+                                            <span class="text-right" style="color: #555; font-size: 14px; line-height: 24px; font-weight: 500;">${totalAmount}원</span>
                                         </div>
                                     </div>
 

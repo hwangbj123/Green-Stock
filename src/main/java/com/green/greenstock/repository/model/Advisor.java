@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class Advisor {
 
     private int advisorId;
-    private String advisor_full_name;
-    private String advisor_nick_name;
+    private String advisorFullName;
+    private String advisorNickName;
     private String career;
     private String introduction;
     private int subscriptionCost;

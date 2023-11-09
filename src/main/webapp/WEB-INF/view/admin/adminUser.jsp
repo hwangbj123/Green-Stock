@@ -48,12 +48,12 @@
 							<table id="responsive-data-table" class="table centered-table">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Birth-Date</th>
-										<th>Join On</th>
-										<th>Sus-Date</th>
+										<th>이름</th>
+										<th>이메일</th>
+										<th>휴대전화</th>
+										<th>생년월일</th>
+										<th>가입일</th>
+										<th>정지기간</th>
 									</tr>
 								</thead>
 

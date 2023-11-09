@@ -17,10 +17,6 @@
 	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<link
-	href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css"
-	rel="stylesheet" />
-
 <!-- Ekka CSS -->
 <link id="ekka-css" rel="stylesheet" href="/resources/css/ekka.css" />
 
@@ -48,6 +44,9 @@
 	z-index:1;
 	position:absolute;
 }
+#news_left, #news_right {
+	padding: 10px;
+}
 
 .main-content-div {
 	width: 100%;
@@ -74,7 +73,7 @@
 .chat-div {
 	width: 90%;
 	height: 400px;
-	/* 				border-radius: 15px; */
+	border-radius: 20px;
 	margin: 20px auto;
 	padding: 15px;
 	text-align: center;
@@ -92,6 +91,7 @@
 .chat-list {
 	height: 300px;
 	overflow: auto;
+	background-color: rgb(214, 227, 246); 
 }
 
 .chat-tb {
@@ -134,6 +134,7 @@
 	height: 550px;
 	margin: 20px auto;
 	padding: 10px;
+	padding-top: 20px;
 	text-align: center;
 }
 
@@ -193,6 +194,18 @@
 	width: 100%;
 	height: 250px;
 }
+.chat-category {
+	width: 50%;
+	height: 30px;
+	padding-top: 4px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #f7f7f7;
+	cursor: pointer;
+}
+#chat-cate-all {
+	background-color: rgb(214, 227, 246);
+}
 </style>
 </head>
 
@@ -220,7 +233,7 @@
 	                <table class="table table-borederd tableVolumeRank">
 	                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
 	                    <tr class="${item.prdyVrssSign < 3 ? 'primaryColorRed' : 'primaryColorBlue'}">
-	                      <td>${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
+	                      <td class="text-start">${status.count}. <a href="/stock/domestic/${item.mkscShrnIscd}">${item.htsKorIsnm}</a></td>
 	                      <td class="text-end"><fmt:formatNumber value="${item.stckPrpr}"/></td>
 	                      <td class="text-end"><fmt:formatNumber value="${item.prdyVrss}"/></td>
 	                      <td class="text-end">${item.prdyCtrt}%</td>
@@ -235,19 +248,19 @@
 
 			<!--------- 뉴스 리스트 ------------>
 			<div class="gstock-div" id="news-div" style="font-weight: bold;">
-				<h6 style="margin-bottom: 15px;">Today's News</h6>
+				<h6 style="margin-bottom: 15px;">금융 소식</h6>
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
 					<div id="news_left"
-						style="display: flex; width: 50%; height: 100%;">
-						<div style="width: 90%; height: 90%;">
+						style="width: 50%; height: 100%;">
+						<div style="width: 100%; height: 90%;">
 							<ul style="width: 100%;" id="news_left_list">
 							</ul>
 						</div>
 					</div>
 					<div id="news_right"
-						style="display: flex; width: 50%; height: 100%;">
-						<div style="width: 90%; height: 90%;">
+						style="width: 50%; height: 100%;">
+						<div style="width: 100%; height: 90%;">
 							<ul style="width: 100%;" id="news_right_list">
 							</ul>
 						</div>
@@ -256,7 +269,7 @@
 			</div>
 			<!--------- 게시판 리스트 ------------>
 			<div class="gstock-div board-div">
-				<h6 style="margin-bottom: 15px;">Board</h6>
+				<h6 style="margin-bottom: 15px;">커뮤니티 게시판</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
@@ -328,18 +341,27 @@
 
 			<!--------- 채팅 리스트 ------------>
 			<div class="gstock-div chat-div">
-				<h6 style="margin-bottom: 15px;">Chatting</h6>
+				<h6>채팅</h6>
 				<c:choose>
 					<c:when test="${not empty chatList}">
-						<div class="chat-list"
-							style="background-color: rgba(52, 116, 212, 0.2)">
+						<div style="display: flex;">
+							<div class="chat-category" id="chat-cate-all">전체</div>
+							<div class="chat-category" id="chat-cate-stock">종목별</div>
+							<div class="chat-category" id="chat-cate-advisor">전문가</div>
+						</div>
+						<div class="chat-list" id="chat-list">
 					</c:when>
-					<c:otherwise>
-						<div class="chat-list" style="background-color: rgb(70, 70, 70)">
-					</c:otherwise>
+					<c:when test="${empty chatList}">
+						<div style="display: flex;">
+							<div id="chat-cate-stock"></div>
+							<div id="chat-cate-advisor"></div>
+							<div id="chat-cate-all"></div>
+						</div>
+						<div class="chat-list" id="chat-list" style="background-color: rgb(70, 70, 70)">
+					</c:when>
 				</c:choose>
 				<input type="hidden" id="chatDisplay" value="${chatList}">
-				<table class="chat-tb">
+				<table class="chat-tb" id="chat-stock-tb">
 					<c:if test="${not empty chatList}">
 						<c:forEach var="chat" items="${chatList}">
 							<tr class="chat-tr"
@@ -347,6 +369,16 @@
 								<td style="width: 20%">${chat.companyCode}</td>
 								<td style="width: 60%">${chat.companyName}</td>
 								<td style="width: 20%">${chat.countUser}명</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+				<table class="chat-tb" id="chat-advisor-tb">
+					<c:if test="${not empty advisorChatList}">
+						<c:forEach var="advisorChat" items="${advisorChatList}">
+							<tr class="chat-tr"
+								onclick="window.open('/chat?companyCode=${advisorChat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+								<td>${advisorChat.companyName}</td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -384,6 +416,38 @@
 				});
 			}
 		}
+		
+		function chatCategoryStock(){
+			document.getElementById("chat-cate-stock").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-stock-tb").style.display="";
+			document.getElementById("chat-advisor-tb").style.display="none";
+		}
+		function chatCategoryAdvisor(){
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-advisor-tb").style.display="";
+			document.getElementById("chat-stock-tb").style.display="none";
+		}
+		function chatCategoryAll(){
+			document.getElementById("chat-cate-all").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-advisor-tb").style.display="";
+			document.getElementById("chat-stock-tb").style.display="";
+		}
+		document.getElementById("chat-cate-stock").addEventListener("click", function() {
+			chatCategoryStock();
+		});
+		document.getElementById("chat-cate-advisor").addEventListener("click", function() {
+			chatCategoryAdvisor();
+		});
+		document.getElementById("chat-cate-all").addEventListener("click", function() {
+			chatCategoryAll();
+		});
+		
 		$(function() {
 			$('.ad-wrapper').slick({
 				slidesToShow : 1,

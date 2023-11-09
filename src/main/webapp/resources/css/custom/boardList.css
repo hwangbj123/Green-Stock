@@ -55,8 +55,10 @@
 #search-div select{
 	height: 43px;
 	width: 58px;
-	text-align: center;
+	text-align: left;
 	padding: 0px;
+	background: #fff url('/resources/img/arrow-down-light.png') no-repeat;
+    background-position: right center;
 }
 #search-div input{
 	width: 330px;

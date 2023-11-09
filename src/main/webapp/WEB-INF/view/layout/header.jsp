@@ -34,6 +34,10 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Hi+Melody&display=swap" rel="stylesheet">
+	
     <!-- Vendor JS -->
     <script src="/resources/js/vendor/jquery-3.5.1.min.js"></script>
     <script src="/resources/js/vendor/popper.min.js"></script>
@@ -54,6 +58,51 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
+    
+    <style>
+    	@font-face {
+		  font-family: "Dovemayo";
+		  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+		  font-weight: normal;
+		}
+	   	*:not(i), h5, h6, li{
+			font-family: 'Dovemayo', sans-serif !important;
+			font-weight: normal;
+		}
+		#dropdownBtn {
+		    color: white;
+/* 		    padding: 10px 20px; */
+		    border: none;
+		    cursor: pointer;
+		}
+		
+		.submenu {
+		    display: none;
+		    position: absolute;
+		    background-color: #f9f9f9;
+		    min-width: 160px;
+		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		    transition: max-height 0.5s ease-in-out;
+		    overflow: hidden;
+		    z-index: 800 !important;
+		}
+		
+		.submenu a {
+		    padding: 12px 16px;
+		    text-decoration: none;
+		    display: block;
+		    transition: 0.3s;
+		}
+		
+		.submenu a:hover {
+		    background-color: #ddd;
+		}
+		
+ 		.sign-inup .container {
+ 			position: relative;
+ 			z-index: auto;
+		} 
+    </style>
   </head>
   <body>
     <header class="ec-header" style="position: relative !important; z-index: 200 !important">
@@ -88,36 +137,42 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                   <c:if test="${empty principal}">
                     <li>
                       <a href="http://localhost/user/sign-in" style="display: flex; align-items: center" class="login_btn"
-                        ><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Login</span></a
+                        ><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">로그인</span></a
                       >
                     </li>
                     <li>
                       <a href="http://localhost/user/sign-up" class="signIn_button" style="display: flex; align-items: center"
-                        ><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a
+                        ><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">회원가입</span></a
                       >
                     </li>
                   </c:if>
                   <c:if test="${principal.roletypeId == 1}">
-                    <li>
-                      <a href="http://localhost/user/verify-user" style="display: flex; align-items: center" class="login_btn"
-                        ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">User-Info</span></a
-                      >
-                    </li>
-                    <li>
-                      <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
-                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+					<div class="ec-main-menu">
+						<ul>
+							<li class="dropdown">
+								<a href="javascript:void(0)" style="display: flex; align-items: center;"><i class="fa-solid fa-house-user"></i><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a>
+								<ul class="sub-menu" style="min-width: 120px;">
+									<li><a href="#">내 정보 수정</a></li>
+									<li><a href="#">구독 목록</a></li>
+								</ul>
+							</li>
+						</ul>
+  		            </div>
+                    <li style= "text-align: center; display: flex; align-items: center; margin-left:0px;">
+                      <a href="http://localhost/user/sign-out" style="display: flex; align-items: center;" class="signIn_button"
+                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
                       >
                     </li>
                   </c:if>
                   <c:if test="${principal.roletypeId == 0}">
                     <li>
                       <a href="http://localhost/admin/main" style="display: flex; align-items: center" class="login_btn"
-                        ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Admin-Page</span></a
+                        ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">관리자 페이지</span></a
                       >
                     </li>
                     <li>
                       <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
-                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+                        ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
                       >
                     </li>
                   </c:if>
@@ -154,82 +209,26 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       </div>
       <!-- Header responsive Bottom  End -->
       <!-- EC Main Menu Start -->
-      <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav" style="z-index: 100 !important">
+      <div id="ec-main-menu-desk" class="d-none d-lg-block sticky-nav">
         <div class="container position-relative">
           <div class="row">
             <div class="col-md-12 align-self-center">
               <div class="ec-main-menu">
-                <ul>
-                  <li><a href="/main">Home</a></li>
-<!--                   <li class="dropdown position-static">
-                    <a href="javascript:void(0)">Categories</a>
-                    <ul class="mega-menu d-block">
-                      <li class="d-flex">
-                        <ul class="d-block">
-                          <li class="menu_title"><a href="javascript:void(0)">Classic Variation</a></li>
-                          <li><a href="shop-left-sidebar-col-3.html">Left sidebar 3 column</a></li>
-                          <li><a href="shop-left-sidebar-col-4.html">Left sidebar 4 column</a></li>
-                          <li><a href="shop-right-sidebar-col-3.html">Right sidebar 3 column</a></li>
-                          <li><a href="shop-right-sidebar-col-4.html">Right sidebar 4 column</a></li>
-                          <li><a href="shop-full-width.html">Full width 4 column</a></li>
-                        </ul>
-                        <ul class="d-block">
-                          <li class="menu_title"><a href="javascript:void(0)">Classic Variation</a></li>
-                          <li><a href="shop-banner-left-sidebar-col-3.html">Banner left sidebar 3 column</a></li>
-                          <li><a href="shop-banner-left-sidebar-col-4.html">Banner left sidebar 4 column</a></li>
-                          <li><a href="shop-banner-right-sidebar-col-3.html">Banner right sidebar 3 column</a></li>
-                          <li><a href="shop-banner-right-sidebar-col-4.html">Banner right sidebar 4 column</a></li>
-                          <li><a href="shop-banner-full-width.html">Banner Full width 4 column</a></li>
-                        </ul>
-                        <ul class="d-block">
-                          <li class="menu_title"><a href="javascript:void(0)">Columns Variation</a></li>
-                          <li><a href="shop-full-width-col-3.html">3 Columns full width</a></li>
-                          <li><a href="shop-full-width-col-4.html">4 Columns full width</a></li>
-                          <li><a href="shop-full-width-col-5.html">5 Columns full width</a></li>
-                          <li><a href="shop-full-width-col-6.html">6 Columns full width</a></li>
-                          <li><a href="shop-banner-full-width-col-3.html">Banner 3 Columns</a></li>
-                        </ul>
-                        <ul class="d-block">
-                          <li class="menu_title"><a href="javascript:void(0)">List Variation</a></li>
-                          <li><a href="shop-list-left-sidebar.html">Shop left sidebar</a></li>
-                          <li><a href="shop-list-right-sidebar.html">Shop right sidebar</a></li>
-                          <li><a href="shop-list-banner-left-sidebar.html">Banner left sidebar</a></li>
-                          <li><a href="shop-list-banner-right-sidebar.html">Banner right sidebar</a></li>
-                          <li><a href="shop-list-full-col-2.html">Full width 2 columns</a></li>
-                        </ul>
-                      </li>
-                      <li>
-                        <ul class="ec-main-banner w-100">
-                          <li>
-                            <a class="p-0" href="shop-left-sidebar-col-3.html"><img class="img-responsive" src="/resources/images/menu-banner/1.jpg" alt="" /></a>
-                          </li>
-                          <li>
-                            <a class="p-0" href="shop-left-sidebar-col-4.html"><img class="img-responsive" src="/resources/images/menu-banner/2.jpg" alt="" /></a>
-                          </li>
-                          <li>
-                            <a class="p-0" href="shop-right-sidebar-col-3.html"><img class="img-responsive" src="/resources/images/menu-banner/3.jpg" alt="" /></a>
-                          </li>
-                          <li>
-                            <a class="p-0" href="shop-right-sidebar-col-4.html"><img class="img-responsive" src="/resources/images/menu-banner/4.jpg" alt="" /></a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li> 
--->
+                <ul style="z-index: 1;">
+                  <li><a href="/main">메인</a></li>
                   <li class="dropdown">
-                    <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span>
-                    <a href="/portfolio">Portfolio</a>
+<!--                     <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span> -->
+                    <a href="/portfolio">포트폴리오</a>
                   </li>
                   <li class="dropdown">
-                    <a href="javascript:void(0)">Advisor</a>
+                    <a href="javascript:void(0)">주식전문가</a>
                     <ul class="sub-menu">
                       <li><a href="/advisor/list">주식 전문가 리스트</a></li>
                       <li><a href="/advisor/register">전문가 신청</a></li>
                     </ul>
                   </li>
                   <li class="dropdown">
-                    <a href="/board/list">Community</a>
+                    <a href="/board/list">커뮤니티</a>
                   </li>
                 </ul>
               </div>
@@ -239,5 +238,18 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       </div>
       <!-- Ec Main Menu End -->
     </header>
+    <script>
+	    document.getElementById("dropdownBtn").addEventListener("click", function() {
+	        var dropdownContent = document.getElementById("dropdownContent");
+	        
+	        if (dropdownContent.style.display === "block") {
+	            dropdownContent.style.display = "none";
+	            dropdownContent.style.maxHeight = "0";
+	        } else {
+	            dropdownContent.style.display = "block";
+	            dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
+	        }
+	    });
+    </script>
   </body>
 </html>

@@ -17,12 +17,12 @@
 							<table id="responsive-data-table" class="table centered-table">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Birth-Date</th>
-										<th>Join On</th>
-										<th>Sus-Date</th>
+										<th>이름</th>
+										<th>이메일</th>
+										<th>휴대전화</th>
+										<th>생년월일</th>
+										<th>가입일</th>
+										<th>정지기간</th>
 									</tr>
 								</thead>
 
@@ -161,7 +161,7 @@
 						<h2>Current Users</h2>
 					</div>
 					<div class="card-body">
-						<canvas id="currentUser" class="chartjs"></canvas>
+						<canvas id="cSubscribe" class="chartjs"></canvas>
 					</div>
 					<div class="card-footer d-flex flex-wrap bg-white border-top">
 						<a href="#" class="text-uppercase py-3">In-Detail Overview</a>
@@ -693,5 +693,97 @@
 	</div>
 	<!-- End Content -->
 </div>
+
+<script>
+var cUser = document.getElementById("cSubscribe");
+if (cUser !== null) {
+  var myUChart = new Chart(cUser, {
+    type: "bar",
+    data: {
+      labels: [
+        "1h",
+        "10 m",
+        "50 m",
+        "30 m",
+        "40 m",
+        "20 m",
+        "30 m",
+        "25 m",
+        "20 m",
+        "5 m",
+        "10 m"
+      ],
+      datasets: [
+        {
+          label: "signup",
+          data: [15, 30, 27, 43, 39, 18, 42, 25, 13, 18, 59],
+          // data: [2, 3.2, 1.8, 2.1, 1.5, 3.5, 4, 2.3, 2.9, 4.5, 1.8, 3.4, 2.8],
+          backgroundColor: "#88aaf3"
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              drawBorder: true,
+              display: false,
+            },
+            ticks: {
+              fontColor: "#8a909d",
+              fontFamily: "Roboto, sans-serif",
+              display: false, // hide main x-axis line
+              beginAtZero: true,
+              callback: function(tick, index, array) {
+                return index % 2 ? "" : tick;
+              }
+            },
+            barPercentage: 1.8,
+            categoryPercentage: 0.2
+          }
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              drawBorder: true,
+              display: true,
+              color: "#eee",
+              zeroLineColor: "#eee"
+            },
+            ticks: {
+              fontColor: "#8a909d",
+              fontFamily: "Roboto, sans-serif",
+              display: true,
+              beginAtZero: true
+            }
+          }
+        ]
+      },
+
+      tooltips: {
+        mode: "index",
+        titleFontColor: "#888",
+        bodyFontColor: "#555",
+        titleFontSize: 12,
+        bodyFontSize: 15,
+        backgroundColor: "rgba(256,256,256,0.95)",
+        displayColors: true,
+        xPadding: 10,
+        yPadding: 7,
+        borderColor: "rgba(220, 220, 220, 0.9)",
+        borderWidth: 2,
+        caretSize: 6,
+        caretPadding: 5
+      }
+    }
+  });
+}
+</script>
 <!-- End Content Wrapper -->
 <%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>

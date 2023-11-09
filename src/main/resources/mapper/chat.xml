@@ -4,16 +4,6 @@
 
 <mapper namespace="com.green.greenstock.repository.interfaces.ChattingRepository"> 
 
-	<insert id="createChattingRoom">
-		insert into chatting_room(
-		    room_number,
-		    room_name
-		) values(
-			#{roomNumber},
-		    #{roomName}
-		)
-	</insert>
-	
 	<insert id="subscribe">
 		insert into subscribe(user_id, companyCode)
 		values (#{userId}, #{companyCode})
@@ -46,9 +36,15 @@
 		join user_tb on message.user_id = user_tb.id
 		where companyCode = #{companyCode}
 		<if test="roleTypeId == 1">
-		and date > (select date from subscribe
-					where companyCode = #{companyCode}
-					and user_id = #{userId})
+		and date > coalesce(
+			(select date from subscribe
+			where companyCode = #{companyCode}
+			and user_id = #{userId}),
+            (select subscribe_time
+            from subscribe_to_advisor
+            where companyCode = #{companyCode}
+            and user_id = #{userId})
+            )
 		</if>
 		order by id desc
 		limit 20
@@ -68,9 +64,13 @@
 	</select>
 	
 	<select id="selectChatListNotPaging" resultType="com.green.greenstock.dto.ChattingRoom">
-		select v.companyCode, v.companyName, count(user_id) countUser
+		select v.companyCode, v.companyName,
+			  (select count(user_id) from subscribe where subscribe.companyCode = v.companyCode) countUser
 		from subscribe s
 		join domestic_stock_code v on s.companyCode = v.companyCode
+		<if test="roletypeId == 1">
+			where s.user_id = #{id}
+		</if>
 		group by companyCode, companyName
 	</select>
 
@@ -92,5 +92,11 @@
         <if test='searchWord != null'>
 			where companyName like concat('%', #{searchWord}, '%')
         </if>
+	</select>
+	
+	<select id="advisorChatList" resultType="com.green.greenstock.dto.ChattingRoom">
+		select concat(s.advisor_id,'@',s.user_id) companyCode, advisor_nick_name companyName, s.user_id from subscribe_to_advisor s
+		join advisor a on a.advisor_id = s.advisor_id
+		where s.user_id = #{userId}
 	</select>
 </mapper>

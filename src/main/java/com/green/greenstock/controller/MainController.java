@@ -48,10 +48,16 @@ public class MainController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("cate", cate);
 
-		// 회원일 때 처리
+		// 회원일 때만 chatting 가져오기
 		if (user != null) {
-			List<ChattingRoom> chatList = chattingService.selectChatListNotPaging();
+			List<ChattingRoom> chatList = chattingService.selectChatListNotPaging(user);
 			model.addAttribute("chatList", chatList);
+			System.out.println("userId : "+user.getRoletypeId());
+			System.out.println("chatList : "+chatList);
+			
+			List<ChattingRoom> advisorChatList = chattingService.advisorChatList(user.getId());
+			model.addAttribute("advisorChatList", advisorChatList);
+			System.out.println("advisorChatList : "+advisorChatList);
 		}
 
 		// 거래량 순위

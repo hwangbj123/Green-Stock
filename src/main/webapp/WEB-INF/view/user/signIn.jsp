@@ -26,7 +26,7 @@
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
-		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/sign_in_test1.jpg');">
+		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/testb1.png');">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
 					<div class="card">
@@ -38,16 +38,16 @@
 							</div>
 						</div>
 						<div class="card-body p-5">
-							<h4 class="text-dark mb-5">Sign In</h4>
+							<h4 class="text-dark mb-5">로그인</h4>
 							
 							<form action="/user/sign-in" method="post" id="loginForm">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
-										<input type="text" class="form-control" id="userName" name="userName" placeholder="Username">
+										<input type="text" class="form-control" id="userName" name="userName" placeholder="아이디">
 									</div>
 									
 									<div class="form-group col-md-12 ">
-										<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+										<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
 									</div>
 									
 									<div class="col-md-12">
@@ -55,10 +55,10 @@
 											<p><a class="text-blue" href="/user/findIdPw">아이디/비밀번호 찾기</a></p>
 										</div>
 
-										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">Sign In</button>
+										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">로그인</button>
 										
-										<p class="sign-upp">Don't have an account yet ?
-											<a class="text-blue" href="/user/sign-up">Sign Up</a>
+										<p class="sign-upp">아직 아이디가 없으십니까?
+											<a class="text-blue" href="/user/sign-up">회원가입</a>
 										</p>
 										<div style="margin-top: 30px; display: flex; justify-content: space-evenly;">
 											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
