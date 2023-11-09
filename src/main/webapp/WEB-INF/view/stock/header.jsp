@@ -31,36 +31,36 @@
               <c:if test="${empty principal}">
                 <li>
                   <a href="http://localhost/user/sign-in" style="display: flex; align-items: center" class="login_btn"
-                    ><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Login</span></a
+                    ><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">로그인</span></a
                   >
                 </li>
                 <li>
                   <a href="http://localhost/user/sign-up" class="signIn_button" style="display: flex; align-items: center"
-                    ><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a
+                    ><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;</span><span class="btn_label">회원가입</span></a
                   >
                 </li>
               </c:if>
               <c:if test="${principal.roletypeId == 1}">
                 <li>
                   <a href="http://localhost/user/verify-user" style="display: flex; align-items: center" class="login_btn"
-                    ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">User-Info</span></a
+                    ><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a
                   >
                 </li>
                 <li>
                   <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
-                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
                   >
                 </li>
               </c:if>
               <c:if test="${principal.roletypeId == 0}">
                 <li>
                   <a href="http://localhost/admin/main" style="display: flex; align-items: center" class="login_btn"
-                    ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Admin-Page</span></a
+                    ><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">관리자 페이지</span></a
                   >
                 </li>
                 <li>
                   <a href="http://localhost/user/sign-out" style="display: flex; align-items: center" class="signIn_button"
-                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a
+                    ><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">로그아웃</span></a
                   >
                 </li>
               </c:if>
@@ -103,20 +103,20 @@
         <div class="col-md-12 align-self-center">
           <div class="ec-main-menu">
             <ul>
-              <li><a href="/main">Home</a></li>
+              <li><a href="/main">메인</a></li>
               <li class="dropdown">
-                <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span>
-                <a href="/portfolio">Portfolio</a>
+<!--                     <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span> -->
+                <a href="/portfolio">포트폴리오</a>
               </li>
               <li class="dropdown">
-                <a href="javascript:void(0)">Advisor</a>
+                <a href="javascript:void(0)">주식전문가</a>
                 <ul class="sub-menu">
                   <li><a href="/advisor/list">주식 전문가 리스트</a></li>
                   <li><a href="/advisor/register">전문가 신청</a></li>
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="/board/list">Community</a>
+                <a href="/board/list">커뮤니티</a>
               </li>
             </ul>
           </div>

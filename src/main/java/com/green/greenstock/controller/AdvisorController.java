@@ -1,11 +1,13 @@
 package com.green.greenstock.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
@@ -46,9 +50,21 @@ public class AdvisorController {
     // 세부사항
     @GetMapping("/{nickName}")
     public String advisorDetail(@PathVariable String nickName, Model model) {
+
+        User user = (User)httpSession.getAttribute("principal");
+        if(user != null){
+            //log.info("id {}",user.getId());
+            boolean validateResult = advisorService.validateSubscribeToAdvisor(nickName, user.getId());
+            model.addAttribute("validate", validateResult);
+        }
+        
+        
+
         if (nickName == null) {
             throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
         }
+
+        //boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId, id);
 
         model.addAttribute("advisor", advisorService.findByAdvisorNickName(nickName));
         return "advisor/advisorDetail";
@@ -131,5 +147,25 @@ public class AdvisorController {
 
         return "redirect:/advisor/advisorBoard/" + advisorNickName;
     }
+
+
+    // 구독한 사용자인지 체크
+    // @ResponseBody
+    // @GetMapping("/validate")
+    // public Map<String, Integer> validateSubscribeToAdvisor(int advisorId, int userId){
+    //     boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId, userId);
+    //     Map<String, Integer> resultMap = new HashMap<>();
+
+    //     if(validateResult){
+    //         resultMap.put("result", 1);
+            
+    //     }else{
+    //         resultMap.put("result", 0);
+
+    //     }
+
+    //     return resultMap;
+
+    // }
 
 }

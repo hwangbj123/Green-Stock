@@ -51,11 +51,31 @@
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="/css/stock/searchList.css">
+		<style>
+			.adviosrBoardList {}
+			.adviosrBoardList table tbody > tr > td:nth-child(2){
+				text-align: left;
+			}
+			.adviosrBoardList table tbody > tr > td{
+				text-align: center;
+			}
+		</style>
+		<style>
+			@font-face {
+			  font-family: "Dovemayo";
+			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+			  font-weight: normal;
+			}
+			   *:not(i), h5, h6, li{
+			  font-family: 'Dovemayo', sans-serif !important;
+			  font-weight: normal;
+			}
+		  </style>
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->
-<div class="ec-content-wrapper container mb-5 stockSearchList">
+<div class="ec-content-wrapper container mb-5 adviosrBoardList">
 	<div class="content">
 		<div class="breadcrumb-wrapper">
 			<div>
@@ -67,30 +87,30 @@
 				<div class="card card-default">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table id="responsive-data-table" class="table searchList" style="width:100%">
+							<table id="responsive-data-table" class="table" style="width:100%">
 								<thead>
-									<tr>
+									<tr class="text-center">
 										<th style="width: 10%;">번호</th>
 										<th style="width: 40%;">제목</th>
 										<th style="width: 20%;">아이디</th>
 										<th style="width: 20%;">작성일자</th>
-										<td style="width: 10%;">상태</td>
+										<th style="width: 10%;">조회수</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>1</td>
+										<td class="text-center">1</td>
 										<td><a href="/advisor/nickname">제목입니다.제목입니다.</a></td>
 										<td>아이디아이디아이디</td>
-										<td>2023-11-06</td>
-										<td>완료</td>
+										<td class="text-center">2023-11-06</td>
+										<td>0</td>
 									</tr>
 									<tr>
 										<td>2</td>
 										<td><a href="#">제목입니다.제목입니다.</a></td>
 										<td>아이디아이디아이디</td>
 										<td>2023-11-06</td>
-										<td>답변대기중</td>
+										<td>0</td>
 									</tr>
 								</tbody>
 							</table>

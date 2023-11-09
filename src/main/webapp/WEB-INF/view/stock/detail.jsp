@@ -50,6 +50,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/stock/detail.css" />
+
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>

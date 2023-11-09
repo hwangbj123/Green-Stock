@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib
+prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -51,7 +52,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 
     <style>
       * {
-        font-family: 'Pretendard-Regular';
+        font-family: "Pretendard-Regular";
       }
       .advisorDetail {
         width: 60%;
@@ -69,15 +70,31 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         height: 80px;
       }
       .advisorDetail .btn {
-        width: 120px;
-        height: 50px;
+        width: 100px;
+        height: 45px;
         border-radius: 10px;
-        font-size: 14px;
+        font-size: 16px;
+        box-shadow: 3px 3px 3px 0px gray;
+        margin-right: 10px;
       }
-      .advisorDetail .btn-info {
-        width: 150px;
+      .advisorDetail .btn-subscribe {
+        background: #A6DA41;
+      }
+      .advisorDetail .btn-advisor {
+        width: 140px;
       }
     </style>
+    <style>
+			@font-face {
+			  font-family: "Dovemayo";
+			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+			  font-weight: normal;
+			}
+			   *:not(i), h5, h6, li{
+			  font-family: 'Dovemayo', sans-serif !important;
+			  font-weight: normal;
+			}
+		  </style>
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
@@ -91,7 +108,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
           <div class="section-title text-center">
             <h3>전문가</h3>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive h-100">
+            <input type="hidden" name="userId" id="userId" value="${principal.id}" />
             <table class="table w-100">
               <tbody>
                 <tr>
@@ -118,25 +136,28 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                     <textarea name="career" id="advisorIntroduction" readonly>${advisor.introduction}</textarea>
                   </td>
                 </tr>
-                <tr class="text-center">
-                  <td colspan="2"><button class="btn btn-primary" id="btnAdvisorSub" data-id="${advisor.advisorId}">구독하기</button></td>
-                </tr>
-                <tr class="text-center">
-                  <td colspan="2">
-                    <button class="btn btn-info me-4" id="btnAdvisorBoard" data-id="${advisor.advisorId}">전문가 상담게시판</button>
-                    <button class="btn btn-info" id="btnAdvisorChat" data-id="${advisor.advisorId}">전문가 실시간채팅</button>
-                  </td>
-                </tr>
               </tbody>
             </table>
+            <div class="text-center">
+              <c:if test="${!validate}">
+                <button class="btn btn-subscribe" id="btnAdvisorSub" data-id="${advisor.advisorId}">구독하기</button>
+              </c:if>
+              <button class="btn btn-subscribe" id="btnAdvisorList">목록으로</button>
+              <c:if test="${validate}">
+              <button class="btn btn-info btn-advisor" id="btnAdvisorBoard" data-id="${advisor.advisorId}">
+                상담게시판
+              </button>
+              <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}">실시간채팅</button>
+            </c:if>
+            </div>
           </div>
-          <div class="subscribe"></div>
-          <div></div>
         </div>
       </div>
     </div>
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
-    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"
+      ><i class="ecicon eci-arrow-up" aria-hidden="true"></i
+    ></a>
   </body>
   <script src="/js/advisor/detail.js"></script>
 </html>
