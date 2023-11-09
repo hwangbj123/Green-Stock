@@ -24,6 +24,6 @@ public interface ChattingRepository {
 	public List<User> selectUserListByCode(String companyCode);
 	public List<ChattingRoom> selectChatListAll(PagingDto paging);
 	public int countChatList(PagingDto paging);
-	public List<ChattingRoom> selectChatListNotPaging(int userId);
+	public List<ChattingRoom> selectChatListNotPaging(User user);
 	public List<ChattingRoom> advisorChatList(int userId);
 }

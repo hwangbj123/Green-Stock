@@ -145,7 +145,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 						<ul>
 							<li class="dropdown">
 								<a href="javascript:void(0)"><i class="fi-rr-user"></i></a>
-								<ul class="sub-menu" style="min-width: 120px;">
+								<ul class="sub-menu" style="min-width: 120px; z-index: 9;">
 									<li><a href="#">내 정보 수정</a></li>
 									<li><a href="#">구독 목록</a></li>
 								</ul>
@@ -212,7 +212,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
           <div class="row">
             <div class="col-md-12 align-self-center">
               <div class="ec-main-menu">
-                <ul>
+                <ul style="z-index: 1;">
                   <li><a href="/main">메인</a></li>
                   <li class="dropdown">
 <!--                     <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span> -->

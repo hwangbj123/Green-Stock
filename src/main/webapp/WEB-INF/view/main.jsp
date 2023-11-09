@@ -351,14 +351,14 @@
 						</div>
 						<div class="chat-list" id="chat-list">
 					</c:when>
-					<c:otherwise>
+					<c:when test="${empty chatList}">
 						<div style="display: flex;">
 							<div id="chat-cate-stock"></div>
 							<div id="chat-cate-advisor"></div>
 							<div id="chat-cate-all"></div>
 						</div>
-						<div class="chat-list" style="background-color: rgb(70, 70, 70)">
-					</c:otherwise>
+						<div class="chat-list" id="chat-list" style="background-color: rgb(70, 70, 70)">
+					</c:when>
 				</c:choose>
 				<input type="hidden" id="chatDisplay" value="${chatList}">
 				<table class="chat-tb" id="chat-stock-tb">
