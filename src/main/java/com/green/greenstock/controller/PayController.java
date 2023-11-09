@@ -25,6 +25,7 @@ import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
+import com.green.greenstock.service.ChattingService;
 import com.green.greenstock.service.KakaoPayService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ public class PayController {
 	private final KakaoPayService kakaoPayService;
 	
 	private final AdvisorService advisorService;
+	
+	private final ChattingService chattingService;
 	
 	@Autowired
 	HttpSession session;
@@ -81,6 +84,15 @@ public class PayController {
 		
 		Advisor advisor = advisorService.findAdvisorById(advisorId);
 		log.info("advisor : " + advisor);
+		
+		//일대일 채팅 생성
+		String chattingCode = ""+advisorId+"@"+user.getId();
+		String subCheck = chattingService.subCheck(chattingCode, user.getId());
+		if(subCheck.equals("0")) {
+			chattingService.subscribe(chattingCode, advisorId);
+			chattingService.subscribe(chattingCode, user.getId());
+		}
+		
 		model.addAttribute("payInfo", kakaoPayApproval);
 		model.addAttribute("advisor", advisor);
 		return "/paySuccess_test";

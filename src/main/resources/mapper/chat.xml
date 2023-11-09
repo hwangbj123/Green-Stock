@@ -4,16 +4,6 @@
 
 <mapper namespace="com.green.greenstock.repository.interfaces.ChattingRepository"> 
 
-	<insert id="createChattingRoom">
-		insert into chatting_room(
-		    room_number,
-		    room_name
-		) values(
-			#{roomNumber},
-		    #{roomName}
-		)
-	</insert>
-	
 	<insert id="subscribe">
 		insert into subscribe(user_id, companyCode)
 		values (#{userId}, #{companyCode})
@@ -71,6 +61,7 @@
 		select v.companyCode, v.companyName, count(user_id) countUser
 		from subscribe s
 		join domestic_stock_code v on s.companyCode = v.companyCode
+		where s.user_id = #{userId}
 		group by companyCode, companyName
 	</select>
 
@@ -92,5 +83,11 @@
         <if test='searchWord != null'>
 			where companyName like concat('%', #{searchWord}, '%')
         </if>
+	</select>
+	
+	<select id="advisorChatList" resultType="com.green.greenstock.dto.ChattingRoom">
+		select concat(s.advisor_id,'@',s.user_id) companyCode, advisor_full_name companyName, s.user_id from subscribe_to_advisor s
+		join advisor a on a.advisor_id = s.advisor_id
+		where s.user_id = {userId}
 	</select>
 </mapper>
