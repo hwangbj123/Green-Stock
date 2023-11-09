@@ -55,7 +55,6 @@ public class MainController {
 			
 			List<ChattingRoom> advisorChatList = chattingService.advisorChatList(user.getId());
 			model.addAttribute("advisorChatList", advisorChatList);
-			
 		}
 
 		// 거래량 순위

@@ -79,12 +79,14 @@
     	</div>
     </form>
     <br>
+    <c:if test="${not empty userList}">
    	<h3>구독자 목록</h3>
-    <div class="user-list-div">
-    	<c:forEach var="user" items="${userList}" varStatus="status">
-    		${user.userName}<br>
-    	</c:forEach>
-    </div>
+	    <div class="user-list-div">
+	    	<c:forEach var="user" items="${userList}" varStatus="status">
+	    		${user.userName}<br>
+	    	</c:forEach>
+	    </div>
+    </c:if>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

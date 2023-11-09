@@ -190,6 +190,13 @@
 	width: 100%;
 	height: 250px;
 }
+.chat-category {
+	width: 50%;
+	height: 30px;
+	padding-top: 4px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
 </style>
 </head>
 
@@ -325,18 +332,21 @@
 
 			<!--------- 채팅 리스트 ------------>
 			<div class="gstock-div chat-div">
-				<h6 style="margin-bottom: 15px;">채팅</h6>
+				<h6>채팅</h6>
+				<div style="display: flex;">
+					<div class="chat-category" id="chat-cate-stock">종목별</div>
+					<div class="chat-category" id="chat-cate-advisor">전문가</div>
+				</div>
 				<c:choose>
 					<c:when test="${not empty chatList}">
-						<div class="chat-list"
-							style="background-color: rgba(52, 116, 212, 0.2)">
+						<div class="chat-list" id="chat-list">
 					</c:when>
 					<c:otherwise>
 						<div class="chat-list" style="background-color: rgb(70, 70, 70)">
 					</c:otherwise>
 				</c:choose>
 				<input type="hidden" id="chatDisplay" value="${chatList}">
-				<table class="chat-tb">
+				<table class="chat-tb" id="chat-stock-tb">
 					<c:if test="${not empty chatList}">
 						<c:forEach var="chat" items="${chatList}">
 							<tr class="chat-tr"
@@ -344,6 +354,16 @@
 								<td style="width: 20%">${chat.companyCode}</td>
 								<td style="width: 60%">${chat.companyName}</td>
 								<td style="width: 20%">${chat.countUser}명</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+				<table class="chat-tb" id="chat-advisor-tb">
+					<c:if test="${not empty advisorChatList}">
+						<c:forEach var="advisorChat" items="${advisorChatList}">
+							<tr class="chat-tr"
+								onclick="window.open('/chat?companyCode=${advisorChat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+								<td>${advisorChat.companyName}</td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -381,6 +401,29 @@
 				});
 			}
 		}
+		
+		function chatCategoryStock(){
+			document.getElementById("chat-cate-stock").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-list").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "white";
+			document.getElementById("chat-stock-tb").style.display="";
+			document.getElementById("chat-advisor-tb").style.display="none";
+		}
+		function chatCategoryAdvisor(){
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-list").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "white";
+			document.getElementById("chat-advisor-tb").style.display="";
+			document.getElementById("chat-stock-tb").style.display="none";
+		}
+		chatCategoryStock();
+		document.getElementById("chat-cate-stock").addEventListener("click", function() {
+			chatCategoryStock();
+		});
+		document.getElementById("chat-cate-advisor").addEventListener("click", function() {
+			chatCategoryAdvisor();
+		});
+		
 		$(function() {
 			$('.ad-wrapper').slick({
 				slidesToShow : 1,

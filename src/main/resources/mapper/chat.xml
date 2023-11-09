@@ -86,8 +86,8 @@
 	</select>
 	
 	<select id="advisorChatList" resultType="com.green.greenstock.dto.ChattingRoom">
-		select concat(s.advisor_id,'@',s.user_id) companyCode, advisor_full_name companyName, s.user_id from subscribe_to_advisor s
+		select concat(s.advisor_id,'@',s.user_id) companyCode, advisor_nick_name companyName, s.user_id from subscribe_to_advisor s
 		join advisor a on a.advisor_id = s.advisor_id
-		where s.user_id = {userId}
+		where s.user_id = #{userId}
 	</select>
 </mapper>
