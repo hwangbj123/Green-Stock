@@ -26,6 +26,7 @@
 
 }
 
+
 .board-tb{
 	width: 100%;
 	min-height: 500px;
@@ -70,33 +71,20 @@
 				<!-- 검색페이지 시작 -->
 				<div class="container">
 					<div class="row">					
-						<form method="post" name="notice-search" action="">		
+						<form action="/notice/admin/list" method="get">		
 						<div class="font-size">
 							<p class="breadcrumbs"></p>
-								<i class="mdi mdi-chevron-right"></i></div>
-								
-								
-									
+								<i class="mdi mdi-chevron-right"></i></div>																							
 							<h2 style="width: 100%; text-align: center;">공지사항</h2>
-							<div class="search-container" style="
-							text-align: center;
-							margin: 0 auto;							
-							height: 100px;
-							width: 600px;
-							display: flex;
-							justify-content: center;
-							align-items: center;">						
+							<!--  검색 영역 시작 -->
+							<div class="search-container" style="text-align: center; margin: 0 auto;	height: 100px;	width: 600px; 	display: flex; justify-content: center;	align-items: center;">																																																	
 							    <select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
-							    <option value="" disabled="" selected="">선택</option>
-							    <option value="searchTitle">제목</option>
-							    <option value="writer">작성자</option>
-								</select>
-							    												 
-							    <input type="text" class="form-control" placeholder="검색어 입력" name="searchText" maxlength="100" style="margin-right: 10px;">
-							    <button type="submit" class="btn btn-success" style="
-							    text-align: center;
-							    width: 100px;
-							    height: 42px;">검색</button>
+							    	<option value="" disabled="" selected="">선택</option>
+							    	<option value="searchTitle">제목</option>
+							    	<option value="writer">작성자</option>
+								</select>							    												
+							    <input type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100"   style="margin-right: 10px;">							  
+							    <button type="submit" class="btn btn-success" style=" text-align: center;	 width: 100px;  height: 42px;">검색</button>							 						
 							</div>
 						</form>
 					</div>	
@@ -124,12 +112,16 @@
 												<th class="noticeId" tabindex="0"
 													aria-controls="responsive-data-table" rowspan="1"
 													colspan="1" aria-sort="ascending"
-													aria-label="Product: activate to sort column descending">번호</th>
-												<th class="notice-Title" tabindex="0"
-													aria-controls="responsive-data-table" rowspan="1"
-													colspan="1"
-													aria-label="Name: activate to sort column ascending"
-													style="text-align: center;">제목</th>
+													aria-label="Product: activate to sort column descending"
+													style="text-align: center;">번호</th>
+											<th class="notice-Title" tabindex="0"
+												    aria-controls="responsive-data-table" rowspan="1"
+												    colspan="1"
+												    aria-label="Name: activate to sort column ascending"
+												    style="text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+												    제목
+												</th>
+
 												<th class="notice-userId" tabindex="0"
 													aria-controls="responsive-data-table" rowspan="1"
 													colspan="1"
@@ -153,15 +145,29 @@
 											<c:forEach items="${noticeList}" var="notice">
 												<tr class="Noticeboard-list">
 													<!-- <img class="tbl-thumb"></td> -->
-													<td>${notice.id}</td>
-													<td style="text-align: center;">
-													<a href="/notice/admin/view/${notice.id}" >
-													${notice.noticeTitle}</a>
+													<td style ="text-align: center; width: 10%">${notice.id}</td>
+													<td style="text-align: center; width: 40%; white-space: nowrap; overflow: hidden;">
+													  <a href="/notice/admin/view/${notice.id}" style="color: #000000; display: inline-block; max-width: 100%;">${notice.noticeTitle}</a>
 													</td>
-													<td style="text-align: center;">${notice.userId}</td>
-													<td style="text-align: center;">1</td>
-													<td style="text-align: center;">${notice.noticeUpdated}</td>
-													<td style="text-align: center;">${notice.hitCount}</td>
+													<td style="text-align: center; width:10%;">관리자</td>
+													<td style="text-align: center; width:10%;">${notice.noticeState}</td>													
+													<%-- <c:choose>
+														<c:when test="${notice.noticeState == 0}">
+														비공개
+													</c:when>
+													<c:otherwise>
+													<c:when test="${notice.noticeState == 1}">
+														공개
+													</c:when>
+													</c:otherwise>													
+													</c:choose> --%>																																			
+													<c:set var ="noticeUpdated" value="${notice.noticeUpdated}"/>																									
+												<c:if test="${not empty noticeUpdated}">
+												  <td style="text-align: center; width: 10%;">
+												    <fmt:formatDate value="${noticeUpdated}" pattern="yyyy-MM-dd" />
+												  </td>
+												</c:if>
+													<td style="text-align: center; width:10%;">${notice.hitCount}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -170,12 +176,12 @@
 										<a href="/notice/admin/write" class="btn btn-primary"
 											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																																																																																																
 												<!-- 페이징 영역 -->										
-											<div class="ec-pro-pagination">
+											<div class="ec-pro-pagination" style="display: flex; text-align: center;">
 					                            <span>Showing ${pagination.start}-${pagination.end} 전채 ${pagination.totalCount} 개</span>
+					                                	<a class="next" href="/notice/admin/list?page=${pagination.currentPage -1}"><i class="ecicon eci-angle-left"></i></a>
 					                            <ul class="ec-pro-pagination-inner">
 					                                <c:if test="${pagination.prevPageGroup}">
 					                                	<li>
-					                                	<a class="next" href="/notice/admin/list?page=${pagination.currentPage -1}">Prev <i class="ecicon eci-angle-left"></i></a>
 					                                	</li>
 					                               	</c:if>
 					                            
@@ -188,7 +194,8 @@
 					                                	<li><a class="next" href="/notice/admin/list?page=${pagination.currentPage + 1}">Next <i class="ecicon eci-angle-right"></i></a></li>
 					                               	</c:if>
 					                            </ul>
-					                        </div>																		
+					                        </div>
+					                        <!--페이징 영역 종료  -->																		
 									</div>	
 								</div>
 							</div>

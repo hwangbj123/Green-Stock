@@ -51,6 +51,7 @@
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="/css/stock/searchList.css">
+
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>

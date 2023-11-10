@@ -8,21 +8,24 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
+import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
 import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
@@ -59,6 +62,7 @@ public class AdvisorService {
      * @param status
      * @return 전문가리스트
      */
+    @Transactional
     public List<AdvisorResDto> findByStatusAuth(int status) {
         List<AdvisorEntity> advisorEntities = advisorEntityRepository.findByStatus(status);
         List<AdvisorResDto> advisorResDtos = new ArrayList<>();
@@ -169,6 +173,7 @@ public class AdvisorService {
      * @param advisorId
      * @param userId
      */
+    @Transactional
     public void saveSubscribeToAdvisor(int advisorId, int userId) {
         AdvisorEntity advisorEntity = advisorEntityRepository.findById(advisorId)
                 .orElseThrow(() -> new CustomRestfulException("존재하지 않는 전문가입니다.", HttpStatus.BAD_REQUEST));
@@ -185,13 +190,43 @@ public class AdvisorService {
 
     }
 
-    public boolean validateSubscribeToAdvisor(int advisorId, int userId) {
+    // 구독 유효성 체크
+    @Transactional
+    public boolean validateSubscribeToAdvisor(String nickName, int userId) {
+
+        AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
+        UserEntity userEntity = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+
         SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
-                .findByAdvisorEntityAndUserEntity(
-                        AdvisorEntity.builder().advisorId(advisorId).build(),
-                        UserEntity.builder().id(userId).build());
+                .findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
 
         return subscribeToAdvisorEntity != null;
     }
 
+    // 전문가 상담 게시판 리스트(일반 글)
+    @Transactional
+    public Page<AdvisorBoardResDto> findByAdvisorEntityAndParent(String nickName, int parent, Pageable pageable) {
+
+        AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
+
+        Page<AdvisorBoardEntity> advisorBoardEntities = advisorBoardEntityRepository
+                .findByAdvisorEntityAndParent(advisorEntity, parent, pageable);
+
+        return advisorBoardEntities.map(entity -> {
+            return AdvisorBoardResDto
+                    .builder()
+                    .advisorBoardId(entity.getAdvisorBoardId())
+                    .title(entity.getTitle())
+                    .content(entity.getContent())
+                    .parent(entity.getParent())
+                    .createdAt(entity.getCreatedAt().toString())
+                    .userId(entity.getUserEntity().getId())
+                    .userName(entity.getUserEntity().getUserName())
+                    .advisorId(entity.getAdvisorEntity().getAdvisorId())
+                    .advisorNickname(entity.getAdvisorEntity().getAdvisorNickName())
+                    .views(entity.getViews())
+                    .build();
+        });
+    }
 }

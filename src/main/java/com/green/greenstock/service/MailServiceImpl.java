@@ -235,4 +235,64 @@ public class MailServiceImpl implements MailCreateService, MailSendService{
 
 		return message;
 	}
+	
+	@Override
+	public int createRefuseMessage(String to,String msg) throws MessagingException, UnsupportedEncodingException {
+		
+		MimeMessage message = emailsender.createMimeMessage();
+
+		message.addRecipients(RecipientType.TO, to);// 보내는 대상
+		message.setSubject("Gstock 전문가 반려 사유");// 제목
+
+		String msgg = "";
+		msgg += "<div style='margin:100px;'>";
+		msgg += "<h1> 안녕하세요</h1>";
+		msgg += "<h1> Gstock입니다</h1>";
+		msgg += "<br>";
+		msgg += "<p>회원님의 전문가 신청이 반려되었습니다.<p>";
+		msgg += "<br>";
+		msgg += "<p>감사합니다<p>";
+		msgg += "<br>";
+		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+		msgg += "<h3 style='color:blue;'>반려사유입니다.</h3>";
+		msgg += "<div style='font-size:130%'>";
+		msgg += "반려사유 : <strong>";
+		msgg += msg + "</strong><div><br/> ";
+		msgg += "</div>";
+		message.setText(msgg, "utf-8", "html");
+		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
+		System.out.println(msg);
+		System.out.println(to);
+		emailsender.send(message);
+		return 1;
+	}
+	
+	@Override
+	public int createAcceptMessage(String to,String msg) throws MessagingException, UnsupportedEncodingException {
+		
+		MimeMessage message = emailsender.createMimeMessage();
+		
+		message.addRecipients(RecipientType.TO, to);// 보내는 대상
+		message.setSubject("Gstock 전문가 승인");// 제목
+		
+		String msgg = "";
+		msgg += "<div style='margin:100px;'>";
+		msgg += "<h1> 안녕하세요</h1>";
+		msgg += "<h1> Gstock입니다</h1>";
+		msgg += "<br>";
+		msgg += "<p>회원님의 전문가 신청이 승인되었습니다.<p>";
+		msgg += "<br>";
+		msgg += "<p>감사합니다<p>";
+		msgg += "<br>";
+		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+		msgg += msg + "</strong><div><br/> ";
+		msgg += "</div>";
+		message.setText(msgg, "utf-8", "html");
+		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
+		System.out.println(msg);
+		System.out.println(to);
+		emailsender.send(message);
+		return 1;
+	}
+	
 }

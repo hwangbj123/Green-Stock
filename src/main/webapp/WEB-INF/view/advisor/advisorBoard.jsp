@@ -52,6 +52,17 @@
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="/css/stock/searchList.css">
 	</head>
+	<style>
+		@font-face {
+		  font-family: "Dovemayo";
+		  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+		  font-weight: normal;
+		}
+		   *:not(i), h5, h6, li{
+		  font-family: 'Dovemayo', sans-serif !important;
+		  font-weight: normal;
+		}
+	  </style>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->

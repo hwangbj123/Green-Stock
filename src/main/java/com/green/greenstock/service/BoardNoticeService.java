@@ -24,13 +24,11 @@ public class BoardNoticeService {
 	 * @return noticeList
 	 * 
 	 */	
-	public List<Noticeboard> noticeListService(int offset) {
-		return noticeRepository.findAll(offset);
+	public List<Noticeboard> noticeListService(int offset, String noticeState, String noticeTitle) {				
+		return noticeRepository.findAll(offset, noticeState, noticeTitle);
 
 	}
-	
-
-	
+		
 	/**
 	 * 공지사항 작성
 	 * @param 
@@ -40,13 +38,11 @@ public class BoardNoticeService {
 		return result;							
 	}
 
-
 	/**
 	 * 공지 사항 수정
 	 * @return 
 	 * 
 	 */
-
 	public int noticeUpdateService(NoticeUpdateDto noticeupdateDto) {
 			Noticeboard noticeboard = new Noticeboard();		
 			noticeboard.setId(noticeupdateDto.getId());
@@ -64,9 +60,7 @@ public class BoardNoticeService {
 	 * 
 	 */
 	public int noticeDeleteService(int id) {
-		return noticeRepository.deleteNotice(id);
-		
-		
+		return noticeRepository.deleteNotice(id);		
 	}
 
 	/**
@@ -78,6 +72,14 @@ public class BoardNoticeService {
 		return noticeboard;
 		
 	}
+	/**
+	 * 공개 비공개 처리
+	 */
+	
+	public int noticeStateService(int id) {
+		return noticeRepository.noticeState(id);
+	}
+	
 		
 	/**
 	 * 조회수 증가 
@@ -90,7 +92,7 @@ public class BoardNoticeService {
 
 
 	/**
-	 * 페이징 
+	 * 댓글 전체 카운트(공개,비공개) 
 	 */
 	public int noticeListCount( ) {		
 		return noticeRepository.listCount();
@@ -98,10 +100,14 @@ public class BoardNoticeService {
 	}
 	
 	/**
-	 * 실시간 데이터 목록
+	 * 한페이지에 보이는 글수는 몇개인가?
 	 * 
 	 */
 	public int noticeLiveListCount( ) {
 		return noticeRepository.listCount();
 	}
+
+
+
+	
 }

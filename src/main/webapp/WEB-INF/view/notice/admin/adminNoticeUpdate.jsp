@@ -99,8 +99,10 @@
             <tr>
                 <td>		            	
            			<div style="text-align: right;">
-					    <input type="radio" name="noticeState" value="0" checked  style="font-size: 5px;width: 4%;height: 25px;margin-right: 10px;">비공개
-					    <input type="radio" name="noticeState" value="1" style="font-size: 5px;width: 4%;height: 25px;margin-right: 10px;">공개	
+					    <input type="radio" name="noticeState" value="0" checked  
+					    style="font-size: 5px;width: 4%;height: 25px;margin-right: 10px;" id="private"><label for="private">비공개</label>
+					    <input type="radio" name="noticeState" value="1" 
+					    style="font-size: 5px;width: 4%;height: 25px;margin-right: 10px;" id="public"><label for="public">공개</label>	
 					</div>
             	</td>              
             </tr>                     

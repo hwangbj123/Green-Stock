@@ -3,6 +3,7 @@ package com.green.greenstock.repository.interfaces;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.green.greenstock.repository.model.Advisor;
 
@@ -15,4 +16,5 @@ public interface AdvisorRepository {
 
     List<Advisor> findByStatus(int status);
 
+    void updateStatus(@Param("advisorId") int advisorId,@Param("status") int status);
 }

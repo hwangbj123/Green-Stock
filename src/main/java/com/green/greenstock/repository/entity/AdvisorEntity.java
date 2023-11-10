@@ -67,13 +67,12 @@ public class AdvisorEntity {
     @Column(columnDefinition = "DATETIME(0) default CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "advisor")
+    @OneToMany(mappedBy = "advisorEntity")
     private List<AdvisorBoardEntity> advisorBoards;
 
     @OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private UserEntity userEntity;
-
 
     @OneToOne
     @JoinColumn(name = "imgId", referencedColumnName = "imgId")
@@ -90,7 +89,5 @@ public class AdvisorEntity {
                 .userEntity(UserEntity.builder().id(advisorDto.getUserId()).build())
                 .build();
     }
-
-
 
 }

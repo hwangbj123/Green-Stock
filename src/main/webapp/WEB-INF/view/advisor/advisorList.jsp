@@ -71,7 +71,16 @@
 				height: 280px;
 				object-fit: cover;
 			}
-	    </style>
+			@font-face {
+			  font-family: "Dovemayo";
+			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
+			  font-weight: normal;
+			}
+			   *:not(i), h5, h6, li{
+			  font-family: 'Dovemayo', sans-serif !important;
+			  font-weight: normal;
+			}
+		  </style>
 	</head>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
