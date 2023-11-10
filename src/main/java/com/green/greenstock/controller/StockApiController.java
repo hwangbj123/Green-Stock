@@ -53,10 +53,8 @@ public class StockApiController {
     	User principal = (User) session.getAttribute("principal");
 
     	if(principal!=null) {
-    		System.out.println("principal : "+principal);
     		String subCheck = chattingService.subCheck(companyCode, principal.getId());
     		model.addAttribute("subCheck", subCheck);
-    		System.out.println("subCheck : "+subCheck);
     	}
     	
 		if (companyCode == null || companyCode.isEmpty()) {
