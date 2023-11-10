@@ -46,9 +46,9 @@ public class AdvisorInterceptor implements HandlerInterceptor {
         String advisorNickName = null;
         String requestUri = request.getRequestURI();
         String[] parts = requestUri.split("/");
-        for (String e : parts) {
-            log.info(e);
-        }
+        // for (String e : parts) {
+        //     log.info(e);
+        // }
 
         if (parts.length > 4) {
             advisorNickName = parts[4];

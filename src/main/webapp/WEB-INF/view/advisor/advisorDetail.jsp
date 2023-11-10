@@ -49,11 +49,10 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <script src="/resources/js/main.js"></script>
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
-      * {
-        font-family: "Pretendard-Regular";
-      }
       .advisorDetail {
         width: 50%;
       }
@@ -83,8 +82,6 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
       .advisorDetail .btn-advisor {
         width: 140px;
       }
-    </style>
-    <style>
 			@font-face {
 			  font-family: "Dovemayo";
 			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
@@ -127,7 +124,8 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
                 <tr>
                   <th scope="row">이력</th>
                   <td>
-                    <textarea name="career" id="advisorCareer" readonly>${advisor.career}</textarea>
+                    <!-- <textarea name="career" id="summernote" readonly>${advisor.career}</textarea> -->
+                    <div>${advisor.career}</div>
                   </td>
                 </tr>
                 <tr>
@@ -159,5 +157,11 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
       ><i class="ecicon eci-arrow-up" aria-hidden="true"></i
     ></a>
   </body>
-  <script src="/resources/js/custom/AdvisorDetail.js"></script>
+  <script src="/resources/js/custom/advisorDetail.js"></script>
+  <script>
+    $('#summernote').summernote({
+      tabsize: 1,
+      height: 100
+    });
+    </script>
 </html>

@@ -199,12 +199,13 @@ public class AdvisorService {
     public boolean validateSubscribeToAdvisor(String nickName, int userId) {
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
+        log.info("nickName {}", advisorEntity);
         UserEntity userEntity = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
-
+        log.info("userEntity {}", userEntity);
         SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
                 .findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
-
+        log.info("subscribeToAdvisorEntity {}", subscribeToAdvisorEntity);
         return subscribeToAdvisorEntity != null;
     }
 
