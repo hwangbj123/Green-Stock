@@ -28,8 +28,6 @@ public class CrawlService {
 	public List<NewsCrawlDTO> newsCrawl() {
 		try {
 			Document doc = Jsoup.connect("https://finance.naver.com/news/mainnews.naver").get();
-			// System.out.println(doc.select(".newsList"));
-			// dl 을 다 모은다.
 			Elements newsList = doc.select(".newsList");
 			Elements newsContents = newsList.select("dl");
 			List<NewsCrawlDTO> newsCrawlList = new ArrayList<>();
@@ -43,8 +41,6 @@ public class CrawlService {
 				dto.setRegdate(e.select(".articleSummary .wdate").text());
 				newsCrawlList.add(dto);
 			});
-			System.out.println(newsCrawlList.size());
-			System.out.println(newsCrawlList.toString());
 			return newsCrawlList;
 		} catch (IOException e) {
 			e.printStackTrace();

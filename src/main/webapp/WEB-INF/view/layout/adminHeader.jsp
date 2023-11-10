@@ -87,6 +87,9 @@
 						<li><a class="sidenav-item-link" href="/notice/admin/list">
 								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">공지사항 관리</span>
 						</a></li>
+						<li><a class="sidenav-item-link" href="/admin/expert/1/page/1">
+								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">전문가 신청 목록</span>
+						</a></li>
 						<!-- Category -->
 						<li class="has-sub"><a class="sidenav-item-link"
 							href="javascript:void(0)"> <i class="mdi mdi-dns-outline" style="margin-right:20px;"></i>

@@ -39,6 +39,11 @@
 	background-color: white; /* 배경색을 흰색으로 설정 */
 	color: black; /* 텍스트 색상을 흰색으로 설정 */
 }
+
+.col-xl-3.col-sm-6.p-b-15.lbl-card[data-clicked="true"] .card-body {
+    border: 1px solid rgba(0, 0, 255, 0.3);
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
 </style>
 </head>
 
@@ -68,7 +73,7 @@
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<div class="card card-default" style="height: 100%">
 									<div class="card-header justify-content-center">
-										<h2>포트폴리오 정보</h2>
+										<h2>선택된 포트폴리오</h2>
 									</div>
 									<div id="portfolioInfo" class="card-body"></div>
 									<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
@@ -87,7 +92,7 @@
 								<!-- Sales Graph -->
 								<div id="user-acquisition" class="card card-default">
 									<div class="card-header justify-content-center">
-										<h2 id = "modal_ranking">랭킹</h2>
+										<h2 id="modal_ranking">랭킹</h2>
 									</div>
 									<div id="rankingBody" style="overflow: auto" class="card-body">
 										<div class="tab-content" id="rankingWrapper"></div>
@@ -103,9 +108,10 @@
 									id="recent-orders">
 									<div class="card-header justify-content-between">
 										<h2>내 주식</h2>
-										<span id="addStock"
-											style="width: 5%; height: 100%; cursor: pointer"
-											class="mdi mdi-clipboard-plus"></span>
+										<div id="addStock" style="cursor: pointer">
+											주식추가 <span style="width: 5%; height: 100%;"
+												class="mdi mdi-clipboard-plus"></span>
+										</div>
 									</div>
 									<div class="card-body pt-0 pb-5">
 										<table id="myStockCardTable"
@@ -219,26 +225,27 @@
 						<div class="col-md-6">
 							<div class="profile-content-left px-4">
 								<div class="text-center widget-profile px-0 border-0">
-								<!-- 	<div class="card-img mx-auto rounded-circle">
+									<!-- 	<div class="card-img mx-auto rounded-circle">
 										 <img src="assets/img/user/u6.jpg" alt="user image"> 
 									</div> -->
 
-									<div id = "modal_canvasWrapper" class="card-body">
+									<div id="modal_canvasWrapper" class="card-body">
 										<!-- <div class="card-img mx-auto rounded-circle">
 											<img src="assets/img/user/u6.jpg" alt="user image">
 										</div> -->
 									</div>
 								</div>
 
-								<div class="d-flex justify-content-between" style=  "margin-top : 10%">
+								<div class="d-flex justify-content-between"
+									style="margin-top: 10%">
 									<div class="text-center pb-4">
 										<h6 class="text-dark pb-2">랭킹</h6>
-										<p id = "user_rank">12</p>
+										<p id="user_rank">12</p>
 									</div>
 
 									<div class="text-center pb-4">
 										<h6 class="text-dark pb-2">수익률</h6>
-										<p id = "modal_ror">11.33 %</p>
+										<p id="modal_ror">11.33 %</p>
 									</div>
 
 									<div class="text-center pb-4">
@@ -259,7 +266,7 @@
 								<p class="text-dark font-weight-medium pt-4 mb-2">pfDisc</p>
 								<p id="modal_pfDisc">portfolio for Test</p>
 								<p class="text-dark font-weight-medium pt-4 mb-2">RegDate</p>
-								<p id = "modal_pfReg">2023-11-03</p>
+								<p id="modal_pfReg">2023-11-03</p>
 								<!-- <button class = "btn btn-primary btn-pill my-4">저장</button>
 												<button class = "btn btn-primary btn-pill my-4">삭제</button> -->
 							</div>
