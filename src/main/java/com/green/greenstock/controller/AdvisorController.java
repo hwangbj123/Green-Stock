@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,14 +41,14 @@ public class AdvisorController {
     private final AdvisorService advisorService;
     private final UserService userService;
 
-    // 목록
+    // 전문가 목록
     @GetMapping(value = { "/", "/list" })
     public String advisorList(Model model) {
         model.addAttribute("advisorResDtos", advisorService.findByStatusAuth(2));
         return "advisor/advisorList";
     }
 
-    // 세부사항
+    // 전문가 세부사항
     @GetMapping("/{nickName}")
     public String advisorDetail(@PathVariable String nickName, Model model) {
 

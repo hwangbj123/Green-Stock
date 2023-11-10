@@ -60,8 +60,8 @@ public class AdvisorEntity {
     private int subscriptionCost;
 
     @Builder.Default
-    @Column(columnDefinition = "tinyint default 0")
-    private int status = 0;
+    @Column(columnDefinition = "tinyint default 1")
+    private int status = 1;
 
     @CreatedDate
     @Column(columnDefinition = "DATETIME(0) default CURRENT_TIMESTAMP")

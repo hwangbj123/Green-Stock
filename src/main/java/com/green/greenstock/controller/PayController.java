@@ -109,7 +109,7 @@ public class PayController {
 		kakaoPayService.insertPaySubscribeInfo(paySubscribe);
 		
 		//일대일 채팅 생성
-		String chattingCode = ""+advisorId+"@"+user.getId();
+		String chattingCode = ""+advisor.getAdvisorNickName()+"@"+user.getUserName();
 		String subCheck = chattingService.subCheck(chattingCode, user.getId());
 		if(subCheck.equals("0")) {
 			int advisorIdToUserId = chattingService.advisorIdToUserId(advisorId);

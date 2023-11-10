@@ -19,6 +19,7 @@ public interface AdvisorRepository {
 
 	List<Advisor> findByStatus(int status);
 
+<<<<<<< HEAD
 	void updateStatus(@Param("advisorId") int advisorId, @Param("status") int status);
 
 	List<AdminExpertDTO> findAllInfoByStatus(int status);
@@ -26,11 +27,26 @@ public interface AdvisorRepository {
 	List<AdminExpertDTO> findAllInfoStatusAsc();
 
 	void insertRefuseReason(@Param("advisorId") int advisorId, @Param("refuseMsg") String refuseMsg);
+=======
+    void updateStatus(@Param("advisorId") int advisorId,@Param("status") int status);
+    
+    List<AdminExpertDTO> findAllInfoByStatus(int status);
+    
+    List<AdminExpertDTO> findAllInfoStatusAsc();
+>>>>>>> deadfe5d860d91811732fc12becc42191ba04993
 
 	RefuseDTO findAdvisorRefuseByAdvisorId(int advisorId);
 
+<<<<<<< HEAD
 	List<AdminExpertDTO> findPagedInfoByStatus(@Param("status") int status, @Param("paging") PagingDto paging);
 
 	List<Advisor> selectAdvisorList(int status);
 
 }
+=======
+	List<AdminExpertDTO> findPagedInfoByStatus(@Param("status") int status,@Param("paging") PagingDto paging);
+
+    List<Advisor> selectAdvisorList(int stauts);
+    
+}
+>>>>>>> deadfe5d860d91811732fc12becc42191ba04993

@@ -51,6 +51,8 @@
 	color: rgba(226,24,17,0.7);
 }
 </style>
+<html>
+<body>
         <!-- Header responsive Bottom  End -->        
         <!-- Ec Main Menu End -->	
 	<div class="content container" style="width : 50%;">
@@ -69,11 +71,11 @@
 			<div class="col-12">
 				<div class="card card-default" style="width: 900px">					
 					<div class="card-body" style="width:900px" >
-						<h4>제목 :${view.noticeTitle}</h4> 
+						<h4 style="border-bottom: 2px solid #ccc;">${view.noticeTitle}</h4> 
 						<p>작성자 :${view.userId}</p>  
-						<p style="">${view.noticeCreated}</p>						
-						<p>${view.hitCount}</p>					
-						<p><textarea readonly="readonly" style ="width: 852px; height: 23em; border: none; resize: none">${view.noticeContent}</textarea></p>
+						<p style="border-bottom: 2px solid #ccc;">${view.noticeCreated}</p>						
+						<p style="border-bottom: 2px solid #ccc;">조회수:${view.hitCount}</p>					
+						<p><textarea readonly="readonly" style ="width: 852px; height: 26em; border: none; resize: none; border-bottom: 2px solid #ccc;">${view.noticeContent}</textarea></p>
 						<table class="table-responsive">
 						    <tr>
 					      	<td><a href = "/notice/admin/update/${view.id}" class="btn btn-primary" style="margin :5px">수정하기</a></td>
@@ -85,6 +87,8 @@
 					</div>
 				</div>
 			</div>	
-		</div>		
+			</div>
+</body>	
 </html>
+
 <%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>

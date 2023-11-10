@@ -4,11 +4,15 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.transaction.Transactional;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
+import com.green.greenstock.service.AdvisorService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,20 +26,12 @@ class GreenStockApplicationTests2 {
 	@Autowired
 	UserEntityRepository userEntityRepository;
 
-//	@Test
-//	@Transactional
-//	void contextLoads() {	
-//		UserEntity userEntity = userEntityRepository.findById(1).orElse(null);
-//		
-//		Advisor advisor = Advisor
-//							.builder()
-//							.advisor_full_name("full")
-//							.advisor_nick_name("nick")
-//							.career("나뭐")
-//							.introduction("하이")
-//							.userEntity(userEntity)
-//							.build();
-//		
-//		advisorRepository.save(advisor);
-//	}
+	@Autowired
+	AdvisorService advisorService;
+
+	@Test
+	@Transactional
+	void contextLoads() {	
+		advisorService.validateSubscribeToAdvisor("shannon50", 3);
+	}
 }
