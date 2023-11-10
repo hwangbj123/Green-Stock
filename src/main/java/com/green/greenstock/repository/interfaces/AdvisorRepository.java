@@ -20,7 +20,6 @@ public interface AdvisorRepository {
     List<Advisor> findByStatus(int status);
 
     void updateStatus(@Param("advisorId") int advisorId,@Param("status") int status);
-<<<<<<< HEAD
     
     List<AdminExpertDTO> findAllInfoByStatus(int status);
     
@@ -31,9 +30,7 @@ public interface AdvisorRepository {
 	RefuseDTO findAdvisorRefuseByAdvisorId(int advisorId);
 
 	List<AdminExpertDTO> findPagedInfoByStatus(@Param("status") int status,@Param("paging") PagingDto paging);
-=======
 
     List<Advisor> selectAdvisorList(int stauts);
     
->>>>>>> f9692caf269b435dd936e2f741794a5d433f970a
 }

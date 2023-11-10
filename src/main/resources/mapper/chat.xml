@@ -64,15 +64,12 @@
 	</select>
 	
 	<select id="selectChatListNotPaging" resultType="com.green.greenstock.dto.ChattingRoom">
-		select v.companyCode, v.companyName,
-			  (select count(user_id) from subscribe where subscribe.companyCode = v.companyCode) countUser,
-	    coalesce((select max(date) from message where companyCode = v.companyCode),'1999-09-09') last_message,
+		select companyCode, coalesce((select companyName from domestic_stock_code where companyCode = s.companyCode), companyCode) companyName,
+			  (select count(user_id) from subscribe where subscribe.companyCode = s.companyCode) countUser,
+	    coalesce((select max(date) from message where companyCode = s.companyCode),'1999-09-09') last_message,
         last_time
 		from subscribe s
-		join domestic_stock_code v on s.companyCode = v.companyCode
-		<if test="roletypeId == 1">
-			where s.user_id = #{id}
-		</if>
+		where user_id = #{id}
 		group by companyCode, companyName, last_time
 	</select>
 

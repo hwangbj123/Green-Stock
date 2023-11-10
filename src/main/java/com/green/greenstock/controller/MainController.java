@@ -54,13 +54,6 @@ public class MainController {
 			model.addAttribute("chatList", chatList);
 			System.out.println("@@@@@@@@@@@@@@  chatList : "+chatList);
 			
-			List<ChattingRoom> advisorChatList = chattingService.advisorChatList(user.getId());
-			model.addAttribute("advisorChatList", advisorChatList);
-			System.out.println("advisorChatList : "+advisorChatList);
-			
-			int advisorIdToUserId = chattingService.advisorIdToUserId(user.getId());
-			List<ChattingRoom> myAdvisorChatList = chattingService.myAdvisorChatList(advisorIdToUserId);
-			model.addAttribute("myAdvisorChatList",myAdvisorChatList);
 		}
 
 		// 거래량 순위
