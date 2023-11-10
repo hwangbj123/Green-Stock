@@ -99,4 +99,8 @@
 		join advisor a on a.advisor_id = s.advisor_id
 		where s.user_id = #{userId}
 	</select>
+	
+	<select id="advisorIdToUserId" resultType="int">
+		select user_id from advisor where advisor_id = {advisorId}
+	</select>
 </mapper>
