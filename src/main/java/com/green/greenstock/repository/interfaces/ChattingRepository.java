@@ -27,4 +27,6 @@ public interface ChattingRepository {
 	public List<ChattingRoom> selectChatListNotPaging(User user);
 	public List<ChattingRoom> advisorChatList(int userId);
 	public int advisorIdToUserId(int advisorId);
+	public List<ChattingRoom> myAdvisorChatList(int userId);
+	public int lastTimeUpdate(@Param("companyCode") String companyCode, @Param("userId") int userId);
 }

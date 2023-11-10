@@ -13,6 +13,10 @@ let chatInit = {
 	        this.sendMessage();
 	    }
 	});
+	this.lastTimeUpdate();
+	window.addEventListener('unload', () => {
+		this.lastTimeUpdate();
+	});
   },
 
   scrollToBottom: function() {
@@ -92,6 +96,22 @@ let chatInit = {
 		  document.getElementById(`delete-form-${id}`).submit();
 	  }
   },
+  
+  lastTimeUpdate: async function(){
+	let companyCode = document.getElementById("hd-companyCode").value;
+	let userId = document.getElementById("hd-userId").value;
+	
+	try {
+	    let response = await fetch(`chat/lastTimeUpdate?companyCode=${companyCode}&userId=${userId}`);
+	    if (!response.ok) {
+	        throw new Error(`HTTP error! Status: ${response.status}`);
+	    }
+	    const check = await response.json();
+	    console.log(`check = ${check}`);
+	} catch (error) {
+	    console.error("Fetch error:", error);
+	}
+  }
   
 };
 

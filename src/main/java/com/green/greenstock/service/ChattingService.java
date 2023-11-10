@@ -71,5 +71,12 @@ public class ChattingService {
 	public int advisorIdToUserId(int advisorId) {
 		return chattingRepository.advisorIdToUserId(advisorId);
 	}
+	
+	public List<ChattingRoom> myAdvisorChatList(int userId) {
+		return chattingRepository.myAdvisorChatList(userId);
+	}
 
+	public int lastTimeUpdate(String companyCode, int userId) {
+		return chattingRepository.lastTimeUpdate(companyCode, userId);
+	}
 }
