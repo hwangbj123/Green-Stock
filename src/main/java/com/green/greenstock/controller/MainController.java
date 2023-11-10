@@ -2,7 +2,9 @@ package com.green.greenstock.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.BoardService;
 import com.green.greenstock.service.ChattingService;
+import com.green.greenstock.service.SiteViewCountService;
 import com.green.greenstock.service.StockApiService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,11 +38,15 @@ public class MainController {
 
 	private final StockApiService stockApiService;
 
+	private final SiteViewCountService siteViewCountService;
+	
 	@GetMapping({ "/main", "/" })
-	public String Main(HttpServletRequest request, Model model) {
+	public String Main(HttpServletRequest request, Model model,HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("principal");
-
+		
+		siteViewCountService.addSiteViewCount(request,response);
+		
 		// board 가져오기
 		PagingDto paging = new PagingDto();
 		paging.setOrderType("recommand");

@@ -90,7 +90,7 @@
 							</div>
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<!-- Sales Graph -->
-								<div id="user-acquisition" class="card card-default">
+								<div id="user-acquisition" style = "height: 100%"class="card card-default">
 									<div class="card-header justify-content-center">
 										<h2 id="modal_ranking">랭킹</h2>
 									</div>

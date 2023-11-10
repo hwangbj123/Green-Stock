@@ -45,49 +45,19 @@
 						</div>
 					</div>
 				</div>
-			</div><!-- End of 유저정보  -->
+			</div>
+			<!-- End of 유저정보  -->
 
 			<div class="col-xl-4 col-md-12 p-b-15">
 				<!-- Doughnut Chart -->
 				<div class="card card-default">
 					<div class="card-header justify-content-center">
-						<h2>Orders Overview</h2>
+						<h2 style="font-weight: bold">일일 방문자수</h2>
 					</div>
 					<div class="card-body">
-						<canvas id="doChart"></canvas>
+						<canvas id="dailyView"></canvas>
 					</div>
-					<a href="#" class="pb-5 d-block text-center text-muted"><i
-						class="mdi mdi-download mr-2"></i> Download overall report</a>
-					<div class="card-footer d-flex flex-wrap bg-white p-0">
-						<div class="col-6">
-							<div class="p-20">
-								<ul class="d-flex flex-column justify-content-between">
-									<li class="mb-2"><i
-										class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #4c84ff"></i>Order Completed</li>
-									<li class="mb-2"><i
-										class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #80e1c1"></i>Order Unpaid</li>
-									<li><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #ff7b7b"></i>Order returned</li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-6 border-left">
-							<div class="p-20">
-								<ul class="d-flex flex-column justify-content-between">
-									<li class="mb-2"><i
-										class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #8061ef"></i>Order Pending</li>
-									<li class="mb-2"><i
-										class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #ffa128"></i>Order Canceled</li>
-									<li><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-										style="color: #7be6ff"></i>Order Broken</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+					<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
 				</div>
 			</div>
 		</div>
@@ -115,42 +85,40 @@
 												<th style="max-width: 50px;">rec</th>
 											</tr>
 										</thead>
-		
+
 										<tbody>
 											<c:forEach var="board" items="${boardList}">
-													<tr>
-														<td>${board.id}</td>
-														<td>${board.categoryId}</td>
-														<td><a href="/board/detail?boardId=${board.id}">
-															${board.title}</a>
-														</td>
-														<td>${board.userName}</td>
-														<td><fmt:formatDate value="${board.date}"
-																pattern="MM-dd HH:mm:ss" /></td>
-														<td>${board.views}</td>
-														<td>${board.recommand}</td>
-													</tr>
+												<tr>
+													<td>${board.id}</td>
+													<td>${board.categoryId}</td>
+													<td><a href="/board/detail?boardId=${board.id}">
+															${board.title}</a></td>
+													<td>${board.userName}</td>
+													<td><fmt:formatDate value="${board.date}"
+															pattern="MM-dd HH:mm:ss" /></td>
+													<td>${board.views}</td>
+													<td>${board.recommand}</td>
+												</tr>
 											</c:forEach>
 											<tr>
-												<td colspan="7" style="text-align: center;">
-													<a href="/board/list">게시판 더 보기</a>
-												</td>
+												<td colspan="7" style="text-align: center;"><a
+													href="/board/list">게시판 더 보기</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-<!-- 							<div class="card-body"> -->
-<!-- 								<div class="tab-content" id="userActivityContent"> -->
-<!-- 									<div class="tab-pane fade show active" id="user" -->
-<!-- 										role="tabpanel"> -->
-<!-- 										<canvas id="activity" class="chartjs"></canvas> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="card-footer d-flex flex-wrap bg-white border-top"> -->
-<!-- 								<a href="#" class="text-uppercase py-3">In-Detail Overview</a> -->
-<!-- 							</div> -->
+							<!-- 							<div class="card-body"> -->
+							<!-- 								<div class="tab-content" id="userActivityContent"> -->
+							<!-- 									<div class="tab-pane fade show active" id="user" -->
+							<!-- 										role="tabpanel"> -->
+							<!-- 										<canvas id="activity" class="chartjs"></canvas> -->
+							<!-- 									</div> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
+							<!-- 							<div class="card-footer d-flex flex-wrap bg-white border-top"> -->
+							<!-- 								<a href="#" class="text-uppercase py-3">In-Detail Overview</a> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -783,6 +751,125 @@ if (cUser !== null) {
         caretPadding: 5
       }
     }
+  });
+}
+
+console.log("여기1111111111111111111");
+var dailyView = document.getElementById("dailyView");
+if (dailyView !== null) {
+  var dailyViewData = [
+    {
+      first: [0, 65, 52, 115, 98, 165, 125],
+      second: [45, 38, 100, 87, 152, 187, 85]
+    },
+    {
+      first: [0, 65, 77, 33, 49, 100, 100],
+      second: [88, 33, 20, 44, 111, 140, 77]
+    },
+    {
+      first: [0, 40, 77, 55, 33, 116, 50],
+      second: [55, 32, 20, 55, 111, 134, 66]
+    },
+    {
+      first: [0, 44, 22, 77, 33, 151, 99],
+      second: [60, 32, 120, 55, 19, 134, 88]
+    }
+  ];
+
+  var config = {
+    // The type of chart we want to create
+    type: "line",
+    // The data for our dataset
+    data: {
+      labels: [
+        "4 Jan",
+        "5 Jan",
+        "6 Jan",
+        "7 Jan",
+        "8 Jan",
+        "9 Jan",
+        "10 Jan"
+      ],
+      datasets: [
+        {
+          label: "dailyView",
+          backgroundColor: "transparent",
+          borderColor: "rgba(82, 136, 255, .8)",
+          data: dailyViewData[0].first,
+          lineTension: 0,
+          pointRadius: 5,
+          pointBackgroundColor: "rgba(255,255,255,1)",
+          pointHoverBackgroundColor: "rgba(255,255,255,1)",
+          pointBorderWidth: 2,
+          pointHoverRadius: 7,
+          pointHoverBorderWidth: 1
+        },
+    // Configuration options go here
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              fontColor: "#8a909d", // this here
+            },
+          }
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              fontColor: "#8a909d",
+              fontFamily: "Roboto, sans-serif",
+              display: true,
+              color: "#eee",
+              zeroLineColor: "#eee"
+            },
+            ticks: {
+              // callback: function(tick, index, array) {
+              //   return (index % 2) ? "" : tick;
+              // }
+              stepSize: 50,
+              fontColor: "#8a909d",
+              fontFamily: "Roboto, sans-serif"
+            }
+          }
+        ]
+      },
+      tooltips: {
+        mode: "index",
+        intersect: false,
+        titleFontColor: "#888",
+        bodyFontColor: "#555",
+        titleFontSize: 12,
+        bodyFontSize: 15,
+        backgroundColor: "rgba(256,256,256,0.95)",
+        displayColors: true,
+        xPadding: 10,
+        yPadding: 7,
+        borderColor: "rgba(220, 220, 220, 0.9)",
+        borderWidth: 2,
+        caretSize: 6,
+        caretPadding: 5
+      }
+    }
+  };
+
+  var ctx = document.getElementById("dailyView").getContext("2d");
+  var myLine = new Chart(ctx, config);
+  var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");
+  items.forEach(function(item, index){
+    item.addEventListener("click", function() {
+      config.data.datasets[0].data = activityData[index].first;
+      config.data.datasets[1].data = activityData[index].second;
+      myLine.update();
+    });
   });
 }
 </script>

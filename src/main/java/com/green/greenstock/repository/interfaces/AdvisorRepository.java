@@ -13,27 +13,24 @@ import com.green.greenstock.repository.model.Advisor;
 @Mapper
 public interface AdvisorRepository {
 
-    Advisor findById(int advisorId);
+	Advisor findById(int advisorId);
 
-    List<Advisor> findAll();
+	List<Advisor> findAll();
 
-    List<Advisor> findByStatus(int status);
+	List<Advisor> findByStatus(int status);
 
-    void updateStatus(@Param("advisorId") int advisorId,@Param("status") int status);
-<<<<<<< HEAD
-    
-    List<AdminExpertDTO> findAllInfoByStatus(int status);
-    
-    List<AdminExpertDTO> findAllInfoStatusAsc();
+	void updateStatus(@Param("advisorId") int advisorId, @Param("status") int status);
 
-	void insertRefuseReason(@Param("advisorId") int advisorId,@Param("refuseMsg") String refuseMsg);
-	
+	List<AdminExpertDTO> findAllInfoByStatus(int status);
+
+	List<AdminExpertDTO> findAllInfoStatusAsc();
+
+	void insertRefuseReason(@Param("advisorId") int advisorId, @Param("refuseMsg") String refuseMsg);
+
 	RefuseDTO findAdvisorRefuseByAdvisorId(int advisorId);
 
-	List<AdminExpertDTO> findPagedInfoByStatus(@Param("status") int status,@Param("paging") PagingDto paging);
-=======
+	List<AdminExpertDTO> findPagedInfoByStatus(@Param("status") int status, @Param("paging") PagingDto paging);
 
-    List<Advisor> selectAdvisorList(int stauts);
-    
->>>>>>> f9692caf269b435dd936e2f741794a5d433f970a
+	List<Advisor> selectAdvisorList(int status);
+
 }

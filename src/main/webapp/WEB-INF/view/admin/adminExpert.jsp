@@ -259,23 +259,11 @@
 								</div>
 							</div>
 
-							<div class="d-flex justify-content-between">
+							<div class="d-flex justify-content-center">
 								<div style="width: 33%;">
 									<h6 style="text-align: center;" class="text-dark pb-2">전문분야</h6>
 									<div id="modal-speciality"
 										style="word-wrap: break-word; text-align: center;"></div>
-								</div>
-
-								<div style="width: 33%;">
-									<h6 style="text-align: center;" class="text-dark pb-2">이메일</h6>
-									<div id="modal-email" style="word-wrap: break-word;"></div>
-								</div>
-
-								<div style="width: 33%;">
-									<div id="phoneWrap" style="text-align: center;">
-										<h6 class="text-dark pb-2">휴대폰</h6>
-									</div>
-									<div id="modal-phone" style="word-wrap: break-word;"></div>
 								</div>
 							</div>
 						</div>

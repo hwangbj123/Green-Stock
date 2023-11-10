@@ -295,7 +295,7 @@ function setRanking() {
 	$.get('portfolio/getRanking', function(data) {
 		console.log(data);
 		//let width = $('#user-acquisition').css('width');
-		let rankingWrapper = $('<div id = "rankingBodyInner" style = "display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
+		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
 		$('#rankingBody').append(rankingWrapper);
 		let thArr = ['랭킹', '아이디', '제목', '수익률'];
 		thArr.forEach(e => {
