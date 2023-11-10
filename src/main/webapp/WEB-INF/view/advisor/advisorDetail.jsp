@@ -147,7 +147,10 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
               <button class="btn btn-info btn-advisor" id="btnAdvisorBoard" data-id="${advisor.advisorId}">
                 상담게시판
               </button>
-              <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}">실시간채팅</button>
+              <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}"
+              		onclick="window.open('/chat?companyCode=${advisor.nickName}@${principal.userName}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+              	실시간채팅
+              </button>
             </c:if>
             </div>
           </div>

@@ -19,10 +19,6 @@ let boardWriteInit = {
     		content.value = '';
     		alert("내용을 입력해주세요");
     		content.focus();
-    	}else if(/<|>/.test(content.value)){
-    		alert("일부 특수문자는 사용할 수 없습니다");
-    		content.value='';
-    		content.focus();
     	}else{
     		if(confirm("해당 내용으로 글을 작성하시겠습니까?")){
 	    		writeForm.submit();

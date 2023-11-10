@@ -47,8 +47,5 @@ const advisorDetailInit = {
     location.href = `/advisor/sub/board/${nickName.textContent}`;
   },
 
-  enterChat: function () {
-    alert("채팅방입장!");
-  },
 };
 advisorDetailInit.init();

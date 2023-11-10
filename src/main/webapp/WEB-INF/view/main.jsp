@@ -200,8 +200,8 @@
 	width: 50%;
 	height: 30px;
 	padding-top: 4px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	background-color: #f7f7f7;
 	cursor: pointer;
 }
