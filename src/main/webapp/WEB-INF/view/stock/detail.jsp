@@ -49,7 +49,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/stock/detail.css" />
+    <link rel="stylesheet" href="/resources/css/custom/stockDetail.css" />
 
   </head>
   <body>
@@ -463,9 +463,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
   <!-- kjh -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-  <script src="/js/stock/chart.js"></script>
-  <script src="/js/stock/websocket.js"></script>
-  <script src="/js/stock/tab.js"></script>
+  <script src="/resources/js/custom/stockChart.js"></script>
+  <script src="/resources/js/custom/stockWebsocket.js"></script>
+  <script src="/resources/js/custom/stockTab.js"></script>
 <!--   <script src="/js/stock/chatting.js"></script> -->
 
   <script src="/resources/js/custom/subscribe.js"></script>

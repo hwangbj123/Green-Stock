@@ -9,5 +9,6 @@ import com.green.greenstock.repository.entity.AdvisorEntity;
 
 public interface AdvisorBoardEntityRepository extends JpaRepository<AdvisorBoardEntity, Integer> {
 
+    AdvisorBoardEntity findByAdvisorBoardId(int advisorBoardId);
     Page<AdvisorBoardEntity> findByAdvisorEntityAndParent(AdvisorEntity advisorEntity, int parent, Pageable pageable);
 }

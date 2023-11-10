@@ -23,4 +23,13 @@
 	<update id="updateStatus">
 		update advisor set status = #{status} where advisor_id = #{advisorId}
 	</update>
+
+	<!-- selectAdvisorList --> 
+
+	<!-- <select id="selectAdvisorList">
+
+	</select> -->
+
+
+	
 </mapper>

@@ -1,7 +1,5 @@
 package com.green.greenstock.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,8 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-
 import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
-import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.UserService;
@@ -116,7 +111,7 @@ public class AdvisorController {
     public String advisorBoardList(Model model, @PathVariable String advisorNickName,
             @RequestParam(defaultValue = "1") int page) {
         int pageReq = page - 1;
-        PageRequest pageRequest = PageRequest.of(pageReq, 10);
+        PageRequest pageRequest = PageRequest.of(pageReq, 10, Sort.by("createdAt").descending());
         Page<AdvisorBoardResDto> advisorBoardResDtos = advisorService.findByAdvisorEntityAndParent(advisorNickName, 0,
                 pageRequest);
         Long result = advisorBoardResDtos.getTotalElements();
@@ -125,13 +120,15 @@ public class AdvisorController {
 
         model.addAttribute("page", advisorBoardResDtos);
         model.addAttribute("pagination", pagination);
-        log.info("pageination {}", pagination);
         return "advisor/advisorBoardList";
     }
 
     // 전문가 상담게시판 글 보기 페이지
     @GetMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
-    public String advisorBoard(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
+    public String advisorBoard(Model model, @PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
+        AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
+        model.addAttribute("advisorBoard", advisorBoardResDto);
+        advisorBoardResDto.getAdvisorBoardId();
         return "advisor/advisorBoard";
     }
 
@@ -139,7 +136,7 @@ public class AdvisorController {
     @GetMapping("/sub/board/{advisorNickName}/write")
     public String advisorBoardWrite() {
 
-        return "advisor/";
+        return "advisor/advisorBoard";
     }
 
     // 전문가 상담게시판 글 쓰기 기능

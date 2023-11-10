@@ -1,5 +1,7 @@
 package com.green.greenstock.dto;
 
+import com.green.greenstock.repository.entity.AdvisorBoardEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +23,26 @@ public class AdvisorBoardResDto {
     private int advisorId;
     private String advisorNickname;
     private int views;
+    private String image;
+
+    public static AdvisorBoardResDto fromEntity(AdvisorBoardEntity advisorBoardEntity){
+
+        return AdvisorBoardResDto
+        .builder()
+        .advisorBoardId(advisorBoardEntity.getAdvisorBoardId())
+                    .title(advisorBoardEntity.getTitle())
+                    .content(advisorBoardEntity.getContent())
+                    .parent(advisorBoardEntity.getParent())
+                    .createdAt(advisorBoardEntity.getCreatedAt().toString())
+                    .userId(advisorBoardEntity.getUserEntity().getId())
+                    .userName(advisorBoardEntity.getUserEntity().getUserName())
+                    .advisorId(advisorBoardEntity.getAdvisorEntity().getAdvisorId())
+                    .advisorNickname(advisorBoardEntity.getAdvisorEntity().getAdvisorNickName())
+                    .views(advisorBoardEntity.getViews())
+                    .image(advisorBoardEntity.getAdvisorEntity().getImageEntity().getImgName())
+        .build();
+
+    }
+
 
 }

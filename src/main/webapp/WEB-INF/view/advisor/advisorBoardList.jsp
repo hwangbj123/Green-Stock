@@ -51,6 +51,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <link rel="stylesheet" href="/css/stock/searchList.css" />
     <style>
       .adviosrBoardList {
+        width: 50%;
+        margin-top: 10px;
+        margin-bottom: 10px;
       }
       .adviosrBoardList table tbody > tr > td:nth-child(2) {
         text-align: left;
@@ -70,16 +73,25 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         font-family: 'Dovemayo', sans-serif !important;
         font-weight: normal;
       }
+      .btn{
+        border-radius: 5px;
+        box-shadow: 2px 2px 6px 0px gray;
+        height: 40px;
+        line-height: 40px;
+      }
+      .footer-bottom{
+
+      }
     </style>
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
     <!-- CONTENT WRAPPER -->
-    <div class="ec-content-wrapper container mb-5 adviosrBoardList">
+    <div class="ec-content-wrapper container adviosrBoardList">
       <div class="content">
         <div class="breadcrumb-wrapper">
-          <div>
-            <h4>${page.content[0].advisorNickname} 상담게시판</h4>
+          <div class="d-flex justify-content-between mb-2">
+            <h4>${page.content[0].advisorNickname} 상담게시판</h4><button class="btn btn-primary">작성하기</button>
           </div>
         </div>
         <div class="row">
@@ -91,9 +103,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                     <thead>
                       <tr class="text-center">
                         <th style="width: 10%">번호</th>
-                        <th style="width: 40%">제목</th>
+                        <th style="width: 50%">제목</th>
                         <th style="width: 20%">작성자</th>
-                        <th style="width: 20%">작성일</th>
+                        <th style="width: 10%">작성일</th>
                         <th style="width: 10%">조회수</th>
                       </tr>
                     </thead>
@@ -101,7 +113,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                       <c:forEach var="entity" items="${page.content}" varStatus="status">
                         <tr>
                           <td class="text-center">${page.getTotalElements() - status.index - page.getNumber() * 10}</td>
-                          <td><a href="/advisor/nickname">${entity.title}</a></td>
+                          <td><a href="/advisor/sub/board/${entity.advisorNickname}/${entity.advisorBoardId}">${entity.title}</a></td>
                           <td>${entity.userName}</td>
                           <td class="text-center">${entity.createdAt.substring(0, 10)}</td>
                           <td>${entity.views}</td>
