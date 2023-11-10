@@ -37,6 +37,10 @@
 		select count(*) from user_tb
 	</select>
 	
+	<select id="countSubUser">
+		select count(*) from pay_tb where month(created_at) = #{i};
+	</select>
+	
 	<select id="findAdminMainUserList" resultType="User">
 		select * from user_tb order by id desc limit 10
 	</select>

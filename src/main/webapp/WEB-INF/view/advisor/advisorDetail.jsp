@@ -159,5 +159,5 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
       ><i class="ecicon eci-arrow-up" aria-hidden="true"></i
     ></a>
   </body>
-  <script src="/resources/js/custom/AdvisorDetail.js"></script>
+  <script src="/resources/js/custom/advisorDetail.js"></script>
 </html>

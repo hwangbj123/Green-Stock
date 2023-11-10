@@ -1,17 +1,14 @@
 package com.green.greenstock.service;
 
-import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import java.net.URI;
 import java.net.URISyntaxException;
- 
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -24,6 +21,9 @@ import com.green.greenstock.repository.interfaces.PayRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.PaySubscribe;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -149,7 +149,7 @@ public class KakaoPayService {
             
             modifyPayInfo(pay);
             
-            deletePaySubscribe(pay.getTid());
+            advisorService.deleteSubscribeToAdvisorEntity(Integer.parseInt(pay.getItemName()), pay.getUserId());
         
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
@@ -160,6 +160,7 @@ public class KakaoPayService {
         }
     }
 
+    @Transactional
 	public void insertPayInfo(Pay pay) {
 		int result = payRepository.insertPayInfo(pay);
 		if(result != 1) {
@@ -167,6 +168,7 @@ public class KakaoPayService {
 		}
 	}
 	
+    @Transactional
 	public void modifyPayInfo(Pay pay) {
 		payRepository.modifyPayInfo(pay);
 	}
@@ -175,10 +177,12 @@ public class KakaoPayService {
 		return payRepository.findPayInfoById(id);
 	}
 	
-	private void deletePaySubscribe(String tid) {
-		payRepository.deletePaySubscribe(tid);		
-	}
+	/*
+	 * @Transactional private void deletePaySubscribe(String tid) {
+	 * payRepository.deletePaySubscribe(tid); }
+	 */
 
+	@Transactional
 	public void insertPaySubscribeInfo(PaySubscribe paySubscribe) {
 		int result = payRepository.insertPaySubscribeInfo(paySubscribe);
 		if(result != 1) {
