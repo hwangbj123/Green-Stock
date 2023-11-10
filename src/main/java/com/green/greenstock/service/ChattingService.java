@@ -67,4 +67,9 @@ public class ChattingService {
 	public List<ChattingRoom> advisorChatList(int userId) {
 		return chattingRepository.advisorChatList(userId);
 	}
+	
+	public int advisorIdToUserId(int advisorId) {
+		return chattingRepository.advisorIdToUserId(advisorId);
+	}
+
 }

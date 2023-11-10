@@ -269,7 +269,7 @@
 			</div>
 			<!--------- 게시판 리스트 ------------>
 			<div class="gstock-div board-div">
-				<h6 style="margin-bottom: 15px;">커뮤니티 게시판</h6>
+				<h6 style="margin-bottom: 15px;">커뮤니티 인기글</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
@@ -343,7 +343,7 @@
 			<div class="gstock-div chat-div">
 				<h6>채팅</h6>
 				<c:choose>
-					<c:when test="${not empty chatList}">
+					<c:when test="${not empty chatList || not empty advisorChatList}">
 						<div style="display: flex;">
 							<div class="chat-category" id="chat-cate-all">전체</div>
 							<div class="chat-category" id="chat-cate-stock">종목별</div>
@@ -351,7 +351,7 @@
 						</div>
 						<div class="chat-list" id="chat-list">
 					</c:when>
-					<c:when test="${empty chatList}">
+					<c:when test="${empty chatList && empty advisorChatList}">
 						<div style="display: flex;">
 							<div id="chat-cate-stock"></div>
 							<div id="chat-cate-advisor"></div>

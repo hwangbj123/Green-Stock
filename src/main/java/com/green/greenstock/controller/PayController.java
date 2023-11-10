@@ -105,7 +105,8 @@ public class PayController {
 		String chattingCode = ""+advisorId+"@"+user.getId();
 		String subCheck = chattingService.subCheck(chattingCode, user.getId());
 		if(subCheck.equals("0")) {
-			chattingService.subscribe(chattingCode, advisorId);
+			int advisorIdToUserId = chattingService.advisorIdToUserId(advisorId);
+			chattingService.subscribe(chattingCode, advisorIdToUserId);
 			chattingService.subscribe(chattingCode, user.getId());
 		}
 		
