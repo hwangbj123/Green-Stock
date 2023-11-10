@@ -24,4 +24,5 @@ public class PaySubscribe {
 	
 	private Date createdAt;
 	
+	private int staId;
 }

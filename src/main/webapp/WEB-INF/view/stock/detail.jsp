@@ -173,7 +173,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                    		</button>
 					</c:when>									
                    	<c:when test="${subCheck ne principal.id}">
-                   		<button class="btn btn-green" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribeInit.subscribe('${companyCode}',${principal.id})">${companyCode}</button>
+                   		<button class="btn btn-green" id="subCheckBtn" style="width: 100%; font-weight: bold;" onclick="subscribeInit.subscribe('${companyCode}',${principal.id})">채팅창<br>구독</button>
                    	</c:when>
 				</c:choose>
 				<!------------------------- 채팅창 include 부분 끝 -->

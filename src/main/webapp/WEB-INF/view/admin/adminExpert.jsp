@@ -50,6 +50,21 @@
 										<th>생일</th>
 										<th>가입일</th>
 										<th>신청일</th>
+										<th>
+											<div style="display: flex; float: right;"
+												class="dropdown show d-inline-block widget-dropdown">
+												<a style="display: block"
+													class="dropdown-toggle icon-burger-mini" href="#"
+													role="button" id="dropdown-recent-order4"
+													data-bs-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false" data-display="static"></a>
+												<ul class="dropdown-menu dropdown-menu-center">
+													<li class="dropdown-item"><a href="/admin/expert/1/page/1">신청</a></li>
+													<li class="dropdown-item"><a href="/admin/expert/2/page/1">승인</a></li>
+													<li class="dropdown-item"><a href="/admin/expert/3/page/1">반려</a></li>
+												</ul>
+											</div>
+										</th>
 									</tr>
 								</thead>
 
@@ -66,38 +81,43 @@
 											<td><fmt:formatDate value="${expert.createdAt}"
 													pattern="yyyy-MM-dd" /></td>
 											<td>
-												<div class="btn-group mb-1">
+												<%-- <div class="btn-group mb-1">
 													<div>
 														<button onclick="infoClicked(`${expert}`)"
 															data-bs-toggle="modal" data-bs-target="#modalContact"
 															class="btn btn-outline-success view-detail" type="button">Info</button>
-														<button onclick="approveClicked(`${expert.advisorId}`,`${expert.email}`)"
-															class="btn btn-success">승인</button>
-														<button class="btn btn-danger" data-bs-toggle="modal"
-															data-bs-target="#modal-refuse-contact"
-															onclick="refuseClicked(`${expert.advisorId}`,`${expert.email}`)">반려</button>
+														<c:if test="${expert.status eq 1}">
+															<button
+																onclick="approveClicked(`${expert.advisorId}`,`${expert.email}`)"
+																class="btn btn-success">승인</button>
+															<button class="btn btn-danger" data-bs-toggle="modal"
+																data-bs-target="#modal-refuse-contact"
+																onclick="refuseClicked(`${expert.advisorId}`,`${expert.email}`)">반려</button>
+														</c:if>
 													</div>
-												</div>
-											</td>
-										</tr>
-									</c:forEach>
-									<c:forEach var="expert" items="${refusedList}">
-										<tr id="tr_${expert.id}">
-											<td>${expert.advisorFullName}</td>
-											<td>${expert.email}</td>
-											<td>${expert.tel}</td>
-											<td><fmt:formatDate value="${expert.birthDate}"
-													pattern="yyyy-MM-dd" /></td>
-											<td><fmt:formatDate value="${expert.regDate}"
-													pattern="yyyy-MM-dd" /></td>
-											<td><fmt:formatDate value="${expert.createdAt}"
-													pattern="yyyy-MM-dd" /></td>
-											<td>
+												</div> --%>
 												<div class="btn-group mb-1">
-													<div>
+													<button type="button" class="btn btn-outline-success">Info</button>
+													<button type="button"
+														class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+														data-bs-toggle="dropdown" aria-haspopup="true"
+														aria-expanded="false" data-display="static">
+														<span class="sr-only">Info</span>
+													</button>
+
+													<div class="dropdown-menu">
 														<button onclick="infoClicked(`${expert}`)"
 															data-bs-toggle="modal" data-bs-target="#modalContact"
-															class="btn btn-outline-success view-detail" type="button">Info</button>
+															class="dropdown-item view-detail" type="button">정보</button>
+														<c:if test="${expert.status eq 1}">
+															<button
+																onclick="approveClicked(`${expert.advisorId}`,`${expert.email}`)"
+																class="dropdown-item">승인</button>
+															<button data-bs-toggle="modal"
+																data-bs-target="#modal-refuse-contact"
+																onclick="refuseClicked(`${expert.advisorId}`,`${expert.email}`)"
+																class="dropdown-item">반려</button>
+														</c:if>
 													</div>
 												</div>
 											</td>
@@ -105,6 +125,70 @@
 									</c:forEach>
 								</tbody>
 							</table>
+						</div>
+						<!-- page -->
+						<div id="customPagenation">
+							<!--시작 페이지 -->
+							<c:choose>
+								<c:when test="${page.paging.page>4}">
+									<c:set var="startPage" value="${page.paging.page-4}" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="startPage" value="1" />
+								</c:otherwise>
+							</c:choose>
+
+							<!-- 엔드 페이지 -->
+							<c:choose>
+								<c:when test="${page.endPage < page.paging.page+4}">
+									<c:set var="endPage" value="${page.endPage}" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="endPage" value="${page.paging.page+4}" />
+								</c:otherwise>
+							</c:choose>
+
+							<!-- 이전 버튼 -->
+							<c:if test="${startPage ne 1}">
+								<a class="page-a"
+									style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+									href="/admin/expert/${status}/${search}page/${page.paging.page-5}"> prev </a>
+							</c:if>
+							<!-- 페이지 넘버 반복문 -->
+							<c:set var="nowPage" value="${startPage}" />
+							<c:forEach begin="${startPage}" end="${endPage}">
+								<c:choose>
+									<c:when test="${page.paging.page eq nowPage}">
+										<p class="page-a" id="customPageA"
+											style="background-color: #3474D4; color: white; cursor: pointer; display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;">
+											<c:out value="${nowPage}" />
+										</p>
+									</c:when>
+									<c:otherwise>
+										<a class="page-a" id="customPageA"
+											href="/admin/expert/${status}/${search}page/${nowPage}"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;">
+											<c:out value="${nowPage}" />
+										</a>
+									</c:otherwise>
+								</c:choose>
+								<c:set var="nowPage" value="${nowPage+1}" />
+							</c:forEach>
+							<!-- 이후 버튼 -->
+							<c:if test="${page.endPage >= startPage+9}">
+								<c:choose>
+									<c:when test="${page.endPage > page.paging.page+5}">
+										<a class="page-a"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+											href="/admin/expert/${status}/${search}page/${page.paging.page+5}"> next </a>
+									</c:when>
+									<c:otherwise>
+										<a class="page-a"
+											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
+											href="/admin/expert/${status}/${search}page/${page.endPage}"> next </a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</div>
 						<!-- 검색 div-->
 						<form action="/admin/search-user" id="search-frm">
@@ -132,10 +216,12 @@
 			<div class="modal-content">
 				<div style="border: none;">
 					<div style="border: none;" class="modal-header px-4">
-						<input id="refuseMsg" style="border: none; heigth: 70%; width: 80%;" type="text"
-							placeholder="반려메시지 작성"><button onclick="modalConfirmClicked()" class="btn btn-primary">확인</button> 
-							<input id="hidden_email"
-							type="hidden"> <input id="hidden_advisorId" type="hidden">
+						<input id="refuseMsg"
+							style="border: none; heigth: 70%; width: 80%;" type="text"
+							placeholder="반려메시지 작성">
+						<button onclick="modalConfirmClicked()" class="btn btn-primary">확인</button>
+						<input id="hidden_email" type="hidden"> <input
+							id="hidden_advisorId" type="hidden">
 					</div>
 				</div>
 			</div>
@@ -177,19 +263,19 @@
 								<div style="width: 33%;">
 									<h6 style="text-align: center;" class="text-dark pb-2">전문분야</h6>
 									<div id="modal-speciality"
-										style="word-wrap: break-word; text-align: center;">해외주식</div>
+										style="word-wrap: break-word; text-align: center;"></div>
 								</div>
 
 								<div style="width: 33%;">
 									<h6 style="text-align: center;" class="text-dark pb-2">이메일</h6>
-									<div id="modal-email" style="word-wrap: break-word;">johnexample@gmail.com</div>
+									<div id="modal-email" style="word-wrap: break-word;"></div>
 								</div>
 
 								<div style="width: 33%;">
 									<div id="phoneWrap" style="text-align: center;">
 										<h6 class="text-dark pb-2">휴대폰</h6>
 									</div>
-									<div id="modal-phone" style="word-wrap: break-word;">010-1010-1010</div>
+									<div id="modal-phone" style="word-wrap: break-word;"></div>
 								</div>
 							</div>
 						</div>
@@ -197,13 +283,13 @@
 
 					<div class="col-md-6">
 						<div id="modal-portfolio-info" class="contact-info px-4">
-							<h3 class="text-dark mb-1">전문가 상세</h3>
+							<h3 class="text-dark mb-1"></h3>
 							<h4 style="font-weight: bold"
 								class="text-dark font-weight-medium pt-4 mb-2">이력</h4>
-							<h5 id="modal-career">어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고</h5>
+							<h5 id="modal-career"></h5>
 							<h4 style="font-weight: bold"
 								class="text-dark font-weight-medium pt-4 mb-2">자기소개</h4>
-							<h5 id="modal-introduction">portfolio for Test</h5>
+							<h5 id="modal-introduction"></h5>
 							<!-- <button class = "btn btn-primary btn-pill my-4">저장</button>
 												<button class = "btn btn-primary btn-pill my-4">삭제</button> -->
 						</div>

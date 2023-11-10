@@ -1,3 +1,6 @@
+
+
+
 function infoClicked(data) {
 	console.log(dataToObject(data));
 	data = dataToObject(data);
@@ -7,10 +10,35 @@ function infoClicked(data) {
 	$('#modal-speciality').html(data.specialization);
 	$('#modal-email').html(data.email);
 	$('#modal-phone').html(data.tel);
-	$('#modal-image').attr('src', '/upload/20231108/c160eaa1-eda3-4269-ba93-ae374a5cdc46.png');
+	$('#modal-image').attr('src', '/upload/' + data.imgName);
+	$.get('/getRefuseData/' + data.advisorId, function(data) {
+		if ($('#refuseReasonH4').length > 0) {
+			$('#refuseReasonH4').remove();
+			$('#refuseReasonH5').remove();
+			$('#refuseDate').remove();
+		}
+		if (data) {
+			console.log(data);
+			let refuseReasonH4 = $('<h4 style="font-weight : bold" class="text-dark font-weight-medium pt-4 mb-2" id = "refuseReasonH4">');
+			let refuseReasonH5 = $('<h5 id = "refuseReasonH5">');
+			let refuseDate = $('<p style = "margin-top:5%" id = "refuseDate">');
+			refuseReasonH4.html('반려사유');
+			refuseReasonH5.html(data.refuseMsg);
+			//refuseDate.html(data.date.slice(0,10) + ' ' + data.date.slice(10,16));
+			refuseDate.html('반려일 : ' + data.date);
+			$('#modal-portfolio-info').append(refuseReasonH4);
+			$('#modal-portfolio-info').append(refuseReasonH5);
+			$('#modal-portfolio-info').append(refuseDate);
+		} else {
+			$('#refuseReasonH4').remove();
+			$('#refuseReasonH5').remove();
+			$('#refuseDate').remove();
+			return;
+		}
+	})
 }
 
-function approveClicked(id,email) {
+function approveClicked(id, email) {
 	console.log(id);
 	$.get('/approve/' + id + "/" + email, function(data) {
 		console.log(data);

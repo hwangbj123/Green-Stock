@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -150,10 +152,10 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
 					<div class="ec-main-menu">
 						<ul>
 							<li class="dropdown">
-								<a href="javascript:void(0)" style="display: flex; align-items: center;"><i class="fa-solid fa-house-user"></i><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a>
+								<a href="javascript:void(0)" style="display: flex; align-items: center;"><i class="fa-solid fa-house-user"></i><span>&nbsp;&nbsp;</span><span class="btn_label">내 정보</span></a>
 								<ul class="sub-menu" style="min-width: 120px;">
-									<li><a href="#">내 정보 수정</a></li>
-									<li><a href="#">구독 목록</a></li>
+									<li><a href="/user/verify-user">내 정보 수정</a></li>
+									<li><a href="/user/payment">구독 목록</a></li>
 								</ul>
 							</li>
 						</ul>

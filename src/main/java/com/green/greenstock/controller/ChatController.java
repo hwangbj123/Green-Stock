@@ -93,5 +93,12 @@ public class ChatController {
     	System.out.println("message : "+message);
     	return message;
     }
+    
+    @GetMapping("chat/lastTimeUpdate")
+    @ResponseBody
+    public void lastTimeUpdate(String companyCode, int userId) {
+    	chattingService.lastTimeUpdate(companyCode, userId);
+    }
+    
 }
 

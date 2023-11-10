@@ -96,12 +96,14 @@
 
 .chat-tb {
 	width: 100%;
-	margin: 1px 0px;
 	border-collapse: collapse;
 }
-
+.chat-tb:last-of-type {
+	border-bottom: 6px solid rgb(214, 227, 246);
+}
 .chat-tr {
-	border: 4px solid rgb(214, 227, 246);
+	border: 6px solid rgb(214, 227, 246);
+	border-bottom: none;
 	cursor: pointer;
 }
 
@@ -205,6 +207,9 @@
 }
 #chat-cate-all {
 	background-color: rgb(214, 227, 246);
+}
+.chat-new td{
+/* 	background-color: ; */
 }
 </style>
 </head>
@@ -343,46 +348,55 @@
 			<div class="gstock-div chat-div">
 				<h6>채팅</h6>
 				<c:choose>
-					<c:when test="${not empty chatList || not empty advisorChatList}">
+					<c:when test="${not empty chatList || not empty advisorChatList || not empty myAdvisorChatList}">
 						<div style="display: flex;">
 							<div class="chat-category" id="chat-cate-all">전체</div>
 							<div class="chat-category" id="chat-cate-stock">종목별</div>
-							<div class="chat-category" id="chat-cate-advisor">전문가</div>
+							<div class="chat-category" id="chat-cate-advisor">구독</div>
 						</div>
 						<div class="chat-list" id="chat-list">
 					</c:when>
-					<c:when test="${empty chatList && empty advisorChatList}">
+					<c:when test="${empty chatList && empty advisorChatList && empty myAdvisorChatList}">
 						<div style="display: flex;">
+							<div id="chat-cate-all"></div>
 							<div id="chat-cate-stock"></div>
 							<div id="chat-cate-advisor"></div>
-							<div id="chat-cate-all"></div>
 						</div>
 						<div class="chat-list" id="chat-list" style="background-color: rgb(70, 70, 70)">
 					</c:when>
 				</c:choose>
 				<input type="hidden" id="chatDisplay" value="${chatList}">
-				<table class="chat-tb" id="chat-stock-tb">
 					<c:if test="${not empty chatList}">
-						<c:forEach var="chat" items="${chatList}">
-							<tr class="chat-tr"
-								onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
-								<td style="width: 20%">${chat.companyCode}</td>
-								<td style="width: 60%">${chat.companyName}</td>
-								<td style="width: 20%">${chat.countUser}명</td>
-							</tr>
-						</c:forEach>
+						<table class="chat-tb" id="chat-advisor-tb">
+							<c:forEach var="chat" items="${chatList}">
+								<c:if test="${fn:contains(chat.companyCode, '@')}">
+										<tr class="chat-tr advisor-tr" onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+											<td colspan="3" style="width: 100%; position: relative;">${chat.companyName}
+												<c:if test="${principal.roletypeId eq 1 && chat.lastMessage > chat.lastTime}">
+													<span style="color: red; position: absolute; vertical-align: middle; right: 15px; color: red;">new</span>
+												</c:if>
+											</td>
+										</tr>
+								</c:if>
+							</c:forEach>
+						</table>
+						<table class="chat-tb" id="chat-stock-tb">
+							<c:forEach var="chat" items="${chatList}">
+								<c:if test="${not fn:contains(chat.companyCode, '@')}">
+										<tr class="chat-tr stock-tr" onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+											<td style="width: 20%">${chat.companyCode}</td>
+											<td style="width: 60%;">${chat.companyName}
+											</td>
+											<td style="width: 20%; position: relative;">${chat.countUser}명
+												<c:if test="${principal.roletypeId eq 1 && chat.lastMessage > chat.lastTime}">
+													<span style="color: red; position: absolute; vertical-align: middle; left: -15px; color: red;">new</span>
+												</c:if>
+											</td>
+										</tr>
+								</c:if>
+							</c:forEach>
+						</table>
 					</c:if>
-				</table>
-				<table class="chat-tb" id="chat-advisor-tb">
-					<c:if test="${not empty advisorChatList}">
-						<c:forEach var="advisorChat" items="${advisorChatList}">
-							<tr class="chat-tr"
-								onclick="window.open('/chat?companyCode=${advisorChat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
-								<td>${advisorChat.companyName}</td>
-							</tr>
-						</c:forEach>
-					</c:if>
-				</table>
 			</div>
 		</div>
 
@@ -417,35 +431,35 @@
 			}
 		}
 		
-		function chatCategoryStock(){
-			document.getElementById("chat-cate-stock").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
-			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
-			document.getElementById("chat-stock-tb").style.display="";
-			document.getElementById("chat-advisor-tb").style.display="none";
-		}
-		function chatCategoryAdvisor(){
-			document.getElementById("chat-cate-advisor").style.backgroundColor = "rgb(214, 227, 246)";
-			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
-			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
-			document.getElementById("chat-advisor-tb").style.display="";
-			document.getElementById("chat-stock-tb").style.display="none";
-		}
 		function chatCategoryAll(){
 			document.getElementById("chat-cate-all").style.backgroundColor = "rgb(214, 227, 246)";
 			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
 			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
-			document.getElementById("chat-advisor-tb").style.display="";
 			document.getElementById("chat-stock-tb").style.display="";
+			document.getElementById("chat-advisor-tb").style.display="";
 		}
+		function chatCategoryStock(){
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-stock-tb").style.display="";
+			document.getElementById("chat-advisor-tb").style.display="none";
+		}
+		function chatCategoryAdvisor(){
+			document.getElementById("chat-cate-all").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-cate-advisor").style.backgroundColor = "rgb(214, 227, 246)";
+			document.getElementById("chat-cate-stock").style.backgroundColor = "#f7f7f7";
+			document.getElementById("chat-stock-tb").style.display="none";
+			document.getElementById("chat-advisor-tb").style.display="";
+		}
+		document.getElementById("chat-cate-all").addEventListener("click", function() {
+			chatCategoryAll();
+		});
 		document.getElementById("chat-cate-stock").addEventListener("click", function() {
 			chatCategoryStock();
 		});
 		document.getElementById("chat-cate-advisor").addEventListener("click", function() {
 			chatCategoryAdvisor();
-		});
-		document.getElementById("chat-cate-all").addEventListener("click", function() {
-			chatCategoryAll();
 		});
 		
 		$(function() {

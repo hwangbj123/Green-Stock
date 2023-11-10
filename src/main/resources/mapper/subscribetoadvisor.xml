@@ -5,7 +5,7 @@
 <mapper namespace="com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository"> 
 
 	<select id="findByAdvisorIdAndUserId" resultType="SubscribeToAdvisor">
-		select * from advisor 
+		select * from subscribe_to_advisor 
 		where advisor_id = #{advisorId} 
 		and user_id = #{userId}
 	</select>

@@ -15,6 +15,7 @@ public class AdminExpertDTO {
 	private int advisorId;
 	private int id;
 	private int status;
+	private String imgName;
 	private String email;
 	private String tel;
 	private String advisorFullName;

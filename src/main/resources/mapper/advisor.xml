@@ -2,34 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.green.greenstock.repository.interfaces.AdvisorRepository"> 
+<mapper
+	namespace="com.green.greenstock.repository.interfaces.AdvisorRepository">
 
 	<select id="findById" resultType="Advisor">
-		select * from advisor where advisor_id = #{advisorId}
+		select * from advisor where
+		advisor_id = #{advisorId}
 	</select>
 
-	<!-- findAll --> 
-	
+	<!-- findAll -->
+
 	<select id="findAll" resultType="Advisor">
 		select * from advisor
 	</select>
 
-	<!-- findByStatus --> 
+	<!-- findByStatus -->
 
 	<select id="findByStatus" resultType="Advisor">
-		select * from advisor where status = #{status}
+		select * from advisor where
+		status = #{status}
+	</select>
+
+	<select id="findAllInfoByStatus" resultType="com.green.greenstock.dto.AdminExpertDTO">
+		select * from
+		advisor a join user_tb u on a.user_id = u.id
+		join image i on a.img_id = i.img_id
+		where a.status = #{status}
 	</select>
 	
-	<update id="updateStatus">
-		update advisor set status = #{status} where advisor_id = #{advisorId}
-	</update>
-
-	<!-- selectAdvisorList --> 
-
-	<!-- <select id="selectAdvisorList">
-
-	</select> -->
-
-
+	<select id="findAllInfoStatusAsc" resultType="com.green.greenstock.dto.AdminExpertDTO">
+		select * from
+		advisor a join user_tb u on a.user_id = u.id
+		join image i on a.img_id = i.img_id
+		where status > 0
+		order by status asc
+	</select>
 	
+	<select id="findPagedInfoByStatus" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.dto.AdminExpertDTO">
+		select * from
+		advisor a join user_tb u on a.user_id = u.id
+		join image i on a.img_id = i.img_id
+		where status > 0
+		order by status asc
+		limit #{paging.recordSize}
+	</select>
+
+	<update id="updateStatus">
+		update advisor set status = #{status} where
+		advisor_id = #{advisorId}
+	</update>
+	
+	<insert id = "insertRefuseReason">
+		insert into advisor_refuse(advisor_id,refuse_msg)
+		values (#{advisorId},#{refuseMsg})
+	</insert>
+	
+	<select id="findAdvisorRefuseByAdvisorId" resultType="com.green.greenstock.dto.RefuseDTO">
+		select * from advisor_refuse where
+		advisor_id = #{advisorId}
+	</select>
+
 </mapper>
