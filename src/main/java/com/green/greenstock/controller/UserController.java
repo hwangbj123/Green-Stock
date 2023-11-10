@@ -415,6 +415,11 @@ public class UserController {
 
 	@PostMapping("/verify-user")
 	public ResponseEntity<Integer> VerifyUserProc(User user) {
+		User sessionUser = (User)session.getAttribute("principal");
+		log.info("" + sessionUser);
+		if(!user.getUserName().equals(sessionUser.getUserName())) {
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}
 		User principal = userService.findUserByUserName(user);
 		if (principal != null) {
 			principal.setPassword(null);

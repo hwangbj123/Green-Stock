@@ -91,14 +91,14 @@
 											조회수 : ${board.views},
 											추천 : ${board.recommand}
 											</div>
-											<div>
-											${board.userName}
+											<div style="font-size: 18px;">
+												${board.userName}
 											</div>
 										</td>
                         			</tr>
                         			<tr>
-                        				<td style="padding: 30px 0px;height: 600px;">
-                        					<div id="content-textarea">
+                        				<td style="height: 600px;">
+                        					<div id="content-textarea" style="font-size: 18px;">
                         						${board.content}
                         					</div>
 										</td>
@@ -139,7 +139,7 @@
 										<!-- 최다 추천수 2 이상이면 최상단에 표시 -->
 										<c:if test="${maxRecommand >= 2}">
 											<c:set var="forBreak" value="0"/>
-											<h4>BEST</h4>
+											<h4>베스트 댓글</h4>
 											<c:forEach var="comment" items="${reply}">
 												<c:if test="${comment.recommand eq maxRecommand && forBreak eq 0}">
 													<div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-top: 0px; margin-left: calc(${comment.level} * 50px); background-color: #fee;">
@@ -165,11 +165,14 @@
 									</div>
 										<!-- 베스트 댓글 표시 코드 끝-->
 										<!-- 전체 댓글 -->
-										<h4>COMMENT</h4>
+										<h4>댓글</h4>
 										<c:forEach var="comment" items="${reply}">
 	                                        <div class="ec-single-comment-wrapper mt-35" style="border: 1px solid lightgrey; padding: 15px; margin-left: calc(${comment.level} * 50px);
-	                                        	<c:if test="${comment.userId eq board.userId}">
+	                                        	<c:if test="${comment.userId eq board.userId && comment.deleted eq 0}">
 	                                        		<c:out value="background-color: rgba(52,116,212,0.1);"/>
+	                                        	</c:if>
+	                                        	<c:if test="${comment.deleted ne 0}">
+	                                        		<c:out value="background-color: #f7f7f7;"/>
 	                                        	</c:if>
 	                                        ">
 	                                            <div class="ec-blog-comment-content">
@@ -291,19 +294,11 @@
                                 </div>
                                 <div class="ec-blog-cmt-form">
                                     <div class="ec-blog-reply-wrapper mt-50">
-                                        <h4 class="ec-blog-dec-title">Leave A Reply</h4>
+                                        <h4 style="color: #777;">댓글 달기</h4>
                                         <form class="ec-blog-form" method="post" action="/board/reply-write">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="ec-leave-form">
-                                                    	<c:choose>
-	                                                    	<c:when test="${not empty principal}">
-		                                                        <input type="text" value="${principal.userName}" readonly>
-	                                                    	</c:when>
-	                                                    	<c:otherwise>
-		                                                        <input type="text" name="userId" value="로그인이 필요합니다" readonly>
-	                                                    	</c:otherwise>
-                                                    	</c:choose>
                                                         <input type="hidden" name="userId" value="${principal.id}">
                                                     	<input type="hidden" name="boardId" value="${board.id}">
                                                     	<input type="hidden" name="level" value="0">
@@ -312,14 +307,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="ec-text-leave">
-                                                        <textarea placeholder="Content" name="content"></textarea>
-                                                        <c:choose>
-	                                                    	<c:when test="${not empty principal}">
-		                                                        <button type="submit" class="btn btn-lg btn-secondary">등록</button>
+                                                    <div class="ec-text-leave" style="text-align: center;">
+                                                    	<c:choose>
+	                                                    	<c:when test="${empty principal}">
+		                                                        <textarea placeholder="Content" name="content" onclick="boardDetailInit.toSignIn()" readonly="readonly" style="cursor: pointer;">현재 로그인 상태가 아닙니다</textarea>
 	                                                    	</c:when>
 	                                                    	<c:otherwise>
-		                                                        <button type="button" class="btn btn-lg btn-secondary" onclick="boardDetailInit.toSignIn()">등록</button>
+		                                                        <textarea placeholder="Content" name="content"></textarea>
+		                                                        <button type="submit" id="reply-btn" class="btn btn-lg btn-secondary">등록</button>
 	                                                    	</c:otherwise>
                                                     	</c:choose>
                                                     </div>

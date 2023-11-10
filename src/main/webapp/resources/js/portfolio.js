@@ -80,14 +80,14 @@ function makeSmallCard(data) {
 function makeAddPortfolioDiv() {
 	let smallCardInnerWrapper = $('<div id = "addCard" class="col-xl-3 col-sm-6 p-b-15 lbl-card" data-clicked = "false">');
 	let smallCard = $('<div class="card card-mini dash-card card-1"style="cursor : pointer">');
-	let cardBody = $('<div class="card-body d-flex justify-content-center">');
-	let plusIcon = $('<div class = "mdi mdi-shape-square-plus"style="font-size: 2.5rem;">');
+	let cardBody = $('<div class="card-body justify-content-center">');
+	let plusIcon = $('<div class = "mdi mdi-shape-square-plus"style="display:flex;justify-content: center;font-size: 2.5rem;">');
 	// h2 p span 은 card-body 안에
 	$('#smallCardOuterWrapper').append(smallCardInnerWrapper); // smallCardInnerWrapper를 smallCardOuterWrapper에 추가
 	smallCardInnerWrapper.append(smallCard);
 	smallCard.append(cardBody);
 	cardBody.append(plusIcon);
-	smallCard.append($('<p style = "text-align:center">포트폴리오 추가</p>'));
+	cardBody.append($('<p style = "text-align:center">포트폴리오 추가</p>'));
 	smallCard.on('click', () => smallCardClicked('addCard'));
 }
 
@@ -174,15 +174,20 @@ function attatchPortfolioInfo(id) {
 	$.get('portfolio/getAllDataInfo/' + id, function(data) {
 		console.log(data);
 		if (data == null) {
-			//alert('stock 을 추가하세요.');
 			console.log('setStock');
 		} else {
 			setPortfolioInfo(data);
-			setDonutChart(data);
-			setMyStock(data);
-			setMonthlyAssetChart();
-			setTradeLog(data);
 			setRanking();
+			setMyStock(data);
+			setTradeLog(data);
+			setMonthlyAssetChart();
+			if (data.stockList.length == 0) {
+				console.log('asdf');
+				$('#donutChartBody').append($('<div style = "font-weight : bold; font-size : large;color:black;">' + '주식을 추가해주세요.' + '</div>'));
+				$('#myStockCardTable').append($('<div style = "border:none; font-weight : bold; font-size : large">' + '주식을 추가해주세요.' + '</div>'));
+				return;
+			}
+			setDonutChart(data);
 		}
 	})
 }
@@ -227,9 +232,6 @@ async function setPortfolioInfo(data) {
 //addCard 가 아닌 다른 smallCards 가 클릭될 시 실행된다.
 
 function setDonutChart(data) {
-	/*$.get('/portfolio/getStockList/' + data.pid, function(data) {
-		console.log(data);
-	})*/
 	$('#donutChartBody').append($('<canvas id="doChart"></canvas>'));
 	let stockNameList = [];
 	let amountList = [];
@@ -387,6 +389,10 @@ function setMonthlyAssetChart() {
 	//<canvas id="monthlyAsset" class="chartjs"></canvas>
 	$.get('portfolio/getdailyGrowthData', function(data) {
 		console.log(data);
+		if(data.length < 6){
+			$('#assetBody').append($('<div style = "border:none; font-weight : bold; font-size : large;color:black;">데이터가 충분하지 않습니다.</div>'));
+			return;
+		}
 		let logDateArr = [];
 		let rorArr = [];
 		for (let i = 0; i < 6; i++) {
@@ -419,22 +425,7 @@ function setMonthlyAssetChart() {
 							pointBorderWidth: 2,
 							pointHoverRadius: 7,
 							pointHoverBorderWidth: 1
-						}/*,
-					{
-						label: "Inactive",
-						backgroundColor: "transparent",
-						borderColor: "rgba(255, 199, 15, .8)",
-						data: activityData[0].second,
-						lineTension: 0,
-						borderDash: [10, 5],
-						borderWidth: 1,
-						pointRadius: 5,
-						pointBackgroundColor: "rgba(255,255,255,1)",
-						pointHoverBackgroundColor: "rgba(255,255,255,1)",
-						pointBorderWidth: 2,
-						pointHoverRadius: 7,
-						pointHoverBorderWidth: 1
-					}*/
+						}
 					]
 				},
 				// Configuration options go here
@@ -497,21 +488,12 @@ function setMonthlyAssetChart() {
 			var ctx = document.getElementById("monthlyAsset").getContext("2d");
 			var myLine = new Chart(ctx, config);
 
-			/*var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");
-			items.forEach(function(item, index) {
-				item.addEventListener("click", function() {
-					config.data.datasets[0].data = activityData[index].first;
-					config.data.datasets[1].data = activityData[index].second;
-					myLine.update();
-				});
-			});*/
 		}
 	})
 }
 
 
 async function setMyStock(data) {
-	console.log(data);
 	let headArr = ['주식명', '가격'];
 	let thead = $('<thead>');
 	headArr.forEach(e => {
@@ -588,6 +570,10 @@ async function setTradeLog(data) {
 	let tradeData = await $.get('portfolio/getTradeLog/' + data.pid, function(data) {
 		console.log(data);
 	})
+	console.log(tradeData.length == 0);
+	if(tradeData.length == 0){
+		$('#myTradeLogTable').append($('<div style = "border:none; font-weight : bold; font-size : large">' + '거래내역이 존재하지 않습니다.' + '</div>'));
+	}
 
 	let headArr = ['주식명', '주식코드', '거래타입', '갯수', '가격', '총합', '거래일'];
 	let thead = $('<thead >');
@@ -663,51 +649,6 @@ function privacyClicked(pid) {
 	});
 }
 
-// editBtnCLicked
-// 변경 버튼 클릭시 동작.
-/*function setModal() {
-	console.log($('.mdi.mdi-pencil'));
-	$('#closeButton').on('click', () => {
-
-	});
-	$('.mdi.mdi-pencil').on('click', () => {
-		console.log('clicked');
-		//  <button class = "btn btn-primary btn-pill my-4">저장</button>
-		// 	<button class = "btn btn-primary btn-pill my-4">삭제</button>
-		if ($('.btn.btn-primary.btn-pill.my-4.buttons').length > 0) {
-			refreshModal();
-		} else {
-			let infoSaveButton = $('<button class = "btn btn-primary btn-pill my-4 buttons">저장</button>');
-			let infoCancelButton = $('<button class = "btn btn-primary btn-pill my-4 buttons">취소</button>');
-			infoCancelButton.css('margin-left', '5%');
-			$('#modal-portfolio-info').append(infoSaveButton);
-			$('#modal-portfolio-info').append(infoCancelButton);
-			$('#visible_toggle').append($('<i id = "visibleToggleButton" style = "cursor : pointer;margin-left : 10%;" class = "mdi mdi-reload"></i>'))
-			$('#visibleToggleButton').on('click', () => changeVisible());
-			$('#pfName').attr('contenteditable', 'true');
-			$('#pfDisc').attr('contenteditable', 'true');
-			$('#pfName').focus();
-		}
-	});
-
-	function refreshModal() {
-		$('.btn.btn-primary.btn-pill.my-4.buttons').each((idx, e) => {
-			e.remove();
-		});
-		$('#visibleToggleButton').remove();
-		$('#pfName').attr('contenteditable', 'false');
-		$('#pfDisc').attr('contenteditable', 'false');
-	}
-
-	function changeVisible() {
-		if ($('#visibleText').text() == "public") {
-			$('#visibleText').html("private");
-		} else {
-			$('#visibleText').html("public");
-		}
-	}
-}*/
-
 
 function editClicked(id) {
 	let eles = $('.editSpans');
@@ -732,6 +673,8 @@ function editClicked(id) {
 		console.log('실행됨');
 		$('#span_' + id).attr('data-clicked', 'false');
 		$('#span_' + id).html('수정');
+		$('#h2_' + id).attr('contenteditable', 'false');
+		$('#p_' + id).attr('contenteditable', 'false');
 		$('.delButtons').each((idx, e) => $(e).remove());
 		return;
 	}
@@ -841,9 +784,6 @@ function delButtonClicked(id) {
 function detatchAll() {
 	console.log($('#myStockCardTable').children().length);
 	$('#portfolioInfoWrapper').remove();
-	$('#donutChartBody').children().each((idx, e) => {
-		$(e).remove();
-	});
 	$('#donutChartBody').children().each((idx, e) => {
 		$(e).remove();
 	});
@@ -957,8 +897,6 @@ async function addStockClicked() {
 			source: autoCompleteData, // 자동완성 데이터 소스
 			minLength: 1, // 입력한 문자 수가 이 값 이상일 때 자동완성이 시작됩니다.
 			select: function(event, ui) {
-				// 사용자가 항목을 선택했을 때 수행할 작업을 정의합니다.
-				alert("선택한 항목: " + ui.item.value);
 			},
 			minLength: 1,// 최소 글자수
 			autoFocus: false,

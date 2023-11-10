@@ -10,8 +10,8 @@
   	</insert>
   	
   	<insert id="insertPaySubscribeInfo">
-	  	insert into pay_subscribe(tid ,advisor_id, advisor_nick_name, user_id, amount, created_at)
-	  	values(#{tid}, #{advisorId}, #{advisorNickName}, #{userId}, #{amount}, #{createdAt})
+	  	insert into pay_subscribe(tid ,advisor_id, advisor_nick_name, user_id, amount, created_at, sta_id)
+	  	values(#{tid}, #{advisorId}, #{advisorNickName}, #{userId}, #{amount}, #{createdAt}, #{staId})
   	</insert>
   	
   	<update id="modifyPayInfo">

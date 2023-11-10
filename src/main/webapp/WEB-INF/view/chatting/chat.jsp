@@ -96,5 +96,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/resources/js/custom/chat.js"></script>
+    <script>
+//     	$(async function(){
+//    			try {
+//    			    const response = await fetch('chat/lastTimeUpdate?companyCode=${companyCode}&userId=${principal.id}');
+//    			    if (!response.ok) {
+//    			        throw new Error(`HTTP error! Status: ${response.status}`);
+//    			    }
+//    			    const check = await response.json();
+//    			    console.log('check : '+check);
+//    			} catch (error) {
+//    			    console.error("Fetch error:", error);
+//    			}
+   			
+//     		$(window).on('unload', function() {
+//     			try {
+//     			    const response = await fetch('chat/lastTimeUpdate?companyCode=${companyCode}&userId=${principal.id}');
+//     			    if (!response.ok) {
+//     			        throw new Error(`HTTP error! Status: ${response.status}`);
+//     			    }
+//     			    const check = await response.json();
+//     			} catch (error) {
+//     			    console.error("Fetch error:", error);
+//     			}
+//     		});
+//     	})
+    </script>
 </body>
 </html>

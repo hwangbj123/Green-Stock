@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +37,7 @@ import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
+import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
 
@@ -52,6 +55,7 @@ public class AdvisorService {
     private final AdvisorRepository advisorRepository;
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final UserEntityRepository userEntityRepository;
+    private final SubscribeToAdvisorRepository subscribeToAdvisorRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String filePath;
@@ -195,12 +199,13 @@ public class AdvisorService {
     public boolean validateSubscribeToAdvisor(String nickName, int userId) {
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
+        log.info("nickName {}", advisorEntity);
         UserEntity userEntity = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
-
+        log.info("userEntity {}", userEntity);
         SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
                 .findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
-
+        log.info("subscribeToAdvisorEntity {}", subscribeToAdvisorEntity);
         return subscribeToAdvisorEntity != null;
     }
 
@@ -214,19 +219,47 @@ public class AdvisorService {
                 .findByAdvisorEntityAndParent(advisorEntity, parent, pageable);
 
         return advisorBoardEntities.map(entity -> {
-            return AdvisorBoardResDto
-                    .builder()
-                    .advisorBoardId(entity.getAdvisorBoardId())
-                    .title(entity.getTitle())
-                    .content(entity.getContent())
-                    .parent(entity.getParent())
-                    .createdAt(entity.getCreatedAt().toString())
-                    .userId(entity.getUserEntity().getId())
-                    .userName(entity.getUserEntity().getUserName())
-                    .advisorId(entity.getAdvisorEntity().getAdvisorId())
-                    .advisorNickname(entity.getAdvisorEntity().getAdvisorNickName())
-                    .views(entity.getViews())
-                    .build();
+            return AdvisorBoardResDto.fromEntity(entity);
         });
     }
+
+    // 전문가 상담게시판 글 한개 보기
+    @Transactional
+    public AdvisorBoardResDto findByAdvisorBoardId(int advisorBoardId){
+        AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        return AdvisorBoardResDto.fromEntity(advisorBoardEntity);
+    }
+
+    /**
+     * 구독자 삭제하기
+     * @param advisorId
+     * @param userId
+     */
+    @Transactional
+    public void deleteSubscribeToAdvisorEntity(int advisorId, int userId){
+        AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorId(advisorId);
+        UserEntity userEntity = userEntityRepository.findById(userId).get();
+        SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository.findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
+        subscribeToAdvisorEntityRepository.delete(subscribeToAdvisorEntity);
+    }
+
+    /**
+     * 구독 만료 삭제
+     * 매일 00시 정각 min > hour > day(일) > month > weekday
+     */
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * *")	
+    public void validateAndDeleteSubscribe(){
+        log.info("매일 자정 구독 만료 확인이 실행되었습니다.");
+        List<SubscribeToAdvisorEntity> subscribeToAdvisorEntities = subscribeToAdvisorEntityRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+        for(SubscribeToAdvisorEntity subscribeToAdvisorEntity : subscribeToAdvisorEntities){
+            LocalDateTime expTime = subscribeToAdvisorEntity.getExpirationTime();
+            if(now.isAfter(expTime)){ // 현재시간과 비교하여 구독시간이 지났다면
+                subscribeToAdvisorEntityRepository.delete(subscribeToAdvisorEntity);
+                log.info("구독만료로 삭제된 아이디 : {}", subscribeToAdvisorEntity.getSubId());
+            }
+        }
+    }
+
 }

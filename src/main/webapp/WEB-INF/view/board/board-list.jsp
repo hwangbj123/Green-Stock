@@ -151,8 +151,8 @@
 			<form action="/board/list" id="search-frm">
 	    	<div id="listopt-div">
 	    		<div id="search-div">
-	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
-		    			<select name="searchType">
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+		    			<select id="searchType" name="searchType">
 		    				<option value="title">제목</option>
 		    				<option value="content">내용</option>
 		    				<option value="userName">작성자</option>
@@ -160,7 +160,7 @@
 	    			</div>
 		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
 		    		<button type="button" class="btn btn-primary" id="search-btn" onclick="boardListInit.searchValid()">검색</button>
-	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 72px; border-radius: 5px;">
+	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 55px; border-radius: 5px; margin: 0px 10px;">
 		    			<select id="orderType" name="orderType">
 		    				<option selected="selected" disabled="disabled">정렬</option>
 		    				<option value="id">번호순</option>

@@ -50,7 +50,7 @@
 	    <script src="/resources/js/main.js"></script>
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="/css/stock/searchList.css">
+		<link rel="stylesheet" href="/resources/css/custom/stockSearchList.css">
 
 	</head>
 <body>

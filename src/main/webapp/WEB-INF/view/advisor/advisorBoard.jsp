@@ -50,7 +50,6 @@
 	    <script src="/resources/js/main.js"></script>
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="/css/stock/searchList.css">
 	</head>
 	<style>
 		@font-face {
@@ -62,68 +61,128 @@
 		  font-family: 'Dovemayo', sans-serif !important;
 		  font-weight: normal;
 		}
+		.advisorBoard{
+			width: 50%;
+		}
+		.advisorBoard textarea{
+			resize: none;
+			border: 1px solid #e7e7e7;
+		}
 	  </style>
 <body>
 <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
  <!-- CONTENT WRAPPER -->
-<div class="ec-content-wrapper container mb-5 stockSearchList">
+<div class="ec-content-wrapper container mb-5 advisorBoard">
 	<div class="content">
 		<div class="breadcrumb-wrapper">
-			<div>
-				<h4>전문가명 상담게시판</h4>
+			<div class="my-4">
+				<h4>${advisorBoard.advisorNickname} 상담게시판</h4>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-12">
-				<div class="card card-default">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table id="responsive-data-table" class="table searchList" style="width:100%">
-								<thead>
-									<tr>
-										<th style="width: 10%;">번호</th>
-										<th style="width: 40%;">제목</th>
-										<th style="width: 20%;">아이디</th>
-										<th style="width: 20%;">작성일자</th>
-										<td style="width: 10%;">상태</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td><a href="/advisor/nickname">제목입니다.제목입니다.</a></td>
-										<td>아이디아이디아이디</td>
-										<td>2023-11-06</td>
-										<td>완료</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td><a href="#">제목입니다.제목입니다.</a></td>
-										<td>아이디아이디아이디</td>
-										<td>2023-11-06</td>
-										<td>답변대기중</td>
-									</tr>
-								</tbody>
-							</table>
+			<div class="ec-blogs-rightside col-lg-12 order-lg-last col-md-12 order-md-first">
+
+				<!-- Blog content Start -->
+				<div class="ec-blogs-content">
+					<div class="ec-blogs-inner">
+						<div class="ec-blog-main-img text-center">
+							<img class="blog-image" src="/upload/${advisorBoard.image}" alt="Blog">
 						</div>
-						<!-- 페이징 영역 -->
-						<div class="ec-pro-pagination">
-                            <span>Showing ${responseDomesticStockSearchDto.pagination.start}-${responseDomesticStockSearchDto.pagination.end} of ${responseDomesticStockSearchDto.pagination.totalCount} 개</span>
-                            <ul class="ec-pro-pagination-inner">
-                                <c:if test="${responseDomesticStockSearchDto.pagination.prevPageGroup}">
-                                	<li><a class="next" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${responseDomesticStockSearchDto.pagination.currentPage - 1}">Prev <i class="ecicon eci-angle-left"></i></a></li>
-                               	</c:if>
-                            
-                            	<c:forEach var="num" begin="${responseDomesticStockSearchDto.pagination.startPageGroup}" end="${responseDomesticStockSearchDto.pagination.endPageGroup}">
-                                <li><a class="${num eq responseDomesticStockSearchDto.pagination.currentPage ? 'active' : ''}" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${num}">${num}</a></li>
-                                </c:forEach>
-                                <c:if test="${responseDomesticStockSearchDto.pagination.nextPageGroup}">
-                                	<li><a class="next" href="/stock/domestic?searchData=${responseDomesticStockSearchDto.searchData}&page=${responseDomesticStockSearchDto.pagination.currentPage + 1}">Next <i class="ecicon eci-angle-right"></i></a></li>
-                               	</c:if>
-                            </ul>
-                        </div>
+						<div class="ec-blog-date">
+							<p class="date">${advisorBoard.createdAt.substring(0,10)} ${advisorBoard.createdAt.substring(11)} - </p><a href="javascript:void(0)">5 Comments</a>
+						</div>
+						<div class="ec-blog-detail">
+							<h3 class="ec-blog-title">${advisorBoard.title}</h3>
+							<textarea name="" id="" cols="30" rows="10" readonly>${advisorBoard.content}</textarea>
+							<!-- <div class="ec-blog-sub-imgs">
+								<div class="row">
+									<div class="col-md-6">
+										<img class="blog-image" src="assets/images/blog-image/2.jpg" alt="Blog">
+									</div>
+									<div class="col-md-6">
+										<img class="blog-image" src="assets/images/blog-image/3.jpg" alt="Blog">
+									</div>
+								</div>
+							</div> -->
+						</div>
+						<!-- <div class="ec-blog-tags">
+							<a href="blog-left-sidebar.html">lifestyle ,</a>
+							<a href="blog-left-sidebar.html">Outdoor ,</a>
+							<a href="blog-left-sidebar.html">interior ,</a>
+							<a href="blog-left-sidebar.html">sports ,</a>
+							<a href="blog-left-sidebar.html">bloging ,</a>
+							<a href="blog-left-sidebar.html">inspiration</a>
+						</div> -->
+						<div class="ec-blog-arrows">
+							<a href="blog-detail-left-sidebar.html"><i class="ecicon eci-angle-left"></i> Prev
+								Post</a>
+							<a href="blog-detail-left-sidebar.html">Next Post <i class="ecicon eci-angle-right"></i></a>
+						</div>
+						<div class="ec-blog-comments">
+							<div class="ec-blog-cmt-preview">
+								<div class="ec-blog-comment-wrapper mt-55">
+									<h4 class="ec-blog-dec-title">Comments : 05</h4>
+									<div class="ec-single-comment-wrapper mt-35">
+										<div class=" ec-blog-user-img">
+											<img src="assets/images/blog-image/9.jpg" alt="blog image">
+										</div>
+										<div class="ec-blog-comment-content">
+											<h5>John Deo</h5>
+											<span>October 14, 2018 </span>
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+												eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
+												ad minim veniam, </p>
+											<div class="ec-blog-details-btn">
+												<a href="javascript:void(0)">Reply</a>
+											</div>
+										</div>
+									</div>
+									<div class="ec-single-comment-wrapper mt-50 ml-150">
+										<div class="ec-blog-user-img">
+											<img src="assets/images/blog-image/10.jpg" alt="blog image">
+										</div>
+										<div class="ec-blog-comment-content">
+											<h5>Jenifer lowes</h5>
+											<span>October 14, 2018 </span>
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+												eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
+												ad minim veniam, </p>
+											<div class="ec-blog-details-btn">
+												<a href="javascript:void(0)">Reply</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ec-blog-cmt-form">
+								<div class="ec-blog-reply-wrapper mt-50">
+									<h4 class="ec-blog-dec-title">Leave A Reply</h4>
+									<form class="ec-blog-form" action="#">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="ec-leave-form">
+													<input type="text" placeholder="Full Name">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="ec-leave-form">
+													<input type="email" placeholder="Email Address ">
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="ec-text-leave">
+													<textarea placeholder="Message"></textarea>
+													<a href="#" class="btn btn-lg btn-secondary">Order Now</a>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<!--Blog content End -->
 			</div>
 		</div>
 	</div> <!-- End Content -->

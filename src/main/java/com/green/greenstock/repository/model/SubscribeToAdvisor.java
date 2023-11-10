@@ -1,5 +1,7 @@
 package com.green.greenstock.repository.model;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -18,4 +20,7 @@ public class SubscribeToAdvisor {
     private int subId;
     private int userId;
     private int advisorId;
+    private LocalDateTime subscribeTime;
+    private LocalDateTime expirationTime;
+    
 }

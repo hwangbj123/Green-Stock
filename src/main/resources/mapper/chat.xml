@@ -42,7 +42,7 @@
 			and user_id = #{userId}),
             (select subscribe_time
             from subscribe_to_advisor
-            where companyCode = #{companyCode}
+            where advisor_id = (select substring(#{companyCode},1,locate('@', #{companyCode})-1) from dual)
             and user_id = #{userId})
             )
 		</if>
@@ -64,24 +64,25 @@
 	</select>
 	
 	<select id="selectChatListNotPaging" resultType="com.green.greenstock.dto.ChattingRoom">
-		select v.companyCode, v.companyName,
-			  (select count(user_id) from subscribe where subscribe.companyCode = v.companyCode) countUser
+		select companyCode, coalesce((select companyName from domestic_stock_code where companyCode = s.companyCode), companyCode) companyName,
+			  (select count(user_id) from subscribe where subscribe.companyCode = s.companyCode) countUser,
+	    coalesce((select max(date) from message where companyCode = s.companyCode),'1999-09-09') last_message,
+        last_time
 		from subscribe s
-		join domestic_stock_code v on s.companyCode = v.companyCode
-		<if test="roletypeId == 1">
-			where s.user_id = #{id}
-		</if>
-		group by companyCode, companyName
+		where user_id = #{id}
+		group by companyCode, companyName, last_time
 	</select>
 
 	<select id="selectChatListAll" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.dto.ChattingRoom">
-		select v.companyCode, v.companyName, count(user_id) countUser
+		select v.companyCode, v.companyName, count(user_id) countUser,
+		coalesce((select max(date) from message where companyCode = v.companyCode),'1999-09-09') last_message,
+        last_time
 		from subscribe s
 		join domestic_stock_code v on s.companyCode = v.companyCode
 		<if test='searchWord!=null'>
 			where companyName like concat('%',#{searchWord},'%')
 		</if>
-		group by companyCode, companyName
+		group by companyCode, companyName, last_time
 		limit #{offset}, #{recordSize}
 	</select>
 	
@@ -99,4 +100,22 @@
 		join advisor a on a.advisor_id = s.advisor_id
 		where s.user_id = #{userId}
 	</select>
+	
+	<select id="advisorIdToUserId" resultType="int">
+		select user_id from advisor where advisor_id = #{advisorId}
+	</select>
+	
+	<select id="myAdvisorChatList" resultType="com.green.greenstock.dto.ChattingRoom">
+		select concat(s.advisor_id,'@',s.user_id) companyCode, 
+	   		   concat(advisor_nick_name ,'@',u.user_name) companyName
+	  	from subscribe_to_advisor s 
+		join advisor a on a.advisor_id = s.advisor_id
+		join user_tb u on s.user_id = u.id
+		where s.advisor_id = ${userId}
+	</select>
+	 
+	<update id="lastTimeUpdate">
+		update subscribe set last_time = now() 
+		where companyCode = #{companyCode} and user_id = #{userId}
+	</update>
 </mapper>

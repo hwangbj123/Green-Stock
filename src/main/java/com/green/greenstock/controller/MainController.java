@@ -52,12 +52,8 @@ public class MainController {
 		if (user != null) {
 			List<ChattingRoom> chatList = chattingService.selectChatListNotPaging(user);
 			model.addAttribute("chatList", chatList);
-			System.out.println("userId : "+user.getRoletypeId());
-			System.out.println("chatList : "+chatList);
+			System.out.println("@@@@@@@@@@@@@@  chatList : "+chatList);
 			
-			List<ChattingRoom> advisorChatList = chattingService.advisorChatList(user.getId());
-			model.addAttribute("advisorChatList", advisorChatList);
-			System.out.println("advisorChatList : "+advisorChatList);
 		}
 
 		// 거래량 순위

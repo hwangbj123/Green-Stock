@@ -50,10 +50,12 @@
 	    <script src="/resources/js/main.js"></script>
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 		
 	    <style>
-			*{
-				font-family: 'Pretendard-Regular';
+			.advisorRegister{
+				width: 50%;
 			}
 			.advisorRegister #profilePhoto{
 				line-height: 30px;
@@ -65,8 +67,6 @@
 				resize: none;
 				border: 1px solid #ededed;
 			}
-	    </style>
-		<style>
 			@font-face {
 			  font-family: "Dovemayo";
 			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
@@ -76,6 +76,14 @@
 			  font-family: 'Dovemayo', sans-serif !important;
 			  font-weight: normal;
 			}
+			.btn {
+				width: 100px;
+				height: 45px;
+				border-radius: 30px;
+				font-size: 16px;
+				box-shadow: 3px 3px 3px 0px gray;
+				margin-right: 10px;
+			  }
 		  </style>
 	</head>
 <body>
@@ -103,7 +111,7 @@
 					</span>
 					<span class="ec-register-wrap">
 						<label>이력</label>
-						<textarea name="career" id="career" cols="30" rows="10" required></textarea>
+						<textarea name="career" id="summernote"></textarea>
 					</span>
 					<span class="ec-register-wrap">
 						<label>자기소개</label>
@@ -129,5 +137,12 @@
 </div>
 <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
+<script>
+	$('#summernote').summernote({
+	  placeholder: 'Hello Bootstrap 5',
+	  tabsize: 1,
+	  height: 100
+	});
+  </script>
 </body>
 </html>
