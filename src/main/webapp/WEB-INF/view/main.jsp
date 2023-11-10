@@ -381,15 +381,14 @@
 								onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
 							</c:otherwise>
 						</c:choose>
-<%-- 									<c:if test="${principal.roletypeId eq 0 || chat.lastMessage < chat.lastTime}"> --%>
-<%-- 									</c:if> --%>
 								<td style="width: 20%">${chat.companyCode}</td>
-								<td style="width: 60%; position: relative;">${chat.companyName}
+								<td style="width: 60%;">${chat.companyName}
+								</td>
+								<td style="width: 20%; position: relative;">${chat.countUser}명
 									<c:if test="${principal.roletypeId eq 1 && chat.lastMessage > chat.lastTime}">
-										<span style="color: red; position: absolute; right: 0px; color: red;">new</span>
+										<span style="color: red; position: absolute; vertical-align: middle; left: -15px; color: red;">new</span>
 									</c:if>
 								</td>
-								<td style="width: 20%">${chat.countUser}명</td>
 							
 						</c:forEach>
 					</c:if>
