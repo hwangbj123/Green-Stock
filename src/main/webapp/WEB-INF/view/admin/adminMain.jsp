@@ -693,8 +693,10 @@
 	</div>
 	<!-- End Content -->
 </div>
-
+<!-- End Content Wrapper -->
+<%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>
 <script>
+
 var cUser = document.getElementById("cSubscribe");
 if (cUser !== null) {
   var myUChart = new Chart(cUser, {
@@ -717,7 +719,6 @@ if (cUser !== null) {
         {
           label: "signup",
           data: [15, 30, 27, 43, 39, 18, 42, 25, 13, 18, 59],
-          // data: [2, 3.2, 1.8, 2.1, 1.5, 3.5, 4, 2.3, 2.9, 4.5, 1.8, 3.4, 2.8],
           backgroundColor: "#88aaf3"
         }
       ]
@@ -785,5 +786,3 @@ if (cUser !== null) {
   });
 }
 </script>
-<!-- End Content Wrapper -->
-<%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>

@@ -26,18 +26,20 @@ public class AdminRestController {
 	@ResponseBody
 	public String refuse(@RequestBody RefuseDTO dto) throws Exception {
 		advisorRepository.updateStatus(dto.getAdvisorId(),3);
+		advisorRepository.insertRefuseReason(dto.getAdvisorId(),dto.getRefuseMsg());
 		mailSendService.createRefuseMessage(dto.getEmail(), dto.getRefuseMsg());
-		//mailSendService.createRefuseMessage("ysl2884@naver.com", dto.getRefuseMsg());
 		return "메시지 전송 완료";
 	}
 	
 	@GetMapping("/approve/{advisorId}/{advisorEmail}")
 	public int approve(@PathVariable int advisorId, @PathVariable String advisorEmail) throws Exception {
-		//System.out.println(advisorId);
-		//System.out.println(advisorEmail);
-		advisorRepository.updateStatus(advisorId, 1);
-		//mailSendService.createRefuseMessage(advisorEmail, "전문가 등록 완료.");
+		advisorRepository.updateStatus(advisorId, 2);
 		mailSendService.createAcceptMessage("ysl2884@naver.com", "전문가 등록 완료.");
 		return 1;
+	}
+	
+	@GetMapping("/getRefuseData/{advisorId}")
+	public RefuseDTO getRefuseData(@PathVariable int advisorId) {
+		return advisorRepository.findAdvisorRefuseByAdvisorId(advisorId);
 	}
 }

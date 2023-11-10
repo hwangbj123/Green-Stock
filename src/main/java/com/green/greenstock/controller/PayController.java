@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.KakaoPayApproval;
 import com.green.greenstock.dto.KakaoPayDto;
+import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.PaySubscribe;
+import com.green.greenstock.repository.model.SubscribeToAdvisor;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.ChattingService;
@@ -43,6 +45,8 @@ public class PayController {
 	private final AdvisorService advisorService;
 	
 	private final ChattingService chattingService;
+	
+	private final SubscribeToAdvisorRepository subscribeToAdvisorRepository;
 	
 	@Autowired
 	HttpSession session;
@@ -86,11 +90,13 @@ public class PayController {
 		
 		//결제 정보를 subscribe_to_advisor에 저장
 		int advisorId = Integer.parseInt(pay.getItemName());
-		advisorService.saveSubscribeToAdvisor(advisorId, user.getId());
+		advisorService.saveSubscribeToAdvisor(advisorId, userId);
 		
 		Advisor advisor = advisorService.findAdvisorById(advisorId);
 		log.info("advisor : " + advisor);
 		
+		SubscribeToAdvisor subscribeToAdvisor = subscribeToAdvisorRepository.findByAdvisorIdAndUserId(advisorId, userId);
+		log.info("subscribeToAdvisor : " + subscribeToAdvisor);
 		//결제 정보를 pay_subscribe에 저장
 		PaySubscribe paySubscribe = new PaySubscribe();
 		paySubscribe.setTid(tid);
@@ -99,6 +105,7 @@ public class PayController {
 		paySubscribe.setAmount(amount);
 		paySubscribe.setUserId(userId);
 		paySubscribe.setCreatedAt(createdAt);
+		paySubscribe.setStaId(subscribeToAdvisor.getSubId());
 		kakaoPayService.insertPaySubscribeInfo(paySubscribe);
 		
 		//일대일 채팅 생성

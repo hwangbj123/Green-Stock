@@ -1,5 +1,6 @@
 package com.green.greenstock.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,17 @@ public class UserService {
 
 	public User findById(Integer id){
 		return userRepository.findById(id);
+	}
+
+	public List<Integer> countSubUser(int currentMonth) {
+		List<Integer> countSubUserList = new ArrayList<>();
+		for(int i=0; i<6; i++) {
+			int j=6;
+			int count = userRepository.countSubUser(currentMonth-j);
+			countSubUserList.add(count);
+			j--;
+		}
+		return countSubUserList;
 	}
 	
 }

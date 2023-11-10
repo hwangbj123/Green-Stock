@@ -1,6 +1,10 @@
 package com.green.greenstock.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,14 +14,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.green.greenstock.dto.AdminExpertDTO;
 import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.dto.Pagination;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.handler.exception.UnSearchedException;
+import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.BoardService;
@@ -46,6 +53,9 @@ public class AdminController {
 	private final ChattingService chattingService;
 
 	@Autowired
+	AdvisorRepository advisorRepository;
+
+	@Autowired
 	HttpSession session;
 
 	@GetMapping("/main")
@@ -62,14 +72,26 @@ public class AdminController {
 			throw new UnAuthorizedException("권한있는 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
 		}
 
+		// 유저 테이블 가져오기
 		List<User> userList = userService.findAdminMainUserList();
 		model.addAttribute("userList", userList);
-
+		
+		// 구독자 차트
+		LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        List<Integer> months = new ArrayList<>();
+        for(int i=5; i<=0; i--) {
+        	months.add(currentMonth-i);
+        }
+        log.info(months.toString());
+        List<Integer> countSubUserList = userService.countSubUser(currentMonth);
+        log.info(countSubUserList.toString());
+        
 		// board 가져오기
 		PagingDto paging = new PagingDto();
 		List<Board> boardList = boardService.selectBoardListAll(paging);
 		System.out.println("paging : " + paging);
-		//System.out.println("board : " + boardList.get(0));
+		// System.out.println("board : " + boardList.get(0));
 		model.addAttribute("boardList", boardList);
 
 		return "admin/adminMain";
@@ -167,7 +189,27 @@ public class AdminController {
 	public String adminAdvisorList() {
 		return "advisor/adminAdvisorList";
 	}
+
 	// 심사중 기능
+	@GetMapping("/expert/{status}/page/{page}")
+	public String expert(Model model, @PathVariable int status, @PathVariable int page) {
+		List<AdminExpertDTO> dtoList = advisorRepository.findAllInfoByStatus(status);
+		PagingDto paging = new PagingDto();
+		paging.setRecordSize(10);
+		paging.setPage(page);
+		List<List<AdminExpertDTO>> paginatedList = IntStream.range(0, (dtoList.size() + 10 - 1) / 10)
+				.mapToObj(i -> dtoList.subList(i * 10, Math.min((i + 1) * 10, dtoList.size())))
+				.collect(Collectors.toList());
+		List<AdminExpertDTO> list = paginatedList.get(page - 1);
+		int total = dtoList.size();
+		Pagination pagination = new Pagination(total, paging);
+		dtoList.forEach(e -> e.setImgName(e.getImgName().replace("\\", "/")));
+		model.addAttribute("status",status);
+		model.addAttribute("page", pagination);
+		model.addAttribute("paging", paging);
+		model.addAttribute("expertList", list);
+		return "/admin/adminExpert";
+	}
 	// 심사완료 등급업 기능
 	// 전문가 이력 추가 페이지
 	// 전문가 이력 추가 기능
