@@ -52,8 +52,8 @@
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		
 	    <style>
-			*{
-				font-family: 'Pretendard-Regular';
+			.advisorRegister{
+				width: 50%;
 			}
 			.advisorRegister #profilePhoto{
 				line-height: 30px;
@@ -65,8 +65,6 @@
 				resize: none;
 				border: 1px solid #ededed;
 			}
-	    </style>
-		<style>
 			@font-face {
 			  font-family: "Dovemayo";
 			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
@@ -76,6 +74,14 @@
 			  font-family: 'Dovemayo', sans-serif !important;
 			  font-weight: normal;
 			}
+			.btn {
+				width: 100px;
+				height: 45px;
+				border-radius: 30px;
+				font-size: 16px;
+				box-shadow: 3px 3px 3px 0px gray;
+				margin-right: 10px;
+			  }
 		  </style>
 	</head>
 <body>

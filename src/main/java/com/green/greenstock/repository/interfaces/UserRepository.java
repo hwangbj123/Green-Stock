@@ -39,4 +39,6 @@ public interface UserRepository {
 	public List<PaySubscribe> findUserPayment(Integer id);
 
 	public User findById(Integer id);
+
+	public int countSubUser(int i);
 }

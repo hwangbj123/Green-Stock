@@ -52,10 +52,9 @@
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		
 	    <style>
-			* {
-				font-family: 'Pretendard-Regular';
+	    	.advisorList{
+				
 			}
-	    	.advisorList{}
 			.advisorList .card{
 				width: 300px;
 				height: 400px;

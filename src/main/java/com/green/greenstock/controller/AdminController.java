@@ -1,5 +1,7 @@
 package com.green.greenstock.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -70,9 +72,21 @@ public class AdminController {
 			throw new UnAuthorizedException("권한있는 사용자가 아닙니다.", HttpStatus.UNAUTHORIZED);
 		}
 
+		// 유저 테이블 가져오기
 		List<User> userList = userService.findAdminMainUserList();
 		model.addAttribute("userList", userList);
-
+		
+		// 구독자 차트
+		LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        List<Integer> months = new ArrayList<>();
+        for(int i=5; i<=0; i--) {
+        	months.add(currentMonth-i);
+        }
+        log.info(months.toString());
+        List<Integer> countSubUserList = userService.countSubUser(currentMonth);
+        log.info(countSubUserList.toString());
+        
 		// board 가져오기
 		PagingDto paging = new PagingDto();
 		List<Board> boardList = boardService.selectBoardListAll(paging);

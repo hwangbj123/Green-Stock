@@ -51,6 +51,7 @@
 		update advisor set status = #{status} where
 		advisor_id = #{advisorId}
 	</update>
+<<<<<<< HEAD
 	
 	<insert id = "insertRefuseReason">
 		insert into advisor_refuse(advisor_id,refuse_msg)
@@ -61,4 +62,15 @@
 		select * from advisor_refuse where
 		advisor_id = #{advisorId}
 	</select>
+=======
+
+	<!-- selectAdvisorList --> 
+
+	<!-- <select id="selectAdvisorList">
+
+	</select> -->
+
+
+	
+>>>>>>> f9692caf269b435dd936e2f741794a5d433f970a
 </mapper>

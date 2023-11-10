@@ -55,7 +55,7 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
         font-family: "Pretendard-Regular";
       }
       .advisorDetail {
-        width: 60%;
+        width: 50%;
       }
       .advisorDetail table th {
         width: 25%;
@@ -159,5 +159,5 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
       ><i class="ecicon eci-arrow-up" aria-hidden="true"></i
     ></a>
   </body>
-  <script src="/js/advisor/detail.js"></script>
+  <script src="/resources/js/custom/advisorDetail.js"></script>
 </html>
