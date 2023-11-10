@@ -17,4 +17,7 @@ public interface AdvisorRepository {
     List<Advisor> findByStatus(int status);
 
     void updateStatus(@Param("advisorId") int advisorId,@Param("status") int status);
+
+    List<Advisor> selectAdvisorList(int stauts);
+    
 }

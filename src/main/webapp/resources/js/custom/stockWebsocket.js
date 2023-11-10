@@ -27,7 +27,7 @@ let stockWebSocketInit = {
             if (this.receivedData != null) {
               this.updateElements(this.receivedData);
             }
-          }, 3000); // 3초마다 설정 업데이트
+          }, 1000); // 3초마다 설정 업데이트
         } else {
           // 온 버튼을 누른 경우 (실행 멈추기)
           this.socket.close();
