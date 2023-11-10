@@ -230,6 +230,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                   <li class="dropdown">
                     <a href="/board/list">커뮤니티</a>
                   </li>
+                  <li class="dropdown">
+                  	<a href="/notice/list">공지사항</a>
+                  </li>                  
                 </ul>
               </div>
             </div>

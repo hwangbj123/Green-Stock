@@ -3,6 +3,7 @@ package com.green.greenstock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
 import com.green.greenstock.repository.interfaces.BoardNoticeRepository;
@@ -30,10 +31,10 @@ public class BoardNoticeService {
 	}
 		
 	/**
-	 * 공지사항 작성
+	 * 공지사항 작성(파일 업로드 추가 예정)
 	 * @param 
 	 */
-	public int noticeWriteService(Noticeboard noticeboard) {
+	public int noticeWriteService(Noticeboard noticeboard ) {
 		int result = noticeRepository.writeNotice(noticeboard);
 		return result;							
 	}
@@ -92,20 +93,17 @@ public class BoardNoticeService {
 
 
 	/**
-	 * 댓글 전체 카운트(공개,비공개) 
+	 * 파라메터 조건에 따라 글개수 반환
+	 * @param noticeState
+	 * @param noticeTitle
+	 * @return 글개수
 	 */
-	public int noticeListCount( ) {		
-		return noticeRepository.listCount();
+	public int noticeListCount(String noticeState, String noticeTitle) {		
+		return noticeRepository.listCount(noticeState, noticeTitle);
 		
 	}
 	
-	/**
-	 * 한페이지에 보이는 글수는 몇개인가?
-	 * 
-	 */
-	public int noticeLiveListCount( ) {
-		return noticeRepository.listCount();
-	}
+
 
 
 

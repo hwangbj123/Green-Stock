@@ -57,7 +57,7 @@
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-contacts">
 			<div>
-				<h1>Notice List</h1>
+				<h1>공지사항</h1>
 				<p class="breadcrumbs">
 					<span><a href="/admin/main">Main</a></span> <span><i
 						class="mdi mdi-chevron-right"></i></span>Notice 
@@ -66,14 +66,14 @@
 		</div>
 
 <div class="content container" style="width: 100%;">
-<h3> 수정 페이지 </h3>
+<h2> 수정 페이지 </h2>
     <form action="/notice/update" method="post">
         <table class = "notice-table-update">  
                       <tr>
                 <td>
-                <button type="submit" class="btn btn-secondary" style="margin :5px">수정하기</button>
+                <button type="submit" class="btn btn-primary" style="margin :5px; font-size: 20px">수정하기</button>
                  <a href ="/notice/admin/list">
-                	<button type="button" class="btn btn-secondary" style="margin :5px">목록으로</button>
+                	<button type="button" class="btn btn-primary" style="margin :5px; font-size: 20px ">목록으로</button>
                 </a>
                 </td>
                 
@@ -81,19 +81,19 @@
             <tr>                
                 <td>
                 	<input type="hidden" value="${notice.id}" name="id">
-                	<input type="hidden" value="${notice.userId}" name="userId">                	
-                		제목 :
-                	<input type="text" value="${notice.noticeTitle}" name="noticeTitle" required>                                       
+                	<input type="hidden" value="${notice.userId}" name="userId" style="font-size: 23px">                	
+                		<p style="font-size: 23px">제목 :</p>
+                	<input type="text" value="${notice.noticeTitle}" name="noticeTitle" required style="font-size: 23px">                                       
                 </td> 
             </tr>            
             <tr>            	               
-                <td>                	
-                    작성글 :
+                <td>
+                    <p style="font-size: 23px"> 작성글 :</p>                   
                 </td>                                                 
             </tr>
             <tr>            
                 <td>                    
-					<textarea name="noticeContent" cols="150" rows="15" required="required" style="resize: none;">${notice.noticeContent}</textarea>
+					<textarea name="noticeContent" cols="100" rows="15" required="required" style="resize: none; font-size: 23px">${notice.noticeContent}</textarea>
                 </td>
             </tr>
             <tr>
