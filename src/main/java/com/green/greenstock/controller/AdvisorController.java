@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
+import com.green.greenstock.repository.entity.AdvisorBoardEntity;
+import com.green.greenstock.repository.model.AdvisorBoard;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.service.UserService;
@@ -53,10 +56,12 @@ public class AdvisorController {
     public String advisorDetail(@PathVariable String nickName, Model model) {
 
         User user = (User) httpSession.getAttribute("principal");
+        log.info("user {}", user);
         if (user != null) {
             // log.info("id {}",user.getId());
             boolean validateResult = advisorService.validateSubscribeToAdvisor(nickName, user.getId());
             model.addAttribute("validate", validateResult);
+            log.info("bool {}", validateResult);
         }
 
         if (nickName == null) {
@@ -100,11 +105,6 @@ public class AdvisorController {
         return "redirect:/advisor/list";
     }
 
-    @GetMapping("/sub")
-    public void sub() {
-        throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
-    }
-
     // 전문가 상담게시판 목록 페이지
     @GetMapping("/sub/board/{advisorNickName}")
     public String advisorBoardList(Model model, @PathVariable String advisorNickName,
@@ -113,9 +113,9 @@ public class AdvisorController {
         PageRequest pageRequest = PageRequest.of(pageReq, 10, Sort.by("createdAt").descending());
         Page<AdvisorBoardResDto> advisorBoardResDtos = advisorService.findByAdvisorEntityAndParent(advisorNickName, 0,
                 pageRequest);
-        Long result = advisorBoardResDtos.getTotalElements();
+        Long total = advisorBoardResDtos.getTotalElements();
 
-        Pagination pagination = new Pagination(result.intValue(), page, advisorBoardResDtos.getSize());
+        Pagination pagination = new Pagination(total.intValue(), page, advisorBoardResDtos.getSize());
 
         model.addAttribute("page", advisorBoardResDtos);
         model.addAttribute("pagination", pagination);
@@ -125,9 +125,26 @@ public class AdvisorController {
     // 전문가 상담게시판 글 보기 페이지
     @GetMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public String advisorBoard(Model model, @PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
+        // 게시글, 이전, 다음 페이지 정보
         AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
         model.addAttribute("advisorBoard", advisorBoardResDto);
-        advisorBoardResDto.getAdvisorBoardId();
+
+        // 댓글
+        PageRequest pageRequest = PageRequest.of(0, 10);
+
+        Page<AdvisorBoardResDto> replyDtos = advisorService
+                .findByParentOrderByCreatedAtDesc(advisorBoardId, pageRequest);
+
+        Long total = replyDtos.getTotalElements();
+        log.info("total {}", total);
+        if (total > 0) {
+            Pagination pagination = new Pagination(total.intValue(), 0, 10);
+            model.addAttribute("pagination", pagination);
+            model.addAttribute("page", replyDtos);
+        }
+        log.info("replyDtos {}", replyDtos);
+
+        model.addAttribute("replyTotal", total);
         return "advisor/advisorBoard";
     }
 

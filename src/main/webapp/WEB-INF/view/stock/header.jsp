@@ -105,7 +105,6 @@
             <ul>
               <li><a href="/main">메인</a></li>
               <li class="dropdown">
-<!--                     <span class="main-label-note-new" data-toggle="tooltip" title="NEW"></span> -->
                 <a href="/portfolio">포트폴리오</a>
               </li>
               <li class="dropdown">
@@ -126,3 +125,24 @@
   </div>
   <!-- Ec Main Menu End -->
 </header>
+<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: none">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="row ec_breadcrumb_inner">
+          <div class="col-md-6 col-sm-12">
+            <h2 class="ec-breadcrumb-title">Products</h2>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <!-- ec-breadcrumb-list start -->
+            <ul class="ec-breadcrumb-list">
+              <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="ec-breadcrumb-item active">Products</li>
+            </ul>
+            <!-- ec-breadcrumb-list end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

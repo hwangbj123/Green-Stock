@@ -33,6 +33,7 @@ import com.green.greenstock.repository.entity.ImageEntity;
 import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
 import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorBoardEntityRepository;
+import com.green.greenstock.repository.interfaces.AdvisorBoardRepository;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
@@ -40,6 +41,7 @@ import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityReposi
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
+import com.green.greenstock.repository.model.AdvisorBoard;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +58,7 @@ public class AdvisorService {
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final UserEntityRepository userEntityRepository;
     private final SubscribeToAdvisorRepository subscribeToAdvisorRepository;
+    private final AdvisorBoardRepository advisorBoardRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String filePath;
@@ -218,28 +221,44 @@ public class AdvisorService {
         Page<AdvisorBoardEntity> advisorBoardEntities = advisorBoardEntityRepository
                 .findByAdvisorEntityAndParent(advisorEntity, parent, pageable);
 
-        return advisorBoardEntities.map(entity -> {
-            return AdvisorBoardResDto.fromEntity(entity);
-        });
+        return advisorBoardEntities.map(AdvisorBoardResDto::fromEntity);
     }
 
     // 전문가 상담게시판 글 한개 보기
     @Transactional
-    public AdvisorBoardResDto findByAdvisorBoardId(int advisorBoardId){
+    public AdvisorBoardResDto findByAdvisorBoardId(int advisorBoardId) {
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
-        return AdvisorBoardResDto.fromEntity(advisorBoardEntity);
+        String localDateTime = advisorBoardEntity.getCreatedAt().toString();
+        int advisorId = advisorBoardEntity.getAdvisorEntity().getAdvisorId();
+        AdvisorBoard prevBoard = advisorBoardRepository.findPrevBoard(advisorId, localDateTime);
+        AdvisorBoard nextBoard = advisorBoardRepository.findNextBoard(advisorId, localDateTime);
+        AdvisorBoardResDto advisorBoardResDto = AdvisorBoardResDto.fromEntity(advisorBoardEntity);
+        advisorBoardResDto.setPrevBoard(prevBoard);
+        advisorBoardResDto.setNextBoard(nextBoard);
+        return advisorBoardResDto;
+    }
+
+    // 댓글 가져오기
+    @Transactional
+    public Page<AdvisorBoardResDto> findByParentOrderByCreatedAtDesc(int parent, Pageable pageable) {
+        Page<AdvisorBoardEntity> replyEntities = advisorBoardEntityRepository.findByParentOrderByCreatedAtDesc(parent,
+                pageable);
+        return replyEntities.map(AdvisorBoardResDto::fromEntity);
     }
 
     /**
      * 구독자 삭제하기
+     * 
      * @param advisorId
      * @param userId
      */
     @Transactional
-    public void deleteSubscribeToAdvisorEntity(int advisorId, int userId){
+    public void deleteSubscribeToAdvisorEntity(int advisorId, int userId) {
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorId(advisorId);
-        UserEntity userEntity = userEntityRepository.findById(userId).get();
-        SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository.findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
+        UserEntity userEntity = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+        SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
+                .findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
         subscribeToAdvisorEntityRepository.delete(subscribeToAdvisorEntity);
     }
 
@@ -248,14 +267,14 @@ public class AdvisorService {
      * 매일 00시 정각 min > hour > day(일) > month > weekday
      */
     @Transactional
-    @Scheduled(cron = "0 0 0 * * *")	
-    public void validateAndDeleteSubscribe(){
+    @Scheduled(cron = "0 0 0 * * *")
+    public void validateAndDeleteSubscribe() {
         log.info("매일 자정 구독 만료 확인이 실행되었습니다.");
         List<SubscribeToAdvisorEntity> subscribeToAdvisorEntities = subscribeToAdvisorEntityRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
-        for(SubscribeToAdvisorEntity subscribeToAdvisorEntity : subscribeToAdvisorEntities){
+        for (SubscribeToAdvisorEntity subscribeToAdvisorEntity : subscribeToAdvisorEntities) {
             LocalDateTime expTime = subscribeToAdvisorEntity.getExpirationTime();
-            if(now.isAfter(expTime)){ // 현재시간과 비교하여 구독시간이 지났다면
+            if (now.isAfter(expTime)) { // 현재시간과 비교하여 구독시간이 지났다면
                 subscribeToAdvisorEntityRepository.delete(subscribeToAdvisorEntity);
                 log.info("구독만료로 삭제된 아이디 : {}", subscribeToAdvisorEntity.getSubId());
             }

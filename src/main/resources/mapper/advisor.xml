@@ -62,13 +62,10 @@
 		advisor_id = #{advisorId}
 	</select>
 
-<<<<<<< HEAD
 	<!-- selectAdvisorList --> 
 
 	<!-- <select id="selectAdvisorList">
 
 	</select> -->
 	
-=======
->>>>>>> deadfe5d860d91811732fc12becc42191ba04993
 </mapper>

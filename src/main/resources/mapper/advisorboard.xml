@@ -15,4 +15,20 @@
 	<select id="findAll">
 		SELECT * FROM advisor_board;
 	</select>
+
+	<!-- findNextBoard --> 
+
+	<select id="findNextBoard" resultType="com.green.greenstock.repository.model.AdvisorBoard">
+	
+		SELECT * FROM advisor_board ab WHERE advisor_id = #{advisorId} AND parent = 0 AND #{dateTime} <![CDATA[ < ]]> created_at ORDER BY created_at ASC LIMIT 1 
+	
+	</select>
+
+	<!-- findPrevBoard --> 
+
+	<select id="findPrevBoard" resultType="com.green.greenstock.repository.model.AdvisorBoard">
+	 
+		SELECT * FROM advisor_board ab WHERE advisor_id = #{advisorId} AND parent = 0 AND #{dateTime} <![CDATA[ > ]]> created_at ORDER BY created_at DESC LIMIT 1 
+	
+	</select>
 </mapper>
