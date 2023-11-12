@@ -38,7 +38,7 @@
 	</select>
 	
 	<select id="countSubUser">
-		select count(*) from pay_tb where month(created_at) = #{i};
+		select count(*) from pay_tb where month(created_at) = #{i}
 	</select>
 	
 	<select id="findAdminMainUserList" resultType="User">

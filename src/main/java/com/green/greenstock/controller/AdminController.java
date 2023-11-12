@@ -79,13 +79,17 @@ public class AdminController {
 		// 구독자 차트
 		LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
+        log.info("currentMonth : " + currentMonth);
         List<Integer> months = new ArrayList<>();
-        for(int i=5; i<=0; i--) {
+        for(int i=5; i>=0; i--) {
         	months.add(currentMonth-i);
+        	log.info("" + (currentMonth-i));
         }
         log.info(months.toString());
         List<Integer> countSubUserList = userService.countSubUser(currentMonth);
         log.info(countSubUserList.toString());
+        model.addAttribute("months", months);
+        model.addAttribute("countSubUserList", countSubUserList);
         
 		// board 가져오기
 		PagingDto paging = new PagingDto();
