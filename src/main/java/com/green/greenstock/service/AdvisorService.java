@@ -15,18 +15,20 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.green.greenstock.dto.AdvisorBoardReqDto;
+import com.green.greenstock.dto.AdvisorBoardReplyResDto;
 import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
+import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
@@ -42,7 +44,6 @@ import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.AdvisorBoard;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -238,12 +239,33 @@ public class AdvisorService {
         return advisorBoardResDto;
     }
 
-    // 댓글 가져오기
+    /**
+     * 댓글목록 불러오기
+     * 
+     * @param parent
+     * @param pageable
+     * @return dto로 변환하여 반환
+     */
     @Transactional
-    public Page<AdvisorBoardResDto> findByParentOrderByCreatedAtDesc(int parent, Pageable pageable) {
-        Page<AdvisorBoardEntity> replyEntities = advisorBoardEntityRepository.findByParentOrderByCreatedAtDesc(parent,
+    public Page<AdvisorBoardReplyResDto> findByParent(int parent, Pageable pageable) {
+        Page<AdvisorBoardEntity> replyEntities = advisorBoardEntityRepository.findByParent(parent,
                 pageable);
-        return replyEntities.map(AdvisorBoardResDto::fromEntity);
+        return replyEntities.map(AdvisorBoardReplyResDto::fromEntity);
+    }
+
+    // 글, 댓글 등록
+    public AdvisorBoardEntity saveAdvisorBoard(AdvisorBoardReqDto advisorBoardReqDto) {
+
+        AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorId(advisorBoardReqDto.getAdvisorId());
+        UserEntity userEntity = userEntityRepository.findById(advisorBoardReqDto.getUserId())
+                .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+
+        AdvisorBoardEntity advisorBoardEntity = AdvisorBoardReqDto.toEntity(advisorBoardReqDto);
+        advisorBoardEntity.setAdvisorEntity(advisorEntity);
+        advisorBoardEntity.setUserEntity(userEntity);
+
+        return advisorBoardEntityRepository.save(advisorBoardEntity);
+
     }
 
     /**
@@ -279,6 +301,17 @@ public class AdvisorService {
                 log.info("구독만료로 삭제된 아이디 : {}", subscribeToAdvisorEntity.getSubId());
             }
         }
+    }
+
+    // 전문가 글 삭제
+    public int deleteAdvisorBoard(int advisorBoardId) {
+        AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        int result = 0;
+        if (advisorBoardEntity != null) {
+            advisorBoardEntityRepository.delete(advisorBoardEntity);
+            result = 1;
+        }
+        return result;
     }
 
 }

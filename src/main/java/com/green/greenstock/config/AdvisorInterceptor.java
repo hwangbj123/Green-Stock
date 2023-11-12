@@ -53,7 +53,7 @@ public class AdvisorInterceptor implements HandlerInterceptor {
             advisorNickName = parts[4];
         }
 
-        // log.info("nick {}", advisorNickName);
+        log.info("nick {}", advisorNickName);
 
         // if (advisorNickName == null) {
         // response.sendRedirect("/advisor/list");

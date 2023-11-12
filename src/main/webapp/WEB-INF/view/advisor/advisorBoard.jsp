@@ -69,6 +69,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     .advisorBoard .hiddenPageArrow {
       visibility: hidden;
     }
+    .advisorBoard .btn-warning {
+      border-radius: 5px;
+      height: 30px;
+      line-height: 30px;
+      width: 60px;
+      box-shadow: 1px 2px 1px 0px gray;
+    }
   </style>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
@@ -78,6 +85,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         <div class="breadcrumb-wrapper">
           <div class="my-4">
             <h4>${advisorBoard.advisorNickname} 상담게시판</h4>
+            <input type="hidden" name="advisorNickname" value="${advisorBoard.advisorNickname}" />
           </div>
         </div>
         <div class="row">
@@ -90,7 +98,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                 </div>
                 <div class="ec-blog-date">
                   <p class="date">${advisorBoard.createdAt.substring(0,10)} ${advisorBoard.createdAt.substring(11)} -</p>
-                  <a href="javascript:void(0)">${replyTotal} Comments</a>
+                  <a href="javascript:void(0)">댓글 ${replyTotal}</a>
                 </div>
                 <div class="ec-blog-detail">
                   <h3 class="ec-blog-title">${advisorBoard.title}</h3>
@@ -118,38 +126,94 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                   <a
                     href="/advisor/sub/board/${advisorBoard.advisorNickname}/${advisorBoard.prevBoard.advisorBoardId}"
                     class="${empty advisorBoard.prevBoard ? 'hiddenPageArrow' : ''}"
-                    ><i class="ecicon eci-angle-left"></i> Prev Post</a
+                    ><i class="ecicon eci-angle-left"></i> 이전 글</a
                   >
                   <a
                     href="/advisor/sub/board/${advisorBoard.advisorNickname}/${advisorBoard.nextBoard.advisorBoardId}"
                     class="${empty advisorBoard.nextBoard ? 'hiddenPageArrow' : ''}"
-                    >Next Post <i class="ecicon eci-angle-right"></i
+                    >다음 글 <i class="ecicon eci-angle-right"></i
                   ></a>
                 </div>
                 <div class="ec-blog-comments">
                   <div class="ec-blog-cmt-preview">
-                    <div class="ec-blog-comment-wrapper mt-55">
-                      <h4 class="ec-blog-dec-title">Comments : ${replyTotal}</h4>
-                      <c:forEach var="entity" items="${page.content}">
-                        <div class="ec-single-comment-wrapper mt-35">
-                          <div class="ec-blog-comment-content">
-                            <h5>${entity.userName}</h5>
-                            <span>${entity.createdAt.substring(0, 10)} ${entity.createdAt.substring(11,16)}</span>
-                            <p>${entity.content}</p>
-                          </div>
+                    <c:choose>
+                      <c:when test="${replyTotal > 0}">
+                        <div class="ec-blog-comment-wrapper mt-55">
+                          <h4 class="ec-blog-dec-title">댓글 수 : ${replyTotal}</h4>
+                          <c:forEach var="entity" items="${reply.content}">
+                            <div class="ec-single-comment-wrapper mt-35">
+                              <div class="ec-blog-comment-content w-100">
+                                <div class="d-flex align-items-baseline justify-content-between">
+                                  <h5>${entity.userName}</h5>
+                                  <c:if test="${entity.userId eq principal.id}">
+                                    <button class="btn btn-warning btnDeleteAdvisorBoard" id="${entity.advisorBoardId}">삭제</button>
+                                  </c:if>
+                                </div>
+                                <span>${entity.createdAt.substring(0, 10)} ${entity.createdAt.substring(11,16)}</span>
+                                <p>${entity.content}</p>
+                              </div>
+                            </div>
+                          </c:forEach>
                         </div>
-                      </c:forEach>
-                    </div>
+                      </c:when>
+                      <c:otherwise>
+                        <div class="ec-blog-comment-wrapper mt-55">
+                          <h4 class="ec-blog-dec-title">댓글이 없습니다.</h4>
+                        </div>
+                      </c:otherwise>
+                    </c:choose>
+
+                    <!-- 페이징 영역 -->
+                    <c:if test="${replyTotal > 0}">
+                      <div class="ec-pro-pagination justify-content-center">
+                        <ul class="ec-pro-pagination-inner">
+                          <c:if test="${pagination.prevPageGroup}">
+                            <li>
+                              <a class="next" href="/advisor/sub/board/${advisorBoard.advisorNickname}/reply/${advisorBoard.advisorBoardId}/${pagination.currentPage - 1}"
+                                >Prev <i class="ecicon eci-angle-left"></i
+                              ></a>
+                            </li>
+                          </c:if>
+                          <c:forEach var="num" begin="${pagination.startPageGroup}" end="${pagination.endPageGroup}">
+                            <c:if test="${not empty pagination.startPageGroup}">
+                              <li>
+                                <a
+                                  class="btnPageNum ${num eq pagination.currentPage ? 'active' : ''}"
+                                  href="/advisor/sub/board/${advisorBoard.advisorNickname}/reply/${advisorBoard.advisorBoardId}/${num}"
+                                  >${num}</a
+                                >
+                              </li>
+                            </c:if>
+                          </c:forEach>
+                          <c:if test="${pagination.nextPageGroup}">
+                            <li>
+                              <a class="next" href="/advisor/sub/board/${advisorBoard.advisorNickname}/reply/${advisorBoard.advisorBoardId}/${pagination.currentPage + 1}"
+                                >Next <i class="ecicon eci-angle-right"></i
+                              ></a>
+                            </li>
+                          </c:if>
+                        </ul>
+                      </div>
+                    </c:if>
                   </div>
                   <div class="ec-blog-cmt-form">
                     <div class="ec-blog-reply-wrapper mt-50">
-                      <h4 class="ec-blog-dec-title">Leave A Reply</h4>
-                      <form class="ec-blog-form" action="#">
+                      <h4 class="ec-blog-dec-title">댓글 쓰기</h4>
+                      <form
+                        class="ec-blog-form"
+                        id="saveReplyForm"
+                        action="/advisor/sub/board/${advisorBoard.advisorNickname}/reply"
+                        data-nickname="${advisorBoard.advisorNickname}"
+                        method="post"
+                      >
                         <div class="row">
                           <div class="col-md-12">
-                            <div class="ec-text-leave">
-                              <textarea placeholder="Message"></textarea>
-                              <a href="#" class="btn btn-lg btn-secondary">Order Now</a>
+                            <div class="ec-text-leave text-end">
+                              <input type="text" name="userId" value="${principal.id}" />
+                              <input type="hidden" name="advisorId" value="${advisorBoard.advisorId}" />
+                              <input type="hidden" name="parent" value="${advisorBoard.advisorBoardId}" />
+                              <textarea name="content" placeholder="댓글을 작성해주세요"></textarea>
+                              <button id="btnReply" type="button" class="btn btn-lg btn-secondary">등 록</button>
                             </div>
                           </div>
                         </div>
@@ -167,5 +231,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     </div>
     <!-- End Content Wrapper -->
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <script src="/resources/js/custom/advisorBoard.js"></script>
   </body>
 </html>

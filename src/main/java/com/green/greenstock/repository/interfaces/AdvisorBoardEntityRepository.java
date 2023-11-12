@@ -13,5 +13,5 @@ public interface AdvisorBoardEntityRepository extends JpaRepository<AdvisorBoard
 
     Page<AdvisorBoardEntity> findByAdvisorEntityAndParent(AdvisorEntity advisorEntity, int parent, Pageable pageable);
 
-    Page<AdvisorBoardEntity> findByParentOrderByCreatedAtDesc(int parent, Pageable pageable);
+    Page<AdvisorBoardEntity> findByParent(int parent, Pageable pageable);
 }
