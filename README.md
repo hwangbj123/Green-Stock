@@ -194,7 +194,7 @@
 <br>
 
 ## 4️⃣ ERD & 테이블 명세서
-테이블 명세서 : https://docs.google.com/spreadsheets/d/1oaUxJ4CWKrVUvi02h9mYOwBL-raDCLswAQ5Qllws7Xw/edit#gid=0
+테이블 명세서 : [https://docs.google.com/spreadsheets/d/1oaUxJ4CWKrVUvi02h9mYOwBL-raDCLswAQ5Qllws7Xw/edit#gid=0](https://docs.google.com/spreadsheets/d/1PxWk2Hjt_2J9wEkbV4r2eIhkXZoKDakHFHb2PHKSTm8/edit#gid=0)
 
 <br>
 <br>
