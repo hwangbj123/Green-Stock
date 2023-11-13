@@ -38,5 +38,5 @@ public class SiteViewCountService {
 		response.addCookie(newCookie);
 		System.out.println("새로운 view 쿠키 생성");
 	}
-
+	
 }
