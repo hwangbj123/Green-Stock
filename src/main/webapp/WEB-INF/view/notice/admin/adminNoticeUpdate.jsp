@@ -67,7 +67,7 @@
 		</div>
 
 <div class="content container" style="width: 100%;">
-<h2> 수정 페이지 </h2>
+<h2> 수정하기</h2>
     <form action="/notice/update" method="post">
         <table class = "notice-table-update">  
                       <tr>

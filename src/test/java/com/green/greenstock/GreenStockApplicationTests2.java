@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.service.AdvisorService;
+import com.green.greenstock.service.BoardNoticeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +30,14 @@ class GreenStockApplicationTests2 {
 	@Autowired
 	AdvisorService advisorService;
 
+	@Autowired
+	BoardNoticeService boardNoticeService;
+	
+	
 	@Test
 	@Transactional
 	void contextLoads() {	
 		advisorService.validateSubscribeToAdvisor("shannon50", 3);
 	}
+	
 }
