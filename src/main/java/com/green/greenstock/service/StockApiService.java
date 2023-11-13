@@ -26,9 +26,6 @@ import com.green.greenstock.dto.ResponseDomesticStockSearchDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.repository.interfaces.AccessTokenRepository;
 import com.green.greenstock.repository.interfaces.DomesticStockCodeRepository;
-import com.green.greenstock.repository.interfaces.KosdaqCodeRepository;
-import com.green.greenstock.repository.interfaces.KospiCodeRepository;
-import com.green.greenstock.repository.interfaces.OverseasStockCodeRepository;
 import com.green.greenstock.repository.interfaces.WebSocketKeyRepository;
 import com.green.greenstock.repository.model.AccessTokenInfo;
 import com.green.greenstock.repository.model.WebSocketKeyInfo;
@@ -53,9 +50,6 @@ public class StockApiService {
 	private String appSecret;
 
 	private final AccessTokenRepository accessTokenRepository;
-	private final KospiCodeRepository kospiCodeRepository;
-	private final KosdaqCodeRepository kosdaqCodeRepository;
-	private final OverseasStockCodeRepository overseasStockCodeRepository;
 	private final DomesticStockCodeRepository domesticStockCodeRepository;
 	private final WebSocketKeyRepository webSocketKeyRepository;
 

@@ -93,14 +93,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       <div class="ec-register-wrapper">
         <div class="ec-register-container">
           <div class="ec-register-form">
-            <form action="/advisor/register" method="post" enctype="multipart/form-data">
+            <form action="/advisor/register" id="advisorRegisterForm" method="post" enctype="multipart/form-data">
               <span class="ec-register-wrap ec-register-half">
                 <label>이름</label>
                 <input type="text" name="fullName" placeholder="이름을 입력하세요" required />
               </span>
               <span class="ec-register-wrap ec-register-half">
                 <label>닉네임</label>
-                <input type="text" name="nickName" placeholder="닉네임을 입력하세요" required />
+                <input type="text" name="nickName" id="advisorNickname" placeholder="닉네임 5자이상 입력하세요" required />
               </span>
               <span class="ec-register-wrap ec-register-half">
                 <label>본인 사진</label>
@@ -108,7 +108,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
               </span>
               <span class="ec-register-wrap">
                 <label>이력</label>
-                <textarea name="career" id="summernote"></textarea>
+                <textarea name="career" rows="10" id=""></textarea>
               </span>
               <span class="ec-register-wrap">
                 <label>자기소개</label>
@@ -134,12 +134,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     </div>
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
-    <script>
-      $('#summernote').summernote({
-        placeholder: 'Hello Bootstrap 5',
-        tabsize: 1,
-        height: 100,
-      });
-    </script>
+    <script src="/resources/js/custom/advisorRegister.js"></script>
   </body>
 </html>

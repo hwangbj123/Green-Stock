@@ -33,4 +33,6 @@ public interface AdvisorRepository {
 
 	List<Advisor> selectAdvisorList(int status);
 
+	int findCountByAdvisorNickname(String nickname);
+
 }
