@@ -2,12 +2,10 @@
 
 
 function infoClicked(data) {
-	console.log(dataToObject(data));
 	data = dataToObject(data);
 	$('#modal-username').html(data.advisorFullName);
 	$('#modal-career').html(data.career);
 	$('#modal-introduction').html(data.introduction);
-	console.log(data.specialization);
 	let specialization = '';
 	switch (data.specialization) {
 		case '1':
@@ -31,7 +29,6 @@ function infoClicked(data) {
 			$('#refuseDate').remove();
 		}
 		if (data) {
-			console.log(data);
 			let refuseReasonH4 = $('<h4 style="font-weight : bold" class="text-dark font-weight-medium pt-4 mb-2" id = "refuseReasonH4">');
 			let refuseReasonH5 = $('<h5 id = "refuseReasonH5">');
 			let refuseDate = $('<p style = "margin-top:5%" id = "refuseDate">');
@@ -52,9 +49,7 @@ function infoClicked(data) {
 }
 
 function approveClicked(id, email) {
-	console.log(id);
 	$.get('/approve/' + id + "/" + email, function(data) {
-		console.log(data);
 		window.location.reload();
 	})
 }
@@ -67,9 +62,6 @@ function refuseClicked(advisorId, email) {
 
 
 function modalConfirmClicked() {
-	console.log($('#refuseMsg').val());
-	console.log($('#hidden_email').text());
-	console.log($('#hidden_advisorId').text());
 	$('#modal-refuse-contact').modal('hide');
 	$.ajax({
 		url: '/refuse',
@@ -80,11 +72,9 @@ function modalConfirmClicked() {
 			"email": $('#hidden_email').text(), "advisorId": $('#hidden_advisorId').text()
 		}),
 		success: (data) => {
-			console.log(data);
 			alert(data);
 			window.location.reload();
 		}, error: (jqXHR, textStatus, errorThrown) => {
-			console.error('AJAX Error:', textStatus, errorThrown);
 			alert('AJAX Error: ' + textStatus);
 		}
 	});
