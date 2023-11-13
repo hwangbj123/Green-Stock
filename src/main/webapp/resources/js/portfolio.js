@@ -180,7 +180,7 @@ function attatchPortfolioInfo(id) {
 			setRanking();
 			setMyStock(data);
 			setTradeLog(data);
-			setMonthlyAssetChart();
+			setMonthlyAssetChart(data.pid);
 			if (data.stockList.length == 0) {
 				console.log('asdf');
 				$('#donutChartBody').append($('<div style = "font-weight : bold; font-size : large;color:black;">' + '주식을 추가해주세요.' + '</div>'));
@@ -384,40 +384,38 @@ function titleClicked(pid, rank) {
 	})
 }
 
-function setMonthlyAssetChart() {
+function setMonthlyAssetChart(pid) {
 	/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
 	//<canvas id="monthlyAsset" class="chartjs"></canvas>
-	$.get('portfolio/getdailyGrowthData', function(data) {
+	$.get('portfolio/getdailyGrowthData/' + pid, function(data) {
 		console.log(data);
-		if(data.length < 6){
+		if(data.length < 2){
 			$('#assetBody').append($('<div style = "border:none; font-weight : bold; font-size : large;color:black;">데이터가 충분하지 않습니다.</div>'));
 			return;
 		}
 		let logDateArr = [];
 		let rorArr = [];
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < data.length; i++) {
 			logDateArr.push(data[i].logDate.slice(5, 10));
 		}
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < data.length; i++) {
 			rorArr.push(data[i].ror);
 		}
-
-		console.log(data);
-		$('#assetBody').append($('<canvas style = "height : 300px" id="monthlyAsset" class="chartjs"></canvas>'))
-		var activity = document.getElementById("monthlyAsset");
+		$('#assetBody').append($('<canvas style = "height : 300px" id="dailyGrowth" class="chartjs"></canvas>'))
+		var activity = document.getElementById("dailyGrowth");
 		if (activity !== null) {
 			var config = {
 				// The type of chart we want to create
 				type: "line",
 				// The data for our dataset
 				data: {
-					labels: logDateArr,
+					labels: logDateArr.slice(-6),
 					datasets: [
 						{
 							label: "Monthly Asset",
 							backgroundColor: "transparent",
 							borderColor: "rgba(82, 136, 255, .8)",
-							data: rorArr,
+							data: rorArr.slice(-6),
 							lineTension: 0,
 							pointRadius: 5,
 							pointBackgroundColor: "rgba(255,255,255,1)",
@@ -485,7 +483,7 @@ function setMonthlyAssetChart() {
 				}
 			};
 
-			var ctx = document.getElementById("monthlyAsset").getContext("2d");
+			var ctx = document.getElementById("dailyGrowth").getContext("2d");
 			var myLine = new Chart(ctx, config);
 
 		}

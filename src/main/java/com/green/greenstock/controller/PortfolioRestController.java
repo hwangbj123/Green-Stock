@@ -200,12 +200,10 @@ public class PortfolioRestController {
 		return 1;
 	}
 
-	@GetMapping("/getdailyGrowthData")
-	public List<GrowthLogDTO> getMonthlyAsset() {
+	@GetMapping("/getdailyGrowthData/{pid}")
+	public List<GrowthLogDTO> getMonthlyAsset(@PathVariable int pid) {
 		List<GrowthLogDTO> glist = new ArrayList<>();
-		List<Double> list = new ArrayList<>();
-		User user = (User) session.getAttribute("principal");
-		glist = growthLogRepository.findGrowthLogByPid(user.getId());
+		glist = growthLogRepository.findGrowthLogByPid(pid);
 		glist.forEach(e -> {
 			// e.set(e.getLogDate().replace("%",""));
 			e.setRor(e.getRor().replace("%", ""));
