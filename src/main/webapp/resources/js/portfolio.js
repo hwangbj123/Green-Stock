@@ -7,10 +7,8 @@ $(document).ready(function() {
 async function setSmallCard() {
 	let userId = await $.get('portfolio/getUserid', function(data) {
 	})
-	console.log(userId);
 	$.get('portfolio/getMyPortfolioList/' + userId, function(data) {
 		$('#addStock').on('click', () => addStockClicked());
-		console.log(data);
 		makeSmallCard(data);
 	})
 
@@ -19,27 +17,22 @@ async function setSmallCard() {
 // smallCard 를 만들어주는 부분.
 // 4개까지 포트폴리오를 만들 수 있고, 3개까지 addPortfolio 카드가 나온다.
 function makeSmallCard(data) {
-	console.log(data.length);
 	if (data.length == 0) {
 		makeAddPortfolioDiv();
 	} else {
 		let count = 0;
 		data.forEach((e, idx) => {
-			console.log(e.pid);
 			let pid = e.pid;
 			let isvisible = '';
 			let privacyP = $('<p style = "display : inline-block" id = "privacy_' + pid + '"></p>');
 			if (e.visible) {
-				console.log('isVisible');
 				isvisible = 'public';
 				privacyP.css('color', 'green');
 			} else {
-				console.log('isnotVisible');
 				isvisible = 'private';
 				privacyP.css('color', 'red');
 			}
 			privacyP.html(isvisible);
-			console.log(pid);
 			count++;
 			let smallCardInnerWrapper = $('<div id="' + pid + '" class="col-xl-3 col-sm-6 p-b-15 lbl-card" data-clicked="false">');
 			let smallCard = $('<div id = "smallCardC_' + pid + '" class="card card-mini dash-card card-1"style="cursor : pointer;height : 100%">');
@@ -98,7 +91,6 @@ function saveButtonClicked(title, discription) {
 		alert('값이 비었습니다.');
 		return;
 	}
-	console.log('saveButtonClicked');
 	// 포트폴리오 저장 로직
 	$.ajax({
 		url: 'portfolio/addPortfolio',
@@ -107,7 +99,6 @@ function saveButtonClicked(title, discription) {
 		dataType: 'json',
 		data: JSON.stringify({ 'title': title, 'discription': discription }),
 		success: (data) => {
-			console.log(data);
 			location.reload();
 		}
 	});
@@ -118,12 +109,10 @@ function saveButtonClicked(title, discription) {
 //---------------- start of display ---------------------------------------
 //smallCard 가 click 되면 해당 포트폴리오의 정보가 모두 다시 뿌려져야 한다.
 function smallCardClicked(id) {
-	console.log('실행');
 	var elements = $(".col-xl-3.col-sm-6.p-b-15.lbl-card");
 	// class Checker
 	let checker = new Checker(id, elements);
 	if (!checker.anyOfClickedBool()) {
-		console.log('101');
 		if (id == "addCard") {
 			addCardClicked();
 			$('#' + id).attr('data-clicked', 'true');
@@ -135,7 +124,6 @@ function smallCardClicked(id) {
 		}
 	}
 	if (checker.checkSelfClicked()) {
-		console.log('113');
 		if (id == "addCard") {
 			detatchAll();
 			$('#' + id).attr('data-clicked', 'false');
@@ -149,7 +137,6 @@ function smallCardClicked(id) {
 		!checker.checkSelfClicked() &&
 		checker.anyOfClickedBool()
 	) {
-		console.log('126');
 		//$('#portfolioRegWrapper').remove();
 		// detatchAll(); attatch(); if(addCard) => addCardClicked() else attatch()  attatch 의 경우 차트와 orderReport, 및 모두를 없애야됨.
 		// 만약 addCard 클릭시에는 이 if 문이 실행되었을 경우 다른애들이 detatchALl 을 실행하고 해야됨. addCard 말고 실행될시에도 다른애들 다 없애고 attatch().
@@ -172,9 +159,7 @@ function smallCardClicked(id) {
 // portfolioInfo 를 붙인다. 포폴정보, 보유주식, 거래내역, 랭킹등이 표시된다.
 function attatchPortfolioInfo(id) {
 	$.get('portfolio/getAllDataInfo/' + id, function(data) {
-		console.log(data);
 		if (data == null) {
-			console.log('setStock');
 		} else {
 			setPortfolioInfo(data);
 			setRanking();
@@ -182,7 +167,6 @@ function attatchPortfolioInfo(id) {
 			setTradeLog(data);
 			setMonthlyAssetChart(data.pid);
 			if (data.stockList.length == 0) {
-				console.log('asdf');
 				$('#donutChartBody').append($('<div style = "font-weight : bold; font-size : large;color:black;">' + '주식을 추가해주세요.' + '</div>'));
 				$('#myStockCardTable').append($('<div style = "border:none; font-weight : bold; font-size : large">' + '주식을 추가해주세요.' + '</div>'));
 				return;
@@ -194,7 +178,6 @@ function attatchPortfolioInfo(id) {
 
 // 포폴의 정보.
 async function setPortfolioInfo(data) {
-	console.log(data);
 	let sellMoney = 0;
 	if (data.sellMoney != null) {
 		sellMoney = data.sellMoney;

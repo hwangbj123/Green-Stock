@@ -77,18 +77,18 @@
 						</a></li>
 						<!-- Board -->
 						<li><a class="sidenav-item-link" href="/admin/board">
-								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">게시판 관리</span>
+								<i class="fa-solid fa-pen-to-square" style="margin-right:20px;"></i> <span class="nav-text">게시판 관리</span>
 						</a></li>
 						<!-- Chatting -->
 						<li><a class="sidenav-item-link" href="/admin/chat">
-								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">채팅 관리</span>
+								<i class="fa-solid fa-comments" style="margin-right:20px;"></i> <span class="nav-text">채팅 관리</span>
 						</a></li>	
 						<!-- Notice  -->
 						<li><a class="sidenav-item-link" href="/notice/admin/list">
-								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">공지사항 관리</span>
+								<i class="fa-solid fa-microphone-lines" style="margin-right:20px;"></i> <span class="nav-text">공지사항 관리</span>
 						</a></li>
 						<li><a class="sidenav-item-link" href="/admin/expert/1/page/1">
-								<i class="fas fa-user-edit" style="margin-right:20px;"></i> <span class="nav-text">전문가 신청 목록</span>
+								<i class="fa-solid fa-user-secret" style="margin-right:20px;"></i> <span class="nav-text">전문가 신청 목록</span>
 						</a></li>
 						<!-- Category -->
 						<li class="has-sub"><a class="sidenav-item-link"

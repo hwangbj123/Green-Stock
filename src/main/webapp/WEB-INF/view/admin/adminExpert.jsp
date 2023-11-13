@@ -31,8 +31,8 @@
 			<div>
 				<h2>전문가 신청 목록</h2>
 				<p class="breadcrumbs">
-					<span><a href="index.html">Main</a></span> <span><i
-						class="mdi mdi-chevron-right"></i></span>Expert
+					<span><a href="index.html">메인</a></span> <span><i
+						class="mdi mdi-chevron-right"></i></span>전문가
 				</p>
 			</div>
 		</div>
@@ -195,7 +195,7 @@
 							<div class="search-form d-lg-inline-block">
 								<div class="input-group" style="margin-top: 20px;">
 									<input type="text" name="search" id="c-search-input"
-										class="form-control" placeholder="search user" autofocus
+										class="form-control" placeholder="유저 검색" autofocus
 										autocomplete="off" style="border: 1px solid #ddd;" />
 									<button type="button" id="search-btnn" class="btn btn-flat"
 										style="border: 1px solid #ddd;">

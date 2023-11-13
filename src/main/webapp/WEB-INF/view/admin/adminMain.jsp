@@ -82,13 +82,13 @@
 									<table id="responsive-data-table" class="table centered-table">
 										<thead>
 											<tr>
-												<th style="width: 65px;">글 번호</th>
-												<th style="width: 75px;">카테고리</th>
-												<th style="min-width: 150px;">제목</th>
+												<th style="min-width: 65px;">글 번호</th>
+												<th style="min-width: 75px;">카테고리</th>
+												<th style="min-width: 100px;">제목</th>
 												<th>작성자</th>
-												<th>등록일</th>
-												<th style="width: 60px;">조회수</th>
-												<th style="width: 60px;">추천수</th>
+												<th style="min-width: 100px;">등록일</th>
+												<th style="min-width: 60px;">조회수</th>
+												<th style="min-width: 60px;">추천수</th>
 											</tr>
 										</thead>
 

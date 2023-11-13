@@ -2,7 +2,7 @@
 .board-content{
 	width: 100%;
 	min-width: 400px;
-	height: 800px;
+	min-height: 1000px;
 	margin: auto;
 }
 .detail-tb{
@@ -83,4 +83,7 @@
 #reply-btn {
 	width: 200px;
 	border-radius: 5px;
+}
+p {
+	white-space: pre;
 }

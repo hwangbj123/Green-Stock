@@ -91,9 +91,6 @@ public class BoardService {
 	        for (Cookie cookie : cookies) {
 	            if (cookie.getName().equals("postView")) {
 	                oldCookie = cookie;
-	                System.out.println("이미 본 게시글입니다");
-	                System.out.println("현재 쿠키 : "+oldCookie.getValue());
-	                System.out.println("현재 쿠키 : "+oldCookie.getMaxAge());
 	            }
 	        }
 	    }
@@ -104,7 +101,6 @@ public class BoardService {
 	            oldCookie.setPath("/");
 	            oldCookie.setMaxAge(60); // test - 1분으로 설정
 	            response.addCookie(oldCookie);
-	            System.out.println("Cookie 에 값 추가");
 	        }
 	    } else {
 	    	viewCountUp(boardId);
@@ -112,7 +108,6 @@ public class BoardService {
 	        newCookie.setPath("/");
 	        newCookie.setMaxAge(60); // test - 1분으로 설정
 	        response.addCookie(newCookie);
-	        System.out.println("새로운 Cookie 생성");
 	    }
 	}
 	public int countMyBoard(int userId) {

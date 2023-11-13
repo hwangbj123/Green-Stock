@@ -24,8 +24,6 @@ public class SiteViewCountService {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("siteView")) {
 					oldCookie = cookie;
-					System.out.println("현재 쿠키 : " + oldCookie.getValue());
-					System.out.println("현재 쿠키 : " + oldCookie.getMaxAge());
 					return; // 이미 "siteView" 쿠키가 존재하면 함수 종료
 				}
 			}
@@ -36,7 +34,6 @@ public class SiteViewCountService {
 		newCookie.setPath("/");
 		newCookie.setMaxAge(60); // test - 1분으로 설정
 		response.addCookie(newCookie);
-		System.out.println("새로운 view 쿠키 생성");
 	}
 	
 }
