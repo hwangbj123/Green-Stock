@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib
-prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -44,13 +43,10 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
 
-    <!-- Main Js -->
-    <script src="/resources/js/vendor/index.js"></script>
-    <script src="/resources/js/main.js"></script>
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
       .advisorDetail {
@@ -77,21 +73,24 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
         margin-right: 10px;
       }
       .advisorDetail .btn-subscribe {
-        background: #A6DA41;
+        background: #a6da41;
       }
       .advisorDetail .btn-advisor {
         width: 140px;
       }
-			@font-face {
-			  font-family: "Dovemayo";
-			  src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
-			  font-weight: normal;
-			}
-			   *:not(i), h5, h6, li{
-			  font-family: 'Dovemayo', sans-serif !important;
-			  font-weight: normal;
-			}
-		  </style>
+      @font-face {
+        font-family: 'Dovemayo';
+        src: url('/resources/fonts/Dovemayo_gothic.ttf') format('truetype');
+        font-weight: normal;
+      }
+      *:not(i),
+      h5,
+      h6,
+      li {
+        font-family: 'Dovemayo', sans-serif !important;
+        font-weight: normal;
+      }
+    </style>
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
@@ -156,15 +155,13 @@ prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
       </div>
     </div>
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
-    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"
-      ><i class="ecicon eci-arrow-up" aria-hidden="true"></i
-    ></a>
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
   </body>
   <script src="/resources/js/custom/advisorDetail.js"></script>
   <script>
     $('#summernote').summernote({
       tabsize: 1,
-      height: 100
+      height: 100,
     });
-    </script>
+  </script>
 </html>

@@ -77,8 +77,12 @@
             	</tr>            	
             	<tr>
             		<td>
+            		작성란:
             		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>
+            		
+            		<input type ="file" name="files" value="파일 업로드">
             		</td>            		            	
+            		
             	</tr>  
             	<tr>
             	<td>		            	

@@ -63,9 +63,11 @@
 			<div>
 				<h1>Notice List</h1>
 				<p class="breadcrumbs">
-					<span><a href="/admin/main">Main</a></span>
-					<i class="mdi mdi-chevron-right"></i>Notice 
-					</p>
+					<span>
+					<a href="/admin/main">Main</a>
+					</span>
+					<i class="mdi mdi-chevron-right">Notice</i>
+				</p>
 			</div>
 		</div>
 				<!-- 검색페이지 시작 -->
@@ -74,14 +76,13 @@
 						<form action="/notice/admin/list" method="get">		
 						<div class="font-size">
 							<p class="breadcrumbs"></p>
-								<i class="mdi mdi-chevron-right"></i></div>																							
+								</div>																							
 							<h2 style="width: 100%; text-align: center;">공지사항</h2>
 							<!--  검색 영역 시작 -->
 							<div class="search-container" style="text-align: center; margin: 0 auto;	height: 100px;	width: 600px; 	display: flex; justify-content: center;	align-items: center;">																																																	
 							    <select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
 							    	<option value="" disabled="" selected="">선택</option>
-							    	<option value="searchTitle">제목</option>
-							    	<option value="writer">작성자</option>
+							    	<option value="searchTitle">제목</option>							    	
 								</select>							    												
 							    <input type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100"   style="margin-right: 10px;">							  
 							    <button type="submit" class="btn btn-success" style=" text-align: center;	 width: 100px;  height: 42px;">검색</button>							 						
@@ -134,18 +135,14 @@
 													aria-controls="responsive-data-table" rowspan="1"
 													colspan="1"
 													aria-label="Purchased: activate to sort column ascending"style="text-align: center;">작성일</th>
-												<th class="noticeCount" tabindex="0"
-													aria-controls="responsive-data-table" rowspan="1"
-													colspan="1"
-													aria-label="Stock: activate to sort column ascending"
-													style="width: 100px; text-align: center;">조회수</th>
+												<th class="sorting" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Stock: activate to sort column ascending" style="text-align: center;width: 100px;">조회수</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${noticeList}" var="notice">
+											<c:forEach items="${noticeList}" var="notice" varStatus = "status">
 												<tr class="Noticeboard-list">
 													<!-- <img class="tbl-thumb"></td> -->
-													<td style ="text-align: center; width: 10%">${notice.id}</td>
+													<td style="width: 10%; text-align: center;">${total - status.index - (pagination.currentPage -1) * 10 }</td>
 													<td style="text-align: center; width: 40%; white-space: nowrap; overflow: hidden;">
 													  <a href="/notice/admin/view/${notice.id}" style="color: #000000; display: inline-block; max-width: 100%;">${notice.noticeTitle}</a>
 													</td>
@@ -171,15 +168,17 @@
 												</tr>
 											</c:forEach>
 										</tbody>
-									</table>																	
+									</table>																							
+									
 									<div class="write" style="text-align: right">	
 										<a href="/notice/admin/write" class="btn btn-primary"
 											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																																																																																																
+												
 												<!-- 페이징 영역 -->										
 											<div class="ec-pro-pagination" style="display: flex; text-align: center;">
 					                            <span>Showing ${pagination.start}-${pagination.end} 전채 ${pagination.totalCount} 개</span>
 					                                	<a class="next" href="/notice/admin/list?page=${pagination.currentPage -1}"><i class="ecicon eci-angle-left"></i></a>
-					                            <ul class="ec-pro-pagination-inner">
+					                            <ul class="ec-pro-pagination-inner" style="display: flex; text-align: center;">
 					                                <c:if test="${pagination.prevPageGroup}">
 					                                	<li>
 					                                	</li>

@@ -43,9 +43,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
 
-    <!-- Main Js -->
-    <script src="/resources/js/vendor/index.js"></script>
-    <script src="/resources/js/main.js"></script>
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/stock/searchList.css" />
@@ -73,14 +70,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         font-family: 'Dovemayo', sans-serif !important;
         font-weight: normal;
       }
-      .btn{
+      .btn {
         border-radius: 5px;
         box-shadow: 2px 2px 6px 0px gray;
         height: 40px;
         line-height: 40px;
       }
-      .footer-bottom{
-
+      .footer-bottom {
       }
     </style>
   </head>
@@ -91,7 +87,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       <div class="content">
         <div class="breadcrumb-wrapper">
           <div class="d-flex justify-content-between mb-2">
-            <h4>${page.content[0].advisorNickname} 상담게시판</h4><button class="btn btn-primary">작성하기</button>
+            <h4>${page.content[0].advisorNickname} 상담게시판</h4>
+            <button class="btn btn-primary">작성하기</button>
           </div>
         </div>
         <div class="row">
@@ -157,5 +154,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     </div>
     <!-- End Content Wrapper -->
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <!-- Main Js -->
   </body>
 </html>

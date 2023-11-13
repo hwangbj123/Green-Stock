@@ -15,7 +15,6 @@ import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
 import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
-import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.User;
 
@@ -47,7 +46,7 @@ public class AdvisorInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         String[] parts = requestUri.split("/");
         // for (String e : parts) {
-        //     log.info(e);
+        // log.info(e);
         // }
 
         if (parts.length > 4) {
@@ -57,8 +56,8 @@ public class AdvisorInterceptor implements HandlerInterceptor {
         log.info("nick {}", advisorNickName);
 
         // if (advisorNickName == null) {
-        //     response.sendRedirect("/advisor/list");
-        //     return false;
+        // response.sendRedirect("/advisor/list");
+        // return false;
         // }
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(advisorNickName);

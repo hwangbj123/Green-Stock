@@ -45,9 +45,6 @@
 	    <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
 	    <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
 	
-	    <!-- Main Js -->
-	    <script src="/resources/js/vendor/index.js"></script>
-	    <script src="/resources/js/main.js"></script>
 	    <!-- kjh -->
 	    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 		

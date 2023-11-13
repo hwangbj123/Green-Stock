@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.green.greenstock.repository.model.Noticeboard;
 
@@ -42,7 +43,7 @@ public interface BoardNoticeRepository {
 	public int deleteNotice(int id);
 
 	/**
-	 * 공지사항상세보기 
+	 * 공지사항 상세보기 
 	 * @param id
 	 * @return
 	 */ 
@@ -56,27 +57,24 @@ public interface BoardNoticeRepository {
 	public int noticeHitCount(int id);
 	
 	/**
-	 * 공개 비공개 처리
+	 * 공개 비공개 글 처리
 	 * 
 	 */
 	public int noticeState(int id);
 	
-	
 	/**
-	 * 공개, 비공개
+	 * 공개, 비공개글 나누기 (어드민과 일반 사용자)
 	 * @param id
 	 * @return
 	 */
-	public int listCount( );
-	
-	
-	
-
-
+	public int listCount(@Param("noticeState") String noticeState, @Param("noticeTitle") String noticeTitle);
 	
 	/**
-	 * 카테고리 기능
+	 * 파일 올리기 
+	 * 
 	 */
+	
+	
 		
 	
 }

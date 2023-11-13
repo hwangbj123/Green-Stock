@@ -62,4 +62,10 @@
 		advisor_id = #{advisorId}
 	</select>
 
+	<!-- selectAdvisorList --> 
+
+	<!-- <select id="selectAdvisorList">
+
+	</select> -->
+	
 </mapper>

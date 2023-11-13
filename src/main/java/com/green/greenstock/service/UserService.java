@@ -120,8 +120,8 @@ public class UserService {
 
 	public List<Integer> countSubUser(int currentMonth) {
 		List<Integer> countSubUserList = new ArrayList<>();
+		int j=5;
 		for(int i=0; i<6; i++) {
-			int j=6;
 			int count = userRepository.countSubUser(currentMonth-j);
 			countSubUserList.add(count);
 			j--;

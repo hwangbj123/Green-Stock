@@ -7,7 +7,20 @@ function infoClicked(data) {
 	$('#modal-username').html(data.advisorFullName);
 	$('#modal-career').html(data.career);
 	$('#modal-introduction').html(data.introduction);
-	$('#modal-speciality').html(data.specialization);
+	console.log(data.specialization);
+	let specialization = '';
+	switch (data.specialization) {
+		case '1':
+			specialization = '국내주식';
+			break;
+		case '2':
+			specialization = '해외주식';
+			break;
+		case '3':
+			specialization = '선물';
+			break;
+	}
+	$('#modal-speciality').html(specialization);
 	$('#modal-email').html(data.email);
 	$('#modal-phone').html(data.tel);
 	$('#modal-image').attr('src', '/upload/' + data.imgName);

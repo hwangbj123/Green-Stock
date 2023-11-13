@@ -26,7 +26,7 @@
 		select *
 		from myPortfolio
 		where visible = true
-		order by ror desc limit 5
+		order by ror desc limit 10
 	</select>
 	
 	<select id="findAllPortfolio"
