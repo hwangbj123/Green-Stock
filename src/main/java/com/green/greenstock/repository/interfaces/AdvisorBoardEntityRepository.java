@@ -1,5 +1,7 @@
 package com.green.greenstock.repository.interfaces;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +16,6 @@ public interface AdvisorBoardEntityRepository extends JpaRepository<AdvisorBoard
     Page<AdvisorBoardEntity> findByAdvisorEntityAndParent(AdvisorEntity advisorEntity, int parent, Pageable pageable);
 
     Page<AdvisorBoardEntity> findByParent(int parent, Pageable pageable);
+
+    List<AdvisorBoardEntity> findByParent(int parent);
 }

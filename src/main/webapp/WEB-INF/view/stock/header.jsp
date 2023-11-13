@@ -125,7 +125,7 @@
   </div>
   <!-- Ec Main Menu End -->
 </header>
-<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: none">
+<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
   <div class="container">
     <div class="row">
       <div class="col-12">

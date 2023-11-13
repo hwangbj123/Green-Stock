@@ -482,7 +482,7 @@ public class UserController {
 	public String deleteUser(Integer id) {
 		session.invalidate();
 		userService.deleteUser(id);
-		return "redirect:/user/signIn";
+		return "redirect:/user/sign-in";
 	}
 	
 	@GetMapping("/payment")

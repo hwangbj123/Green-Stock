@@ -54,17 +54,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="/resources/js/plugins/infiniteslidev2.js"></script>
     <script src="/resources/js/vendor/jquery.magnific-popup.min.js"></script>
     <script src="/resources/js/plugins/jquery.sticky-sidebar.js"></script>
-
-    <!-- Main Js -->
-    <script src="/resources/js/vendor/index.js"></script>
-    <script src="/resources/js/main.js"></script>
     
     <!-- Summernote -->
 	 <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 	 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 	 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
-
-    <style>
+	 
+	<style>
       @font-face {
         font-family: 'Dovemayo';
         src: url('/resources/fonts/Dovemayo_gothic.ttf') format('truetype');
@@ -205,7 +201,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
             <!-- Ec Header Logo Start -->
             <div class="col">
               <div class="header-logo">
-                <a href="index.html"><img src="/resources/img/G_logo.jpg" alt="Site Logo" /></a>
+                <a href="/main"><img src="/resources/img/G_logo.jpg" alt="Site Logo" /></a>
               </div>
             </div>
             <!-- Ec Header Logo End -->
@@ -213,7 +209,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
             <div class="col d-flex justify-content-center align-items-center">
               <div class="header-search">
                 <form class="ec-btn-group-form" action="#">
-                  <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                  <input class="form-control ec-search-bar" placeholder="종목명을 입력해주세요" type="text" />
                   <button class="submit" type="submit">
                     <i class="fi-rr-search"></i>
                   </button>

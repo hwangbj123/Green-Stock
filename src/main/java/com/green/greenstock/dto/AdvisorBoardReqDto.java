@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdvisorBoardReqDto {
 
+    private int advisorBoardId;
     private String title;
     private String content;
     private int parent;
@@ -23,6 +24,8 @@ public class AdvisorBoardReqDto {
 
         return AdvisorBoardEntity
                 .builder()
+                .advisorBoardId(advisorBoardReqDto.getAdvisorBoardId())
+                .title(advisorBoardReqDto.getTitle())
                 .content(advisorBoardReqDto.getContent())
                 .parent(advisorBoardReqDto.getParent())
                 .build();
