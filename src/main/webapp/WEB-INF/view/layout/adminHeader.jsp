@@ -119,9 +119,9 @@
 			<header class="ec-main-header" id="header">
 				<nav class="navbar navbar-static-top navbar-expand-lg">
 					<!-- Sidebar toggle button -->
-					<button id="sidebar-toggler" class="sidebar-toggle"></button>
+					<button id="sidebar-toggler" class="sidebar-toggle" style="display : none"></button>
 					<!-- search form -->
-					<div class="search-form d-lg-inline-block">
+					<div style="margin-left : 2%" class="search-form d-lg-inline-block">
 						<div class="input-group">
 							<input type="text" name="query" id="search-input"
 								class="form-control" placeholder="search.." autofocus

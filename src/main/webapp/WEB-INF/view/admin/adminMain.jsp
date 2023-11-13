@@ -51,10 +51,10 @@
 			<div class="col-xl-4 col-md-12 p-b-15">
 				<!-- Doughnut Chart -->
 				<div class="card card-default">
-					<div class="card-header justify-content-center">
-						<h2 style="font-weight: bold">일일 방문자수</h2>
+					<div class="card-header flex-column align-items-start"">
+						<h2>일일 방문자수</h2>
 					</div>
-					<div class="card-body">
+					<div class="card-body"style="height:483px">
 						<canvas id="dailyView"></canvas>
 					</div>
 					<div class="card-footer d-flex flex-wrap bg-white p-0"></div>
@@ -130,7 +130,7 @@
 						<input type="hidden" id="months" value="${months}"> <input
 							type="hidden" id="countSubUserList" value="${countSubUserList}">
 					</div>
-					<div class="card-body">
+					<div class="card-body" style="height:521px">
 						<canvas id="cSubscribe" class="chartjs"></canvas>
 					</div>
 				</div>
