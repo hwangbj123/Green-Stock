@@ -204,6 +204,8 @@
 .ad-wrapper img{
 	width: 100%;
 	height: 350px;
+	object-fit: cover;
+	object-position: center;
 }
 .chat-category {
 	width: 50%;
@@ -226,10 +228,9 @@
 	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
 				<img src="/resources/img/banner/banner-img1.png">	
-				<img src="https://picsum.photos/id/30/1500/300">	
-				<img src="https://picsum.photos/id/50/1500/300">	
-				<img src="https://picsum.photos/id/70/1500/300">	
-				<img src="https://picsum.photos/id/90/1500/300">	
+				<img src="/resources/img/banner/banner-img2.png">	
+				<img src="/resources/img/banner/banner-img3.png">	
+				<img src="/resources/img/banner/banner-img4.png">	
 		</div>
 	</div>
 
@@ -328,7 +329,7 @@
 							<td style="text-align: left;"><a
 								href="/board/detail?boardId=${board.id}"> ${board.title} <c:if
 										test="${board.reply ne 0}">
-										<span style="color: #bbb;">[${board.reply}]</span>
+										<span style="color: #aaa">[${board.reply}]</span>
 									</c:if>
 							</a></td>
 							<td>${board.userName}</td>
