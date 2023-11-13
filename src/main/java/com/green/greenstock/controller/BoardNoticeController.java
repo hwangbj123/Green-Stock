@@ -35,8 +35,8 @@ public class BoardNoticeController {
 	
 	/**
 	 * 
-	 * @param 어드민 상태 일때 보이는 공지사항 목록
-	 * @param 페이징 기능 추가 ,공개 비공개 추가 
+	 * 어드민 상태 일때 보이는 공지사항 목록(페이징 기능 추가 ,공개 비공개 추가 )
+	 * @param list 
 	 * @return adminNoticeList
 	 */
 	//공지사랑 목록 (어드민)	
@@ -44,7 +44,6 @@ public class BoardNoticeController {
 	public String adminListNotice(Model model, @RequestParam (defaultValue = "1") int page, String noticeState,
 		String noticeTitle){
 
-		
 		//공지사항 글 갯수를 불러오는 부분 	
 		int total =  boardNoticeService.noticeListCount(null, noticeTitle);
 		System.out.println(total);
@@ -69,8 +68,8 @@ public class BoardNoticeController {
 
 	/**
 	 * 
-	 * @param 일반 사용자한태 보여지는 공지사항 목록 
-	 * @param 페이징 기능 추가 
+	 * 일반 사용자한태 보여지는 공지사항 목록 페이징 기능 추가 
+	 * @param list
 	 * @return noticeList
 	 */
 	//공지사항 목록 리스트(일반)
@@ -85,7 +84,8 @@ public class BoardNoticeController {
 		 model.addAttribute("page", page);
 		 model.addAttribute("total", total);
 		 model.addAttribute("pagination",paginaion);
-		 model.addAttribute("noticeTitle", noticeTitle);		 
+		 model.addAttribute("noticeTitle", noticeTitle);	
+		 model.addAttribute("message", "검색결과가 없습니다");
 		 if(listNotice.isEmpty()) {
 			 model.addAttribute("noticeList", null);
 		 }else {
@@ -110,7 +110,7 @@ public class BoardNoticeController {
 		
 	/**
 	 *   
-	 * @param 수정할때 페이지로 보내주는 주소(어드민 상태일때만)
+	 * 수정할때 페이지로 보내주는 주소(어드민 상태일때만)
 	 * @param id
 	 * @return adminNoticeUpdate
 	 */
@@ -136,7 +136,7 @@ public class BoardNoticeController {
 	/**
 	 * 
 	 * @param 공지사항 삭제 기능(어드민 상태만 가능)
-	 * @return
+	 * @return adminlist
 	 */
 	//공지사항 삭제(어드민)
 	@GetMapping("/admin/delete/{id}")
@@ -157,7 +157,7 @@ public class BoardNoticeController {
 	
 	/**
 	 * 
-	 * @param 공지사항 상세보기(일반 페이지)
+	 * 공지사항 상세보기(일반 페이지)
 	 * @param 조회수 추가 
 	 * @param id
 	 * @return notice/noticeView

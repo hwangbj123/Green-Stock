@@ -61,6 +61,7 @@
 				<p class="breadcrumbs">
 					<span><a href="/admin/main">Main</a></span> <span><i
 						class="mdi mdi-chevron-right"></i></span>Notice 
+						<i class="mdi mdi-chevron-right"></i><span>Update</span>
 				</p>
 			</div>
 		</div>
@@ -83,7 +84,8 @@
                 	<input type="hidden" value="${notice.id}" name="id">
                 	<input type="hidden" value="${notice.userId}" name="userId" style="font-size: 23px">                	
                 		<p style="font-size: 23px">제목 :</p>
-                	<input type="text" value="${notice.noticeTitle}" name="noticeTitle" required style="font-size: 23px">                                       
+                	<textarea name="noticeTitle" required style="font-size: 23px; width: 100%; height: 100px; resize: none; bac border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0; border-left: none; border-right:none;">${notice.noticeTitle}</textarea>                	
+                	                	                           
                 </td> 
             </tr>            
             <tr>            	               
