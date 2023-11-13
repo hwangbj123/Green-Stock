@@ -26,8 +26,29 @@
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
+		<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-12">
+		        <div class="row ec_breadcrumb_inner">
+		          <div class="col-md-6 col-sm-12">
+		            <h2 class="ec-breadcrumb-title">회원가입</h2>
+		          </div>
+		          <div class="col-md-6 col-sm-12">
+		            <!-- ec-breadcrumb-list start -->
+		            <ul class="ec-breadcrumb-list">
+		              <li class="ec-breadcrumb-item"><a href="index.html">회원</a></li>
+		              <li class="ec-breadcrumb-item active">회원가입</li>
+		            </ul>
+		            <!-- ec-breadcrumb-list end -->
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<!-- start of main  -->
-		<div class="container d-flex align-items-center justify-content-center form-height pt-24px pb-24px">
+		<div class="container d-flex align-items-center justify-content-center form-height pt-24px pb-24px" style="height: 100vh">
 		    <div class="row justify-content-center">
 		      <div class="col-lg-4 col-md-10">
 		        <div class="card">

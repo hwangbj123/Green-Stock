@@ -50,5 +50,8 @@
 			</div>
 		</div>
 	</div>
+    <!-- Main Js -->
+    <script src="/resources/js/vendor/index.js"></script>
+    <script src="/resources/js/main.js"></script>
 </body>
 </html>

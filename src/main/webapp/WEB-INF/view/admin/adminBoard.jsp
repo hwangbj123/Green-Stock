@@ -27,9 +27,11 @@
 
 .board-tb{
 	width: 100%;
-	min-height: 500px;
 	text-align: center;
 	margin: 20px auto;
+}
+.board-tb td{
+	height: 50px;
 }
 .board-tb tr:first-child{
 	background-color: #f7f7f7; 

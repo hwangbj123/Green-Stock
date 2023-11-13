@@ -88,7 +88,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         <div class="breadcrumb-wrapper">
           <div class="d-flex justify-content-between mb-2">
             <h4>${page.content[0].advisorNickname} 상담게시판</h4>
-            <button class="btn btn-primary">작성하기</button>
+            <a href="/advisor/sub/board/${page.content[0].advisorNickname}/write" class="btn btn-primary">작성하기</a>
           </div>
         </div>
         <div class="row">

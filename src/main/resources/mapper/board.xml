@@ -122,37 +122,14 @@
 				 	where deleted != 1
 					group by board_id) r
 		on b.id = r.board_id
-		<where>
-		<if test='categoryId!="0"'>
-		category_id = #{categoryId}
-		 </if>
-		 <if test='categoryId!="0" and searchWord!=null'>
-		 	and
-		 </if>
-		 <if test='searchType!=null'>
-		 	<if test='searchType == "title"'>
-		 		title
-		 	</if>
-		 	<if test='searchType == "content"'>
-		 		content
-		 	</if>
-		 	<if test='searchType == "userName"'>
-		 		user_name 
-		 	</if>
-			 like concat('%',#{searchWord},'%')
-		 </if>
-		</where>
- 		order by 
-		<if test='orderType == "views"'>
-			views desc,
+		<if test="searchWord != null">
+			where user_name = #{searchWord}
 		</if>
-		<if test='orderType == "recommand"'>
-			recommand desc,
-		</if>
-		<if test='orderType == "reply"'>
-			reply desc,
-		</if>
-		 	id desc
+		order by
+		<if test="orderType != null">
+		recommand desc,
+		</if> 
+		b.id desc
 		limit #{offset}, #{recordSize}
 	</select>
 	

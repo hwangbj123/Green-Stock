@@ -19,7 +19,7 @@
 		<style>
 			.board-tb{
 				width: 90%;
-				border: 1px solid #777;
+				border: 1px solid #eee;
 				margin: 30px auto;
 				text-align: center;
 			}
@@ -68,10 +68,11 @@
 					<table class="board-tb">
 						<thead>
 							<tr>
-								<td colspan="2" style="min-width: 100px;">제목</td>
-								<td style="width: 50px;">등록일</td>
-								<td style="width: 40px;">조회수</td>
-								<td style="width: 40px;">추천수</td>
+								<td style="width: 60px;">글번호</td>
+								<td colspan="2" style="min-width: 80px;">제목</td>
+								<td style="width: 60px;">등록일</td>
+								<td style="width: 60px;">조회수</td>
+								<td style="width: 60px;">추천수</td>
 							</tr>
 						</thead>
 	
@@ -85,7 +86,8 @@
 										<tr>
 									</c:otherwise>
 								</c:choose>
-								<td style="width: 70px; text-align: right;"><c:forEach
+								<td>${board.id}</td>
+								<td style="width: 50px;"><c:forEach
 										var="c" items="${cate}" varStatus="status">
 										<c:choose>
 											<c:when

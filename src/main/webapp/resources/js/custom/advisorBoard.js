@@ -2,11 +2,24 @@ const advisorBoard = {
     version: 1,
     advisorNickname: null,
     init: function () {
+        // 변수 값
         this.advisorNickname = document.querySelector('input[name=advisorNickname]').value;
+        // 페이지 버튼 이벤트
         this.addPageButtonClickListeners();
+        // 댓글 버튼 이벤트
         const btnReply = document.getElementById('btnReply');
         btnReply.addEventListener('click', this.saveReply.bind(this));
+        // 삭제 버튼 이벤트
         this.addDeleteButtonClickListners();
+        // 목록 버튼 이벤트
+        const btnAdvisorBoardList = document.getElementById('btnAdvisorBoardList');
+        btnAdvisorBoardList.addEventListener('click', this.backToList.bind(this));
+        // 수정 버튼 이벤트
+        const btnAdvisorBoardUpdate = document.getElementById('btnAdvisorBoardUpdate');
+        btnAdvisorBoardUpdate.addEventListener('click', this.updateAdcisorBoardEvent.bind(this));
+        // 삭제 버튼 이벤트
+        const btnAdvisorBoardDelete = document.getElementById('btnAdvisorBoardDelete');
+        btnAdvisorBoardDelete.addEventListener('click', this.deleteAdvisorBoardEvent.bind(this));
     },
 
     addPageButtonClickListeners: function () {
@@ -148,6 +161,7 @@ const advisorBoard = {
 
         const result = confirm('댓글을 삭제하시겠습니까?');
         const advisorBoardId = event.currentTarget.id;
+        const parent = document.querySelector('input[name=parent]').value;
         if (result) {
             fetch(`/advisor/sub/board/${this.advisorNickname}/${advisorBoardId}`, {
                 method: 'DELETE',
@@ -156,14 +170,36 @@ const advisorBoard = {
                 .then(data => {
                     if (data.result > 0) {
                         alert('삭제 되었습니다.');
-                        // TODO 삭제 후 처리 댓글 다시 불러오기
-                        // const pageUrl = `/advisor/sub/board/${this.advisorNickname}/reply/${advisorBoardId}/${totalPages}`;
-                        // this.fetchRepliesAndRender(pageUrl);
+                        location.href = `/advisor/sub/board/${this.advisorNickname}/${parent}`;
                     }
                 })
                 .catch(error => console.log(error));
         }
     },
+
+    // 목록으로 돌아가기
+    backToList: function(event){
+        location.href = `/advisor/sub/board/${this.advisorNickname}`;
+    },
+
+    // 게시글 수정 페이지 이동
+    updateAdcisorBoardEvent: function(event){
+        const advisorBoardId = event.currentTarget.dataset.advisorboardid;
+        const advisorNickName = event.currentTarget.dataset.advisorboardnickname;
+        location.href = `/advisor/sub/board/${advisorNickName}/update/${advisorBoardId}`
+    },
+
+    // 게시글 삭제
+    deleteAdvisorBoardEvent: function(event){
+        const result = confirm('작성한 글을 삭제하시겠습니까?');
+        if(!result){
+            return;
+        }
+        const advisorBoardId = event.currentTarget.dataset.advisorboardid;
+        const advisorNickName = event.currentTarget.dataset.advisorboardnickname;
+        location.href = `/advisor/sub/board/${advisorNickName}/delete/${advisorBoardId}`
+    }
+
 
 
 };
