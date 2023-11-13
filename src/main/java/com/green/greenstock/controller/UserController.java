@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.greenstock.dto.GoogleProfile;
 import com.green.greenstock.dto.KakaoProfile;
 import com.green.greenstock.dto.NaverResponse;
+import com.green.greenstock.dto.Pagination;
+import com.green.greenstock.dto.PagingDto;
+import com.green.greenstock.dto.ReplyPagination;
+import com.green.greenstock.dto.ReplyPagingDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.UnAuthorizedException;
+import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.Pay;
 import com.green.greenstock.repository.model.PaySubscribe;
+import com.green.greenstock.repository.model.Reply;
 import com.green.greenstock.repository.model.User;
+import com.green.greenstock.service.BoardService;
 import com.green.greenstock.service.MailSendService;
+import com.green.greenstock.service.ReplyService;
 import com.green.greenstock.service.SocialLoginService;
 import com.green.greenstock.service.UserService;
 
@@ -51,6 +60,9 @@ public class UserController {
 	
 	private final SocialLoginService socialLoginServiceImpl;
 	
+	private final ReplyService replyService;
+	
+	private final BoardService boardService;
 	@Autowired
 	HttpSession session;
 
@@ -470,7 +482,7 @@ public class UserController {
 	public String deleteUser(Integer id) {
 		session.invalidate();
 		userService.deleteUser(id);
-		return "redirect:/user/signIn";
+		return "redirect:/user/sign-in";
 	}
 	
 	@GetMapping("/payment")
@@ -484,5 +496,57 @@ public class UserController {
 		model.addAttribute("payList", payList);
 		model.addAttribute("totalAmount", totalAmount);
 		return "user/payment";
+	}
+	
+	@GetMapping("/my-info")
+	public String myInfo(Model model, HttpServletRequest request) {
+		User user = (User)session.getAttribute("principal");
+		
+		// reply 가져오기
+		int replySize = replyService.countMyReply(user.getId());
+		model.addAttribute("replySize", replySize);
+		
+		// board 가져오기
+		int boardSize = boardService.countMyBoard(user.getId());
+		model.addAttribute("boardSize", boardSize);
+		
+		return "user/myInfo";
+	}
+	@GetMapping("/my-reply")
+	public String myReply(ReplyPagingDto replyPaging, Model model, HttpServletRequest request) {
+		User user = (User)session.getAttribute("principal");
+		
+		// reply 가져오기
+		replyPaging.setUserId(user.getId());
+		List<Reply> reply = replyService.selectMyReply(replyPaging);
+		int total = replyService.countMyReply(user.getId());
+		ReplyPagination pagination = new ReplyPagination(total, replyPaging);
+		
+		model.addAttribute("reply", reply);
+		model.addAttribute("paging", replyPaging);
+		model.addAttribute("page", pagination);
+		model.addAttribute("paging", replyPaging);
+		
+		return "user/myReply";
+	}
+	@GetMapping("/my-board")
+	public String myBoard(PagingDto paging, Model model, HttpServletRequest request) {
+		User user = (User)session.getAttribute("principal");
+
+		// board 가져오기
+		paging.setSearchType("userName");
+		paging.setSearchWord(user.getUserName());
+		
+		List<Board> boardList = boardService.selectBoardSearchList(paging);
+		List<String> cate = boardService.findCategoryList();
+		int total = boardService.countMyBoard(user.getId());
+		Pagination pagination = new Pagination(total, paging);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("cate", cate);
+		model.addAttribute("page", pagination);
+		model.addAttribute("paging", paging);
+		
+		return "user/myBoard";
 	}
 }

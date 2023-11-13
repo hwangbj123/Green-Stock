@@ -148,7 +148,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
           <div class="col-1">
             <div class="ec-tools-sidebar divWebSocket">
               <div class="ec-fullscreen-mode">
-                <div class="ec-fullscreen-switch">
+                <div class="ec-fullscreen-switch2">
                   <div class="ec-fullscreen-btn">실시간</div>
                   <div class="ec-fullscreen-on btnGetWebSocketData">On</div>
                   <div class="ec-fullscreen-off btnGetWebSocketData">Off</div>
@@ -460,7 +460,5 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
   <script src="/resources/js/custom/stockChart.js"></script>
   <script src="/resources/js/custom/stockWebsocket.js"></script>
   <script src="/resources/js/custom/stockTab.js"></script>
-<!--   <script src="/js/stock/chatting.js"></script> -->
-
   <script src="/resources/js/custom/subscribe.js"></script>
 </html>

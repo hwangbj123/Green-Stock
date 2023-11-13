@@ -28,6 +28,7 @@
 		advisor a join user_tb u on a.user_id = u.id
 		join image i on a.img_id = i.img_id
 		where a.status = #{status}
+		order by a.created_at desc;
 	</select>
 	
 	<select id="findAllInfoStatusAsc" resultType="com.green.greenstock.dto.AdminExpertDTO">
@@ -62,10 +63,10 @@
 		advisor_id = #{advisorId}
 	</select>
 
-	<!-- selectAdvisorList --> 
-
-	<!-- <select id="selectAdvisorList">
-
-	</select> -->
+	<select id="findCountByAdvisorNickname" resultType="int">
+		select count(*) from advisor
+		where advisor_nick_name = #{nickname}
+	</select>
 	
 </mapper>
+

@@ -57,8 +57,6 @@ public class BoardNoticeService {
 			noticeboard.setNoticeTitle(noticeupdateDto.getNoticeTitle());
 			noticeboard.setNoticeContent(noticeupdateDto.getNoticeContent());
 			noticeboard.setNoticeState(noticeupdateDto.getNoticeState());
-			System.out.println(noticeupdateDto);
-			System.out.println(noticeboard);
 			int result = noticeRepository.updateNotice(noticeboard);	
 			return result;
 	}	

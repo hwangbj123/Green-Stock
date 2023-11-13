@@ -66,15 +66,25 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       resize: none;
       border: 1px solid #e7e7e7;
     }
+    .advisorBoard #textareaReply{
+      height: 120px;
+    }
     .advisorBoard .hiddenPageArrow {
       visibility: hidden;
     }
-    .advisorBoard .btn-warning {
+    .advisorBoard .btn {
       border-radius: 5px;
+      box-shadow: 1px 2px 1px 0px gray;
+    }
+    .advisorBoard .btn-warning {
       height: 30px;
       line-height: 30px;
       width: 60px;
       box-shadow: 1px 2px 1px 0px gray;
+    }
+    .advisorBoard #btnAdvisorBoardDelete{
+      height: inherit;
+      line-height: inherit;
     }
   </style>
   <body>
@@ -94,34 +104,17 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
             <div class="ec-blogs-content">
               <div class="ec-blogs-inner">
                 <div class="ec-blog-main-img text-center">
-                  <img class="blog-image" src="/upload/${advisorBoard.image}" alt="Blog" />
+                  <img class="blog-image" src="/upload/${advisorBoard.image}" alt="Blog" style="width: 400px;"/>
                 </div>
-                <div class="ec-blog-date">
+                <div class="ec-blog-date d-flex">
+                  <p class="date me-auto">작성자 - ${advisorBoard.userName}</p>
                   <p class="date">${advisorBoard.createdAt.substring(0,10)} ${advisorBoard.createdAt.substring(11)} -</p>
                   <a href="javascript:void(0)">댓글 ${replyTotal}</a>
                 </div>
                 <div class="ec-blog-detail">
                   <h3 class="ec-blog-title">${advisorBoard.title}</h3>
                   <textarea name="" id="" cols="30" rows="10" readonly>${advisorBoard.content}</textarea>
-                  <!-- <div class="ec-blog-sub-imgs">
-								<div class="row">
-									<div class="col-md-6">
-										<img class="blog-image" src="assets/images/blog-image/2.jpg" alt="Blog">
-									</div>
-									<div class="col-md-6">
-										<img class="blog-image" src="assets/images/blog-image/3.jpg" alt="Blog">
-									</div>
-								</div>
-							</div> -->
                 </div>
-                <!-- <div class="ec-blog-tags">
-							<a href="blog-left-sidebar.html">lifestyle ,</a>
-							<a href="blog-left-sidebar.html">Outdoor ,</a>
-							<a href="blog-left-sidebar.html">interior ,</a>
-							<a href="blog-left-sidebar.html">sports ,</a>
-							<a href="blog-left-sidebar.html">bloging ,</a>
-							<a href="blog-left-sidebar.html">inspiration</a>
-						</div> -->
                 <div class="ec-blog-arrows">
                   <a
                     href="/advisor/sub/board/${advisorBoard.advisorNickname}/${advisorBoard.prevBoard.advisorBoardId}"
@@ -135,7 +128,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                   ></a>
                 </div>
                 <div class="ec-blog-comments">
-                  <div class="ec-blog-cmt-preview">
+                  <div class="ec-blog-cmt-preview mb-5">
                     <c:choose>
                       <c:when test="${replyTotal > 0}">
                         <div class="ec-blog-comment-wrapper mt-55">
@@ -196,6 +189,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                       </div>
                     </c:if>
                   </div>
+                  <div class="d-flex justify-content-end">
+                    <c:if test="${advisorBoard.userId eq principal.id}">
+                      <button id="btnAdvisorBoardUpdate" data-advisorboardid="${advisorBoard.advisorBoardId}" data-advisorboardnickname="${advisorBoard.advisorNickname}" type="button" class="btn btn-lg btn-info me-3">수 정</button>
+                      <button id="btnAdvisorBoardDelete" data-advisorboardid="${advisorBoard.advisorBoardId}" data-advisorboardnickname="${advisorBoard.advisorNickname}" type="button" class="btn btn-lg btn-warning me-3">삭 제</button>
+                    </c:if>
+                    <button id="btnAdvisorBoardList" type="button" class="btn btn-lg btn-secondary">목 록</button>
+                  </div>
                   <div class="ec-blog-cmt-form">
                     <div class="ec-blog-reply-wrapper mt-50">
                       <h4 class="ec-blog-dec-title">댓글 쓰기</h4>
@@ -206,13 +206,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                         data-nickname="${advisorBoard.advisorNickname}"
                         method="post"
                       >
+                      
                         <div class="row">
                           <div class="col-md-12">
                             <div class="ec-text-leave text-end">
-                              <input type="text" name="userId" value="${principal.id}" />
+                              <input type="hidden" name="userId" value="${principal.id}" />
                               <input type="hidden" name="advisorId" value="${advisorBoard.advisorId}" />
                               <input type="hidden" name="parent" value="${advisorBoard.advisorBoardId}" />
-                              <textarea name="content" placeholder="댓글을 작성해주세요"></textarea>
+                              <textarea name="content" id="textareaReply" placeholder="댓글을 작성해주세요"></textarea>
                               <button id="btnReply" type="button" class="btn btn-lg btn-secondary">등 록</button>
                             </div>
                           </div>

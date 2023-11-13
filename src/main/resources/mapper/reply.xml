@@ -40,11 +40,6 @@
 		set step = step + #{step} where board_id = #{boardId} and ref = #{ref} and step >= #{step}
 	</update>
 	
-	<update id="updateReply2">
-		update reply 
-		set step = step + #{step} where board_id = #{boardId} and ref = #{ref}
-	</update>
-	
 	<select id="getStep" resultType="int">
 		select IFNULL(min(step),0) from reply where board_id = #{boardId} and ref = #{ref} and parent_id = #{parentId}
 	</select>
@@ -93,5 +88,20 @@
 		from reply_recommand 
 		join reply on reply_recommand.reply_id = reply.id 
 		where reply_recommand.user_id = #{userId} and board_id = #{boardId};
+	</select>
+	
+	<select id="selectMyReply" parameterType="com.green.greenstock.dto.ReplyPagingDto" resultType="com.green.greenstock.repository.model.Reply">
+		select reply.id, board_id, user_id, user_name, content, date, ref, level, step, deleted,
+				(select count(user_id) from reply_recommand rc
+				 where rc.reply_id = reply.id) recommand
+		from reply
+		join user_tb on reply.user_id = user_tb.id
+		where user_id=#{userId}
+		limit #{offset}, #{recordSize}
+	</select>
+	
+	<select id="countMyReply">
+		select count(*) from reply
+		where user_id = #{userId}
 	</select>
 </mapper>

@@ -26,9 +26,7 @@ public class ChattingService {
 	}
 	
 	public String subCheck(String companyCode, int userId) {
-		System.out.println("subCheck Service ");
 		String res = chattingRepository.subCheck(companyCode, userId);
-		System.out.println("userId : "+res);
 		return res;
 	}
 	

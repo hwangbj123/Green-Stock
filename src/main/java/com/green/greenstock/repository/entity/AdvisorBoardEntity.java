@@ -39,7 +39,8 @@ public class AdvisorBoardEntity {
     // private int advisorId;
     // private int userId;
 
-    private String title;
+    @Builder.Default
+    private String title = null;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;

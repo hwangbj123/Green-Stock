@@ -4,7 +4,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>전문가 상세</title>
+    <title>Gstock</title>
     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -49,34 +49,12 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
-      .advisorDetail {
+      .advisorBoardWrite {
         width: 50%;
       }
-      .advisorDetail table th {
-        width: 25%;
-      }
-      .advisorDetail textarea {
-        height: 140px;
+      .advisorBoardWrite textarea {
         resize: none;
-        border: none;
-        padding: 0;
-      }
-      .advisorDetail #advisorCareer {
-        height: 80px;
-      }
-      .advisorDetail .btn {
-        width: 100px;
-        height: 45px;
-        border-radius: 10px;
-        font-size: 16px;
-        box-shadow: 3px 3px 3px 0px gray;
-        margin-right: 10px;
-      }
-      .advisorDetail .btn-subscribe {
-        background: #a6da41;
-      }
-      .advisorDetail .btn-advisor {
-        width: 140px;
+        border: 1px solid #ededed;
       }
       @font-face {
         font-family: 'Dovemayo';
@@ -90,78 +68,58 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         font-family: 'Dovemayo', sans-serif !important;
         font-weight: normal;
       }
+      .advisorBoardWrite .btn {
+        width: 100px;
+        height: 45px;
+        border-radius: 30px;
+        font-size: 16px;
+        box-shadow: 3px 3px 3px 0px gray;
+        margin-right: 10px;
+      }
     </style>
   </head>
   <body>
     <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
     <!-- CONTENT WRAPPER -->
-    <div class="container mt-4 mb-4 advisorDetail">
-      <div class="row">
-        <div class="col-6">
-          <img src="/upload/${advisor.image}" alt="" />
-        </div>
-        <div class="col-6">
-          <div class="section-title text-center">
-            <h3>전문가</h3>
-          </div>
-          <div class="table-responsive h-100">
-            <input type="hidden" name="userId" id="userId" value="${principal.id}" />
-            <table class="table w-100">
-              <tbody>
-                <tr>
-                  <th scope="row">닉네임</th>
-                  <td id="advisorNickName">${advisor.nickName}</td>
-                </tr>
-                <tr>
-                  <th scope="row">이름</th>
-                  <td>${advisor.fullName}</td>
-                </tr>
-                <tr>
-                  <th scope="row">분야</th>
-                  <td>${advisor.strSpecialization}</td>
-                </tr>
-                <tr>
-                  <th scope="row">이력</th>
-                  <td>
-                    <!-- <textarea name="career" id="summernote" readonly>${advisor.career}</textarea> -->
-                    <div>${advisor.career}</div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">자기소개</th>
-                  <td>
-                    <textarea name="career" id="advisorIntroduction" readonly>${advisor.introduction}</textarea>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="text-center">
-              <c:if test="${!validate}">
-                <button class="btn btn-subscribe" id="btnAdvisorSub" data-id="${advisor.advisorId}">구독하기</button>
-              </c:if>
-              <button class="btn btn-subscribe" id="btnAdvisorList">목록으로</button>
-              <c:if test="${validate}">
-              <button class="btn btn-info btn-advisor" id="btnAdvisorBoard" data-id="${advisor.advisorId}">
-                상담게시판
-              </button>
-              <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}"
-              		onclick="window.open('/chat?companyCode=${advisor.nickName}@${principal.userName}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
-              	실시간채팅
-              </button>
-            </c:if>
-            </div>
+    <div class="container mt-4 mb-4 advisorBoardWrite">
+      <div class="section-title text-center">
+        <h3>${advisor.nickName} 게시판 글 쓰기</h3>
+      </div>
+      <div class="ec-register-wrapper">
+        <div class="ec-register-container">
+          <div class="ec-register-form">
+            <form id="advisorBoardForm" action="/advisor/sub/board/${advisor.nickName}/write" method="post">
+                <input type="hidden" name="advisorId" value="${advisor.advisorId}" id="">
+                <input type="hidden" name="userId" value="${principal.id}">
+              <span class="ec-register-wrap ec-register-half mb-4">
+                <label>작성자</label>
+                <span class="spanUserName ms-5">${principal.userName}</span>
+              </span>
+              <span class="ec-register-wrap">
+                <label>제 목</label>
+                <input type="text" name="title" value="" />
+              </span>
+              <span class="ec-register-wrap">
+                <label>내 용</label>
+                <textarea name="content" rows="10"  id=""></textarea>
+              </span>
+              <span class="ec-register-wrap ec-register-btn">
+                <button class="btn btn-primary" type="submit">등 록</button>
+              </span>
+            </form>
           </div>
         </div>
       </div>
-    </div>
+    </div>  
     <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
+    <script>
+      $('#summernote').summernote({
+        placeholder: 'Hello Bootstrap 5',
+        tabsize: 1,
+        height: 100,
+      });
+    </script>
+    <script src="/resources/js/custom/advisorBoardValidation.js"></script>
   </body>
-  <script src="/resources/js/custom/advisorDetail.js"></script>
-  <script>
-    $('#summernote').summernote({
-      tabsize: 1,
-      height: 100,
-    });
-  </script>
 </html>

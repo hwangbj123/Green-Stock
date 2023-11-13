@@ -25,8 +25,29 @@
 	</head>
 	
 	<body class="sign-inup" id="body">
-	<%@include file="/WEB-INF/view/layout/header.jsp"%>
-		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/testb1.png');">
+		<%@include file="/WEB-INF/view/layout/header.jsp"%>
+		<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-12">
+		        <div class="row ec_breadcrumb_inner">
+		          <div class="col-md-6 col-sm-12">
+		            <h2 class="ec-breadcrumb-title">로그인</h2>
+		          </div>
+		          <div class="col-md-6 col-sm-12">
+		            <!-- ec-breadcrumb-list start -->
+		            <ul class="ec-breadcrumb-list">
+		              <li class="ec-breadcrumb-item"><a href="index.html">회원</a></li>
+		              <li class="ec-breadcrumb-item active">로그인</li>
+		            </ul>
+		            <!-- ec-breadcrumb-list end -->
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/testb1.png'); height: 80vh;">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
 					<div class="card">

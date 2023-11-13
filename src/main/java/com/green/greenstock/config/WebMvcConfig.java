@@ -22,19 +22,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	private final AuthInterceptor authInterceptor;
 	private final AdvisorInterceptor advisorInterceptor;
-
-	// @Autowired
-	// private AdminInterceptor adminInterceptor;
+	private final AdminInterceptor adminInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/customerservice/inquiry/**").addPathPatterns("/user/my-info/**").addPathPatterns("/user/payList/**").addPathPatterns("/user/ticketList/**").addPathPatterns("/user/rentalList/**").addPathPatterns("/show/apply*")
-		// .excludePathPatterns("/show/applyIntro").excludePathPatterns("/payment/cancel");
-		// registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
+		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
 		registry.addInterceptor(authInterceptor).addPathPatterns("/board/write").addPathPatterns("/board/update/*")
-				.addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*")
-				.addPathPatterns("/chat*");
-		registry.addInterceptor(authInterceptor).addPathPatterns("/advisor/register");
+				.addPathPatterns("/board/thumb-*").addPathPatterns("/board/board*").addPathPatterns("/user/my-*")
+				.addPathPatterns("/advisor/register").addPathPatterns("/chat*").addPathPatterns("/user/verify-user")
+				.addPathPatterns("/pay/**").addPathPatterns("/user/user-info").addPathPatterns("/user/payment")
+				.addPathPatterns("/advisor/register");
 		registry.addInterceptor(advisorInterceptor).addPathPatterns("/advisor/sub/**");
 	}
 

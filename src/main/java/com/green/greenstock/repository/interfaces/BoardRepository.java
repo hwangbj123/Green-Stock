@@ -13,7 +13,6 @@ public interface BoardRepository {
 
 	public List<String> findCategoryList();
 	public int insertBoard(Board board);
-	public List<Board> selectBoardListAll(PagingDto paging);
 	public int selectBoardCount(PagingDto paging);
 	public Board selectBoardById(int id);
 	public int updateBoard(Board board);
@@ -23,4 +22,5 @@ public interface BoardRepository {
 	public int thumbUp(@Param("boardId") int boardId,@Param("userId") int userId);
 	public int thumbDelete(@Param("boardId") int boardId,@Param("userId") int userId);
 	public int thumbCheck(@Param("boardId") int boardId,@Param("userId") int userId);
+	public int countMyBoard(int userId);
 }

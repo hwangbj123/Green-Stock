@@ -8,17 +8,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,13 +25,13 @@ import com.green.greenstock.dto.AdvisorBoardReqDto;
 import com.green.greenstock.dto.AdvisorBoardReplyResDto;
 import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
+import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
 import com.green.greenstock.repository.entity.AdvisorBoardEntity;
-import com.green.greenstock.repository.model.AdvisorBoard;
+import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.AdvisorService;
-import com.green.greenstock.service.UserService;
 import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
@@ -49,7 +46,6 @@ public class AdvisorController {
     @Autowired
     private final HttpSession httpSession;
     private final AdvisorService advisorService;
-    private final UserService userService;
 
     private final int PAGE_SIZE = 10;
 
@@ -57,6 +53,7 @@ public class AdvisorController {
     @GetMapping(value = { "/", "/list" })
     public String advisorList(Model model) {
         model.addAttribute("advisorResDtos", advisorService.findByStatusAuth(2));
+        model.addAttribute("category", "전문가 목록");
         return "advisor/advisorList";
     }
 
@@ -65,29 +62,38 @@ public class AdvisorController {
     public String advisorDetail(@PathVariable String nickName, Model model) {
 
         User user = (User) httpSession.getAttribute("principal");
-        log.info("user {}", user);
+        
         if (user != null) {
-            // log.info("id {}",user.getId());
             boolean validateResult = advisorService.validateSubscribeToAdvisor(nickName, user.getId());
             model.addAttribute("validate", validateResult);
-            log.info("bool {}", validateResult);
+            
         }
 
         if (nickName == null) {
             throw new PageNotFoundException("페이지를 찾지 못했습니다.", "/advisor/list");
         }
 
-        // boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId,
-        // id);
-
         model.addAttribute("advisor", advisorService.findByAdvisorNickName(nickName));
+        model.addAttribute("category", "전문가 세부사항");
         return "advisor/advisorDetail";
     }
 
     // 전문가 신청페이지
     @GetMapping("/register")
-    public String advisorRegister() {
-
+    public String advisorRegister(Model model) {
+        User user = (User) httpSession.getAttribute("principal");
+        AdvisorEntity advisorEntity = advisorService.findByUserEntity(user.getId());
+        int status = 0;
+        if(advisorEntity != null){
+            status = advisorEntity.getStatus();
+        }
+        
+        if(status == 1){
+            throw new CustomRestfulException("이미 신청하였습니다.", HttpStatus.BAD_REQUEST);
+        }else if(status == 2){
+            throw new CustomRestfulException("이미 전문가입니다.", HttpStatus.BAD_REQUEST);
+        }
+        model.addAttribute("category", "전문가 신청");
         return "advisor/advisorRegister";
     }
 
@@ -114,6 +120,18 @@ public class AdvisorController {
         return "redirect:/advisor/list";
     }
 
+    // 전문가 닉네임 중복체크
+    @ResponseBody
+    @GetMapping("/register/duplicate")
+    public Map<String, Integer> advisorNicknameDuplicate(String advisorNickname){
+        int result = advisorService.findCountByNickname(advisorNickname);
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+        return resultMap;
+    }
+
+
+
     // 전문가 상담게시판 목록 페이지
     @GetMapping("/sub/board/{advisorNickName}")
     public String advisorBoardList(Model model, @PathVariable String advisorNickName,
@@ -128,12 +146,14 @@ public class AdvisorController {
 
         model.addAttribute("page", advisorBoardResDtos);
         model.addAttribute("pagination", pagination);
+        model.addAttribute("category", "전문가 상담게시판");
         return "advisor/advisorBoardList";
     }
 
     // 전문가 상담게시판 글 보기 페이지
     @GetMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public String advisorBoard(Model model, @PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
+        
         // 게시글, 이전, 다음 페이지 정보
         AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
         model.addAttribute("advisorBoard", advisorBoardResDto);
@@ -151,13 +171,14 @@ public class AdvisorController {
         }
 
         model.addAttribute("replyTotal", total);
+        model.addAttribute("category", "전문가 상담게시판");
         return "advisor/advisorBoard";
     }
 
     /* 댓글 영역 */
     // 댓글 불러오기(ajax - json)
     @ResponseBody
-    @GetMapping("/sub/board/{nickname}/reply/{parent}/{page}")
+    @GetMapping("/sub/board/{advisorNickName}/reply/{parent}/{page}")
     public Page<AdvisorBoardReplyResDto> advisorBoardReplyList(@PathVariable int parent, @PathVariable int page) {
         PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, Sort.by("createdAt").ascending()); // 0이 시작 페이지
         return advisorService.findByParent(parent, pageRequest);
@@ -165,7 +186,7 @@ public class AdvisorController {
 
     // 댓글 작성
     @ResponseBody
-    @PostMapping("/sub/board/{nickname}/reply")
+    @PostMapping("/sub/board/{advisorNickName}/reply")
     public Map<String, Integer> addAdvisorBoardReply(@RequestBody AdvisorBoardReqDto advisorBoardReqDto) {
 
         AdvisorBoardEntity advisorBoardEntity = advisorService.saveAdvisorBoard(advisorBoardReqDto);
@@ -183,7 +204,7 @@ public class AdvisorController {
 
     // 댓글 삭제
     @ResponseBody
-    @DeleteMapping("/sub/board/{nickname}/{advisorBoardId}")
+    @DeleteMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public Map<String, Integer> deleteAdvisorBoard(@PathVariable int advisorBoardId) {
 
         int result = advisorService.deleteAdvisorBoard(advisorBoardId);
@@ -194,55 +215,53 @@ public class AdvisorController {
 
     /* 댓글 영역 끝 */
 
+    
     // 전문가 상담게시판 글 쓰기 페이지
     @GetMapping("/sub/board/{advisorNickName}/write")
-    public String advisorBoardWrite() {
-
-        return "advisor/advisorBoard";
+    public String advisorBoardWrite(Model model, @PathVariable String advisorNickName) {
+        AdvisorResDto advisorResDto = advisorService.findByAdvisorNickName(advisorNickName);
+        model.addAttribute("advisor", advisorResDto);
+        model.addAttribute("category", "전문가 상담게시판");
+        return "advisor/advisorBoardWrite";
     }
 
     // 전문가 상담게시판 글 쓰기 기능
     @PostMapping("/sub/board/{advisorNickName}/write")
-    public String advisorBoardWriteProc(@PathVariable String advisorNickName) {
-        int advisorBoardId = 1;
-        advisorNickName = "tom";
-        return "redirect:/advisor/board/" + advisorNickName + "/" + advisorBoardId;
+    public String advisorBoardWriteProc(@PathVariable String advisorNickName, AdvisorBoardReqDto advisorBoardReqDto) {
+        if(advisorBoardReqDto == null){
+            throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
+        }
+        if(advisorBoardReqDto.getAdvisorId() == 0 || advisorBoardReqDto.getUserId() == 0){
+            throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
+        }
+        
+        AdvisorBoardEntity advisorBoardEntity = advisorService.saveAdvisorBoard(advisorBoardReqDto);
+
+        return "redirect:/advisor/sub/board/" + advisorNickName + "/" + advisorBoardEntity.getAdvisorBoardId();
+    }
+
+    // 전문가 상담게시판 글 수정 페이지
+    @GetMapping("/sub/board/{advisorNickName}/update/{advisorBoardId}")
+    public String advisorBoardUpdate(Model model, @PathVariable int advisorBoardId){
+        AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
+        model.addAttribute("advisorBoard", advisorBoardResDto);
+        model.addAttribute("category", "전문가 상담게시판");
+        return "advisor/advisorBoardUpdate";
     }
 
     // 전문가 상담게시판 글 수정 기능
-    @PutMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
-    public Map<String, String> advisorBoardUpdateProc(@PathVariable String advisorNickName,
-            @PathVariable int advisorBoardId) {
-
-        return null;
+    @PostMapping("/sub/board/{advisorNickName}/update")
+    public String advisorBoardUpdateProc(@PathVariable String advisorNickName, AdvisorBoardReqDto advisorBoardReqDto) {
+                
+        advisorService.updateAdvisorBoard(advisorBoardReqDto);
+        return "redirect:/advisor/sub/board/"+advisorNickName+"/"+advisorBoardReqDto.getAdvisorBoardId();
     }
 
     // 전문가 상담게시판 글 삭제 기능
     @GetMapping("/sub/board/{advisorNickName}/delete/{advisorBoardId}")
     public String advisorBoardDelete(@PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
-
-        return "redirect:/advisor/advisorBoard/" + advisorNickName;
+        // 게시글, 댓글 삭제
+        advisorService.deleteAdvisorBoard(advisorBoardId);
+        return "redirect:/advisor/sub/board/" + advisorNickName;
     }
-
-    // 구독한 사용자인지 체크
-    // @ResponseBody
-    // @GetMapping("/validate")
-    // public Map<String, Integer> validateSubscribeToAdvisor(int advisorId, int
-    // userId){
-    // boolean validateResult = advisorService.validateSubscribeToAdvisor(advisorId,
-    // userId);
-    // Map<String, Integer> resultMap = new HashMap<>();
-
-    // if(validateResult){
-    // resultMap.put("result", 1);
-
-    // }else{
-    // resultMap.put("result", 0);
-
-    // }
-
-    // return resultMap;
-
-    // }
-
 }

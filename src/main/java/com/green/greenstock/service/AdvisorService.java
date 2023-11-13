@@ -28,7 +28,6 @@ import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
-import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
@@ -40,7 +39,6 @@ import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
-import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.AdvisorBoard;
@@ -58,7 +56,6 @@ public class AdvisorService {
     private final AdvisorRepository advisorRepository;
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final UserEntityRepository userEntityRepository;
-    private final SubscribeToAdvisorRepository subscribeToAdvisorRepository;
     private final AdvisorBoardRepository advisorBoardRepository;
 
     @Value("${spring.servlet.multipart.location}")
@@ -97,6 +94,12 @@ public class AdvisorService {
         }
         return advisorResDto.fromEntity(advisorEntity);
     }
+
+    @Transactional
+    public int findCountByNickname(String nickname){
+        return advisorRepository.findCountByAdvisorNickname(nickname);
+    }
+
 
     /**
      * 전문가 신청하기
@@ -228,11 +231,17 @@ public class AdvisorService {
     // 전문가 상담게시판 글 한개 보기
     @Transactional
     public AdvisorBoardResDto findByAdvisorBoardId(int advisorBoardId) {
+        // 대상 엔티티 찾기
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        // 조회수 증가
+        int originViews = advisorBoardEntity.getViews();
+        advisorBoardEntity.setViews(originViews + 1);
+        // 이전글 다음글 가져오기
         String localDateTime = advisorBoardEntity.getCreatedAt().toString();
         int advisorId = advisorBoardEntity.getAdvisorEntity().getAdvisorId();
         AdvisorBoard prevBoard = advisorBoardRepository.findPrevBoard(advisorId, localDateTime);
         AdvisorBoard nextBoard = advisorBoardRepository.findNextBoard(advisorId, localDateTime);
+        // 엔티티 dto 변환
         AdvisorBoardResDto advisorBoardResDto = AdvisorBoardResDto.fromEntity(advisorBoardEntity);
         advisorBoardResDto.setPrevBoard(prevBoard);
         advisorBoardResDto.setNextBoard(nextBoard);
@@ -254,6 +263,7 @@ public class AdvisorService {
     }
 
     // 글, 댓글 등록
+    @Transactional
     public AdvisorBoardEntity saveAdvisorBoard(AdvisorBoardReqDto advisorBoardReqDto) {
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorId(advisorBoardReqDto.getAdvisorId());
@@ -304,14 +314,39 @@ public class AdvisorService {
     }
 
     // 전문가 글 삭제
+    @Transactional
     public int deleteAdvisorBoard(int advisorBoardId) {
+        // 게시글 또는 댓글 찾기
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+
+        // 게시글이고 댓글이 있다면 삭제
+        List<AdvisorBoardEntity> advisorBoardEntities = advisorBoardEntityRepository.findByParent(advisorBoardId);
+        if(advisorBoardEntities.size() != 0){
+            advisorBoardEntityRepository.deleteAll(advisorBoardEntities);
+        }
+
+        // 게시글 또는 댓글 삭제
         int result = 0;
         if (advisorBoardEntity != null) {
             advisorBoardEntityRepository.delete(advisorBoardEntity);
             result = 1;
         }
         return result;
+    }
+
+    // 게시글 수정
+    @Transactional
+    public void updateAdvisorBoard(AdvisorBoardReqDto advisorBoardReqDto) {
+        int advisorBoardId = advisorBoardReqDto.getAdvisorBoardId();
+        AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        advisorBoardEntity.setTitle(advisorBoardReqDto.getTitle());
+        advisorBoardEntity.setContent(advisorBoardReqDto.getContent());
+    }
+
+    // 전문가 신청, 이미 전문가인지  확인
+    public AdvisorEntity findByUserEntity(Integer id) {
+        UserEntity userEntity = userEntityRepository.findById(id).orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+        return advisorEntityRepository.findByUserEntity(userEntity);
     }
 
 }

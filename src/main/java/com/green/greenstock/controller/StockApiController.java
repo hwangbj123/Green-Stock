@@ -110,7 +110,8 @@ public class StockApiController {
 		model.addAttribute("rankOutPut", rankOutPut);
 		model.addAttribute("inquireMember", inquireMemberResDto);
 		model.addAttribute("inquireInvestors", inquireInvestorResDto);
-
+		model.addAttribute("category", "주식 세부 정보");		
+		
 		return "/stock/detail";
 	}
 
@@ -137,8 +138,8 @@ public class StockApiController {
 	// 국내주식 현재가 검색 목록
 	@GetMapping("/domestic")
 	public String getStockList(Model model, String searchData, @RequestParam(defaultValue = "1") int page) {
-		model.addAttribute("responseDomesticStockSearchDto",
-				stockApiService.getApiDomesticStockCurrentPriceList(searchData, page));
+		model.addAttribute("responseDomesticStockSearchDto", stockApiService.getApiDomesticStockCurrentPriceList(searchData, page));
+		model.addAttribute("category", "주식 정보 검색");
 		return "/stock/searchList";
 	}
 
