@@ -19,7 +19,7 @@
 		<style>
 			.rep-tb{
 				width: 90%;
-				border: 1px solid #777;
+				border: 1px solid #eee;
 				margin: 50px auto;
 				text-align: center;
 			}
