@@ -15,7 +15,6 @@ import com.green.greenstock.repository.entity.SubscribeToAdvisorEntity;
 import com.green.greenstock.repository.entity.UserEntity;
 import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
-import com.green.greenstock.repository.interfaces.UserRepository;
 import com.green.greenstock.repository.model.User;
 
 import lombok.RequiredArgsConstructor;

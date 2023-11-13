@@ -53,11 +53,18 @@
 </style> 
 <html>
 <body>
+<script type="text/javascript">
+function cancellation() {
+    // 취소 버튼 클릭시 목록창으로 돌아가도록 지정
+    window.location.href = "http://localhost/notice/admin/list";
+}
+
+</script>
 <div class="ec-content-wrapper">
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-contacts">
 			<div>
-				<h1>Notice Write</h1>
+				<h1>작성하기</h1>
 				<p class="breadcrumbs">
 					<span><a href="/admin/main">Main</a></span> <span><i
 						class="mdi mdi-chevron-right"></i></span>Notice 
@@ -93,7 +100,7 @@
             	<tr>
             		<td>
             			<a><button type="submit" class="btn btn-primary">작성</button></a> 
-            			<a><button type="submit" class="btn btn-primary">취소</button></a>                                       	
+            			<button type="submit" class="btn btn-primary" onclick="cancellation()">취소</button>                                     	
             		</td>            		           	
             	</tr>             	                                                   
     	</tbody>
@@ -125,8 +132,7 @@
                     </div>                
            
                     <div class="col d-lg-none ">
-                        <div class="ec-header-bottons">
-                            <!-- Header User Start -->
+                        <div class="ec-header-bottons">              
                             <div class="ec-header-user dropdown">
                                 <button class="dropdown-toggle" data-bs-toggle="dropdown"><i
                                         class="fi-rr-user"></i></button>
@@ -135,28 +141,20 @@
                                     <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
                                     <li><a class="dropdown-item" href="login.html">Login</a></li>
                                 </ul>
-                            </div>
-                            <!-- Header User End -->
-                            <!-- Header Cart Start -->
+                            </div>                        
                             <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
                                 <div class="header-icon"><i class="fi-rr-heart"></i></div>
                                 <span class="ec-header-count">4</span>
-                            </a>
-                            <!-- Header Cart End -->
-                            <!-- Header Cart Start -->
+                            </a>                     
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-bag"></i></div>
                                 <span class="ec-header-count cart-count-lable">3</span>
-                            </a>
-                            <!-- Header Cart End -->
-                            <!-- Header menu Start -->
+                            </a>                      
                             <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
                                 <i class="fi fi-rr-menu-burger"></i>
-                            </a>
-                            <!-- Header menu End -->
+                            </a>                        
                         </div>
-                    </div>
-                    <!-- Header Top responsive Action -->
+                    </div>                  
                 </div>
             </div>
         </div>
@@ -187,8 +185,7 @@
          
                 </div>
             </div>
-        </div>
-   
+        </div>   
 	</header>
 	</body>
 	</head>

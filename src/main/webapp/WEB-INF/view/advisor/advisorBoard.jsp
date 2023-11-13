@@ -66,6 +66,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       resize: none;
       border: 1px solid #e7e7e7;
     }
+    .advisorBoard #textareaReply{
+      height: 120px;
+    }
     .advisorBoard .hiddenPageArrow {
       visibility: hidden;
     }
@@ -101,7 +104,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
             <div class="ec-blogs-content">
               <div class="ec-blogs-inner">
                 <div class="ec-blog-main-img text-center">
-                  <img class="blog-image" src="/upload/${advisorBoard.image}" alt="Blog" />
+                  <img class="blog-image" src="/upload/${advisorBoard.image}" alt="Blog" style="width: 400px;"/>
                 </div>
                 <div class="ec-blog-date d-flex">
                   <p class="date me-auto">작성자 - ${advisorBoard.userName}</p>
@@ -210,7 +213,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                               <input type="hidden" name="userId" value="${principal.id}" />
                               <input type="hidden" name="advisorId" value="${advisorBoard.advisorId}" />
                               <input type="hidden" name="parent" value="${advisorBoard.advisorBoardId}" />
-                              <textarea name="content" placeholder="댓글을 작성해주세요"></textarea>
+                              <textarea name="content" id="textareaReply" placeholder="댓글을 작성해주세요"></textarea>
                               <button id="btnReply" type="button" class="btn btn-lg btn-secondary">등 록</button>
                             </div>
                           </div>

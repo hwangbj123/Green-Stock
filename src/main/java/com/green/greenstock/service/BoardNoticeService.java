@@ -1,11 +1,13 @@
 package com.green.greenstock.service;
 
+import java.io.IOException;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
 import com.green.greenstock.repository.interfaces.BoardNoticeRepository;
@@ -20,6 +22,8 @@ public class BoardNoticeService {
 	
 	private final UserRepository userRepository;
 	private final BoardNoticeRepository noticeRepository;
+	
+	private static String Crol_URL = "https://notice.naver.com/notices/finance";
 	/**
 	 * 
 	 * 공지사항 목록 조회
@@ -53,8 +57,6 @@ public class BoardNoticeService {
 			noticeboard.setNoticeTitle(noticeupdateDto.getNoticeTitle());
 			noticeboard.setNoticeContent(noticeupdateDto.getNoticeContent());
 			noticeboard.setNoticeState(noticeupdateDto.getNoticeState());
-			System.out.println(noticeupdateDto);
-			System.out.println(noticeboard);
 			int result = noticeRepository.updateNotice(noticeboard);	
 			return result;
 	}	
@@ -108,9 +110,7 @@ public class BoardNoticeService {
 		
 	}
 	
-
-
-
+	
 
 	
 }

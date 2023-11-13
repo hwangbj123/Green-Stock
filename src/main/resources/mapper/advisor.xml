@@ -63,10 +63,10 @@
 		advisor_id = #{advisorId}
 	</select>
 
-	<!-- selectAdvisorList --> 
-
-	<!-- <select id="selectAdvisorList">
-
-	</select> -->
+	<select id="findCountByAdvisorNickname" resultType="int">
+		select count(*) from advisor
+		where advisor_nick_name = #{nickname}
+	</select>
 	
 </mapper>
+

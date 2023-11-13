@@ -1,9 +1,13 @@
 package com.green.greenstock.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.NoticeUpdateDto;
 import com.green.greenstock.repository.model.Noticeboard;
@@ -34,7 +38,6 @@ public class BoardNoticeController {
 
 	
 	/**
-	 * 
 	 * 어드민 상태 일때 보이는 공지사항 목록(페이징 기능 추가 ,공개 비공개 추가 )
 	 * @param list 
 	 * @return adminNoticeList
@@ -75,7 +78,7 @@ public class BoardNoticeController {
 		 int total = boardNoticeService.noticeListCount("1", noticeTitle); // 전체글 개수(공개상태, 제목 검색)
 		 Pagination paginaion = new Pagination(total, page, 10); // 전체글( 공개상태일때, 페이지,페이지 갯수(파라미터를 int) 
 		 int offset = paginaion.getStart() - 1; // start 값이 1 많음		 
-		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset,"1", noticeTitle); // limit, 0:비공개 1:공개, 제목검색		 
+		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset,"1", noticeTitle); // limit, 0:비공개 1:공개, 제목검색		 	 
 		 model.addAttribute("page", page);
 		 model.addAttribute("total", total);
 		 model.addAttribute("pagination",paginaion);
@@ -163,15 +166,10 @@ public class BoardNoticeController {
 		Noticeboard noticeboard = boardNoticeService.noticeViewService(id) ;
 		// 조회수 증가
 		boardNoticeService.noticeHitCountService(id);	
-		
 		model.addAttribute("view", noticeboard);		
 		return "notice/noticeView";
 	}
 	
-	
-	
-	
 
-	
-	
+		
 }

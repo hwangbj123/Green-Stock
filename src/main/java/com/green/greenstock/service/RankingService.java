@@ -54,7 +54,6 @@ public class RankingService {
 				});
 				portfolioRepository.updateRor(e);
 			} else {
-				System.out.println("else");
 			}
 		});
 	}

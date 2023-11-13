@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.green.greenstock.repository.entity.AdvisorEntity;
+import com.green.greenstock.repository.entity.UserEntity;
 
 public interface AdvisorEntityRepository extends JpaRepository<AdvisorEntity, Integer> {
 
@@ -13,5 +14,9 @@ public interface AdvisorEntityRepository extends JpaRepository<AdvisorEntity, In
     AdvisorEntity findByAdvisorNickName(String advisorNickName);
 
     AdvisorEntity findByAdvisorId(int advisorId);
+
+    AdvisorEntity findByUserEntity(UserEntity userEntity);
+
+    
 
 }

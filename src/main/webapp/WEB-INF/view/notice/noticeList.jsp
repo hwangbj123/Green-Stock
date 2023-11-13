@@ -6,6 +6,12 @@
 <html>
 <body>
 <header>
+<script type="text/javascript">
+
+
+
+</script>
+
 		<!-- Ec Main Menu End -->
 		<div class="content container">
 			<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">				
@@ -29,14 +35,14 @@
 							<select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
 		                    <option value="select" disabled="disabled" selected="selected">선택</option>
 		                    <option value="searchTitle">제목</option>                                    
-		                	</select>	
-														   
+		                	</select>															  
 							    <input type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100" style="margin-right: 10px;">
 							    <button type="submit" class="btn btn-success" style="
 							    text-align: center;
 							    width: 100px;
-							    height: 50px;">검색</button>
+							    height: 50px;">검색</button>							   
 							</div>
+							
 						</form>
 					</div>	
 				</div>

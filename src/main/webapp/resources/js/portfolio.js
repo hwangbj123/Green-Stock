@@ -7,10 +7,8 @@ $(document).ready(function() {
 async function setSmallCard() {
 	let userId = await $.get('portfolio/getUserid', function(data) {
 	})
-	console.log(userId);
 	$.get('portfolio/getMyPortfolioList/' + userId, function(data) {
 		$('#addStock').on('click', () => addStockClicked());
-		console.log(data);
 		makeSmallCard(data);
 	})
 
@@ -19,27 +17,22 @@ async function setSmallCard() {
 // smallCard 를 만들어주는 부분.
 // 4개까지 포트폴리오를 만들 수 있고, 3개까지 addPortfolio 카드가 나온다.
 function makeSmallCard(data) {
-	console.log(data.length);
 	if (data.length == 0) {
 		makeAddPortfolioDiv();
 	} else {
 		let count = 0;
 		data.forEach((e, idx) => {
-			console.log(e.pid);
 			let pid = e.pid;
 			let isvisible = '';
 			let privacyP = $('<p style = "display : inline-block" id = "privacy_' + pid + '"></p>');
 			if (e.visible) {
-				console.log('isVisible');
 				isvisible = 'public';
 				privacyP.css('color', 'green');
 			} else {
-				console.log('isnotVisible');
 				isvisible = 'private';
 				privacyP.css('color', 'red');
 			}
 			privacyP.html(isvisible);
-			console.log(pid);
 			count++;
 			let smallCardInnerWrapper = $('<div id="' + pid + '" class="col-xl-3 col-sm-6 p-b-15 lbl-card" data-clicked="false">');
 			let smallCard = $('<div id = "smallCardC_' + pid + '" class="card card-mini dash-card card-1"style="cursor : pointer;height : 100%">');
@@ -98,7 +91,6 @@ function saveButtonClicked(title, discription) {
 		alert('값이 비었습니다.');
 		return;
 	}
-	console.log('saveButtonClicked');
 	// 포트폴리오 저장 로직
 	$.ajax({
 		url: 'portfolio/addPortfolio',
@@ -107,7 +99,6 @@ function saveButtonClicked(title, discription) {
 		dataType: 'json',
 		data: JSON.stringify({ 'title': title, 'discription': discription }),
 		success: (data) => {
-			console.log(data);
 			location.reload();
 		}
 	});
@@ -118,12 +109,10 @@ function saveButtonClicked(title, discription) {
 //---------------- start of display ---------------------------------------
 //smallCard 가 click 되면 해당 포트폴리오의 정보가 모두 다시 뿌려져야 한다.
 function smallCardClicked(id) {
-	console.log('실행');
 	var elements = $(".col-xl-3.col-sm-6.p-b-15.lbl-card");
 	// class Checker
 	let checker = new Checker(id, elements);
 	if (!checker.anyOfClickedBool()) {
-		console.log('101');
 		if (id == "addCard") {
 			addCardClicked();
 			$('#' + id).attr('data-clicked', 'true');
@@ -135,7 +124,6 @@ function smallCardClicked(id) {
 		}
 	}
 	if (checker.checkSelfClicked()) {
-		console.log('113');
 		if (id == "addCard") {
 			detatchAll();
 			$('#' + id).attr('data-clicked', 'false');
@@ -149,7 +137,6 @@ function smallCardClicked(id) {
 		!checker.checkSelfClicked() &&
 		checker.anyOfClickedBool()
 	) {
-		console.log('126');
 		//$('#portfolioRegWrapper').remove();
 		// detatchAll(); attatch(); if(addCard) => addCardClicked() else attatch()  attatch 의 경우 차트와 orderReport, 및 모두를 없애야됨.
 		// 만약 addCard 클릭시에는 이 if 문이 실행되었을 경우 다른애들이 detatchALl 을 실행하고 해야됨. addCard 말고 실행될시에도 다른애들 다 없애고 attatch().
@@ -172,9 +159,7 @@ function smallCardClicked(id) {
 // portfolioInfo 를 붙인다. 포폴정보, 보유주식, 거래내역, 랭킹등이 표시된다.
 function attatchPortfolioInfo(id) {
 	$.get('portfolio/getAllDataInfo/' + id, function(data) {
-		console.log(data);
 		if (data == null) {
-			console.log('setStock');
 		} else {
 			setPortfolioInfo(data);
 			setRanking();
@@ -182,7 +167,6 @@ function attatchPortfolioInfo(id) {
 			setTradeLog(data);
 			setMonthlyAssetChart(data.pid);
 			if (data.stockList.length == 0) {
-				console.log('asdf');
 				$('#donutChartBody').append($('<div style = "font-weight : bold; font-size : large;color:black;">' + '주식을 추가해주세요.' + '</div>'));
 				$('#myStockCardTable').append($('<div style = "border:none; font-weight : bold; font-size : large">' + '주식을 추가해주세요.' + '</div>'));
 				return;
@@ -194,7 +178,6 @@ function attatchPortfolioInfo(id) {
 
 // 포폴의 정보.
 async function setPortfolioInfo(data) {
-	console.log(data);
 	let sellMoney = 0;
 	if (data.sellMoney != null) {
 		sellMoney = data.sellMoney;
@@ -206,7 +189,6 @@ async function setPortfolioInfo(data) {
 		stockTotalAmount += data.stockList[i].amount * nowprice;
 	}
 	let rorData = ((stockTotalAmount + sellMoney - data.totalAsset) / data.totalAsset) * 100;
-	console.log(rorData);
 	let portfolioInfoWrapper = $('<div id = "portfolioInfoWrapper" style = "width : 100%; height :90%;margin:auto">');
 	$('#portfolioInfo').append(portfolioInfoWrapper);
 	let keyArr = ['제목', '설명', '현재자산', '판매금', '총자산', '보유주식량', '수익률'];
@@ -238,9 +220,7 @@ function setDonutChart(data) {
 	data.stockList.forEach(stock => {
 		stockNameList.push(stock.companyName);
 		amountList.push(stock.amount * stock.price);
-		console.log(stock.amount * stock.price);
 	});
-	console.log(stockNameList);
 	let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5"];
 	let doughnut = document.getElementById("doChart");
 	if (doughnut !== null) {
@@ -287,13 +267,11 @@ function setDonutChart(data) {
 			}
 		});
 	}
-	console.log(data.totalAsset);
 	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + numberWithCommas(data.totalAsset) + '</div>'));
 }
 
 function setRanking() {
 	$.get('portfolio/getRanking', function(data) {
-		console.log(data);
 		//let width = $('#user-acquisition').css('width');
 		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
 		$('#rankingBody').append(rankingWrapper);
@@ -314,7 +292,6 @@ function setRanking() {
 
 function titleClicked(pid, rank) {
 	$.get('portfolio/getMyPortfolioInfo/' + pid, function(data) {
-		console.log(data);
 		$('#user_rank').html(rank);
 		$('#modal_pfName').html(data.title);
 		$('#modal_pfDisc').html(data.discription);
@@ -330,9 +307,7 @@ function titleClicked(pid, rank) {
 		data.stockList.forEach(stock => {
 			stockNameList.push(stock.companyName);
 			amountList.push(stock.amount * stock.price);
-			console.log(stock.amount * stock.price);
 		});
-		console.log(stockNameList);
 		let colorList = ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5", "#a4d9e5"];
 		let doughnut = document.getElementById("rankingDoChart");
 		if (doughnut !== null) {
@@ -379,7 +354,6 @@ function titleClicked(pid, rank) {
 				}
 			});
 		}
-		console.log(data.totalAsset);
 		$('#rankingDoChart').append($('<div id="donutCenterText" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + numberWithCommas(data.totalAsset) + '</div>'));
 	})
 }
@@ -388,7 +362,6 @@ function setMonthlyAssetChart(pid) {
 	/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
 	//<canvas id="monthlyAsset" class="chartjs"></canvas>
 	$.get('portfolio/getdailyGrowthData/' + pid, function(data) {
-		console.log(data);
 		if(data.length < 2){
 			$('#assetBody').append($('<div style = "border:none; font-weight : bold; font-size : large;color:black;">데이터가 충분하지 않습니다.</div>'));
 			return;
@@ -520,10 +493,6 @@ async function setMyStock(data) {
 	});
 	await Promise.all(promises);
 
-	console.log('-------------------')
-	console.log(nowPriceArr);
-	console.log(data);
-	console.log('-------------------')
 	//table body
 	let tbody = $('<tbody>');
 
@@ -566,9 +535,7 @@ function nowPriceSetter(nowPriceArr, stock) {
 
 async function setTradeLog(data) {
 	let tradeData = await $.get('portfolio/getTradeLog/' + data.pid, function(data) {
-		console.log(data);
 	})
-	console.log(tradeData.length == 0);
 	if(tradeData.length == 0){
 		$('#myTradeLogTable').append($('<div style = "border:none; font-weight : bold; font-size : large">' + '거래내역이 존재하지 않습니다.' + '</div>'));
 	}
@@ -585,7 +552,6 @@ async function setTradeLog(data) {
 	//table body
 	let tbody = $('<tbody>');
 
-	tradeData.forEach(e => console.log(e));
 	tradeData.forEach(async (e, idx) => {
 		let tr = $('<tr>');
 		if (idx % 2 == 0) {
@@ -642,7 +608,6 @@ function addCardClicked() {
 
 function privacyClicked(pid) {
 	$.get('portfolio/updateVisible/' + pid, function(data) {
-		console.log(data);
 		location.reload();
 	});
 }
@@ -656,10 +621,8 @@ function editClicked(id) {
 		e.stopPropagation();
 		delButtonClicked(id);
 	});
-	console.log('실행됨');
 	// checker class 를 통해 클릭된 요소가 겹치지 않게.
 	if (!checker.anyOfClickedBool()) { // nothing checked
-		console.log('실행됨');
 		$('#span_' + id).attr('data-clicked', 'true');
 		$('#' + id).children().append(delButton);
 		$('.editSpans').each((idx, e) => $(e).html('수정'));
@@ -668,7 +631,6 @@ function editClicked(id) {
 		return;
 	}
 	if (checker.checkSelfClicked()) { // 내가 체크되있음
-		console.log('실행됨');
 		$('#span_' + id).attr('data-clicked', 'false');
 		$('#span_' + id).html('수정');
 		$('#h2_' + id).attr('contenteditable', 'false');
@@ -677,7 +639,6 @@ function editClicked(id) {
 		return;
 	}
 	if (!checker.checkSelfClicked() && checker.anyOfClickedBool()) { // 나 아니고 딴애들
-		console.log('실행됨');
 		$('.delButtons').each((idx, e) => e.remove());
 		$('#span_' + id).children().append(delButton);
 		$('#span_' + id).attr('data-clicked', 'true');
@@ -713,9 +674,7 @@ function pfedit(id) {
 				return;
 			}
 			$("#" + e.target.id).attr("contenteditable", "false");
-			console.log(originalH2 + " : " + editedH2);
 			if (originalH2 != editedH2) {
-				console.log(id);
 				$.ajax({
 					url: "portfolio/testCode123/title",
 					method: "post",
@@ -723,12 +682,10 @@ function pfedit(id) {
 					dataType: "json",
 					data: JSON.stringify({ 'pid': id, 'title': editedH2 }),
 					success: (data) => {
-						console.log(data);
 						$('#span_' + id).attr('data-clicked', 'false');
 					}
 				});
 			} else {
-				console.log("title 안바뀜");
 				return;
 			}
 		}
@@ -737,7 +694,6 @@ function pfedit(id) {
 		if (e.type == "blur" || e.type == "keypress && e.which ==13") {
 			editedP = p.text();
 			$("#" + e.target.id).attr("contenteditable", "false");
-			console.log(originalP + " : " + editedP);
 			if (originalP != editedP) {
 				if (editedP.length > 10) {
 					alert('설명은 10글자까지 가능합니다.');
@@ -745,8 +701,6 @@ function pfedit(id) {
 					editClicked(id);
 					return;
 				}
-				console.log(editedP.length);
-				console.log(id);
 				$.ajax({
 					url: "portfolio/testCode123/dis",
 					method: "post",
@@ -754,12 +708,10 @@ function pfedit(id) {
 					dataType: "json",
 					data: JSON.stringify({ 'pid': id, 'discription': editedP }),
 					success: (data) => {
-						console.log(data);
 						$('#span_' + id).attr('data-clicked', 'false');
 					}
 				});
 			} else {
-				console.log("discription 안바뀜");
 				return;
 			}
 		}
@@ -769,10 +721,8 @@ function pfedit(id) {
 
 // edit 버튼을 누르면 del 버튼이 나오고, delButton 으로 삭제할 수 있다.
 function delButtonClicked(id) {
-	console.log(id);
 	if (confirm('삭제하시겠습니까?')) {
 		$.get('portfolio/deletePortfolio/' + id, function(data) {
-			console.log('삭제됨');
 			location.reload();
 		})
 	}
@@ -780,7 +730,6 @@ function delButtonClicked(id) {
 // info 관련 모든 정보를 detatch
 // small 카드를 눌렀을 시 실행된 함수로 append 된 tag 들이 모두 사라진다.
 function detatchAll() {
-	console.log($('#myStockCardTable').children().length);
 	$('#portfolioInfoWrapper').remove();
 	$('#donutChartBody').children().each((idx, e) => {
 		$(e).remove();
@@ -788,18 +737,13 @@ function detatchAll() {
 	$('#assetBody').children().each((idx, e) => {
 		$(e).remove();
 	});
-	console.log('실행');
 	$('#cardFooterWrapper').remove();
 	$('#portfolioRegWrapper').remove();
 	$('#myStockCardTable').children().each((idx, e) => {
-		console.log('실행됨');
-		console.log(e);
 		$(e).remove();
 	})
 	$('#rankingBodyInner').remove();
 	$('#myTradeLogTable').children().each((idx, e) => {
-		console.log('실행됨');
-		console.log(e);
 		$(e).remove();
 	})
 }
@@ -807,7 +751,6 @@ function detatchAll() {
 // 새 창을띄우고, placeholder 에 살 주식의 이름을 띄워준다.
 // 띄워준 이름에 숫자를 입력하면 해당 갯수만큼의 해당 주식을 구입/ 판매 한다.
 function newWindow(pId, stockId, type, stockname) {
-	console.log(pId, stockId, type, stockname);
 	var newWindow = window.open(
 		"portfolio/popUpPage",
 		"_blank",
@@ -856,14 +799,12 @@ function numberWithCommas(number) {
 
 // 추가 buy 시  new window 를 띄움.
 function buyClicked(pId, stockId, stockname) {
-	console.log(pId + '    ' + stockId);
 	newWindow(pId, stockId, 'buy', stockname);
 }
 
 
 // 추가 sell 시 클릭시 new window 를 띄움.
 function sellClicked(pId, stockId, stockname) {
-	console.log(pId + '    ' + stockId);
 	newWindow(pId, stockId, 'sell', stockname)
 }
 
@@ -912,9 +853,7 @@ async function addStockClicked() {
 
 // stockname 과 stockAmount 를 통해 주식을 구매한다.
 async function confrimBtnClicked(stockName, stockAmount) {
-	console.log($('div[data-clicked="true"]').attr('id'));
 	let pfid = $('div[data-clicked="true"]').attr('id');
-	console.log(pfid);
 	let stock = await getStockByStockName(stockName);
 	let data = {
 		'portfolioId': pfid,
@@ -923,7 +862,6 @@ async function confrimBtnClicked(stockName, stockAmount) {
 		'amount': stockAmount,
 		'price': stock.price
 	};
-	console.log(stock);
 	if (stock.companyCode == undefined || stock.companyCode == "" || stockAmount == undefined || stockAmount == "" || stock.price == undefined || stock.price == "") {
 		//alert('값을 제대로 입력해주세요.');
 	}
@@ -933,7 +871,6 @@ async function confrimBtnClicked(stockName, stockAmount) {
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		success: (data) => {
-			console.log(data);
 			detatchAll();
 			$('#smallCardC_' + pfid).click();
 			$('#smallCardC_' + pfid).click();
@@ -943,9 +880,6 @@ async function confrimBtnClicked(stockName, stockAmount) {
 
 // tr 의 색을 +% 일경우 빨강, -% 일경우 파랑으로 바꾼다.
 function calculatePercentageChange(oldValue, newValue, tr) {
-	console.log('----------------');
-	console.log(oldValue);
-	console.log(newValue);
 	if (oldValue === 0) {
 		if (newValue === 0) {
 			return 0; // 두 값이 모두 0이면 변화가 없음
@@ -983,7 +917,6 @@ async function getAutoCompleteData() {
 // stock 의 이름으로 stock 의 정보를 가져온다.
 async function getStockByStockName(stockName) {
 	let fetchData = await fetch("/portfolio/getStockByStockName/" + stockName).then((les) => les.json());
-	console.log(fetchData);
 	return fetchData;
 }
 

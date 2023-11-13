@@ -28,7 +28,6 @@ import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
-import com.green.greenstock.handler.exception.UnAuthorizedException;
 import com.green.greenstock.repository.entity.AdvisorBoardEntity;
 import com.green.greenstock.repository.entity.AdvisorEntity;
 import com.green.greenstock.repository.entity.ImageEntity;
@@ -40,7 +39,6 @@ import com.green.greenstock.repository.interfaces.AdvisorEntityRepository;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
 import com.green.greenstock.repository.interfaces.ImageEntityRepository;
 import com.green.greenstock.repository.interfaces.SubscribeToAdvisorEntityRepository;
-import com.green.greenstock.repository.interfaces.SubscribeToAdvisorRepository;
 import com.green.greenstock.repository.interfaces.UserEntityRepository;
 import com.green.greenstock.repository.model.Advisor;
 import com.green.greenstock.repository.model.AdvisorBoard;
@@ -58,7 +56,6 @@ public class AdvisorService {
     private final AdvisorRepository advisorRepository;
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final UserEntityRepository userEntityRepository;
-    private final SubscribeToAdvisorRepository subscribeToAdvisorRepository;
     private final AdvisorBoardRepository advisorBoardRepository;
 
     @Value("${spring.servlet.multipart.location}")
@@ -97,6 +94,12 @@ public class AdvisorService {
         }
         return advisorResDto.fromEntity(advisorEntity);
     }
+
+    @Transactional
+    public int findCountByNickname(String nickname){
+        return advisorRepository.findCountByAdvisorNickname(nickname);
+    }
+
 
     /**
      * 전문가 신청하기
@@ -338,6 +341,12 @@ public class AdvisorService {
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
         advisorBoardEntity.setTitle(advisorBoardReqDto.getTitle());
         advisorBoardEntity.setContent(advisorBoardReqDto.getContent());
+    }
+
+    // 전문가 신청, 이미 전문가인지  확인
+    public AdvisorEntity findByUserEntity(Integer id) {
+        UserEntity userEntity = userEntityRepository.findById(id).orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+        return advisorEntityRepository.findByUserEntity(userEntity);
     }
 
 }
