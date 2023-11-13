@@ -138,8 +138,7 @@
 		width: 80%;
 		margin: auto;
 		min-width: 600px;
-		min-height: 800px;
-		border: 1px solid black;
+		height: 1020px;
 	}
 }
 
@@ -226,7 +225,7 @@
 	<!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
 	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
-				<img src="https://picsum.photos/id/10/1500/300">	
+				<img src="/resources/img/banner/banner-img1.png">	
 				<img src="https://picsum.photos/id/30/1500/300">	
 				<img src="https://picsum.photos/id/50/1500/300">	
 				<img src="https://picsum.photos/id/70/1500/300">	
@@ -296,7 +295,7 @@
 					<tbody>
 						<c:forEach var="board" items="${boardList}">
 							<c:choose>
-								<c:when test="${board.recommand >= 2}">
+								<c:when test="${board.recommand >= 5}">
 									<tr style="background-color: #fee; font-weight: 500;">
 								</c:when>
 								<c:otherwise>

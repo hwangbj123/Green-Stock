@@ -156,7 +156,7 @@
 		    				<option value="userName">작성자</option>
 		    			</select>
 	    			</div>
-		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord">
+		    		<input class="form-control ec-search-bar" type="text" id="search-word" name="searchWord" autocomplete="off">
 		    		<button type="button" class="btn btn-primary" id="search-btn" onclick="boardListInit.searchValid()">검색</button>
 	    			<div style="border: 1px solid #CED4DA; height: 45px; width: 55px; border-radius: 5px; margin: 0px 10px;">
 		    			<select id="orderType" name="orderType">
