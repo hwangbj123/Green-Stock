@@ -261,8 +261,6 @@ public class MailServiceImpl implements MailCreateService, MailSendService{
 		msgg += "</div>";
 		message.setText(msgg, "utf-8", "html");
 		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
-		System.out.println(msg);
-		System.out.println(to);
 		emailsender.send(message);
 		return 1;
 	}
@@ -289,8 +287,6 @@ public class MailServiceImpl implements MailCreateService, MailSendService{
 		msgg += "</div>";
 		message.setText(msgg, "utf-8", "html");
 		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
-		System.out.println(msg);
-		System.out.println(to);
 		emailsender.send(message);
 		return 1;
 	}

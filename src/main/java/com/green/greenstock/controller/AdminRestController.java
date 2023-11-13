@@ -27,6 +27,9 @@ public class AdminRestController {
 
 	@Autowired
 	ViewRepository viewRepository;
+	
+	@Autowired
+	
 
 	@PostMapping("/refuse")
 	@ResponseBody
@@ -52,5 +55,10 @@ public class AdminRestController {
 	@GetMapping("/getDailyViewData")
 	public List<ViewLogDTO> getDailyViewCount(){
 		return viewRepository.findAll();
+	}
+	
+	@GetMapping("/insertData")
+	public void insertData() {
+		
 	}
 }
