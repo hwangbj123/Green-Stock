@@ -93,7 +93,7 @@
 						<div class="row">
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<div class="card card-default" style="height: 100%">
-									<div class="card-header justify-content-center" style="background-color:#0d6efd;">
+									<div class="card-header justify-content-center" style="background-color:#8eb7e3;">
 										<h2 style="color:white;">선택된 포트폴리오</h2>
 									</div>
 									<div id="portfolioInfo" class="card-body"></div>
@@ -103,7 +103,7 @@
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<!-- Doughnut Chart -->
 								<div class="card card-default" style="height: 100%">
-									<div class="card-header justify-content-center" style="background-color:#0d6efd;">
+									<div class="card-header justify-content-center" style="background-color:#8eb7e3;">
 										<h2 style="color:white;">주식 오버뷰</h2>
 									</div>
 									<div id="donutChartBody" class="card-body"></div>
@@ -113,7 +113,7 @@
 								<!-- Sales Graph -->
 								<div id="user-acquisition" style="height: 100%"
 									class="card card-default">
-									<div class="card-header justify-content-center" style="background-color:#0d6efd;">
+									<div class="card-header justify-content-center" style="background-color:#8eb7e3;">
 										<h2 id="modal_ranking" style="color:white">랭킹</h2>
 									</div>
 									<div id="rankingBody" style="overflow: auto" class="card-body">
@@ -128,7 +128,7 @@
 								<div
 									class="card card-table-border-none card-default recent-orders"
 									id="recent-orders">
-									<div class="card-header justify-content-between" style="background-color:#0d6efd;">
+									<div class="card-header justify-content-between" style="background-color:#8eb7e3;">
 										<h2 style="color:white">내 주식</h2>
 										<div id="addStock" style="cursor: pointer;color:white">
 											주식추가 <span style="width: 5%; height: 100%;color:white"
@@ -154,7 +154,7 @@
 								<div
 									class="card card-table-border-none card-default recent-orders"
 									id="recent-orders">
-									<div class="card-header justify-content-between" style="background-color:#0d6efd;">
+									<div class="card-header justify-content-between" style="background-color:#8eb7e3;">
 										<h2 style="color:white">거래 기록</h2>
 									</div>
 									<div class="card-body pt-0 pb-5"
@@ -179,7 +179,7 @@
 								<div class="card card-default" id="user-activity">
 									<div class="no-gutters">
 										<div>
-											<div class="card-header justify-content-between" style="background-color:#0d6efd;">
+											<div class="card-header justify-content-between" style="background-color:#8eb7e3;">
 												<h2 style="color:white">포트폴리오 성장률</h2>
 												<!-- <div class="date-range-report ">
 												<span></span>
