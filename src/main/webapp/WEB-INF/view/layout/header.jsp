@@ -61,6 +61,11 @@
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
     
+    <!-- Summernote -->
+	 <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
+	 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
     <style>
     	@font-face {
 		  font-family: "Dovemayo";
@@ -240,18 +245,5 @@
       </div>
       <!-- Ec Main Menu End -->
     </header>
-    <script>
-	    document.getElementById("dropdownBtn").addEventListener("click", function() {
-	        var dropdownContent = document.getElementById("dropdownContent");
-	        
-	        if (dropdownContent.style.display === "block") {
-	            dropdownContent.style.display = "none";
-	            dropdownContent.style.maxHeight = "0";
-	        } else {
-	            dropdownContent.style.display = "block";
-	            dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
-	        }
-	    });
-    </script>
   </body>
 </html>

@@ -41,7 +41,7 @@
 				<div class="col footer-bottom-right">
 					<div class="footer-bottom-payment d-flex justify-content-end">
 						<div class="payment-link">
-							<img src="assets/images/icons/payment.png" alt="">
+<!-- 							<img src="assets/images/icons/payment.png" alt=""> -->
 						</div>
 
 					</div>
