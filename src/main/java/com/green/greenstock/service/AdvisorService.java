@@ -228,11 +228,17 @@ public class AdvisorService {
     // 전문가 상담게시판 글 한개 보기
     @Transactional
     public AdvisorBoardResDto findByAdvisorBoardId(int advisorBoardId) {
+        // 대상 엔티티 찾기
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        // 조회수 증가
+        int originViews = advisorBoardEntity.getViews();
+        advisorBoardEntity.setViews(originViews + 1);
+        // 이전글 다음글 가져오기
         String localDateTime = advisorBoardEntity.getCreatedAt().toString();
         int advisorId = advisorBoardEntity.getAdvisorEntity().getAdvisorId();
         AdvisorBoard prevBoard = advisorBoardRepository.findPrevBoard(advisorId, localDateTime);
         AdvisorBoard nextBoard = advisorBoardRepository.findNextBoard(advisorId, localDateTime);
+        // 엔티티 dto 변환
         AdvisorBoardResDto advisorBoardResDto = AdvisorBoardResDto.fromEntity(advisorBoardEntity);
         advisorBoardResDto.setPrevBoard(prevBoard);
         advisorBoardResDto.setNextBoard(nextBoard);
@@ -254,6 +260,7 @@ public class AdvisorService {
     }
 
     // 글, 댓글 등록
+    @Transactional
     public AdvisorBoardEntity saveAdvisorBoard(AdvisorBoardReqDto advisorBoardReqDto) {
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorId(advisorBoardReqDto.getAdvisorId());
@@ -304,14 +311,33 @@ public class AdvisorService {
     }
 
     // 전문가 글 삭제
+    @Transactional
     public int deleteAdvisorBoard(int advisorBoardId) {
+        // 게시글 또는 댓글 찾기
         AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+
+        // 게시글이고 댓글이 있다면 삭제
+        List<AdvisorBoardEntity> advisorBoardEntities = advisorBoardEntityRepository.findByParent(advisorBoardId);
+        if(advisorBoardEntities.size() != 0){
+            advisorBoardEntityRepository.deleteAll(advisorBoardEntities);
+        }
+
+        // 게시글 또는 댓글 삭제
         int result = 0;
         if (advisorBoardEntity != null) {
             advisorBoardEntityRepository.delete(advisorBoardEntity);
             result = 1;
         }
         return result;
+    }
+
+    // 게시글 수정
+    @Transactional
+    public void updateAdvisorBoard(AdvisorBoardReqDto advisorBoardReqDto) {
+        int advisorBoardId = advisorBoardReqDto.getAdvisorBoardId();
+        AdvisorBoardEntity advisorBoardEntity = advisorBoardEntityRepository.findByAdvisorBoardId(advisorBoardId);
+        advisorBoardEntity.setTitle(advisorBoardReqDto.getTitle());
+        advisorBoardEntity.setContent(advisorBoardReqDto.getContent());
     }
 
 }
