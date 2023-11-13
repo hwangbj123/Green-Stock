@@ -26,6 +26,7 @@ import com.green.greenstock.dto.AdvisorBoardReplyResDto;
 import com.green.greenstock.dto.AdvisorBoardResDto;
 import com.green.greenstock.dto.AdvisorReqDto;
 import com.green.greenstock.dto.AdvisorResDto;
+import com.green.greenstock.dto.AdvisorSubCountResDto;
 import com.green.greenstock.handler.exception.CustomRestfulException;
 import com.green.greenstock.handler.exception.PageNotFoundException;
 import com.green.greenstock.repository.entity.AdvisorBoardEntity;
@@ -68,15 +69,8 @@ public class AdvisorService {
      * @return 전문가리스트
      */
     @Transactional
-    public List<AdvisorResDto> findByStatusAuth(int status) {
-        List<AdvisorEntity> advisorEntities = advisorEntityRepository.findByStatus(status);
-        List<AdvisorResDto> advisorResDtos = new ArrayList<>();
-        for (AdvisorEntity advisorEntity : advisorEntities) {
-            AdvisorResDto dto = new AdvisorResDto();
-            advisorResDtos.add(dto.fromEntity(advisorEntity));
-        }
-
-        return advisorResDtos;
+    public List<AdvisorSubCountResDto> findByAdvisorSubCount(String orderBy) {
+        return advisorRepository.findByAdvisorSubCount(orderBy);
     }
 
     /**
@@ -96,10 +90,9 @@ public class AdvisorService {
     }
 
     @Transactional
-    public int findCountByNickname(String nickname){
+    public int findCountByNickname(String nickname) {
         return advisorRepository.findCountByAdvisorNickname(nickname);
     }
-
 
     /**
      * 전문가 신청하기
@@ -321,7 +314,7 @@ public class AdvisorService {
 
         // 게시글이고 댓글이 있다면 삭제
         List<AdvisorBoardEntity> advisorBoardEntities = advisorBoardEntityRepository.findByParent(advisorBoardId);
-        if(advisorBoardEntities.size() != 0){
+        if (advisorBoardEntities.size() != 0) {
             advisorBoardEntityRepository.deleteAll(advisorBoardEntities);
         }
 
@@ -343,9 +336,10 @@ public class AdvisorService {
         advisorBoardEntity.setContent(advisorBoardReqDto.getContent());
     }
 
-    // 전문가 신청, 이미 전문가인지  확인
+    // 전문가 신청, 이미 전문가인지 확인
     public AdvisorEntity findByUserEntity(Integer id) {
-        UserEntity userEntity = userEntityRepository.findById(id).orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
+        UserEntity userEntity = userEntityRepository.findById(id)
+                .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
         return advisorEntityRepository.findByUserEntity(userEntity);
     }
 

@@ -76,6 +76,28 @@
 			  font-family: 'Dovemayo', sans-serif !important;
 			  font-weight: normal;
 			}
+			.advisorList .tab-content > .divOrderBy > div{
+				cursor: pointer;
+				color: #000;
+				box-sizing: border-box;
+				border-radius: 5px;
+				border: 1px solid gray;
+			}
+			.advisorList .tab-content > .divOrderBy > div:hover{
+				color: #FFF;
+				border: 1px solid #3474d4;
+				background-color: #3474d4;
+				box-shadow: 1px 1px 2px 1px gray;
+			}
+			.advisorList .tab-content > .divOrderBy > div.active{
+				color: #FFF;
+				border: 1px solid #3474d4;
+				background-color: #3474d4;
+			}
+			.advisorList .visible{
+				visibility: visible;
+			}
+
 		  </style>
 	</head>
 <body>
@@ -94,40 +116,33 @@
 	<div class="row m-tb-minus-15">
 		<div class="col">
 			<div class="tab-content">
+				<div class="divOrderBy row mb-3 justify-content-end pe-5" style="height: 30px; text-align: center;">
+					<div id="subscribeDesc" class="orderBy col-4 me-2 ${orderBy eq 'subscribeDesc' ? 'active' : ''}" style="line-height: 30px; width: 90px;">구독자순</div>
+					<div id="costDesc" class="orderBy col-4 me-2 ${orderBy eq 'costDesc' ? 'active' : ''}" style="line-height: 30px; width: 90px;">가격순</div>
+					<div id="createdAtDesc" class="orderBy col-4 ${orderBy eq 'createdAtDesc' ? 'active' : ''}" style="line-height: 30px; width: 90px;">최신등록순</div>
+				</div>
 				<div class="row">
 					<c:forEach var="advisor" items="${advisorResDtos}">
 						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
 							<div class="card">
 								<div class="mb-2">
-									<a href="/advisor/${advisor.nickName}">
-										<img src="/upload/${advisor.image}" alt="">
+									<a href="/advisor/${advisor.advisorNickName}">
+										<img src="/upload/${advisor.imgName}" alt="">
 									</a>
 								</div>
 								<div class="ec-pro-content text-center">
-									<h5 class="ec-pro-title"><a href="/advisor/${advisor.nickName}">${advisor.nickName}</a></h5>
-									<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">${advisor.strSpecialization}</a></h6>
+									<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorNickName}">${advisor.advisorNickName}</a></h5>
+									<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">${advisor.specialization}</a></h6>
 									<div class="ec-pro-rat-price">
 										<div class="ec-pro-rat-pri-inner">
 											<span class="ec-price">
-												<span class="new-price">&#8361; ${advisor.formatSubscriptionCost}</span>
+												<span class="new-price me-5">구독자수 : ${advisor.subscribeCount}</span>
+												<span class="new-price">&#8361; ${advisor.subscriptionCost}</span>
 											</span>
-											<!-- <span class="ec-pro-rating">
-												<i class="ecicon eci-star fill"></i>
-												<i class="ecicon eci-star fill"></i>
-												<i class="ecicon eci-star fill"></i>
-												<i class="ecicon eci-star-o"></i>
-												<i class="ecicon eci-star-o"></i>
-											</span> -->
 										</div>
 									</div>
 									<div class="pro-hidden-block">
-										<div class="ec-pro-desc">Lorem Ipsum is simply dummy text of the printing.</div>
-										<div class="ec-pro-actions">
-											<a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-											<button title="Add To Cart" class="add-to-cart btn btn-primary">Add To
-												Cart</button>
-											<a href="#" class="ec-btn-group quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-										</div>
+										<div class="ec-pro-desc">${advisor.introduction}</div>
 									</div>
 								</div>
 							</div>
@@ -141,4 +156,5 @@
 <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
 </body>
+<script src="/resources/js/custom/advisorList.js"></script>
 </html>

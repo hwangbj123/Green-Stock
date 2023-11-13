@@ -27,6 +27,7 @@ public class AdvisorInterceptor implements HandlerInterceptor {
 
     private final SubscribeToAdvisorEntityRepository subscribeToAdvisorEntityRepository;
     private final AdvisorEntityRepository advisorEntityRepository;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -45,8 +46,6 @@ public class AdvisorInterceptor implements HandlerInterceptor {
         if (parts.length > 4) {
             advisorNickName = parts[4];
         }
-
-        log.info("nick {}", advisorNickName);
 
         if (advisorNickName == null) {
             response.sendRedirect("/advisor/list");
