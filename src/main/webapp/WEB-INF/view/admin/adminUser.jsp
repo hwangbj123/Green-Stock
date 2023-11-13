@@ -69,22 +69,6 @@
 													pattern="yyyy-MM-dd" /></td>
 											<td><fmt:formatDate value="${user.suspensionEndDate}"
 													pattern="yyyy-MM-dd" /></td>
-											<td>
-												<div class="btn-group mb-1">
-													<button type="button" class="btn btn-outline-success">Info</button>
-													<button type="button"
-														class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-														data-bs-toggle="dropdown" aria-haspopup="true"
-														aria-expanded="false" data-display="static">
-														<span class="sr-only">정보</span>
-													</button>
-
-													<div class="dropdown-menu">
-														<a class="dropdown-item" href="#">수정</a> <a
-															class="dropdown-item" href="#">삭제</a>
-													</div>
-												</div>
-											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
