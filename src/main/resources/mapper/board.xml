@@ -23,7 +23,7 @@
 		)
 	</insert>
 	
-	<select id="selectBoardListAll" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.repository.model.Board">
+	<select id="selectMyBoardList" parameterType="com.green.greenstock.dto.PagingDto" resultType="com.green.greenstock.repository.model.Board">
 		select b.id,
 				title,
 				b.user_id,
@@ -43,6 +43,7 @@
 				 	where deleted != 1
 					group by board_id) r
 		on b.id = r.board_id
+		where b.user_id = #{userId}
 		order by id desc
 		limit #{offset}, #{recordSize}
 	</select>
@@ -178,4 +179,8 @@
 		and user_id = #{userId}
 	</insert>
 	
+	<select id="countMyBoard">
+		select count(*) from board
+		where user_id = #{userId}
+	</select>
 </mapper>

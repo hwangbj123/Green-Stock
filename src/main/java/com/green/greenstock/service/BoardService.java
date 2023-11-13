@@ -35,9 +35,6 @@ public class BoardService {
 		}
 		return boardRepository.insertBoard(board); 
 	}
-	public List<Board> selectBoardListAll(PagingDto paging){
-		return boardRepository.selectBoardListAll(paging);
-	}
 	public int selectBoardCount(PagingDto paging) {
 		return boardRepository.selectBoardCount(paging);
 	}
@@ -117,5 +114,8 @@ public class BoardService {
 	        response.addCookie(newCookie);
 	        System.out.println("새로운 Cookie 생성");
 	    }
+	}
+	public int countMyBoard(int userId) {
+		return boardRepository.countMyBoard(userId);
 	}
 }

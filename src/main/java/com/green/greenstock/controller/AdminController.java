@@ -93,7 +93,7 @@ public class AdminController {
         
 		// board 가져오기
 		PagingDto paging = new PagingDto();
-		List<Board> boardList = boardService.selectBoardListAll(paging);
+		List<Board> boardList = boardService.selectBoardSearchList(paging);
 		System.out.println("paging : " + paging);
 		// System.out.println("board : " + boardList.get(0));
 		model.addAttribute("boardList", boardList);

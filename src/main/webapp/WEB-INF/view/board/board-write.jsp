@@ -15,28 +15,36 @@
      <meta name="description" content="Best ecommerce html template for single and multi vendor store.">
      <meta name="author" content="ashishmaraviya">
  
-     <!-- site Favicon -->
-     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
-     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
-     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
- 
-<!--      css Icon Font -->
-     <link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
- 
-<!--      Main Style -->
-     <link rel="stylesheet" href="/resources/css/style.css" />
-     <link rel="stylesheet" href="/resources/css/responsive.css" />
- 
-<!--      Background css -->
-     <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-     
 <!--      Custom css -->
      <link rel="stylesheet" href="/resources/css/custom/boardWrite.css" />
      
      
 <!--Header -->
     <%@include file="/WEB-INF/view/layout/header.jsp"%>
-
+	
+	<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="row ec_breadcrumb_inner">
+						<div class="col-md-6 col-sm-12">
+							<h2 class="ec-breadcrumb-title">게시글</h2>
+						</div>
+						<div class="col-md-6 col-sm-12">
+						<!-- ec-breadcrumb-list start -->
+							<ul class="ec-breadcrumb-list">
+								<li class="ec-breadcrumb-item"><a href="/main">메인</a></li>
+								<li class="ec-breadcrumb-item"><a href="/board/list">게시판</a></li>
+								<li class="ec-breadcrumb-item active">게시글 작성</li>
+							</ul>
+						<!-- ec-breadcrumb-list end -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <!-- Ec Blog page -->
     <section class="ec-page-content section-space-p">
         <div class="container">

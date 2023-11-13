@@ -64,22 +64,6 @@ public class BoardController {
 		return "board/board-list";
 	}
 	
-//	@GetMapping("/search")
-//	public String boardSearchList(PagingDto paging, Model model) {
-//		List<String> cate = boardService.findCategoryList();
-//		int total = boardService.selectBoardCount(paging);
-//		Pagination pagination = new Pagination(total, paging);
-//		List<Board> list = boardService.selectBoardSearchList(paging);
-//		
-//		System.out.println("board search - page : "+pagination);
-//		System.out.println("board search - paging : "+paging);
-//		
-//		model.addAttribute("cate", cate);
-//		model.addAttribute("list", list);
-//		model.addAttribute("page", pagination);
-//		model.addAttribute("paging", paging);
-//		return "board/board-search";
-//	}
 	
 	@GetMapping("/detail")
 	public String boardDetail(ReplyPagingDto paging, HttpServletRequest request,HttpServletResponse response, Model model) {

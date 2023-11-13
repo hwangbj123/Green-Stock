@@ -168,6 +168,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                           <ul class="sub-menu" style="min-width: 120px">
                             <li><a href="/user/verify-user">내 정보 수정</a></li>
                             <li><a href="/user/payment">구독 목록</a></li>
+                            <li><a href="/user/my-info">내 글 목록</a></li>
                           </ul>
                         </li>
                       </ul>
@@ -247,6 +248,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                     <a href="/board/list">커뮤니티</a>
                     <ul class="sub-menu">
                       <li><a href="/notice/list">공지사항</a></li>
+                      <li><a href="/board/list">자유게시판</a></li>
                     </ul>
                   </li>
                 </ul>

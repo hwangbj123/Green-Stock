@@ -9,38 +9,14 @@
      <meta http-equiv="x-ua-compatible" content="ie=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
  
-     <title>Ekka - Ecommerce HTML Template + Admin Dashboard.</title>
+     <title>Green Stock</title>
      <meta name="keywords"
          content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
      <meta name="description" content="Best ecommerce html template for single and multi vendor store.">
      <meta name="author" content="ashishmaraviya">
  
-     <!-- site Favicon -->
-     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
-     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
-     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
- 
-     <!-- css Icon Font -->
-     <link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
- 
-     <!-- css All Plugins Files -->
-     <link rel="stylesheet" href="/resources/css/plugins/animate.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
- 
-     <!-- Main Style -->
-     <link rel="stylesheet" href="/resources/css/style.css" />
-     <link rel="stylesheet" href="/resources/css/responsive.css" />
- 
-     <!-- Background css -->
-     <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
-     
      <!-- Custom css -->
      <link rel="stylesheet" href="/resources/css/custom/boardWrite.css" />
-     
      
  </head>
 <body class="blog_page">
@@ -48,106 +24,28 @@
 <!--Header -->
     <%@include file="/WEB-INF/view/layout/header.jsp"%>
 
-    <!-- ekka Cart Start -->
-    <div class="ec-side-cart-overlay"></div>
-    <div id="ec-side-cart" class="ec-side-cart">
-        <div class="ec-cart-inner">
-            <div class="ec-cart-top">
-                <div class="ec-cart-title">
-                    <span class="cart_title">My Cart</span>
-                    <button class="ec-close">Ã</button>
-                </div>
-                <ul class="eccart-pro-items">
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/6_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">T-shirt For Women</a>
-                            <span class="cart-price"><span>$76.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/12_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Women Leather Shoes</a>
-                            <span class="cart-price"><span>$64.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="/resources/images/product-image/3_1.jpg" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Girls Nylon Purse</a>
-                            <span class="cart-price"><span>$59.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">Ã</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="ec-cart-bottom">
-                <div class="cart-sub-total">
-                    <table class="table cart-table">
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Sub-Total :</td>
-                                <td class="text-right">$300.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">VAT (20%) :</td>
-                                <td class="text-right">$60.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Total :</td>
-                                <td class="text-right primary-color">$360.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="cart_btn">
-                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                    <a href="checkout.html" class="btn btn-secondary">Checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ekka Cart End -->
-
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Blog Page</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Blog Page</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
-
+	<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="row ec_breadcrumb_inner">
+						<div class="col-md-6 col-sm-12">
+							<h2 class="ec-breadcrumb-title">게시글</h2>
+						</div>
+						<div class="col-md-6 col-sm-12">
+						<!-- ec-breadcrumb-list start -->
+							<ul class="ec-breadcrumb-list">
+								<li class="ec-breadcrumb-item"><a href="/main">메인</a></li>
+								<li class="ec-breadcrumb-item"><a href="/board/list">게시판</a></li>
+								<li class="ec-breadcrumb-item active">게시글 수정</li>
+							</ul>
+						<!-- ec-breadcrumb-list end -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- Ec Blog page -->
     <section class="ec-page-content section-space-p">
         <div class="container">

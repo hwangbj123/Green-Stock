@@ -24,4 +24,6 @@ public interface ReplyRepository {
 	public int replyThumbDelete(@Param("replyId") int replyId,@Param("userId") int userId);
 	public int getReplyCount(int replyId);
 	public List<Integer> replyUserCheck(@Param("userId") int userId, @Param("boardId") int boardId);
+	public List<Reply> selectMyReply(ReplyPagingDto paging);
+	public int countMyReply(int userId);
 }

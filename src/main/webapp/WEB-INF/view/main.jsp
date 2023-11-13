@@ -29,11 +29,24 @@
 .gstock-div{
 	border: 1px solid lightgrey;
 	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+	margin: 20px auto;
+	margin-top: 0px;
+}
+.gstock-div-title{
+	display: block;
+	width: 95%;
+	height: 50px;
+	background-color: #0d6efd;
+	text-align: center;
+	margin: 20px auto;
+	margin-bottom: 0px;
+	padding: 15px;
+	color: white;
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 #news-div {
 	width: 95%;
 	height: 350px;
-	margin: 20px auto;
 	padding: 20px;
 	text-align: center;
 }
@@ -56,7 +69,7 @@
 
 .main-div {
 	min-width: 300px;
-	height: 1000px;
+	height: 1100px;
 }
 
 .content-center {
@@ -74,7 +87,6 @@
 	width: 90%;
 	height: 400px;
 	border-radius: 20px;
-	margin: 20px auto;
 	padding: 15px;
 	text-align: center;
 }
@@ -134,7 +146,6 @@
 .board-div {
 	width: 95%;
 	height: 550px;
-	margin: 20px auto;
 	padding: 10px;
 	padding-top: 20px;
 	text-align: center;
@@ -154,8 +165,8 @@
 }
 
 .ad-slider {
-	width: 90%;
-	margin: 50px auto;
+	width: 100%;
+	margin-bottom: 50px;
 }
 .content-left > h6{
 	text-align: center;
@@ -174,8 +185,7 @@
 }
 .ranking-div {
 	width: 95%;
-	height: 92%;
-	margin: 20px auto;
+	height: 970px;
 	padding: 20px;
 	text-align: center;
 }
@@ -194,7 +204,7 @@
 }
 .ad-wrapper img{
 	width: 100%;
-	height: 250px;
+	height: 350px;
 }
 .chat-category {
 	width: 50%;
@@ -208,9 +218,6 @@
 #chat-cate-all {
 	background-color: rgb(214, 227, 246);
 }
-.chat-new td{
-/* 	background-color: ; */
-}
 </style>
 </head>
 
@@ -219,11 +226,11 @@
 	<!-- start of Main ---------------------------------------------------------------------------------------------------------------------- -->
 	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
-				<img src="https://picsum.photos/id/10/1500/250">	
-				<img src="https://picsum.photos/id/30/1500/250">	
-				<img src="https://picsum.photos/id/50/1500/250">	
-				<img src="https://picsum.photos/id/70/1500/250">	
-				<img src="https://picsum.photos/id/90/1500/250">	
+				<img src="https://picsum.photos/id/10/1500/300">	
+				<img src="https://picsum.photos/id/30/1500/300">	
+				<img src="https://picsum.photos/id/50/1500/300">	
+				<img src="https://picsum.photos/id/70/1500/300">	
+				<img src="https://picsum.photos/id/90/1500/300">	
 		</div>
 	</div>
 
@@ -232,8 +239,8 @@
 
 		<!----- 좌측 사이드 div ------------>
 		<div class="main-div content-left">
+			<h6 class="gstock-div-title">거래량 순위</h6>
 			<div class="gstock-div ranking-div">
-				<h6>거래량 순위</h6>
 				<div class="table-responsive divVolumeRank">
 	                <table class="table table-borederd tableVolumeRank">
 	                  <c:forEach var="item" items="${volumeRank}" varStatus="status">
@@ -252,8 +259,8 @@
 		<div class="main-div content-center">
 
 			<!--------- 뉴스 리스트 ------------>
+			<h6 class="gstock-div-title">금융 소식</h6>
 			<div class="gstock-div" id="news-div" style="font-weight: bold;">
-				<h6 style="margin-bottom: 15px;">금융 소식</h6>
 				<div id="newsWrapper"
 					style="display: flex; height: 85%; width: 100%;">
 					<div id="news_left"
@@ -273,16 +280,16 @@
 				</div>
 			</div>
 			<!--------- 게시판 리스트 ------------>
+			<h6 class="gstock-div-title">커뮤니티 인기글</h6>
 			<div class="gstock-div board-div">
-				<h6 style="margin-bottom: 15px;">커뮤니티 인기글</h6>
 				<table class="table centered-table">
 					<thead>
 						<tr>
-							<th colspan="2" style="min-width: 100px;">title</th>
-							<th style="width: 100px;">user</th>
-							<th style="width: 50px;">date</th>
-							<th style="width: 40px;">view</th>
-							<th style="width: 40px;">rec</th>
+							<th colspan="2" style="min-width: 100px;">제목</th>
+							<th style="width: 100px;">작성자</th>
+							<th style="width: 50px;">등록일</th>
+							<th style="width: 40px;">조회수</th>
+							<th style="width: 40px;">추천수</th>
 						</tr>
 					</thead>
 
@@ -345,7 +352,7 @@
 		<div class="main-div content-right">
 
 			<!--------- 채팅 리스트 ------------>
-			<div class="gstock-div chat-div">
+			<div class="gstock-div chat-div" style="margin-top: 20px;">
 				<h6>채팅</h6>
 				<c:choose>
 					<c:when test="${not empty chatList || not empty advisorChatList || not empty myAdvisorChatList}">

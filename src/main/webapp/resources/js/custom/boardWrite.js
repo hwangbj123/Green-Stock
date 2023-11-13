@@ -4,7 +4,7 @@ let boardWriteInit = {
 	submit: function(){
 		let category = document.getElementById("category-select");
 		let title = document.getElementById("title-input");
-		let content = document.getElementById("content-textarea");
+		let content = document.getElementById("summernote");
 		let writeForm = document.getElementById("board-write-frm");
 		
 		if(category.value.length==0){
