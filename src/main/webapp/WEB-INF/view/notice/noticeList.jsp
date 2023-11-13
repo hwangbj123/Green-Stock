@@ -6,7 +6,6 @@
 <html>
 <body>
 <header>
-
 		<!-- Ec Main Menu End -->
 		<div class="content container">
 			<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">				
@@ -27,10 +26,10 @@
 							display: flex;
 							justify-content: center;
 							align-items: center;">						
-							    <select class="custom-select" style="width: 150px">
-							    <option value="" disabled selected>선택</option>
-							    <option value="searchTitle">제목</option>							  
-								</select>	
+							<select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
+		                    <option value="select" disabled="disabled" selected="selected">선택</option>
+		                    <option value="searchTitle">제목</option>                                    
+		                	</select>	
 														   
 							    <input type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100" style="margin-right: 10px;">
 							    <button type="submit" class="btn btn-success" style="
@@ -62,7 +61,6 @@
 										<thead>
 											<tr style="text-align: center; background-color: #f2f2f2; font-weight: bold;">
 										    <th class="noticeId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending">번호</th>
-										    <th class="noticeId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending">파일</th>
 										    <th class="notice-Title" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">제목</th>
 										    <th class="notice-userId" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Offer: activate to sort column ascending" style="text-align: center;">작성자</th>
 										    <th class="notice-Created" tabindex="0" aria-controls="responsive-data-table" rowspan="1" colspan="1" aria-label="Purchased: activate to sort column ascending" style="text-align: center;">작성일</th>
@@ -74,8 +72,7 @@
 											<c:forEach items="${noticeList}" var="notice" varStatus="status">
 												<tr class="Noticeboard-list">
 													<!-- <img class="tbl-thumb"></td> -->
-													<td style="width: 10%; text-align: center;">${total - status.index - (pagination.currentPage -1) * 10 }</td>
-													<td style="width: 10%;text-align: center">파일</td>
+													<td style="width: 10%; text-align: center;">${total - status.index - (pagination.currentPage -1) * 10 }</td>											
 													<td style="width: 40%;"><a href="/notice/view/${notice.id}">${notice.noticeTitle}</a></td>
 													<td style="width: 10%; text-align: center;">관리자</td>																																						
 												<c:set var ="noticeUpdated" value="${notice.noticeUpdated}"/>																									

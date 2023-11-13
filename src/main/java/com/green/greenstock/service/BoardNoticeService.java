@@ -2,6 +2,8 @@ package com.green.greenstock.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +33,8 @@ public class BoardNoticeService {
 	}
 		
 	/**
-	 * 공지사항 작성(파일 업로드 추가 예정)
-	 * @param 
+	 * 공지사항 작성
+	 * @param -write
 	 */
 	public int noticeWriteService(Noticeboard noticeboard ) {
 		int result = noticeRepository.writeNotice(noticeboard);
@@ -41,7 +43,8 @@ public class BoardNoticeService {
 
 	/**
 	 * 공지 사항 수정
-	 * @return 
+	 * @param -update
+	 * @return result(상태값) 
 	 * 
 	 */
 	public int noticeUpdateService(NoticeUpdateDto noticeupdateDto) {
@@ -58,7 +61,7 @@ public class BoardNoticeService {
 	
 	/**
 	 * 공지 사항 삭제
-	 * 
+	 * @param - delete
 	 */
 	public int noticeDeleteService(int id) {
 		return noticeRepository.deleteNotice(id);		
@@ -66,7 +69,7 @@ public class BoardNoticeService {
 
 	/**
 	 *	공지사항 상세보기  
-	 *  
+	 *  @param - view
 	 */
 	public Noticeboard noticeViewService(int id) {
 		Noticeboard noticeboard = noticeRepository.viewNoticePage(id);
@@ -75,6 +78,7 @@ public class BoardNoticeService {
 	}
 	/**
 	 * 공개 비공개 처리
+	 * @param - noticeState
 	 */
 	
 	public int noticeStateService(int id) {
@@ -84,6 +88,7 @@ public class BoardNoticeService {
 		
 	/**
 	 * 조회수 증가 
+	 * @param - HitCount
 	 */
 	
 	public int noticeHitCountService(int id) {
@@ -93,7 +98,7 @@ public class BoardNoticeService {
 
 
 	/**
-	 * 파라메터 조건에 따라 글개수 반환
+	 * 파라메터 조건에 따라 글 갯수 반환
 	 * @param noticeState
 	 * @param noticeTitle
 	 * @return 글개수

@@ -56,24 +56,24 @@
         <!-- Header responsive Bottom  End -->        
         <!-- Ec Main Menu End -->	
 	<div class="content container" style="width : 50%;">
-		<div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">					
-			
+		<div class="breadcrumb-wrapper breadcrumb-contacts">
 			<div>
-				<p class="breadcrumbs">										
-					<i class="mdi mdi-chevron-right">
-					</i>
-					<h2 style="width: 900px; text-align: center;">상세보기</h2>
-					<div class="search-container" >					
-				</div>					
-			</div>			
+				<h1>공지사항</h1>
+				<p class="breadcrumbs">
+					<span><a href="/admin/main">Main</a></span> <span><i
+						class="mdi mdi-chevron-right"></i></span>Notice 
+						<i class="mdi mdi-chevron-right"></i><span>View</span>
+				</p>
+			</div>
 		</div>
 			<div class="row">
 			<div class="col-12">
 				<div class="card card-default" style="width: 900px">					
 					<div class="card-body" style="width:900px" >
-						<h4 style="border-bottom: 2px solid #ccc;">${view.noticeTitle}</h4> 
+						<h4 style="border-left: 12px solid ;border-bottom: 3px solid; color: #808080;">${view.noticeTitle}</h4> 
 						<p>작성자 :${view.userId}</p>  
-						<p style="border-bottom: 2px solid #ccc;">${view.noticeCreated}</p>						
+						<fmt:formatDate value="${view.noticeCreated}" pattern="yyyy-MM-dd-mm" var="formattedDate" />
+						<p style="border-bottom: 2px solid #ccc;">${formattedDate}</p>						
 						<p style="border-bottom: 2px solid #ccc;">조회수:${view.hitCount}</p>					
 						<p><textarea readonly="readonly" style ="width: 852px; height: 26em; border: none; resize: none; border-bottom: 2px solid #ccc;">${view.noticeContent}</textarea></p>
 						<table class="table-responsive">
@@ -90,5 +90,4 @@
 			</div>
 </body>	
 </html>
-
 <%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>

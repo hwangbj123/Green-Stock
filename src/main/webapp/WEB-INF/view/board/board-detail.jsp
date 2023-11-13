@@ -174,7 +174,7 @@
 	                                        	<c:if test="${comment.deleted ne 0}">
 	                                        		<c:out value="background-color: #f7f7f7;"/>
 	                                        	</c:if>
-	                                        ">
+	                                        	">
 	                                            <div class="ec-blog-comment-content">
 	                                                <h5>${comment.userName}</h5>
 	                                                <span><fmt:formatDate value="${comment.date}" pattern="yyyy-MM-dd HH:mm:ss"/> </span>

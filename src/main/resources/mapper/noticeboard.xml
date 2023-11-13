@@ -15,7 +15,7 @@
     	</if>
     	<if test="noticeTitle !=null">
     	 	AND notice_title like CONCAT("%", #{noticeTitle}, "%")     	 	    	      
-    	</if>    	
+    	</if>        	
     </where>   
     ORDER BY notice_updated DESC
     LIMIT #{offset}, 10; 			
