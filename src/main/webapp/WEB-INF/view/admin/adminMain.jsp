@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
+	<style>
+		.centered-table {
+			text-align: center;
+		}
+	</style>
+
 <!-- CONTENT WRAPPER -->
 <div class="ec-content-wrapper">
 	<div class="content">
@@ -69,20 +75,20 @@
 					<div class="no-gutters">
 						<div>
 							<div class="card-header justify-content-between">
-								<h2>Board List</h2>
+								<h2>게시판 글 목록</h2>
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table id="responsive-data-table" class="table centered-table">
 										<thead>
 											<tr>
-												<th style="max-width: 50px;">id</th>
-												<th style="max-width: 50px;">cate</th>
-												<th style="min-width: 150px;">title</th>
-												<th>user</th>
-												<th>date</th>
-												<th style="max-width: 50px;">views</th>
-												<th style="max-width: 50px;">rec</th>
+												<th style="width: 65px;">글 번호</th>
+												<th style="width: 75px;">카테고리</th>
+												<th style="min-width: 150px;">제목</th>
+												<th>작성자</th>
+												<th>등록일</th>
+												<th style="width: 60px;">조회수</th>
+												<th style="width: 60px;">추천수</th>
 											</tr>
 										</thead>
 
@@ -91,34 +97,26 @@
 												<tr>
 													<td>${board.id}</td>
 													<td>${board.categoryId}</td>
-													<td><a href="/board/detail?boardId=${board.id}">
-															${board.title}</a></td>
+													<td style="width: 100px; text-align: left; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+														<a href="/board/detail?boardId=${board.id}">
+															${board.title}
+														</a>
+													</td>
 													<td>${board.userName}</td>
 													<td><fmt:formatDate value="${board.date}"
-															pattern="MM-dd HH:mm:ss" /></td>
+															pattern="MM-dd HH:mm" /></td>
 													<td>${board.views}</td>
 													<td>${board.recommand}</td>
 												</tr>
 											</c:forEach>
 											<tr>
 												<td colspan="7" style="text-align: center;"><a
-													href="/board/list">게시판 더 보기</a></td>
+													href="/admin/board">게시판 더 보기</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<!-- 							<div class="card-body"> -->
-							<!-- 								<div class="tab-content" id="userActivityContent"> -->
-							<!-- 									<div class="tab-pane fade show active" id="user" -->
-							<!-- 										role="tabpanel"> -->
-							<!-- 										<canvas id="activity" class="chartjs"></canvas> -->
-							<!-- 									</div> -->
-							<!-- 								</div> -->
-							<!-- 							</div> -->
-							<!-- 							<div class="card-footer d-flex flex-wrap bg-white border-top"> -->
-							<!-- 								<a href="#" class="text-uppercase py-3">In-Detail Overview</a> -->
-							<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

@@ -122,7 +122,15 @@
 				 	where deleted != 1
 					group by board_id) r
 		on b.id = r.board_id
-		where user_name = #{searchWord}
+		<if test="searchWord != null">
+			where user_name = #{searchWord}
+		</if>
+		order by
+		<if test="orderType != null">
+		recommand desc,
+		</if> 
+		b.id desc
+		limit #{offset}, #{recordSize}
 	</select>
 	
 	<update id="viewCountUp">
