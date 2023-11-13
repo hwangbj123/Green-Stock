@@ -9,34 +9,11 @@
      <meta http-equiv="x-ua-compatible" content="ie=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
  
-     <title>Ekka - Ecommerce HTML Template + Admin Dashboard.</title>
+     <title>Green Stock</title>
      <meta name="keywords"
          content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
      <meta name="description" content="Best ecommerce html template for single and multi vendor store.">
      <meta name="author" content="ashishmaraviya">
- 
-     <!-- site Favicon -->
-     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
-     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
-     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
- 
-     <!-- css Icon Font -->
-     <link rel="stylesheet" href="/resources/css/vendor/ecicons.min.css" />
- 
-     <!-- css All Plugins Files -->
-     <link rel="stylesheet" href="/resources/css/plugins/animate.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/swiper-bundle.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/jquery-ui.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/countdownTimer.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/slick.min.css" />
-     <link rel="stylesheet" href="/resources/css/plugins/bootstrap.css" />
- 
-     <!-- Main Style -->
-     <link rel="stylesheet" href="/resources/css/style.css" />
-     <link rel="stylesheet" href="/resources/css/responsive.css" />
- 
-     <!-- Background css -->
-     <link rel="stylesheet" id="bg-switcher-css" href="/resources/css/backgrounds/bg-4.css">
  
      <!-- Custom css -->
      <link rel="stylesheet" href="/resources/css/custom/boardList.css" />
@@ -46,7 +23,28 @@
 <!--Header -->
     <%@include file="/WEB-INF/view/layout/header.jsp"%>
 
-
+	<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="row ec_breadcrumb_inner">
+						<div class="col-md-6 col-sm-12">
+							<h2 class="ec-breadcrumb-title">게시판</h2>
+						</div>
+						<div class="col-md-6 col-sm-12">
+						<!-- ec-breadcrumb-list start -->
+							<ul class="ec-breadcrumb-list">
+								<li class="ec-breadcrumb-item"><a href="/main">메인</a></li>
+								<li class="ec-breadcrumb-item active">게시판</li>
+							</ul>
+						<!-- ec-breadcrumb-list end -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <div class="section-space-p">
 <!------카테고리 div	    	 -->
     	<table id="category-tb">

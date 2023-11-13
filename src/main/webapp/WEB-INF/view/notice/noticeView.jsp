@@ -98,22 +98,29 @@
 			</div>					
 		</div>
 		<div class="row">
-			<div class="col-12">												
-						<h4>제목 : ${view.noticeTitle}</h4> 
-						<p>작성자 : 관리자</p>  
+			<div class="col-12">	
+																	
+						<h4 style="border-left: 12px solid; border-bottom: 12px solid #C0C0C0; color: #C0C0C0;">
+						    <span style="color: black;">제목 : ${view.noticeTitle}</span>
+						</h4>
+
+						 
+						<p style="border-bottom: 1px solid #C0C0C0; color: black;">작성자 : 관리자</p>
 						<c:set var="formattedDate">
 					    <fmt:formatDate value="${view.noticeUpdated}" pattern="yyyy-MM-dd"/>
 						</c:set>					
-						<p style="">작성일자: ${formattedDate}</p>					
-						<p><textarea readonly="readonly" style ="width: 100%; height: 23em; border: none; resize: none">${view.noticeContent}</textarea></p>
-						<table class="table-responsive">
-						    <tr>					     
+						<p style="border-bottom: 1px solid #C0C0C0; color: black;"">작성일자: ${formattedDate}</p>					
+						<p style="margin-bottom: 30px;">
+    					<textarea readonly="readonly" style="width: 100%; height: 23em; resize: none; color: black; border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0; border-left: none; border-right: none;">${view.noticeContent}</textarea>
+    					</p>
+						<table class="table-responsive"style =" color : border-bottom: 1px solid;color: #C0C0C0">
+						    <tr style="border: none; resize: none" >					     
 					          <td><a href = "/notice/list" class="btn btn-primary">목록으로</a></td>
 					      	</tr>							  
 						</table>														 							   												
 				</div>
 			</div>
-		</div>	
+		</div>		
 	</header>
 	</body>
 	</head>

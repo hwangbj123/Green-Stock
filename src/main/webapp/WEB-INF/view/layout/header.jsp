@@ -58,6 +58,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <!-- Main Js -->
     <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/main.js"></script>
+    
+    <!-- Summernote -->
+	 <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
+	 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
       @font-face {
@@ -163,6 +168,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                           <ul class="sub-menu" style="min-width: 120px">
                             <li><a href="/user/verify-user">내 정보 수정</a></li>
                             <li><a href="/user/payment">구독 목록</a></li>
+                            <li><a href="/user/my-info">내 글 목록</a></li>
                           </ul>
                         </li>
                       </ul>
@@ -242,6 +248,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                     <a href="/board/list">커뮤니티</a>
                     <ul class="sub-menu">
                       <li><a href="/notice/list">공지사항</a></li>
+                      <li><a href="/board/list">자유게시판</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -252,18 +259,5 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       </div>
       <!-- Ec Main Menu End -->
     </header>
-    <script>
-      document.getElementById('dropdownBtn').addEventListener('click', function () {
-        var dropdownContent = document.getElementById('dropdownContent');
-
-        if (dropdownContent.style.display === 'block') {
-          dropdownContent.style.display = 'none';
-          dropdownContent.style.maxHeight = '0';
-        } else {
-          dropdownContent.style.display = 'block';
-          dropdownContent.style.maxHeight = dropdownContent.scrollHeight + 'px';
-        }
-      });
-    </script>
   </body>
 </html>

@@ -65,4 +65,10 @@ public class ReplyService {
 	public List<Integer> replyUserCheck(int userId, int boardId) {
 		return replyRepository.replyUserCheck(userId, boardId);
 	}
+	public List<Reply> selectMyReply(ReplyPagingDto paging){
+		return replyRepository.selectMyReply(paging);
+	}
+	public int countMyReply(int userId) {
+		return replyRepository.countMyReply(userId);
+	}
 }

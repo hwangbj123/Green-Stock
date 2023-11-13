@@ -141,9 +141,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
               </c:if>
               <button class="btn btn-subscribe" id="btnAdvisorList">목록으로</button>
               <c:if test="${validate}">
-                <button class="btn btn-info btn-advisor" id="btnAdvisorBoard" data-id="${advisor.advisorId}">상담게시판</button>
-                <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}">실시간채팅</button>
-              </c:if>
+              <button class="btn btn-info btn-advisor" id="btnAdvisorBoard" data-id="${advisor.advisorId}">
+                상담게시판
+              </button>
+              <button class="btn btn-info btn-advisor" id="btnAdvisorChat" data-id="${advisor.advisorId}"
+              		onclick="window.open('/chat?companyCode=${advisor.nickName}@${principal.userName}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+              	실시간채팅
+              </button>
+            </c:if>
             </div>
           </div>
         </div>

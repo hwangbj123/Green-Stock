@@ -54,7 +54,8 @@
 
 	
 }
-</style> 
+</style>
+
 <html>
 <body>
 <div class="ec-content-wrapper"></div>
@@ -71,25 +72,26 @@
 			</div>
 		</div>
 				<!-- 검색페이지 시작 -->
-				<div class="container">
-					<div class="row">					
-						<form action="/notice/admin/list" method="get">		
-						<div class="font-size">
-							<p class="breadcrumbs"></p>
-								</div>																							
-							<h2 style="width: 100%; text-align: center;">공지사항</h2>
-							<!--  검색 영역 시작 -->
-							<div class="search-container" style="text-align: center; margin: 0 auto;	height: 100px;	width: 600px; 	display: flex; justify-content: center;	align-items: center;">																																																	
-							    <select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
-							    	<option value="" disabled="" selected="">선택</option>
-							    	<option value="searchTitle">제목</option>							    	
-								</select>							    												
-							    <input type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100"   style="margin-right: 10px;">							  
-							    <button type="submit" class="btn btn-success" style=" text-align: center;	 width: 100px;  height: 42px;">검색</button>							 						
-							</div>
-						</form>
-					</div>	
-				</div>
+	<!-- HTML 코드 -->
+<div class="container">
+    <div class="row">                    
+        <form id="searchForm" action="/notice/admin/list" method="get" onsubmit="return validateSearch()">        
+            <div class="font-size">
+                <p class="breadcrumbs"></p>
+            </div>                                                                                            
+            <h2 style="width: 100%; text-align: center;">공지사항</h2>
+            <!--  검색 영역 시작 -->
+            <div class="search-container" style="text-align: center; margin: 0 auto; height: 100px; width: 600px; display: flex; justify-content: center; align-items: center;">                                                                                                                              
+                <select class="custom-select" style="margin: 19px;height: 40px;width: 150px;">
+                    <option value="select" disabled="disabled" selected="selected">선택</option>
+                    <option value="searchTitle">제목</option>                                    
+                </select>                                   
+                <input id="searchInput" type="text" class="form-control" placeholder="검색어 입력" name="noticeTitle" maxlength="100" style="margin-right: 10px;">                              
+                <button type="submit" class="btn btn-success" style="text-align: center; width: 100px; height: 42px;">검색</button>                                      
+            </div>                                                        
+        </form>
+    </div>  
+</div>
 				<!-- 검색페이지 종료 -->
 			</div>
 			<div class="row">
@@ -174,7 +176,7 @@
 										<a href="/notice/admin/write" class="btn btn-primary"
 											style="display: inline-block; vertical-align: inherit; text-align: center; font-weight: bold; color: white;">작성하기</a>																																																																																																
 												
-												<!-- 페이징 영역 -->										
+												<!-- 페이징 부분-->										
 											<div class="ec-pro-pagination" style="display: flex; text-align: center;">
 					                            <span>Showing ${pagination.start}-${pagination.end} 전채 ${pagination.totalCount} 개</span>
 					                                	<a class="next" href="/notice/admin/list?page=${pagination.currentPage -1}"><i class="ecicon eci-angle-left"></i></a>
@@ -186,7 +188,7 @@
 					                            
 					                            	<c:forEach var="num" begin="${pagination.startPageGroup}" end="${pagination.endPageGroup}">
 					                                <li>
-					                                <a class="${num eq pagination.currentPage ? 'active' : ''}" href="/notice/admin/list?page=${num}">${num}</a>
+					                                <a style="display: flex; justify-content: center;" class="${num eq pagination.currentPage ? 'active' : ''}" href="/notice/admin/list?page=${num}">${num}</a>
 					                                </li>
 					                                </c:forEach>
 					                                <c:if test="${pagination.nextPageGroup}">
@@ -194,7 +196,7 @@
 					                               	</c:if>
 					                            </ul>
 					                        </div>
-					                        <!--페이징 영역 종료  -->																		
+					                        <!--페이징 부분 종료  -->																		
 									</div>	
 								</div>
 							</div>

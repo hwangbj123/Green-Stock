@@ -41,8 +41,8 @@
 }
 
 .col-xl-3.col-sm-6.p-b-15.lbl-card[data-clicked="true"] .card-body {
-    border: 1px solid rgba(0, 0, 255, 0.3);
-    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 255, 0.3);
+	box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 </style>
 </head>
@@ -61,7 +61,28 @@
 
 				<!-- Header -->
 				<%@ include file="/WEB-INF/view/layout/header.jsp"%>
-
+				<div class="sticky-header-next-sec ec-breadcrumb section-space-mb"
+					style="display: block">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="row ec_breadcrumb_inner">
+									<div class="col-md-6 col-sm-12">
+										<h2 class="ec-breadcrumb-title">Portfolio</h2>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<!-- ec-breadcrumb-list start -->
+										<ul class="ec-breadcrumb-list">
+											<li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+											<li class="ec-breadcrumb-item active">Portfolio</li>
+										</ul>
+										<!-- ec-breadcrumb-list end -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- CONTENT WRAPPER -->
 				<div class="ec-content-wrapper" style="width: 50%; margin: auto;">
 					<div class="content">
@@ -90,7 +111,8 @@
 							</div>
 							<div class="col-xl-4 col-md-12 p-b-15">
 								<!-- Sales Graph -->
-								<div id="user-acquisition" style = "height: 100%"class="card card-default">
+								<div id="user-acquisition" style="height: 100%"
+									class="card card-default">
 									<div class="card-header justify-content-center">
 										<h2 id="modal_ranking">랭킹</h2>
 									</div>

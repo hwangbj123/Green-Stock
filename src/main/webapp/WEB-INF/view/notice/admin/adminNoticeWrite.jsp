@@ -72,15 +72,13 @@
             <table class="noticeWrite" style="width: 840px; height:200px ;">            
             	<tbody><tr>
             		<td>
-            			<input type="text" value="" name="noticeTitle" required="required">
+            			<textarea name="noticeTitle" required style="font-size: 23px; width: 100%; height: 100px; resize: none; bac border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0; border-left: none; border-right:none;">${notice.noticeTitle}</textarea>   
             		</td>
             	</tr>            	
             	<tr>
             		<td>
             		작성란:
-            		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>
-            		
-            		<input type ="file" name="files" value="파일 업로드">
+            		<textarea name="noticeContent" required="required" style="resize: none; width: 840px; height :500px;"></textarea>            		            
             		</td>            		            	
             		
             	</tr>  
