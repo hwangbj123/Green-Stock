@@ -127,8 +127,8 @@
 				<div class="card card-default">
 					<div class="card-header flex-column align-items-start">
 						<h2>월별 구독자 수</h2>
-						<input type="hidden" id="months" value="${months}">
-						<input type="hidden" id="countSubUserList" value="${countSubUserList}">
+						<input type="hidden" id="months" value="${months}"> <input
+							type="hidden" id="countSubUserList" value="${countSubUserList}">
 					</div>
 					<div class="card-body">
 						<canvas id="cSubscribe" class="chartjs"></canvas>
@@ -142,226 +142,191 @@
 <!-- End Content Wrapper -->
 <%@include file="/WEB-INF/view/layout/adminFooter.jsp"%>
 <script>
+	var cUser = document.getElementById("cSubscribe");
+	var monthsList = document.getElementById("months").value;
+	var countSubUserListString = document.getElementById("countSubUserList").value;
+	var modifyMonthList = JSON.parse(monthsList);
+	var months = modifyMonthList.map(function(item) {
+		if (typeof item === 'string') {
+			return item.replace(/\[|\]/g, '');
+		} else {
+			return item + "월";
+		}
+	});
+	var countSubUserList = JSON.parse(countSubUserListString);
+	var modifiedCountSubUserList = countSubUserList.map(function(item) {
+		if (typeof item === 'string') {
+			return item.replace(/\[|\]/g, '');
+		} else {
+			return item;
+		}
+	});
 
-var cUser = document.getElementById("cSubscribe");
-var monthsList = document.getElementById("months").value;
-var countSubUserListString = document.getElementById("countSubUserList").value;
-var modifyMonthList = JSON.parse(monthsList);
-var months = modifyMonthList.map(function(item) {
-	if (typeof item === 'string') {
-        return item.replace(/\[|\]/g, '');
-    } else {
-        return item + "월";
-    }
-});
-var countSubUserList = JSON.parse(countSubUserListString);
-var modifiedCountSubUserList = countSubUserList.map(function(item) {
-	if (typeof item === 'string') {
-        return item.replace(/\[|\]/g, '');
-    } else {
-        return item;
-    }
-});
+	if (cUser !== null) {
+		var myUChart = new Chart(cUser, {
+			type : "bar",
+			data : {
+				labels : [ months[0], months[1], months[2], months[3],
+						months[4], months[5], ],
+				datasets : [ {
+					label : "구독자",
+					data : [ modifiedCountSubUserList[0],
+							modifiedCountSubUserList[1],
+							modifiedCountSubUserList[2],
+							modifiedCountSubUserList[3],
+							modifiedCountSubUserList[4],
+							modifiedCountSubUserList[5] ],
+					backgroundColor : "#88aaf3"
+				} ]
+			},
+			options : {
+				responsive : true,
+				maintainAspectRatio : false,
+				legend : {
+					display : false
+				},
+				scales : {
+					xAxes : [ {
+						gridLines : {
+							drawBorder : true,
+							display : false,
+						},
+						ticks : {
+							fontColor : "#8a909d",
+							fontFamily : "Roboto, sans-serif",
+							display : false, // hide main x-axis line
+							beginAtZero : true,
+							callback : function(tick, index, array) {
+								return index % 2 ? "" : tick;
+							}
+						},
+						barPercentage : 1.8,
+						categoryPercentage : 0.2
+					} ],
+					yAxes : [ {
+						gridLines : {
+							drawBorder : true,
+							display : true,
+							color : "#eee",
+							zeroLineColor : "#eee"
+						},
+						ticks : {
+							fontColor : "#8a909d",
+							fontFamily : "Roboto, sans-serif",
+							display : true,
+							beginAtZero : true
+						}
+					} ]
+				},
 
-if (cUser !== null) {
-  var myUChart = new Chart(cUser, {
-    type: "bar",
-    data: {
-      labels: [
-		months[0],
-		months[1],
-		months[2],
-		months[3],
-		months[4],
-		months[5],
-	  ],
-      datasets: [
-        {
-          label: "구독자",
-          data: [modifiedCountSubUserList[0], modifiedCountSubUserList[1], modifiedCountSubUserList[2], modifiedCountSubUserList[3], modifiedCountSubUserList[4], modifiedCountSubUserList[5]],
-          backgroundColor: "#88aaf3"
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [
-          {
-            gridLines: {
-              drawBorder: true,
-              display: false,
-            },
-            ticks: {
-              fontColor: "#8a909d",
-              fontFamily: "Roboto, sans-serif",
-              display: false, // hide main x-axis line
-              beginAtZero: true,
-              callback: function(tick, index, array) {
-                return index % 2 ? "" : tick;
-              }
-            },
-            barPercentage: 1.8,
-            categoryPercentage: 0.2
-          }
-        ],
-        yAxes: [
-          {
-            gridLines: {
-              drawBorder: true,
-              display: true,
-              color: "#eee",
-              zeroLineColor: "#eee"
-            },
-            ticks: {
-              fontColor: "#8a909d",
-              fontFamily: "Roboto, sans-serif",
-              display: true,
-              beginAtZero: true
-            }
-          }
-        ]
-      },
+				tooltips : {
+					mode : "index",
+					titleFontColor : "#888",
+					bodyFontColor : "#555",
+					titleFontSize : 12,
+					bodyFontSize : 15,
+					backgroundColor : "rgba(256,256,256,0.95)",
+					displayColors : true,
+					xPadding : 10,
+					yPadding : 7,
+					borderColor : "rgba(220, 220, 220, 0.9)",
+					borderWidth : 2,
+					caretSize : 6,
+					caretPadding : 5
+				}
+			}
+		});
+	}
 
-      tooltips: {
-        mode: "index",
-        titleFontColor: "#888",
-        bodyFontColor: "#555",
-        titleFontSize: 12,
-        bodyFontSize: 15,
-        backgroundColor: "rgba(256,256,256,0.95)",
-        displayColors: true,
-        xPadding: 10,
-        yPadding: 7,
-        borderColor: "rgba(220, 220, 220, 0.9)",
-        borderWidth: 2,
-        caretSize: 6,
-        caretPadding: 5
-      }
-    }
-  });
-}
-
-console.log("여기1111111111111111111");
-var dailyView = document.getElementById("dailyView");
-if (dailyView !== null) {
-  var dailyViewData = [
-    {
-      first: [0, 65, 52, 115, 98, 165, 125],
-      second: [45, 38, 100, 87, 152, 187, 85]
-    },
-    {
-      first: [0, 65, 77, 33, 49, 100, 100],
-      second: [88, 33, 20, 44, 111, 140, 77]
-    },
-    {
-      first: [0, 40, 77, 55, 33, 116, 50],
-      second: [55, 32, 20, 55, 111, 134, 66]
-    },
-    {
-      first: [0, 44, 22, 77, 33, 151, 99],
-      second: [60, 32, 120, 55, 19, 134, 88]
-    }
-  ];
-
-  var config = {
-    // The type of chart we want to create
-    type: "line",
-    // The data for our dataset
-    data: {
-      labels: [
-        "4 Jan",
-        "5 Jan",
-        "6 Jan",
-        "7 Jan",
-        "8 Jan",
-        "9 Jan",
-        "10 Jan"
-      ],
-      datasets: [
-        {
-          label: "dailyView",
-          backgroundColor: "transparent",
-          borderColor: "rgba(82, 136, 255, .8)",
-          data: dailyViewData[0].first,
-          lineTension: 0,
-          pointRadius: 5,
-          pointBackgroundColor: "rgba(255,255,255,1)",
-          pointHoverBackgroundColor: "rgba(255,255,255,1)",
-          pointBorderWidth: 2,
-          pointHoverRadius: 7,
-          pointHoverBorderWidth: 1
-        },
-    // Configuration options go here
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [
-          {
-            gridLines: {
-              display: false,
-            },
-            ticks: {
-              fontColor: "#8a909d", // this here
-            },
-          }
-        ],
-        yAxes: [
-          {
-            gridLines: {
-              fontColor: "#8a909d",
-              fontFamily: "Roboto, sans-serif",
-              display: true,
-              color: "#eee",
-              zeroLineColor: "#eee"
-            },
-            ticks: {
-              // callback: function(tick, index, array) {
-              //   return (index % 2) ? "" : tick;
-              // }
-              stepSize: 50,
-              fontColor: "#8a909d",
-              fontFamily: "Roboto, sans-serif"
-            }
-          }
-        ]
-      },
-      tooltips: {
-        mode: "index",
-        intersect: false,
-        titleFontColor: "#888",
-        bodyFontColor: "#555",
-        titleFontSize: 12,
-        bodyFontSize: 15,
-        backgroundColor: "rgba(256,256,256,0.95)",
-        displayColors: true,
-        xPadding: 10,
-        yPadding: 7,
-        borderColor: "rgba(220, 220, 220, 0.9)",
-        borderWidth: 2,
-        caretSize: 6,
-        caretPadding: 5
-      }
-    }
-  };
-
-  var ctx = document.getElementById("dailyView").getContext("2d");
-  var myLine = new Chart(ctx, config);
-  var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");
-  items.forEach(function(item, index){
-    item.addEventListener("click", function() {
-      config.data.datasets[0].data = activityData[index].first;
-      config.data.datasets[1].data = activityData[index].second;
-      myLine.update();
-    });
-  });
-}
+	// 예제 사용
+	$.get('/getDailyViewData', function(data) {
+		console.log(data);
+		let viewCount = [];
+		let date = [];
+		for (let i = 0; i < data.length; i++) {
+			viewCount.push(data[i].viewCount);
+		}
+		for (let i = 0; i < data.length; i++) {
+			date.push(data[i].dateColumn);
+		}
+		console.log(viewCount);
+		console.log(date);
+		var dailyView = document.getElementById("dailyView");
+		if (dailyView !== null) {
+			var config = {
+				// The type of chart we want to create
+				type : "line",
+				// The data for our dataset
+				data : {
+					labels : date,
+					datasets : [ {
+						label : "dailyView",
+						backgroundColor : "transparent",
+						borderColor : "rgba(82, 136, 255, .8)",
+						data : viewCount,
+						lineTension : 0,
+						pointRadius : 5,
+						pointBackgroundColor : "rgba(255,255,255,1)",
+						pointHoverBackgroundColor : "rgba(255,255,255,1)",
+						pointBorderWidth : 2,
+						pointHoverRadius : 7,
+						pointHoverBorderWidth : 1
+					}, ]
+				},
+				// Configuration options go here
+				options : {
+					responsive : true,
+					maintainAspectRatio : false,
+					legend : {
+						display : false
+					},
+					scales : {
+						xAxes : [ {
+							gridLines : {
+								display : false,
+							},
+							ticks : {
+								fontColor : "#8a909d", // this here
+							},
+						} ],
+						yAxes : [ {
+							gridLines : {
+								fontColor : "#8a909d",
+								fontFamily : "Roboto, sans-serif",
+								display : true,
+								color : "#eee",
+								zeroLineColor : "#eee"
+							},
+							ticks : {
+								// callback: function(tick, index, array) {
+								//   return (index % 2) ? "" : tick;
+								// }
+								stepSize : 50,
+								fontColor : "#8a909d",
+								fontFamily : "Roboto, sans-serif"
+							}
+						} ]
+					},
+					tooltips : {
+						mode : "index",
+						intersect : false,
+						titleFontColor : "#888",
+						bodyFontColor : "#555",
+						titleFontSize : 12,
+						bodyFontSize : 15,
+						backgroundColor : "rgba(256,256,256,0.95)",
+						displayColors : true,
+						xPadding : 10,
+						yPadding : 7,
+						borderColor : "rgba(220, 220, 220, 0.9)",
+						borderWidth : 2,
+						caretSize : 6,
+						caretPadding : 5
+					}
+				}
+			};
+			var ctx = document.getElementById("dailyView").getContext("2d");
+			var myLine = new Chart(ctx, config);
+		}
+	})
 </script>

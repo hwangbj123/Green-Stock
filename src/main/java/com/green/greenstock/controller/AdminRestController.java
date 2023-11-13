@@ -1,5 +1,7 @@
 package com.green.greenstock.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.greenstock.dto.RefuseDTO;
+import com.green.greenstock.dto.ViewLogDTO;
 import com.green.greenstock.repository.interfaces.AdvisorRepository;
+import com.green.greenstock.repository.interfaces.ViewRepository;
 import com.green.greenstock.service.MailSendService;
 
 @RestController
@@ -21,6 +25,8 @@ public class AdminRestController {
 	@Autowired
 	AdvisorRepository advisorRepository;
 
+	@Autowired
+	ViewRepository viewRepository;
 
 	@PostMapping("/refuse")
 	@ResponseBody
@@ -41,5 +47,10 @@ public class AdminRestController {
 	@GetMapping("/getRefuseData/{advisorId}")
 	public RefuseDTO getRefuseData(@PathVariable int advisorId) {
 		return advisorRepository.findAdvisorRefuseByAdvisorId(advisorId);
+	}
+	
+	@GetMapping("/getDailyViewData")
+	public List<ViewLogDTO> getDailyViewCount(){
+		return viewRepository.findAll();
 	}
 }
