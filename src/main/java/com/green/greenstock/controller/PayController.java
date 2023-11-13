@@ -54,7 +54,7 @@ public class PayController {
 	@GetMapping("/kakao")
 	public String KakaoPay(@RequestParam("advisorId") Integer advisorId, Model model) {
 		model.addAttribute("advisorId", advisorId);
-		return "/pay_test";
+		return "/pay/pay";
 	}
 	
 	@PostMapping("/kakao")
@@ -119,7 +119,7 @@ public class PayController {
 		
 		model.addAttribute("payInfo", kakaoPayApproval);
 		model.addAttribute("advisor", advisor);
-		return "/paySuccess_test";
+		return "/pay/paySuccess";
 	}
 	
 	@GetMapping("/refund")

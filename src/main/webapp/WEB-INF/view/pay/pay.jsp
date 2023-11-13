@@ -19,15 +19,33 @@
 		
 		<!-- Ekka CSS -->
 		<link id="ekka-css" rel="stylesheet" href="/resources/css/ekka.css" />
-		
-		<!-- FAVICON -->
-		<link href="/resources/img/favicon.png" rel="shortcut icon" />
 	</head>
 	
 	<body class="sign-inup" id="body">
 	<%@include file="/WEB-INF/view/layout/header.jsp"%>
+		<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-12">
+		        <div class="row ec_breadcrumb_inner">
+		          <div class="col-md-6 col-sm-12">
+		            <h2 class="ec-breadcrumb-title">정보입력</h2>
+		          </div>
+		          <div class="col-md-6 col-sm-12">
+		            <!-- ec-breadcrumb-list start -->
+		            <ul class="ec-breadcrumb-list">
+		              <li class="ec-breadcrumb-item"><a href="index.html">결제</a></li>
+		              <li class="ec-breadcrumb-item active">정보입력</li>
+		            </ul>
+		            <!-- ec-breadcrumb-list end -->
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<!-- start of main  -->
-		<div class="container d-flex align-items-center justify-content-center form-height pt-24px pb-24px">
+		<div class="container d-flex align-items-center justify-content-center form-height pt-24px pb-24px" style="height: 70vh;">
 		    <div class="row justify-content-center">
 		      <div class="col-lg-4 col-md-10">
 		        <div class="card">
@@ -51,9 +69,6 @@
 			                <input type="text" class="form-control" id="email" placeholder="이메일" name="email" value="${principal.email}">
 			                <input type="hidden" class="form-control" id="pEmail" placeholder="Email" value="${principal.email}">
 		                </div>
-<!-- 				        <div class="form-group col-md-12 mb-4">
-		                  <input type="text" class="form-control" id="email" placeholder="Email" name="email">
-		                </div> -->
 		                		
 				        <div class="form-group col-md-12 mb-4">
 		                  <input type="text" class="form-control" id="tel" placeholder="휴대전화" name="tel" value="${principal.tel}">
@@ -73,14 +88,6 @@
 		  </div>
 		<!-- end of main  -->
 	<%@include file="/WEB-INF/view/layout/footer.jsp"%>
-		<!-- Javascript -->
-		<script src="/resources/plugins/jquery/jquery-3.5.1.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.min.js"></script>
-		<script src="/resources/plugins/jquery-zoom/jquery.zoom.min.js"></script>
-		<script src="/resources/plugins/slick/slick.min.js"></script>
-	
-		<!-- Ekka Custom -->	
-		<script src="/resources/js/ekka.js"></script>
 		
 		<script>
  		// 카카오결제
@@ -92,6 +99,27 @@
 				let tel = $("#form-payment input[name='tel']").val();
 				let email = $("#form-payment input[name='email']").val();
 				let advisorId = $("#advisorId").val();
+				
+				const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				const telvalcheck = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+				
+				if (name.length < 2) {
+					alert('성함을 입력해주세요.');
+					$('#userName').focus();
+					return false
+				}
+				
+				if (!emailRegex.test(email)) {
+					alert('이메일 형식을 확인해주세요 ex) Gstock@naver.com');
+					$("#form-payment input[name='email']").focus();
+					return false;
+				}
+				
+				if (!telvalcheck.test(tel)) {
+					alert('전화번호 양식이 맞지 않습니다 ex) 01040618333');
+					$('#tel').focus();
+					return false
+				}
 				
 				// 결제 정보를 form에 저장한다.
 				let totalPayPrice = parseInt($("#total-pay-price").text().replace(/,/g,''))
