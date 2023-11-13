@@ -46,13 +46,9 @@ public class BoardNoticeController {
 
 		//공지사항 글 갯수를 불러오는 부분 	
 		int total =  boardNoticeService.noticeListCount(null, noticeTitle);
-		System.out.println(total);
 		Pagination paginaion =  new Pagination(total , page, 10);		
-		System.out.println(total);
 		int offset = paginaion.getStart() -1;		
-		System.out.println(offset);			
 		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset, noticeState, noticeTitle);
-		System.out.println(listNotice);		
 		model.addAttribute("page", page);
 		model.addAttribute("total", total);
 		model.addAttribute("pagination",paginaion);
@@ -80,7 +76,6 @@ public class BoardNoticeController {
 		 Pagination paginaion = new Pagination(total, page, 10); // 전체글( 공개상태일때, 페이지,페이지 갯수(파라미터를 int) 
 		 int offset = paginaion.getStart() - 1; // start 값이 1 많음		 
 		 List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset,"1", noticeTitle); // limit, 0:비공개 1:공개, 제목검색		 
-		 System.out.println(total);		 
 		 model.addAttribute("page", page);
 		 model.addAttribute("total", total);
 		 model.addAttribute("pagination",paginaion);

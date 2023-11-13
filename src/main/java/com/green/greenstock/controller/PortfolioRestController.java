@@ -94,9 +94,7 @@ public class PortfolioRestController {
 				mp.setNowTotalAsset();
 			});
 		} else {
-			System.out.println("else");
 		}
-		System.out.println(mp);
 		return mp;
 	}
 
@@ -142,16 +140,11 @@ public class PortfolioRestController {
 	@PostMapping("/buySell/{type}")
 	public int buySell(@PathVariable String type, @RequestBody BuySellDTO buySellDto) {
 		// 포트폴리오 상태 업데이트
-		System.out.println(buySellDto);
 		MyPortfolio mp = portfolioRepository.findByPortfolioId(buySellDto.getPortfolioId());
-		System.out.println(mp);
 		// List<MyStocks> 을 set하는 과정이 없다 지금.
 		mp.setStockList(mystocksRepository.findMyStocksByPortfolioId(mp.getPId()));
-		System.out.println(mp);
-		System.out.println("--------------------");
 
 		int price = Integer.parseInt(dataRestController.getStockDetailJson(buySellDto.getStockId()).getStckPrpr());
-		System.out.println("--------------------");
 		MyStocks ms = new MyStocks();
 		ms.setAmount(buySellDto.getAmount());
 		Stock stock = new Stock();
@@ -162,8 +155,6 @@ public class PortfolioRestController {
 		ms.setCompanyName(stock.getCompanyName());
 		ms.setPId(buySellDto.getPortfolioId());
 		mp.buySell(ms, type);
-		System.out.println(mp);
-		System.out.println("--------------");
 		portfolioRepository.buySellStock(mp);
 		TradeLogDTO td = new TradeLogDTO();
 		td.setPId(ms.getPId());
@@ -177,23 +168,14 @@ public class PortfolioRestController {
 
 		if (type.equals("buy")) {
 			if (mp.isStockExist()) {
-				System.out.println(mp.isStockExist());
-				System.out.println("buy mystockExist");
 				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
 			} else {
-				System.out.println(mp.isStockExist());
-				System.out.println("buy myStockDoesntExist");
 				mystocksRepository.insertMyStocks(ms);
 			}
 		} else {
 			if (mp.isStockExist()) {
-				System.out.println(mp.isStockExist());
-				System.out.println("stockExist");
-				System.out.println(mp.getMyStocks(ms.getCompanyCode()));
 				mystocksRepository.updateMyStocks(mp.getMyStocks(ms.getCompanyCode()));
 			} else {
-				System.out.println(mp.isStockExist());
-				System.out.println("stockDoesn'tExist");
 				mystocksRepository.deleteMyStocks(ms.getCompanyCode());
 			}
 		}
@@ -221,8 +203,6 @@ public class PortfolioRestController {
 	public int updateVisible(@PathVariable int pid) {
 		MyPortfolio mp = portfolioRepository.findByPortfolioId(pid);
 		if (mp.isVisible()) {
-			System.out.println("asdf");
-			System.out.println(mp.isVisible());
 			mp.setVisible(false);
 		} else {
 			System.out.println(mp.isVisible());
@@ -234,14 +214,9 @@ public class PortfolioRestController {
 	// test용----------------------------------------------------------
 	@PostMapping("/testCode123/{type}")
 	public String testCode(@PathVariable String type, @RequestBody MyPortfolio mp) {
-		System.out.println("------------------");
-		System.out.println(mp);
-		System.out.println("------------------");
 		if (type.equals("title")) {
-			System.out.println("title");
 			portfolioRepository.updateTitle(mp);
 		} else {
-			System.out.println("diss");
 			portfolioRepository.updateDiscription(mp);
 		}
 		return "asdf";
@@ -264,7 +239,6 @@ public class PortfolioRestController {
 
 	@GetMapping("/deletePortfolio/{pfId}")
 	public int deletePortfolio(@PathVariable int pfId) {
-		System.out.println(pfId);
 		mystocksRepository.deleteMyStockByPid(pfId);
 		return portfolioRepository.deleteByPortfolioId(pfId);
 	}

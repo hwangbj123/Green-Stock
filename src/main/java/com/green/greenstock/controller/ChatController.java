@@ -45,9 +45,7 @@ public class ChatController {
 	@RequestMapping("/subCheck")
 	@ResponseBody
 	public String subCheck(String companyCode, int userId) {
-		System.out.println("controller subCheck companyCode = "+companyCode);
 		String res = chattingService.subCheck(companyCode, userId);
-		System.out.println("controller subCheck res = "+res);
 		return res;
 	}
 	
@@ -69,15 +67,12 @@ public class ChatController {
     	HttpSession session =  request.getSession();
     	
     	model.addAttribute("companyCode", companyCode);
-    	System.out.println("companyCode : "+companyCode);
 
     	User principal = (User) session.getAttribute("principal");
 
     	if(principal!=null) {
-    		System.out.println("principal : "+principal);
     		String subCheck = chattingService.subCheck(companyCode, principal.getId());
     		model.addAttribute("subCheck", subCheck);
-    		System.out.println("subCheck : "+subCheck);
     	}
     	
     	return "chatting/product";
@@ -89,8 +84,6 @@ public class ChatController {
     	
     	chattingService.insertMessage(message);
     	
-    	System.out.println("companyCode : "+companyCode);
-    	System.out.println("message : "+message);
     	return message;
     }
     

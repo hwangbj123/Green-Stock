@@ -45,7 +45,6 @@ public class BoardController {
 	}
 	@PostMapping("/board-write")
 	public String postBoardWrite(Board board, HttpServletRequest request) {
-		System.out.println("board-write board : "+board);
 		boardService.insertBoard(board, request);
 		return "redirect:/board/list";
 	}
@@ -67,8 +66,6 @@ public class BoardController {
 	
 	@GetMapping("/detail")
 	public String boardDetail(ReplyPagingDto paging, HttpServletRequest request,HttpServletResponse response, Model model) {
-		System.out.println("detail : "+paging);
-		System.out.println("detail offset : "+paging.getOffset());
 		
 		List<String> cate = boardService.findCategoryList();
 		Board board = boardService.selectBoardById(paging.getBoardId());
@@ -114,7 +111,6 @@ public class BoardController {
 	@PostMapping("/board-update")
 	public String postBoardUpdate(Board board, HttpServletRequest request) {
 		boardService.updateBoard(board, request);
-		System.out.println("board update success");
 		return "redirect:list";
 	}
 	@PostMapping("/board-delete")
@@ -125,7 +121,6 @@ public class BoardController {
 
 	@PostMapping("/reply-write")
 	public String postReplyWrite(Reply reply) {
-		System.out.println("reply-write board : "+reply);
 		int step = replyService.getStep(reply);
 		if(step==0) {
 			replyService.updateReply(reply);
@@ -176,7 +171,6 @@ public class BoardController {
 	@ResponseBody
 	public int getReplyCount(int replyId) {
 		int count = replyService.getReplyCount(replyId);
-		System.out.println("count : "+count);
 		return count;
 	}
 }

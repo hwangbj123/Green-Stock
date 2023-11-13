@@ -27,7 +27,6 @@ public class NewsRestController {
 		String otherServerUrl = "http://localhost:8181/wherego/asdf";
 		try {
 			String response = restTemplate.getForObject(otherServerUrl, String.class);
-			System.out.println(response);
 		} catch (Exception e) {
 			e.printStackTrace(); // 예외 정보를 출력하거나 로깅할 수 있습니다.
 		}

@@ -203,7 +203,7 @@
 }
 .ad-wrapper img{
 	width: 100%;
-	height: 350px;
+	height: 300px;
 	object-fit: cover;
 	object-position: center;
 }
@@ -218,6 +218,25 @@
 }
 #chat-cate-all {
 	background-color: rgb(214, 227, 246);
+}
+.newsAs{
+	margin: 3px 0px;
+	border-bottom: 1px solid #eee;
+}
+.portfolio-div{
+	width: 90%;
+	height: 360px;
+	padding: 10px;
+	padding-top: 20px;
+	text-align: center;
+}
+.port-tb{
+	width: 90%;
+	margin: auto;
+	padding: 10px;
+}
+.port-tb td{
+	height: 30px;
 }
 </style>
 </head>
@@ -406,7 +425,50 @@
 					</c:if>
 			</div>
 		</div>
-
+		<h6 class="gstock-div-title" style="width: 90%;">포트폴리오 랭킹</h6>
+		<div class="gstock-div portfolio-div">
+			<table class="port-tb">
+				<tr>
+					<td>랭킹</td>
+					<td>제목</td>
+					<td>수익율</td>
+				</tr>
+				<c:forEach var="port" items="${portfolio}" varStatus="status">
+					<c:if test="${not empty port.ror}">
+					<tr>
+						<td>
+							<c:choose>
+								<c:when test="${status.count eq 1}">
+								🥇
+								</c:when>
+								<c:when test="${status.count eq 2}">
+								🥈
+								</c:when>
+								<c:when test="${status.count eq 3}">
+								🥉
+								</c:when>
+								<c:otherwise>
+									${status.count }
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td>${port.title}</td>
+						<c:choose>
+							<c:when test="${port.ror > 0}">
+								<td style="color: #ff3149;">${port.ror}%</td>
+							</c:when>
+							<c:when test="${port.ror < 0}">
+								<td style="color: #3474d4;">${port.ror}%</td>
+							</c:when>
+							<c:otherwise>
+								<td style="color: #777;">${port.ror}%</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+					</c:if>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 	</div>
 	<!-- end of Main ------------------------------------------------------------------------------------------------------------------------ -->

@@ -96,7 +96,6 @@ public class AdminController {
 		List<Board> boardList = boardService.selectBoardSearchList(paging);
 		List<Board> subBoardList = boardList.subList(0, 10);
 		model.addAttribute("boardList", subBoardList);
-		System.out.println("boardList : " + subBoardList);
 
 		return "admin/adminMain";
 	}
@@ -147,15 +146,12 @@ public class AdminController {
 		model.addAttribute("list", list);
 		model.addAttribute("page", pagination);
 		model.addAttribute("paging", paging);
-		System.out.println("page : " + pagination);
 		return "admin/adminBoard";
 	}
 
 	@PostMapping("/board-delete")
 	public String boardDelete(Board board, HttpServletRequest request) {
-		System.out.println("admin delete board : " + board);
 		boardService.deleteBoard(board, request);
-		System.out.println("admin delete success");
 		return "redirect:/admin/board";
 	}
 
@@ -168,7 +164,6 @@ public class AdminController {
 		model.addAttribute("page", pagination);
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
-		System.out.println("list : " + list);
 		return "admin/adminChatList";
 	}
 

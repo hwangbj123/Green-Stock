@@ -16,8 +16,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.dto.DomesticStockVolumeRankOutPut;
+import com.green.greenstock.dto.MyPortfolio;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.dto.ResponseApiInfoList;
+import com.green.greenstock.repository.interfaces.PortfolioRepository;
 import com.green.greenstock.repository.model.Board;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.BoardService;
@@ -40,6 +42,8 @@ public class MainController {
 
 	private final SiteViewCountService siteViewCountService;
 	
+	private final PortfolioRepository portfolioRepository;
+	
 	@GetMapping({ "/main", "/" })
 	public String Main(HttpServletRequest request, Model model,HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -59,7 +63,6 @@ public class MainController {
 		if (user != null) {
 			List<ChattingRoom> chatList = chattingService.selectChatListNotPaging(user);
 			model.addAttribute("chatList", chatList);
-			System.out.println("@@@@@@@@@@@@@@  chatList : "+chatList);
 			
 		}
 
@@ -70,6 +73,11 @@ public class MainController {
 				new TypeReference<List<DomesticStockVolumeRankOutPut>>() {
 				});
 		model.addAttribute("volumeRank", outPuts);
+		
+		// 포트폴리오 랭킹
+		List<MyPortfolio> portfolio = portfolioRepository.findAllPortfolioDescRor();
+		model.addAttribute("portfolio", portfolio);
+		
 		return "/main";
 	}
 }

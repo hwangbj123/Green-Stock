@@ -59,7 +59,7 @@
 		              </a>
 		            </div>
 		          </div>
-		          <div class="card-body p-3" style="height: 800px;">
+		          <div class="card-body p-3">
    		          	<h5 style="text-align: center;">나의 댓글 목록</h5>
    		          	<div style="display: flex; justify-content: space-between;">
 		          		<a href="/user/my-info">목록으로</a>
