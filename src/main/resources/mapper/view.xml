@@ -6,7 +6,7 @@
 	namespace="com.green.greenstock.repository.interfaces.ViewRepository">
 
 	<select id = "findAll" resultType = "com.green.greenstock.dto.ViewLogDTO">
-		select * from siteViewCount order by date_column desc limit 6;
+		select * from siteViewCount order by date_column asc limit 6;
 	</select>
 
 
