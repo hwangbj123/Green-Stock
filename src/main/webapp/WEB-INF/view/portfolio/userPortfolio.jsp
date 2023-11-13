@@ -68,13 +68,13 @@
 							<div class="col-12">
 								<div class="row ec_breadcrumb_inner">
 									<div class="col-md-6 col-sm-12">
-										<h2 class="ec-breadcrumb-title">Portfolio</h2>
+										<h2 class="ec-breadcrumb-title">포트폴리오</h2>
 									</div>
 									<div class="col-md-6 col-sm-12">
 										<!-- ec-breadcrumb-list start -->
 										<ul class="ec-breadcrumb-list">
-											<li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
-											<li class="ec-breadcrumb-item active">Portfolio</li>
+											<li class="ec-breadcrumb-item"><a href="index.html">메인</a></li>
+											<li class="ec-breadcrumb-item active">포트폴리오</li>
 										</ul>
 										<!-- ec-breadcrumb-list end -->
 									</div>

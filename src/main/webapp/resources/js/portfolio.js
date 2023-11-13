@@ -412,7 +412,7 @@ function setMonthlyAssetChart(pid) {
 					labels: logDateArr.slice(-6),
 					datasets: [
 						{
-							label: "Monthly Asset",
+							label: "일별성장률",
 							backgroundColor: "transparent",
 							borderColor: "rgba(82, 136, 255, .8)",
 							data: rorArr.slice(-6),
