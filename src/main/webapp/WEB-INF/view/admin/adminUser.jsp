@@ -29,15 +29,15 @@
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-contacts">
 			<div>
-				<h1>User List</h1>
+				<h1>유저 목록</h1>
 				<p class="breadcrumbs">
-					<span><a href="index.html">Main</a></span> <span><i
-						class="mdi mdi-chevron-right"></i></span>User
+					<span><a href="index.html">메인</a></span> <span><i
+						class="mdi mdi-chevron-right"></i></span>유저
 				</p>
 			</div>
 			<div>
 				<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-					data-bs-target="#addUser">Suspended User</button>
+					data-bs-target="#addUser">회원 정지</button>
 			</div>
 		</div>
 		<div class="row">
@@ -76,12 +76,12 @@
 														class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
 														data-bs-toggle="dropdown" aria-haspopup="true"
 														aria-expanded="false" data-display="static">
-														<span class="sr-only">Info</span>
+														<span class="sr-only">정보</span>
 													</button>
 
 													<div class="dropdown-menu">
-														<a class="dropdown-item" href="#">Edit</a> <a
-															class="dropdown-item" href="#">Delete</a>
+														<a class="dropdown-item" href="#">수정</a> <a
+															class="dropdown-item" href="#">삭제</a>
 													</div>
 												</div>
 											</td>
@@ -95,7 +95,7 @@
 							<div class="search-form d-lg-inline-block">
 								<div class="input-group" style="margin-top: 20px;">
 									<input type="text" name="search" id="c-search-input"
-										class="form-control" placeholder="search user" autofocus
+										class="form-control" placeholder="유저 검색" autofocus
 										autocomplete="off" style="border: 1px solid #ddd;"/>
 									<button type="button" id="search-btnn"
 										class="btn btn-flat" style="border: 1px solid #ddd;">
@@ -157,12 +157,12 @@
 									<c:when test="${page.endPage > page.paging.page+5}">
 										<a class="page-a"
 											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
-											href="user?page=${page.paging.page+5}"> next </a>
+											href="user?page=${page.paging.page+5}"> 다음 </a>
 									</c:when>
 									<c:otherwise>
 										<a class="page-a"
 											style="display: inline-block; border: 1px solid lightgrey; padding: 4px 12px; margin: 1px; border-radius: 5px;"
-											href="user?page=${page.endPage}"> next </a>
+											href="user?page=${page.endPage}"> 다음 </a>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
