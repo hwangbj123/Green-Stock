@@ -39,7 +39,6 @@ public class MyPortfolio {
 
 		// 예외처리.
 		if (stockList == null) {
-			System.out.println("실행됨mp asdf");
 			if (type.equals("buy")) {
 				this.setStockExist(false);
 				List<MyStocks> list = new ArrayList<>();
@@ -47,8 +46,6 @@ public class MyPortfolio {
 				this.stockList = list;
 				this.setTotalAsset();
 			} else {
-				// null sell 은 불가능.
-				System.out.println("????????");
 			}
 		}
 
@@ -62,7 +59,6 @@ public class MyPortfolio {
 				stockList.removeIf(e -> e.getCompanyCode().equals(mystock.getCompanyCode())
 						&& e.getAmount() == mystock.getAmount());
 				this.sellMoney = (int) mystock.getAmount() * mystock.getPrice();
-				System.out.println("다 팔렸습니다.");
 				this.setStockExist(false);
 			} else {
 				stockList.stream().filter(e -> e.getCompanyCode().equals(mystock.getCompanyCode())).forEach(stock -> {
@@ -88,7 +84,6 @@ public class MyPortfolio {
 				});
 				this.setTotalAsset();
 			} else {
-				System.out.println("여기타야됨");
 				this.setStockExist(false);
 				this.stockList.add(mystock);
 				this.setTotalAsset();
@@ -101,7 +96,6 @@ public class MyPortfolio {
 	public void setTotalAsset() {
 		Integer asset = 0;
 
-		System.out.println(this.sellMoney);
 		for (int i = 0; i < this.stockList.size(); i++) {
 			asset += (int) this.stockList.get(i).getAmount() * this.stockList.get(i).getPrice();
 		}
@@ -119,13 +113,12 @@ public class MyPortfolio {
 		MyStocks myStock = this.stockList.stream().filter(e -> e.getCompanyCode().equals(companyCode)).findFirst() // 또는
 																													// .findAny()
 				.orElse(null);
-		System.out.println(myStock);
 		return myStock;
 	}
 
 	public void setNowTotalAsset() {
 		Integer asset = 0;
-		
+
 		for (int i = 0; i < this.stockList.size(); i++) {
 			asset += (int) this.stockList.get(i).getAmount() * this.stockList.get(i).getNowPrice();
 		}
@@ -135,13 +128,13 @@ public class MyPortfolio {
 		this.nowTotalAsset = asset;
 		setRor();
 	}
-	
+
 	public void setRor() {
-	    double roi = (((double)this.nowTotalAsset - (double)this.totalAsset) / this.totalAsset) * 100;
-	    BigDecimal roiDecimal = new BigDecimal(roi);
-	    DecimalFormat df = new DecimalFormat("0.00");
-	    String formattedData = df.format(roiDecimal);
-	    this.ror = new BigDecimal(formattedData);
+		double roi = (((double) this.nowTotalAsset - (double) this.totalAsset) / this.totalAsset) * 100;
+		BigDecimal roiDecimal = new BigDecimal(roi);
+		DecimalFormat df = new DecimalFormat("0.00");
+		String formattedData = df.format(roiDecimal);
+		this.ror = new BigDecimal(formattedData);
 	}
 
 }

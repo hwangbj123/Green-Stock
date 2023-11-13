@@ -28,8 +28,6 @@ public class AdminRestController {
 	@Autowired
 	ViewRepository viewRepository;
 	
-	@Autowired
-	
 
 	@PostMapping("/refuse")
 	@ResponseBody

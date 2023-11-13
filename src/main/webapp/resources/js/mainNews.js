@@ -1,5 +1,4 @@
 $.get('/getNews', function(data) {
-	console.log(data);
 	for (let i = 0; i < 10; i++) {
 		$('#news_left_list').append(makeNewsListLi(data[i], i));
 	}
