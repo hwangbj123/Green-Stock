@@ -16,6 +16,7 @@
 		select *
 		from growthlog
 		where p_id = #{pid}
+		order by log_date asc;
 	</select>
 
 	<insert id="makeGrowthLog">

@@ -258,12 +258,12 @@
 				type : "line",
 				// The data for our dataset
 				data : {
-					labels : date,
+					labels : date.slice(-6),
 					datasets : [ {
 						label : "dailyView",
 						backgroundColor : "transparent",
 						borderColor : "rgba(82, 136, 255, .8)",
-						data : viewCount,
+						data : viewCount.slice(-6),
 						lineTension : 0,
 						pointRadius : 5,
 						pointBackgroundColor : "rgba(255,255,255,1)",
