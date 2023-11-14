@@ -281,6 +281,14 @@
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/3ae1f247-4d95-4c9c-9e25-52d912a9bb74"></td>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/5f88bb13-e2a6-4c84-9b98-89c68e42a561"></td>
 </tr>
+<tr>
+<td>공지사항 상세보기/검색</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/53a5c99d-3ae7-4817-a354-d584f6b11eaf"></td>
+<td></td>
+</tr>
 </table>
 
 <br>
