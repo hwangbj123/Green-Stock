@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 public class ChatMessage {
-    private int roomId;
+    private String companyCode;
+    private int id;
 	private String userId;
 	private String userName;
     private String content;

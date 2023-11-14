@@ -25,29 +25,50 @@
 	</head>
 	
 	<body class="sign-inup" id="body">
-	<%@include file="/WEB-INF/view/layout/header.jsp"%>
-		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/sign_in_test1.jpg');">
+		<%@include file="/WEB-INF/view/layout/header.jsp"%>
+		<div class="sticky-header-next-sec ec-breadcrumb section-space-mb" style="display: block">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-12">
+		        <div class="row ec_breadcrumb_inner">
+		          <div class="col-md-6 col-sm-12">
+		            <h2 class="ec-breadcrumb-title">로그인</h2>
+		          </div>
+		          <div class="col-md-6 col-sm-12">
+		            <!-- ec-breadcrumb-list start -->
+		            <ul class="ec-breadcrumb-list">
+		              <li class="ec-breadcrumb-item"><a href="index.html">회원</a></li>
+		              <li class="ec-breadcrumb-item active">로그인</li>
+		            </ul>
+		            <!-- ec-breadcrumb-list end -->
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="container d-flex align-items-center justify-content-center form-height-login pt-24px pb-24px card-body" style="background-image: url('/resources/img/testb1.png'); height: 80vh;">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-10">
 					<div class="card">
 						<div class="card-header bg-primary">
 							<div class="ec-brand">
 								<a href="/main" title="Ekka">
-									<img class="ec-brand-icon" src="/resources/img/logo/logo-login.png" alt="" />
+									<img class="ec-brand-icon" src="/resources/img/G_logo_white.jpg" alt="" />
 								</a>
 							</div>
 						</div>
 						<div class="card-body p-5">
-							<h4 class="text-dark mb-5">Sign In</h4>
+							<h4 class="text-dark mb-5">로그인</h4>
 							
 							<form action="/user/sign-in" method="post" id="loginForm">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
-										<input type="text" class="form-control" id="userName" name="userName" placeholder="Username">
+										<input type="text" class="form-control" id="userName" name="userName" placeholder="아이디">
 									</div>
 									
 									<div class="form-group col-md-12 ">
-										<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+										<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
 									</div>
 									
 									<div class="col-md-12">
@@ -55,10 +76,10 @@
 											<p><a class="text-blue" href="/user/findIdPw">아이디/비밀번호 찾기</a></p>
 										</div>
 
-										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">Sign In</button>
+										<button type="button" class="btn btn-primary btn-block mb-4 bg-primary" style="margin-top: 30px;" id="signInBtn">로그인</button>
 										
-										<p class="sign-upp">Don't have an account yet ?
-											<a class="text-blue" href="/user/sign-up">Sign Up</a>
+										<p class="sign-upp">아직 아이디가 없으십니까?
+											<a class="text-blue" href="/user/sign-up">회원가입</a>
 										</p>
 										<div style="margin-top: 30px; display: flex; justify-content: space-evenly;">
 											<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1e30a4b6f56a90aa1e581ead0614dcf6&redirect_uri=http://localhost/user/kakao/callback">
@@ -90,46 +111,9 @@
 		<!-- Ekka Custom -->	
 		<script src="/resources/js/ekka.js"></script>
 		
-		<script>
-		$(document).ready(function() {
-			$('#signInBtn').click(function() {
-				//유효성
-				let idval = $('#userName').val();
-				let pwval = $('#password').val();
-				let idvalcheck = /^[a-z0-9]+$/;
-				if (!idvalcheck.test(idval) || idval.length < 4) {
-					alert('아이디는 영소문자,숫자로 된 4자 이상이어야 합니다.');
-					$('#userName').focus();
-					return false
-				}
-				if(pwval.length < 1) {
-					alert('비밀번호를 입력하세요.');
-					$('#password').focus();
-					return false
-				}
-				
-				$.ajax({
-					type : "POST",
-					url : "/user/sign-in",
-					data : {
-						"userName" : idval,
-						"password" : pwval
-					},
-					success : function(data){
-						if (data === 200) {
-							window.location.href = "http://localhost/main";
-							} else {
-							alert('로그인실패. \n아이디 비밀번호를 다시 확인해주세요.');
-							$('#userName').focus();
-						}
-					}
-					,error: function(){
-						alert('서버 에러입니다.');
-					}
-				});
-			});
-		});
+		<!-- custom Js -->
+		<script src="/resources/js/custom/common.js"></script>
+		<script src="/resources/js/custom/signIn.js"></script>
 
-		</script>
 	</body>
 </html>

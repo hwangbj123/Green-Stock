@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.ChatMessage;
@@ -28,80 +26,78 @@ public class ChatController {
 
 	@Autowired
 	ChattingService chattingService;
-	
-//	@GetMapping("/chatList")
-//	public String chatList(Model model) {
-//		List<ChattingRoom> chattingRooms = chattingService.findChattingRoomAll();
-//		model.addAttribute("rooms", chattingRooms);
-//		
-//		return "chatting/chatList";
-//	}
-	
-//	@GetMapping("/chatCreate")
-//	public String chatCreate(String roomNumber, String roomName) {
-//		System.out.println("roomNumber : "+roomNumber);
-//		System.out.println("roomName : "+roomName);
-//		
-//		ChattingRoom chattingRoom = new ChattingRoom();
-//		chattingRoom.setRoomNumber(roomNumber);
-//		chattingRoom.setRoomName(roomName);
-//		
-//		chattingService.createChattingRoom(chattingRoom);
-//		return "redirect:chatList";
-//	}
 
 	@GetMapping("/chat")
-	public String chatMain(int roomId, int userId, Model model) {
-		model.addAttribute("roomId", roomId);
-		model.addAttribute("userId", userId);
+	public String chatMain(ChattingRoom chattingRoom, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("principal");
 		
-		List<ChatMessage> list = chattingService.selectMessageList(roomId, userId);
+		String companyCode = chattingRoom.getCompanyCode();
+		String companyName = chattingRoom.getCompanyName();
+		int userId = chattingRoom.getUserId();
+		int roleTypeId = user.getRoletypeId();
+		List<ChatMessage> list = chattingService.selectMessageList(companyCode, userId, roleTypeId);
+		List<User> userList = chattingService.selectUserListByCode(companyCode);
+		
+		model.addAttribute("companyCode", companyCode);
+		model.addAttribute("companyName", companyName);
+		model.addAttribute("userId", userId);
 		model.addAttribute("list", list);
-//		System.out.println("list : "+list);
+		model.addAttribute("userList", userList);
 		
 		return "chatting/chat";
 	}
 
 	@RequestMapping("/subCheck")
 	@ResponseBody
-	public String subCheck(int roomId, int userId) {
-		System.out.println("controller subCheck roomId = "+roomId);
-		String res = chattingService.subCheck(roomId, userId);
+	public String subCheck(String companyCode, int userId) {
+		String res = chattingService.subCheck(companyCode, userId);
 		return res;
 	}
 	
 	@GetMapping("/subscribe")
-	public String subscribe(int roomId, int userId) {
-		chattingService.subscribe(roomId, userId);
-		return "redirect:product/"+roomId;
+	public String subscribe(String companyCode, int userId) {
+		chattingService.subscribe(companyCode, userId);
+		return "redirect:stock/domestic/"+companyCode;
 	}
 	
-    @GetMapping("product/{roomId}")
-    public String product(@PathVariable("roomId") int roomId,HttpServletRequest request, Model model) {
+	@GetMapping("/un-subscribe")
+	public String unSubscribe(String companyCode, int userId) {
+		chattingService.unSubscribe(companyCode, userId);
+		return "redirect:stock/domestic/"+companyCode;
+	}
+	
+    @GetMapping("product/{companyCode}")
+    public String product(@PathVariable("companyCode") String companyCode,HttpServletRequest request, Model model) {
     	
     	HttpSession session =  request.getSession();
-    	User principal = (User) session.getAttribute("principal");
     	
-    	model.addAttribute("roomId", roomId);
-//    	model.addAttribute("user", principal);
-    	System.out.println("principal : "+principal);
+    	model.addAttribute("companyCode", companyCode);
 
-    	String subCheck = chattingService.subCheck(roomId, principal.getId());
-    	model.addAttribute("subCheck", subCheck);
-    	System.out.println("subCheck : "+subCheck);
+    	User principal = (User) session.getAttribute("principal");
+
+    	if(principal!=null) {
+    		String subCheck = chattingService.subCheck(companyCode, principal.getId());
+    		model.addAttribute("subCheck", subCheck);
+    	}
     	
     	return "chatting/product";
     }
 
-    @MessageMapping("/chat/{roomId}")
-    @SendTo("/topic/{roomId}")
-    public ChatMessage sendChatMessage(@DestinationVariable String roomId, ChatMessage message) {
+    @MessageMapping("/chat/{companyCode}")
+    @SendTo("/topic/{companyCode}")
+    public ChatMessage sendChatMessage(@DestinationVariable String companyCode, ChatMessage message) {
     	
     	chattingService.insertMessage(message);
     	
-    	System.out.println("roomId : "+roomId);
-    	System.out.println("message : "+message);
     	return message;
     }
+    
+    @GetMapping("chat/lastTimeUpdate")
+    @ResponseBody
+    public void lastTimeUpdate(String companyCode, int userId) {
+    	chattingService.lastTimeUpdate(companyCode, userId);
+    }
+    
 }
 

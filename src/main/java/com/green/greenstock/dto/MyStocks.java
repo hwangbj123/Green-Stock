@@ -12,6 +12,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class MyStocks {
-	private double amount;
-	private Stock stock;
+	private int pId;
+	private int amount;
+	private int price;
+	private int nowPrice;
+	private String companyName;
+	private String companyCode;
 }

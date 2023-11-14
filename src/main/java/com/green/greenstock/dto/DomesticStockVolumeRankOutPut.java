@@ -1,5 +1,6 @@
 package com.green.greenstock.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -20,6 +21,7 @@ public class DomesticStockVolumeRankOutPut {
 	private String prdyVol; // 전일 거래량
 	private String lstnStcn; // 상장 주수
 	private String avrgVol; // 평균 거래량
+	@JsonProperty("n_befr_clpr_vrss_prpr_rate")
 	private String nBefrClprVrssPrprRate; // N일전종가대비현재가대비율
 	private String volInrt; // 거래량증가율
 	private String volTnrt; // 거래량 회전율

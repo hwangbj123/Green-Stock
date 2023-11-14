@@ -31,7 +31,7 @@
 				<div class="col text-center footer-copy">
 					<div class="footer-bottom-copy ">
 						<div class="ec-copy">
-							Copyright © 2023 <a class="site-name text-upper" href="#">ekka<span>.</span></a>.
+							Copyright © 2023 <a class="site-name text-upper" href="#">Gstock<span>.</span></a>.
 							All Rights Reserved
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 				<div class="col footer-bottom-right">
 					<div class="footer-bottom-payment d-flex justify-content-end">
 						<div class="payment-link">
-							<img src="assets/images/icons/payment.png" alt="">
+<!-- 							<img src="assets/images/icons/payment.png" alt=""> -->
 						</div>
 
 					</div>
@@ -50,5 +50,8 @@
 			</div>
 		</div>
 	</div>
+    <!-- Main Js -->
+    <script src="/resources/js/vendor/index.js"></script>
+    <script src="/resources/js/main.js"></script>
 </body>
 </html>
