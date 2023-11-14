@@ -205,18 +205,7 @@
 
 ## 5️⃣ SiteMap
 <br>
-
-<table>
-<tr>
- <td>User</td>
- <td>Manager</td>
- </tr>
-<tr>
-<td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/872e19cf-262f-48aa-bd3a-338e88208be6"></td>
-<td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/faa63d99-e44c-49d5-adf1-66d1dff62262"></td>
-</tr>
-</table>
-
+<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/041a1c2f-bda5-4138-8cef-73b66fdf2b33">
 <br>
 
 ## 6️⃣ 기능 - 회원
