@@ -1,5 +1,6 @@
-![로고2](https://github.com/seoyounglee0105/green_airline_project/assets/106488607/45885ada-932d-4640-93a8-4a84d451bb9c)
-
+<div align="center">
+	![로고2](https://github.com/hwangbj123/Green-Stock/assets/136680186/d94d9c5e-41f4-4251-a281-28042caf1eba)
+</div>
 
 
 
