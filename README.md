@@ -282,13 +282,30 @@
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/5f88bb13-e2a6-4c84-9b98-89c68e42a561"></td>
 </tr>
 <tr>
-<td>공지사항 상세보기/검색</td>
-<td></td>
+  <td>공지사항 상세보기/검색</td>
+  <td>주식 정보 조회</td>
 </tr>
 <tr>
-<td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/53a5c99d-3ae7-4817-a354-d584f6b11eaf"></td>
-<td></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/53a5c99d-3ae7-4817-a354-d584f6b11eaf"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/bdb8780c-fe42-4593-9885-fff52adf4c8e"></td>
 </tr>
+<tr>
+  <td>전문가 신청/승인</td>
+  <td>전문가 구독하기</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/abacc6d7-2b08-4ac7-a310-29715c9c2ede"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/a8c8d45a-a409-4722-9447-486a51434c16"></td>
+</tr>
+<tr>
+  <td>전문가 상담게시판</td>
+  <td></td>
+</tr>
+<tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/58e46d96-33ba-4366-8cfb-c5a89b5931fc"></td>
+  <td></td>
+</tr>
+	
 </table>
 
 <br>
