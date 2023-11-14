@@ -91,22 +91,6 @@
 								<i class="fa-solid fa-user-secret" style="margin-right:20px;"></i> <span class="nav-text">전문가 신청 목록</span>
 						</a></li>
 						<!-- Category -->
-						<li class="has-sub"><a class="sidenav-item-link"
-							href="javascript:void(0)"> <i class="mdi mdi-dns-outline" style="margin-right:20px;"></i>
-								<span class="nav-text">견본</span> <b class="caret"></b>
-						</a>
-							<div class="collapse">
-								<ul class="sub-menu" id="categorys" data-parent="#sidebar-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="main-category.html"> <span class="nav-text">Main
-												Category</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="sub-category.html"> <span class="nav-text">Sub
-												Category</span>
-									</a></li>
-								</ul>
-							</div></li>
 					</ul>
 				</div>
 			</div>
