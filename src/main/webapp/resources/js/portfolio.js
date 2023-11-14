@@ -41,7 +41,7 @@ function makeSmallCard(data) {
 			let infoWrapper = $('<div id = "infoWrpper">')
 			let h2 = $('<h2 class = "editableH2s" id = "h2_' + pid + '" class="mb-1">'); // CardLayout header
 			let p = $('<p class = "editablePs" id = "p_' + pid + '">') // CardLayout body
-			let span = $('<span data-clicked="false" class = "editSpans" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer; font-size: smaller;line-height: 250%;">수정</span>');
+			let span = $('<span data-clicked="false" class = "editSpans" id="span_' + pid + '" style="height : 20%;width : 15%;cursor: pointer;background-color: #8eb7e3; font-size: smaller;line-height: 250%;">수정</span>');
 			span.on('click', (event) => {
 				event.stopImmediatePropagation();
 				editClicked(pid);
@@ -200,7 +200,7 @@ async function setPortfolioInfo(data) {
 	});
 	$('#infoRows_0').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + data.title + '</div>'));
 	$('#infoRows_1').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + data.discription + '</div>'));
-	$('#infoRows_2').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + numberWithCommas(data.totalAsset) + '</div>'));
+	$('#infoRows_2').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + numberWithCommas(stockTotalAmount + data.sellMoney) + '</div>'));
 	$('#infoRows_3').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + numberWithCommas(data.sellMoney) + '</div>'));
 	$('#infoRows_4').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + numberWithCommas(data.sellMoney + data.totalAsset) + '</div>'));
 	$('#infoRows_5').append($('<div style = "font-weight : bold;width : 50%; height : 100%;">' + numberWithCommas(stockTotalAmount) + '</div>'));
@@ -213,7 +213,13 @@ async function setPortfolioInfo(data) {
 //CardHeader 에 portfolio 정보를 입력한다.
 //addCard 가 아닌 다른 smallCards 가 클릭될 시 실행된다.
 
-function setDonutChart(data) {
+async function setDonutChart(data) {
+	let stockTotalAmount = 0;
+	for (let i = 0; i < data.stockList.length; i++) {
+		let nowprice = await $.get('portfolio/getNowPrice/' + data.stockList[i].companyCode, function(data) {
+		})
+		stockTotalAmount += data.stockList[i].amount * nowprice;
+	}
 	$('#donutChartBody').append($('<canvas id="doChart"></canvas>'));
 	let stockNameList = [];
 	let amountList = [];
@@ -267,21 +273,20 @@ function setDonutChart(data) {
 			}
 		});
 	}
-	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + numberWithCommas(data.totalAsset) + '</div>'));
+	$('#donutChartBody').append($('<div id="donutCenterText" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">' + numberWithCommas(stockTotalAmount + data.sellMoney) + '</div>'));
 }
 
 function setRanking() {
 	$.get('portfolio/getRanking', function(data) {
 		//let width = $('#user-acquisition').css('width');
-		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
+		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr; grid-gap : 1%;">')
 		$('#rankingBody').append(rankingWrapper);
-		let thArr = ['랭킹', '아이디', '제목', '수익률'];
+		let thArr = ['랭킹', '제목', '수익률'];
 		thArr.forEach(e => {
 			rankingWrapper.append($('<div class="ths" style = "text-align:center;">' + e + '</div>'));
 		});
 		data.forEach((e, idx) => {
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + (idx + 1) + '</div>');
-			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.userId + '</div>');
 			let title = $('<div data-bs-toggle="modal" data-bs-target="#modalContact" class="view-detail" style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis; cursor : pointer">' + e.title + '</div>')
 			rankingWrapper.append(title);
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '%</div>');

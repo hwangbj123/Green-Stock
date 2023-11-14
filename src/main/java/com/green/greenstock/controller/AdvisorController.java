@@ -35,9 +35,7 @@ import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/advisor")
@@ -51,9 +49,10 @@ public class AdvisorController {
 
     // 전문가 목록
     @GetMapping(value = { "/", "/list" })
-    public String advisorList(Model model) {
-        model.addAttribute("advisorResDtos", advisorService.findByStatusAuth(2));
+    public String advisorList(Model model, @RequestParam(defaultValue = "subscribeDesc") String orderBy) {
+        model.addAttribute("advisorResDtos", advisorService.findByAdvisorSubCount(orderBy));
         model.addAttribute("category", "전문가 목록");
+        model.addAttribute("orderBy", orderBy);
         return "advisor/advisorList";
     }
 
@@ -62,11 +61,11 @@ public class AdvisorController {
     public String advisorDetail(@PathVariable String nickName, Model model) {
 
         User user = (User) httpSession.getAttribute("principal");
-        
+
         if (user != null) {
             boolean validateResult = advisorService.validateSubscribeToAdvisor(nickName, user.getId());
             model.addAttribute("validate", validateResult);
-            
+
         }
 
         if (nickName == null) {
@@ -84,14 +83,14 @@ public class AdvisorController {
         User user = (User) httpSession.getAttribute("principal");
         AdvisorEntity advisorEntity = advisorService.findByUserEntity(user.getId());
         int status = 0;
-        if(advisorEntity != null){
+        if (advisorEntity != null) {
             status = advisorEntity.getStatus();
         }
-        
-        if(status == 1){
-            throw new CustomRestfulException("이미 신청하였습니다.", HttpStatus.BAD_REQUEST);
-        }else if(status == 2){
-            throw new CustomRestfulException("이미 전문가입니다.", HttpStatus.BAD_REQUEST);
+
+        if (status == 1) {
+            throw new CustomRestfulException("승인 심사중입니다.", HttpStatus.BAD_REQUEST);
+        } else if (status == 2) {
+            throw new CustomRestfulException("이미 자격이 있습니다.", HttpStatus.BAD_REQUEST);
         }
         model.addAttribute("category", "전문가 신청");
         return "advisor/advisorRegister";
@@ -123,14 +122,12 @@ public class AdvisorController {
     // 전문가 닉네임 중복체크
     @ResponseBody
     @GetMapping("/register/duplicate")
-    public Map<String, Integer> advisorNicknameDuplicate(String advisorNickname){
+    public Map<String, Integer> advisorNicknameDuplicate(String advisorNickname) {
         int result = advisorService.findCountByNickname(advisorNickname);
         Map<String, Integer> resultMap = new HashMap<>();
         resultMap.put("result", result);
         return resultMap;
     }
-
-
 
     // 전문가 상담게시판 목록 페이지
     @GetMapping("/sub/board/{advisorNickName}")
@@ -153,7 +150,7 @@ public class AdvisorController {
     // 전문가 상담게시판 글 보기 페이지
     @GetMapping("/sub/board/{advisorNickName}/{advisorBoardId}")
     public String advisorBoard(Model model, @PathVariable String advisorNickName, @PathVariable int advisorBoardId) {
-        
+
         // 게시글, 이전, 다음 페이지 정보
         AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
         model.addAttribute("advisorBoard", advisorBoardResDto);
@@ -215,7 +212,6 @@ public class AdvisorController {
 
     /* 댓글 영역 끝 */
 
-    
     // 전문가 상담게시판 글 쓰기 페이지
     @GetMapping("/sub/board/{advisorNickName}/write")
     public String advisorBoardWrite(Model model, @PathVariable String advisorNickName) {
@@ -228,13 +224,13 @@ public class AdvisorController {
     // 전문가 상담게시판 글 쓰기 기능
     @PostMapping("/sub/board/{advisorNickName}/write")
     public String advisorBoardWriteProc(@PathVariable String advisorNickName, AdvisorBoardReqDto advisorBoardReqDto) {
-        if(advisorBoardReqDto == null){
+        if (advisorBoardReqDto == null) {
             throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
         }
-        if(advisorBoardReqDto.getAdvisorId() == 0 || advisorBoardReqDto.getUserId() == 0){
+        if (advisorBoardReqDto.getAdvisorId() == 0 || advisorBoardReqDto.getUserId() == 0) {
             throw new CustomRestfulException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
         }
-        
+
         AdvisorBoardEntity advisorBoardEntity = advisorService.saveAdvisorBoard(advisorBoardReqDto);
 
         return "redirect:/advisor/sub/board/" + advisorNickName + "/" + advisorBoardEntity.getAdvisorBoardId();
@@ -242,7 +238,7 @@ public class AdvisorController {
 
     // 전문가 상담게시판 글 수정 페이지
     @GetMapping("/sub/board/{advisorNickName}/update/{advisorBoardId}")
-    public String advisorBoardUpdate(Model model, @PathVariable int advisorBoardId){
+    public String advisorBoardUpdate(Model model, @PathVariable int advisorBoardId) {
         AdvisorBoardResDto advisorBoardResDto = advisorService.findByAdvisorBoardId(advisorBoardId);
         model.addAttribute("advisorBoard", advisorBoardResDto);
         model.addAttribute("category", "전문가 상담게시판");
@@ -252,9 +248,9 @@ public class AdvisorController {
     // 전문가 상담게시판 글 수정 기능
     @PostMapping("/sub/board/{advisorNickName}/update")
     public String advisorBoardUpdateProc(@PathVariable String advisorNickName, AdvisorBoardReqDto advisorBoardReqDto) {
-                
+
         advisorService.updateAdvisorBoard(advisorBoardReqDto);
-        return "redirect:/advisor/sub/board/"+advisorNickName+"/"+advisorBoardReqDto.getAdvisorBoardId();
+        return "redirect:/advisor/sub/board/" + advisorNickName + "/" + advisorBoardReqDto.getAdvisorBoardId();
     }
 
     // 전문가 상담게시판 글 삭제 기능

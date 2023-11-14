@@ -103,7 +103,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
                 <input type="text" name="nickName" id="advisorNickname" placeholder="닉네임 5자이상 입력하세요" required />
               </span>
               <span class="ec-register-wrap ec-register-half">
-                <label>본인 사진</label>
+                <label>프로필 사진</label>
+                <img src="" alt="" />
                 <input type="file" name="profilePhoto" id="profilePhoto" required />
               </span>
               <span class="ec-register-wrap">

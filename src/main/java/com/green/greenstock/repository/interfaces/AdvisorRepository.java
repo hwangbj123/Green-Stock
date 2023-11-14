@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.green.greenstock.dto.AdminExpertDTO;
+import com.green.greenstock.dto.AdvisorSubCountResDto;
 import com.green.greenstock.dto.PagingDto;
 import com.green.greenstock.dto.RefuseDTO;
 import com.green.greenstock.repository.model.Advisor;
@@ -34,5 +35,7 @@ public interface AdvisorRepository {
 	List<Advisor> selectAdvisorList(int status);
 
 	int findCountByAdvisorNickname(String nickname);
+
+	List<AdvisorSubCountResDto> findByAdvisorSubCount(@Param("orderBy") String orderBy);
 
 }
