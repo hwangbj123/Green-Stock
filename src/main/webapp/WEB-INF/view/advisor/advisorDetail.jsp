@@ -4,7 +4,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>전문가 상세</title>
+    <title>Green Stock</title>
     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -49,22 +49,22 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
     <style>
-      .advisorDetail {
+      #advisorDetail {
         width: 50%;
       }
-      .advisorDetail table th {
+      #advisorDetail table th {
         width: 25%;
       }
-      .advisorDetail textarea {
+      #advisorDetail textarea {
         height: 140px;
         resize: none;
         border: none;
         padding: 0;
       }
-      .advisorDetail #advisorCareer {
+      #advisorDetail #advisorCareer {
         height: 80px;
       }
-      .advisorDetail .btn {
+      #advisorDetail .btn {
         width: 100px;
         height: 45px;
         border-radius: 10px;
@@ -72,7 +72,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         box-shadow: 3px 3px 3px 0px gray;
         margin-right: 10px;
       }
-      .advisorDetail .btn-subscribe {
+      #advisorDetail .btn-subscribe {
         background: #a6da41;
       }
       .advisorDetail .btn-advisor {
@@ -93,9 +93,30 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     </style>
   </head>
   <body>
-    <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+    <div class="sticky-header-next-sec ec-breadcrumb section-space-mb">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-12">
+	        <div class="row ec_breadcrumb_inner">
+	          <div class="col-md-6 col-sm-12">
+	            <h2 class="ec-breadcrumb-title">${category}</h2>
+	          </div>
+	          <div class="col-md-6 col-sm-12">
+	            <!-- ec-breadcrumb-list start -->
+	            <ul class="ec-breadcrumb-list">
+	              <li class="ec-breadcrumb-item"><a href="/">메인</a></li>
+	              <li class="ec-breadcrumb-item active">${category}</li>
+	            </ul>
+	            <!-- ec-breadcrumb-list end -->
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- CONTENT WRAPPER -->
-    <div class="container mt-4 mb-4 advisorDetail">
+    <div class="container mt-4 mb-4 advisorDetail" id="advisorDetail">
       <div class="row">
         <div class="col-6">
           <img src="/upload/${advisor.image}" alt="" />
@@ -154,14 +175,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
         </div>
       </div>
     </div>
-    <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
-  </body>
+  <!-- Main Js -->
+  <script src="/resources/js/main.js"></script>
+  <script src="/resources/js/vendor/index.js"></script>
   <script src="/resources/js/custom/advisorDetail.js"></script>
-  <script>
-    $('#summernote').summernote({
-      tabsize: 1,
-      height: 100,
-    });
-  </script>
+  </body>
 </html>

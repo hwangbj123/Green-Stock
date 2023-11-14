@@ -49,7 +49,28 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 
   </head>
   <body>
-    <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+    <div class="sticky-header-next-sec ec-breadcrumb section-space-mb">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-12">
+	        <div class="row ec_breadcrumb_inner">
+	          <div class="col-md-6 col-sm-12">
+	            <h2 class="ec-breadcrumb-title">${category}</h2>
+	          </div>
+	          <div class="col-md-6 col-sm-12">
+	            <!-- ec-breadcrumb-list start -->
+	            <ul class="ec-breadcrumb-list">
+	              <li class="ec-breadcrumb-item"><a href="/">메인</a></li>
+	              <li class="ec-breadcrumb-item active">${category}</li>
+	            </ul>
+	            <!-- ec-breadcrumb-list end -->
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper container mt-4 mb-4 stockDetail">
       <div class="content">
@@ -451,9 +472,12 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
     </div>
     <!-- End Content Wrapper -->
 
-    <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
   </body>
+  <!-- Main Js -->
+  <script src="/resources/js/vendor/index.js"></script>
+  <script src="/resources/js/main.js"></script>
   <!-- kjh -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>

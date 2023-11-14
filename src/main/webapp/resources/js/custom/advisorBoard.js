@@ -16,10 +16,10 @@ const advisorBoard = {
         btnAdvisorBoardList.addEventListener('click', this.backToList.bind(this));
         // 수정 버튼 이벤트
         const btnAdvisorBoardUpdate = document.getElementById('btnAdvisorBoardUpdate');
-        btnAdvisorBoardUpdate.addEventListener('click', this.updateAdcisorBoardEvent.bind(this));
+        if(btnAdvisorBoardUpdate) btnAdvisorBoardUpdate.addEventListener('click', this.updateAdvisorBoardEvent.bind(this));
         // 삭제 버튼 이벤트
         const btnAdvisorBoardDelete = document.getElementById('btnAdvisorBoardDelete');
-        btnAdvisorBoardDelete.addEventListener('click', this.deleteAdvisorBoardEvent.bind(this));
+        if(btnAdvisorBoardDelete) btnAdvisorBoardDelete.addEventListener('click', this.deleteAdvisorBoardEvent.bind(this));
     },
 
     addPageButtonClickListeners: function () {
@@ -178,12 +178,12 @@ const advisorBoard = {
     },
 
     // 목록으로 돌아가기
-    backToList: function(event){
+    backToList: function(){
         location.href = `/advisor/sub/board/${this.advisorNickname}`;
     },
 
     // 게시글 수정 페이지 이동
-    updateAdcisorBoardEvent: function(event){
+    updateAdvisorBoardEvent: function(event){
         const advisorBoardId = event.currentTarget.dataset.advisorboardid;
         const advisorNickName = event.currentTarget.dataset.advisorboardnickname;
         location.href = `/advisor/sub/board/${advisorNickName}/update/${advisorBoardId}`

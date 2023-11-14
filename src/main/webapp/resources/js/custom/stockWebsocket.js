@@ -51,7 +51,7 @@ let stockWebSocketInit = {
       return false; // 9시 이전 또는 15시 20분 이후
     }
 
-    if (nowHour >= 15 && nowMin <= 20) {
+    if (nowHour >= 15 && nowMin >= 20) {
       return false; // 15시 20분 이후
     }
 
