@@ -303,35 +303,11 @@
 
 <table>
 <tr>
-  <td>대시보드</td>
-  <td>회원 정보 조회</td>
+  <td>게시판 관리</td>
+  <td>채팅 메시지 관리</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/a5dd6d2d-c462-476b-90d9-86e759df94e9" width="445"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/15547ecc-167f-4a2a-b87c-4462ecce1f43/img.gif"></td>
-</tr>
-<tr>
-  <td>관리자 정보 조회</td>
-  <td>마일리지샵 상품 등록</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/df7e0db1-de86-46cf-9c55-4ef402f77680/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/80afc88c-6ba2-4107-8a18-62bf118546df/img.gif"></td>
-</tr>
-<tr>
-  <td>마일리지샵 이용 내역 조회</td>
-  <td>공지사항 작성</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/28eb301d-1af1-4498-9a3b-2bd168987e39/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/7bea7e6a-0fab-4082-b406-446702474c90/img.gif"></td>
-</tr>
-<tr>
-  <td>자주 묻는 질문 작성</td>
-  <td>고객의 말씀 답변</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/105858187/f8fce7d1-ab33-4d66-b7d1-c4b03c7c94a0/img.gif"></td>
-  <td><img src="https://github.com/seoyounglee0105/green_airline_project/assets/106488607/b0c45e0b-c09e-4473-8605-500392a60542/img.gif"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/5aa8aa8b-49af-4c39-abb5-19fe707370f2"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/71a6169e-b43b-4a14-8692-ba3cb1a88574"></td>
 </tr>
 </table>
