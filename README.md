@@ -320,12 +320,11 @@
 </tr>
 <tr>
  <td>공지사항 관리</td>
+ <td>공지사항 관리</td>
 </tr>
 <tr>
- <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/1884e70a-0bd2-45c2-89ee-0b5e0fd03639"></td>
+ <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/76f40113-5e3e-44b7-8725-6b6ef116adca"></td>
+ <td></td>
 </tr> 
 </table>
-<img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/1884e70a-0bd2-45c2-89ee-0b5e0fd03639">
-
-
 
