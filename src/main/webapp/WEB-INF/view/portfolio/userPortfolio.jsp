@@ -272,7 +272,7 @@
 
 									<div class="text-center pb-4">
 										<div id="visible_toggle" style="display: flex;">
-											<h6 class="text-dark pb-2">visible</h6>
+											<h6 class="text-dark pb-2">공개여부</h6>
 										</div>
 										<p id="visibleText">public</p>
 									</div>
@@ -282,12 +282,12 @@
 
 						<div class="col-md-6">
 							<div id="modal-portfolio-info" class="contact-info px-4">
-								<h4 class="text-dark mb-1">Portfolio Detail</h4>
-								<p class="text-dark font-weight-medium pt-4 mb-2">pfName</p>
+								<h4 class="text-dark mb-1">포트폴리오 상세</h4>
+								<p class="text-dark font-weight-medium pt-4 mb-2">포폴제목</p>
 								<p id="modal_pfName">My Test Portfolio</p>
-								<p class="text-dark font-weight-medium pt-4 mb-2">pfDisc</p>
+								<p class="text-dark font-weight-medium pt-4 mb-2">포폴설명</p>
 								<p id="modal_pfDisc">portfolio for Test</p>
-								<p class="text-dark font-weight-medium pt-4 mb-2">RegDate</p>
+								<p class="text-dark font-weight-medium pt-4 mb-2">등록일</p>
 								<p id="modal_pfReg">2023-11-03</p>
 								<!-- <button class = "btn btn-primary btn-pill my-4">저장</button>
 												<button class = "btn btn-primary btn-pill my-4">삭제</button> -->

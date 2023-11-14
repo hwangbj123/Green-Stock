@@ -279,15 +279,14 @@ async function setDonutChart(data) {
 function setRanking() {
 	$.get('portfolio/getRanking', function(data) {
 		//let width = $('#user-acquisition').css('width');
-		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr 1fr; grid-gap : 1%;">')
+		let rankingWrapper = $('<div id = "rankingBodyInner" style = "margin : auto;display:grid; grid-template-columns : 1fr 1fr 1fr; grid-gap : 1%;">')
 		$('#rankingBody').append(rankingWrapper);
-		let thArr = ['랭킹', '아이디', '제목', '수익률'];
+		let thArr = ['랭킹', '제목', '수익률'];
 		thArr.forEach(e => {
 			rankingWrapper.append($('<div class="ths" style = "text-align:center;">' + e + '</div>'));
 		});
 		data.forEach((e, idx) => {
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + (idx + 1) + '</div>');
-			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.userId + '</div>');
 			let title = $('<div data-bs-toggle="modal" data-bs-target="#modalContact" class="view-detail" style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis; cursor : pointer">' + e.title + '</div>')
 			rankingWrapper.append(title);
 			rankingWrapper.append('<div style = "text-align:center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">' + e.ror + '%</div>');
