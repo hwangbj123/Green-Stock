@@ -51,7 +51,7 @@ public class BoardNoticeController {
 		int total =  boardNoticeService.noticeListCount(null, noticeTitle);
 		Pagination paginaion =  new Pagination(total , page, 10);		
 		int offset = paginaion.getStart() -1;		
-		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset, noticeState, noticeTitle);	
+		List<Noticeboard> listNotice = boardNoticeService.noticeListService(offset, noticeState, noticeTitle);
 		model.addAttribute("page", page);
 		model.addAttribute("total", total);
 		model.addAttribute("pagination",paginaion);

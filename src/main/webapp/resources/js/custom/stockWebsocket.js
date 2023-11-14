@@ -27,7 +27,7 @@ let stockWebSocketInit = {
             if (this.receivedData != null) {
               this.updateElements(this.receivedData);
             }
-          }, 1000); // 3초마다 설정 업데이트
+          }, 1000); // 1초마다 설정 업데이트
         } else {
           // 온 버튼을 누른 경우 (실행 멈추기)
           this.socket.close();
@@ -125,7 +125,6 @@ let stockWebSocketInit = {
     for (let i = 0; i < originElements.length; i++) {
       const element = originElements[i];
       element.classList.remove(...colorClasses);
-      //console.log('ele',i, originElements[i])
       if (i === 0 || i === 3 || i === 4) {
         let colorClass = '';
         if (vrssNum < 3) {

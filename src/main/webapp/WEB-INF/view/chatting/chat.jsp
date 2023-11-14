@@ -13,7 +13,7 @@
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 	<div style="width: 100%;">
 	    <h3>
-	    	Chat Room
+	    	${companyName}(${companyCode})
 	    	<br>
 	    	<c:if test="${not empty companyCode}">
 	    		<input type="hidden" id="hd-companyCode" value="${companyCode}">

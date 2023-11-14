@@ -67,6 +67,30 @@
 		select count(*) from advisor
 		where advisor_nick_name = #{nickname}
 	</select>
-	
+
+	<!-- findByAdvisorSubCount --> 
+
+	<select id="findByAdvisorSubCount" resultType="com.green.greenstock.dto.AdvisorSubCountResDto">
+		SELECT a.*, i.img_name ,COALESCE(sub.subscribe_count, 0) AS 'subscribe_count'
+		FROM advisor a
+		LEFT JOIN (
+			SELECT sta.advisor_id, count(advisor_id) AS 'subscribe_count'
+			FROM subscribe_to_advisor sta 
+			GROUP BY advisor_id
+		) sub 
+		USING(advisor_id)
+		JOIN image i 
+		ON i.img_id = a.img_id 
+		WHERE a.status = 2
+		<if test="orderBy != null">
+			ORDER BY 
+			<choose>
+      			<when test="orderBy == 'subscribeDesc'">subscribe_count DESC</when>
+      			<when test="orderBy == 'costDesc'">subscription_cost DESC</when>
+      			<when test="orderBy == 'createdAtDesc'">created_at DESC</when>
+      			<otherwise>subscribe_count DESC</otherwise>
+    		</choose>
+		</if>
+	</select>	
 </mapper>
 

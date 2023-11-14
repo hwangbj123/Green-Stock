@@ -163,7 +163,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
               <button class="btn btn-green" id="chatIn" style="width: 100%; font-size: 12px; font-weight: bold;" onclick="subscribeInit.toSignIn()">채팅창</button>
             </c:when>
             <c:when test="${subCheck eq principal.id}">
-						  <button class="btn btn-green" type="button" id="openChat" onclick="window.open('/chat?companyCode=${companyCode}&userId=${principal.id}', '_black', 'width= 480; height= 720;');" style="width: 100%;">채팅창<br>열기</button>
+						  <button class="btn btn-green" type="button" id="openChat" onclick="window.open('/chat?companyCode=${companyCode}&companyName=${chat.companyName}&userId=${principal.id}', '_black', 'width= 480; height= 720;');" style="width: 100%;">채팅창<br>열기</button>
               <button type="button" id="unSubscribe-btn" onclick="subscribeInit.subscribe(${companyCode}, ${principal.id})" style="width: 100%; background-color: #ff3149; color: white; border-radius: 5px; font-size: 10px; margin: auto;">구독 해제</button>
 					  </c:when>									
             <c:when test="${subCheck ne principal.id}">
