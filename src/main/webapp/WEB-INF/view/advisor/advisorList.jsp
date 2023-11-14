@@ -148,7 +148,7 @@
 								</div>
 								<div class="ec-pro-content text-center">
 									<h5 class="ec-pro-title"><a href="/advisor/${advisor.advisorNickName}">${advisor.advisorNickName}</a></h5>
-									<h6 class="ec-pro-stitle"><a href="/advisor/domestic/">${advisor.specialization}</a></h6>
+									<h6 class="ec-pro-stitle"><a href="/advisor/${advisor.advisorNickName}/">${advisor.specialization}</a></h6>
 									<div class="ec-pro-rat-price">
 										<div class="ec-pro-rat-pri-inner">
 											<span class="ec-price">
