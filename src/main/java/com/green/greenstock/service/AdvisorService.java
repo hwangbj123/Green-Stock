@@ -156,7 +156,6 @@ public class AdvisorService {
         }
         // 경로 + 파일 이름(경로/파일이름)
         String newImagePathAndName = formatedNow + File.separator + newFileName;
-        log.info("저장된 이미지경로와 이름: {}", newImagePathAndName);
 
         // 이미지 테이블에 저장
         return imageEntityRepository.save(
@@ -199,13 +198,10 @@ public class AdvisorService {
     public boolean validateSubscribeToAdvisor(String nickName, int userId) {
 
         AdvisorEntity advisorEntity = advisorEntityRepository.findByAdvisorNickName(nickName);
-        log.info("nickName {}", advisorEntity);
         UserEntity userEntity = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new CustomRestfulException("아이디를 찾을수 없습니다.", HttpStatus.BAD_REQUEST));
-        log.info("userEntity {}", userEntity);
         SubscribeToAdvisorEntity subscribeToAdvisorEntity = subscribeToAdvisorEntityRepository
                 .findByAdvisorEntityAndUserEntity(advisorEntity, userEntity);
-        log.info("subscribeToAdvisorEntity {}", subscribeToAdvisorEntity);
         return subscribeToAdvisorEntity != null;
     }
 

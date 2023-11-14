@@ -48,7 +48,6 @@ public class StockApiController {
 		HttpSession session =  request.getSession();
     	
     	model.addAttribute("companyCode", companyCode);
-    	System.out.println("companyCode : "+companyCode);
 
     	User principal = (User) session.getAttribute("principal");
 

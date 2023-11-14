@@ -35,7 +35,6 @@ import com.green.greenstock.service.AdvisorService;
 import com.green.greenstock.utils.Pagination;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor

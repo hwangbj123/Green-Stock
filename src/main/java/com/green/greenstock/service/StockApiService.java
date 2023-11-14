@@ -63,9 +63,6 @@ public class StockApiService {
 	public String getCompanyName(String companyCode) {
 		// 종목코드
 		DomesticStockCode domesticStockCode = domesticStockCodeRepository.findByCompanyCode(companyCode);
-		
-		//log.debug("companyName : {}", domesticStockCode.getCompanyName());
-		//log.debug("companyCode : {}", companyCode);
 
 		if(domesticStockCode == null){
 			return null;
@@ -189,10 +186,6 @@ public class StockApiService {
 		domesticStockSearchDto.setSearchData(searchData); // 검색어
 		domesticStockSearchDto.setPagination(new Pagination(total, page, 5)); // 페이지 네이션
 
-		log.debug("total {}", total);
-		log.debug("start {}", start);
-		log.debug("end {}", end);
-		log.debug("listSize {}", domesticStockSearchDto.getDomesticStockCurrentPriceList().size());
 		return domesticStockSearchDto;
 	}
 
@@ -343,7 +336,6 @@ public class StockApiService {
 			selectedDateData = beforeMonthDate;
 		} else if (date.equals("year")) {
 			selectedDateData = beforeYearDate;
-			log.debug("selectedDateData : {}", selectedDateData);
 		} else {
 			selectedDateData = beforeWeekDate;
 		}

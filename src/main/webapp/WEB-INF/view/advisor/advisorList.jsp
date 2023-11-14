@@ -56,15 +56,18 @@
 				width: 300px;
 				height: 400px;
 				margin-bottom: 20px;
-				padding: 10px;
+				padding: 20px 10px 20px 10px;
 				box-sizing: border-box;
+			}
+			.advisorList .card img{
+				border-radius: 5px;
 			}
 			.advisorList .pro-hidden-block{
 				visibility: hidden;
 			}
 			.advisorList img{
-				width: 280px;
-				height: 280px;
+				width: 260px;
+				height: 260px;
 				object-fit: cover;
 			}
 			@font-face {
@@ -97,6 +100,19 @@
 			.advisorList .visible{
 				visibility: visible;
 			}
+			.advisorList .new-price{
+				font-weight: bold;
+				font-size: 16px;
+			}
+			
+			.advisorList .subCount{
+				color: #ff4359;
+			}
+			.advisorList .subCount::before{
+				content: '\f005';
+				font: var(--fa-font-solid);
+				margin-right: 5px;
+			  }
 
 		  </style>
 	</head>
@@ -125,7 +141,7 @@
 					<c:forEach var="advisor" items="${advisorResDtos}">
 						<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ec-product-content">
 							<div class="card">
-								<div class="mb-2">
+								<div class="mb-2 text-center">
 									<a href="/advisor/${advisor.advisorNickName}">
 										<img src="/upload/${advisor.imgName}" alt="">
 									</a>
@@ -136,13 +152,18 @@
 									<div class="ec-pro-rat-price">
 										<div class="ec-pro-rat-pri-inner">
 											<span class="ec-price">
-												<span class="new-price me-5">구독자수 : ${advisor.subscribeCount}</span>
+												<span class="subCount new-price me-5">구독자수 : ${advisor.subscribeCount}</span>
 												<span class="new-price">&#8361; ${advisor.subscriptionCost}</span>
 											</span>
 										</div>
 									</div>
 									<div class="pro-hidden-block">
-										<div class="ec-pro-desc">${advisor.introduction}</div>
+										<c:if test="${advisor.introduction.length() < 60}">
+											<div class="ec-pro-desc">${advisor.introduction}</div>
+										</c:if>
+										<c:if test="${advisor.introduction.length() > 60}">
+											<div class="ec-pro-desc">${advisor.introduction.substring(0, 60)}...</div>
+										</c:if>
 									</div>
 								</div>
 							</div>
