@@ -247,8 +247,8 @@
 	<div class="gstock-div ad-slider">
 		<div class="ad-wrapper">
 				<img src="/resources/img/banner/banner-img1.png">	
-				<img src="/resources/img/banner/banner-img2.png">	
-				<img src="/resources/img/banner/banner-img3.png">	
+				<img src="/resources/img/banner/banner-img2.jpg">	
+				<img src="/resources/img/banner/banner-img3.jpg">	
 				<img src="/resources/img/banner/banner-img4.png">	
 		</div>
 	</div>
