@@ -202,10 +202,9 @@
 <br>
 <br>
 
-
 ## 5️⃣ SiteMap
 <br>
-<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/041a1c2f-bda5-4138-8cef-73b66fdf2b33">
+<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/c6d7b80f-fe22-4087-8a39-40614cafb536">
 <br>
 
 ## 6️⃣ 기능 - 회원
