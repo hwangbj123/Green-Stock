@@ -96,7 +96,27 @@
 											<c:forEach var="board" items="${boardList}">
 												<tr>
 													<td>${board.id}</td>
-													<td>${board.categoryId}</td>
+													<td>
+														<c:forEach var="c" items="${cate}" varStatus="status">
+							           						<c:choose>
+								           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 1}">
+								           							<span style="border: 1px solid skyblue; padding: 3px 5px; border-radius: 5px; color: skyblue;">
+								           								${c}
+							           								</span>
+								           						</c:when>
+								           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 2}">
+								           							<span style="border: 1px solid #ffc107; padding: 3px 5px; border-radius: 5px; color: #ffc107;">
+								           								${c}
+							           								</span>
+								           						</c:when>
+								           						<c:when test="${board.categoryId eq status.count && board.categoryId eq 3}">
+								           							<span style="border: 1px solid #2ab674; padding: 3px 5px; border-radius: 5px; color: #2ab674;">
+								           								${c}
+							           								</span>
+								           						</c:when>
+							           						</c:choose>
+							           					</c:forEach>
+													</td>
 													<td style="width: 100px; text-align: left; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 														<a href="/board/detail?boardId=${board.id}">
 															${board.title}

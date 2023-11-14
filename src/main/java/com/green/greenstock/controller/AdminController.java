@@ -95,7 +95,10 @@ public class AdminController {
 		PagingDto paging = new PagingDto();
 		List<Board> boardList = boardService.selectBoardSearchList(paging);
 		List<Board> subBoardList = boardList.subList(0, 10);
+		List<String> cate = boardService.findCategoryList();
+
 		model.addAttribute("boardList", subBoardList);
+		model.addAttribute("cate", cate);
 
 		return "admin/adminMain";
 	}

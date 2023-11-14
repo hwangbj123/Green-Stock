@@ -409,7 +409,7 @@
 						<table class="chat-tb" id="chat-stock-tb">
 							<c:forEach var="chat" items="${chatList}">
 								<c:if test="${not fn:contains(chat.companyCode, '@')}">
-										<tr class="chat-tr stock-tr" onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+										<tr class="chat-tr stock-tr" onclick="window.open('/chat?companyCode=${chat.companyCode}&companyName=${chat.companyName}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
 											<td style="width: 20%">${chat.companyCode}</td>
 											<td style="width: 60%;">${chat.companyName}
 											</td>

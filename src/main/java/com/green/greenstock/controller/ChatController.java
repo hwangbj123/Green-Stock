@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.greenstock.dto.ChatMessage;
+import com.green.greenstock.dto.ChattingRoom;
 import com.green.greenstock.repository.model.User;
 import com.green.greenstock.service.ChattingService;
 
@@ -27,14 +28,19 @@ public class ChatController {
 	ChattingService chattingService;
 
 	@GetMapping("/chat")
-	public String chatMain(String companyCode, int userId, Model model, HttpServletRequest request) {
+	public String chatMain(ChattingRoom chattingRoom, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("principal");
+		
+		String companyCode = chattingRoom.getCompanyCode();
+		String companyName = chattingRoom.getCompanyName();
+		int userId = chattingRoom.getUserId();
 		int roleTypeId = user.getRoletypeId();
 		List<ChatMessage> list = chattingService.selectMessageList(companyCode, userId, roleTypeId);
 		List<User> userList = chattingService.selectUserListByCode(companyCode);
 		
 		model.addAttribute("companyCode", companyCode);
+		model.addAttribute("companyName", companyName);
 		model.addAttribute("userId", userId);
 		model.addAttribute("list", list);
 		model.addAttribute("userList", userList);

@@ -111,6 +111,7 @@
 			                        					<button type="button" class="btn btn-primary" onclick="location.href='/board/list'" style="background-color: rgba(100,100,100,0.5)">목록</button>
 		                        					<c:if test="${board.userId eq principal.id}">
 														<input type="hidden" name="id" value="${board.id}">
+														<input type="hidden" name="userId" value="${principal.id}">
 			                        					<button type="button" class="btn btn-primary" id="delete-btn" onclick="boardDetailInit.boardDelete()">
 			                        						삭제
 			                        					</button>
