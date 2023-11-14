@@ -229,7 +229,7 @@ public class MailServiceImpl implements MailCreateService, MailSendService{
 		msgg += "<br>";
 		msgg += "<p>이용약관 위반으로 " + userName + "가 사용정지되었습니다.<p>";
 		msgg += "<br>";
-		msgg += "<p>정지기간은 " + suspendDate + "입니다. 이용에 불편없으시길 바랍니다.<p>";
+		msgg += "<p>정지기간은 " + suspendDate + "일 입니다. 이용에 불편없으시길 바랍니다.<p>";
 		message.setText(msgg, "utf-8", "html");
 		message.setFrom(new InternetAddress("dltmdgh757@naver.com", "Gstock_관리자"));
 

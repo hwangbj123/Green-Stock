@@ -189,7 +189,7 @@
 					<div class="modal-footer px-4">
 						<button type="button" class="btn btn-secondary btn-pill"
 							data-bs-dismiss="modal">취소</button>
-						<button type="submit" id = "suspend=btn" class="btn btn-primary btn-pill" onclick="this.disabled=true;">정지하기</button>
+						<button type="submit" id = "suspend=btn" class="btn btn-primary btn-pill">정지하기</button>
 					</div>
 				</form>
 			</div>
