@@ -27,7 +27,6 @@ const advisorDetailInit = {
     
     if(this.btnAdvisorBoard && this.btnAdvisorChat){
       this.btnAdvisorBoard.addEventListener("click", this.enterBoard.bind(this));
-      this.btnAdvisorChat.addEventListener("click", this.enterChat.bind(this));
     }
     
     document.getElementById('btnAdvisorList').addEventListener('click', function(){
@@ -42,7 +41,6 @@ const advisorDetailInit = {
   },
 
   enterBoard: function () {
-    // 게시판 이동
     const nickName = document.getElementById("advisorNickName");
     location.href = `/advisor/sub/board/${nickName.textContent}`;
   },
