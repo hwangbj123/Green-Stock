@@ -323,13 +323,12 @@
 </tr>
 <tr>
   <td>전문가 상담게시판</td>
-  <td></td>
+  <td>유저 포트폴리오</td>
 </tr>
 <tr>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/58e46d96-33ba-4366-8cfb-c5a89b5931fc"></td>
-  <td></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/fbdebc0b-d234-47ee-bd92-a028a1c2096d"></td>
 </tr>
-	
 </table>
 
 <br>
