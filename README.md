@@ -203,7 +203,7 @@
 <br>
 <br>
 
-![ERD Model](https://github.com/seoyounglee0105/green_airline_project/assets/124985978/3dc47f53-61da-4115-9644-3d19a8e3f185)
+![Gstock](https://github.com/hwangbj123/Green-Stock/assets/121776914/10b95f94-4db1-4912-9ac0-b64d98926246)
 
 
 <br>
