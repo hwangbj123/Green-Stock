@@ -1,4 +1,4 @@
-<div align="center">
+![main](https://github.com/hwangbj123/Green-Stock/assets/118721780/ae2d4f97-c10a-4813-83cb-c82eca7ed3fb)<div align="center">
 	<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/d94d9c5e-41f4-4251-a281-28042caf1eba">
 </div>
 
@@ -265,6 +265,30 @@
 <br>
 
 <table>
+<tr>
+  <td>메인 페이지</td>
+  <td>구글 로그인</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/215261cd-f97b-47d0-9b95-89e5984d15cc"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/7ac286e2-84bc-4abc-b12c-fe9b7458f4fa"></td>
+</tr>
+<tr>
+  <td>카카오 로그인</td>
+  <td>네이버 로그인</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/40aacc60-2f8b-4362-8229-5f0547249232"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/6fc9389e-9c4c-4a2d-958f-94d90204a65a"></td>
+</tr>
+<tr>
+  <td>회원 가입</td>
+  <td>회원 정보 수정</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/93c30be4-aeb0-4d1b-8b5c-428bfd611ca5"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/41a47637-aadf-4373-879c-040a71ebb2ae"></td>
+</tr>
 <tr>
   <td>게시판 CRUD</td>
   <td>게시판 검색/정렬</td>
