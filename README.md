@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/d94d9c5e-41f4-4251-a281-28042caf1eba"  style="width:100%;">
+	<img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/8e2d5818-e35b-473e-b9ff-2c026b6c19df"  style="width:100%;">
 </div>
 
 <div>
