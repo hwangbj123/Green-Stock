@@ -317,19 +317,17 @@
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/bdb8780c-fe42-4593-9885-fff52adf4c8e"></td>
 </tr>
 <tr>
-  <td>전문가 신청/승인</td>
+  <td>전문가 상담게시판</td>
   <td>전문가 구독하기</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/abacc6d7-2b08-4ac7-a310-29715c9c2ede"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/58e46d96-33ba-4366-8cfb-c5a89b5931fc"></td>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/a8c8d45a-a409-4722-9447-486a51434c16"></td>
 </tr>
 <tr>
-  <td>전문가 상담게시판</td>
   <td>유저 포트폴리오</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/58e46d96-33ba-4366-8cfb-c5a89b5931fc"></td>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/fbdebc0b-d234-47ee-bd92-a028a1c2096d"></td>
 </tr>
 </table>
@@ -370,12 +368,12 @@
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/71a6169e-b43b-4a14-8692-ba3cb1a88574"></td>
 </tr>
 <tr>
- <td>공지사항 관리</td>
- <td>공지사항 관리</td>
+  <td>공지사항 관리</td>
+  <td>전문가 신청/승인</td>
 </tr>
 <tr>
  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/76f40113-5e3e-44b7-8725-6b6ef116adca"></td>
- <td></td>
-</tr> 
+ <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/abacc6d7-2b08-4ac7-a310-29715c9c2ede"></td>
+</tr>
 </table>
 
