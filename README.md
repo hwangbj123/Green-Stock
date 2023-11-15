@@ -1,4 +1,4 @@
-![main](https://github.com/hwangbj123/Green-Stock/assets/118721780/ae2d4f97-c10a-4813-83cb-c82eca7ed3fb)<div align="center">
+<div align="center">
 	<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/d94d9c5e-41f4-4251-a281-28042caf1eba">
 </div>
 
