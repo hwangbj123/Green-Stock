@@ -76,7 +76,7 @@
 						    			<td>${chat.companyCode}</td>
 						    			<td>
 						    				<button id="subCheckBtn" 
-						    						onclick="window.open('/chat?companyCode=${chat.companyCode}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
+						    						onclick="window.open('/chat?companyCode=${chat.companyCode}&companyName=${chat.companyName}&userId=${principal.id}', '_black', 'width= 480, height= 720, location=no')">
 					    						${chat.companyName}
 				    						</button>
 						    			</td>

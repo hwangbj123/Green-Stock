@@ -14,8 +14,8 @@ let stockWebSocketInit = {
         let webSocketInterval;
 
         if (!this.isMarketOpen()) {
-          alert('장마감시간입니다.');
-          return;
+          //alert('장마감시간입니다.');
+          //return;
         }
 
         mode.classList.toggle('active'); // 토글형식으로 on off
