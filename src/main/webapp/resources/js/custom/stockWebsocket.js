@@ -14,8 +14,8 @@ let stockWebSocketInit = {
         let webSocketInterval;
 
         if (!this.isMarketOpen()) {
-          alert('장마감시간입니다.');
-          return;
+          //alert('장마감시간입니다.');
+          //return;
         }
 
         mode.classList.toggle('active'); // 토글형식으로 on off
@@ -51,7 +51,7 @@ let stockWebSocketInit = {
       return false; // 9시 이전 또는 15시 20분 이후
     }
 
-    if (nowHour >= 15 && nowMin <= 20) {
+    if (nowHour >= 15 && nowMin >= 20) {
       return false; // 15시 20분 이후
     }
 

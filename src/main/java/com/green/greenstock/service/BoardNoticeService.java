@@ -103,7 +103,7 @@ public class BoardNoticeService {
 	 * 파라메터 조건에 따라 글 갯수 반환
 	 * @param noticeState
 	 * @param noticeTitle
-	 * @return 글개수
+	 * @return 글갯수
 	 */
 	public int noticeListCount(String noticeState, String noticeTitle) {		
 		return noticeRepository.listCount(noticeState, noticeTitle);
@@ -112,5 +112,5 @@ public class BoardNoticeService {
 	
 	
 
-	
+
 }

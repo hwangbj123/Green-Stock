@@ -70,8 +70,7 @@
 			<div class="col-12">
 				<div class="card card-default" style="width: 900px">					
 					<div class="card-body" style="width:900px" >
-						<h4 style="border-left: 12px solid ;border-bottom: 3px solid; color: #808080;">${view.noticeTitle}</h4> 
-						<p>작성자 :${view.userId}</p>  
+						<h4 style="border-left: 12px solid ;border-bottom: 3px solid; color: #808080;">${view.noticeTitle}</h4> 						
 						<fmt:formatDate value="${view.noticeCreated}" pattern="yyyy-MM-dd-mm" var="formattedDate" />
 						<p style="border-bottom: 2px solid #ccc;">${formattedDate}</p>						
 						<p style="border-bottom: 2px solid #ccc;">조회수:${view.hitCount}</p>					

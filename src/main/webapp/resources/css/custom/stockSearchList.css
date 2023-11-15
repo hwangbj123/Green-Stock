@@ -3,7 +3,7 @@
   src: url("/resources/fonts/Dovemayo_gothic.ttf") format("truetype");
   font-weight: normal;
 }
-   *:not(i), h5, h6, li{
+*:not(i), h5, h6, li{
   font-family: 'Dovemayo', sans-serif !important;
   font-weight: normal;
 }
@@ -25,7 +25,24 @@
   font-size: 0.65rem;
 }
 .stockSearchList .findResult::before {
-    content: '\f002';
+  content: '\f002';
   font: var(--fa-font-solid);
   margin-right: 5px;
+}
+#advisorBoardList {
+  width: 50%; 
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#advisorBoardList table tbody > tr > td:nth-child(2) {
+  text-align: left;
+}
+#advisorBoardList table tbody > tr > td {
+  text-align: center;
+}
+#advisorBoardList .btn {
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px 0px gray;
+  height: 40px;
+  line-height: 40px;
 }

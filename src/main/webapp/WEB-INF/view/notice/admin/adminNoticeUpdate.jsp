@@ -53,6 +53,12 @@
 </style> 
 <html>
 <body>
+<script type="text/javascript">
+function updateTextarea() {
+    const editorContent = document.getElementById('editor').innerHTML;
+    document.getElementById('textarea').value = editorContent;
+}
+</script>	
 <div class="ec-content-wrapper">
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-contacts">
@@ -83,9 +89,8 @@
                 <td>
                 	<input type="hidden" value="${notice.id}" name="id">
                 	<input type="hidden" value="${notice.userId}" name="userId" style="font-size: 23px">                	
-                		<p style="font-size: 23px">제목 :</p>
-                	<textarea name="noticeTitle" required style="font-size: 23px; width: 100%; height: 100px; resize: none; bac border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0; border-left: none; border-right:none;">${notice.noticeTitle}</textarea>                	
-                	                	                           
+                		<p style="font-size: 23px">제목 :</p>                             
+                		<textarea name="noticeTitle" id ="textarea" required style="font-size: 23px; width: 100%; height: 100px; resize: none; bac border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0; border-left: none; border-right:none;">${notice.noticeTitle}</textarea>                                          	                	    	                	                	                      		
                 </td> 
             </tr>            
             <tr>            	               
@@ -94,8 +99,8 @@
                 </td>                                                 
             </tr>
             <tr>            
-                <td>                    
-					<textarea name="noticeContent" cols="100" rows="15" required="required" style="resize: none; font-size: 23px">${notice.noticeContent}</textarea>
+                <td>                     
+					<textarea name="noticeContent" cols="100" rows="15" required="required" style="resize: none; font-size: 23px">${notice.noticeContent}</textarea>                                	
                 </td>
             </tr>
             <tr>

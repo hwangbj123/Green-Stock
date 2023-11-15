@@ -4,7 +4,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>GStock</title>
+    <title>Green Stock</title>
     <link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -45,45 +45,33 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 
     <!-- kjh -->
     <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/stock/searchList.css" />
-    <style>
-      .adviosrBoardList {
-        width: 50%;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-      .adviosrBoardList table tbody > tr > td:nth-child(2) {
-        text-align: left;
-      }
-      .adviosrBoardList table tbody > tr > td {
-        text-align: center;
-      }
-      @font-face {
-        font-family: 'Dovemayo';
-        src: url('/resources/fonts/Dovemayo_gothic.ttf') format('truetype');
-        font-weight: normal;
-      }
-      *:not(i),
-      h5,
-      h6,
-      li {
-        font-family: 'Dovemayo', sans-serif !important;
-        font-weight: normal;
-      }
-      .btn {
-        border-radius: 5px;
-        box-shadow: 2px 2px 6px 0px gray;
-        height: 40px;
-        line-height: 40px;
-      }
-      .footer-bottom {
-      }
-    </style>
+    <link rel="stylesheet" href="/resources/css/custom/stockSearchList.css" />
   </head>
   <body>
-    <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+    <div class="sticky-header-next-sec ec-breadcrumb section-space-mb">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-12">
+	        <div class="row ec_breadcrumb_inner">
+	          <div class="col-md-6 col-sm-12">
+	            <h2 class="ec-breadcrumb-title">${category}</h2>
+	          </div>
+	          <div class="col-md-6 col-sm-12">
+	            <!-- ec-breadcrumb-list start -->
+	            <ul class="ec-breadcrumb-list">
+	              <li class="ec-breadcrumb-item"><a href="/">메인</a></li>
+	              <li class="ec-breadcrumb-item active">${category}</li>
+	            </ul>
+	            <!-- ec-breadcrumb-list end -->
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- CONTENT WRAPPER -->
-    <div class="ec-content-wrapper container adviosrBoardList">
+    <div class="ec-content-wrapper container advisorBoardList" id="advisorBoardList">
       <div class="content">
         <div class="breadcrumb-wrapper">
           <div class="d-flex justify-content-between mb-2">
@@ -153,7 +141,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       <!-- End Content -->
     </div>
     <!-- End Content Wrapper -->
-    <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
     <!-- Main Js -->
+    <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/vendor/index.js"></script>
   </body>
 </html>
