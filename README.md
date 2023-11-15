@@ -1,8 +1,11 @@
-<div align="center">
+<div style="width:100%;" align="center">
 	<img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/d94d9c5e-41f4-4251-a281-28042caf1eba">
 </div>
 
+<div>
 
+ 
+</div>
 
 <br>
 
