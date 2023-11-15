@@ -4,7 +4,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Gstock</title>
+    <title>Green Stock</title>
     <link rel="icon" href="/resources/img/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -59,38 +59,59 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       font-family: 'Dovemayo', sans-serif !important;
       font-weight: normal;
     }
-    .advisorBoard {
+    #advisorBoard {
       width: 50%;
     }
-    .advisorBoard textarea {
+    #advisorBoard textarea {
       resize: none;
       border: 1px solid #e7e7e7;
     }
-    .advisorBoard #textareaReply{
+    #advisorBoard #textareaReply{
       height: 120px;
     }
-    .advisorBoard .hiddenPageArrow {
+    #advisorBoard .hiddenPageArrow {
       visibility: hidden;
     }
-    .advisorBoard .btn {
+    #advisorBoard .btn {
       border-radius: 5px;
       box-shadow: 1px 2px 1px 0px gray;
     }
-    .advisorBoard .btn-warning {
+    #advisorBoard .btn-warning {
       height: 30px;
       line-height: 30px;
       width: 60px;
       box-shadow: 1px 2px 1px 0px gray;
     }
-    .advisorBoard #btnAdvisorBoardDelete{
+    #advisorBoard #btnAdvisorBoardDelete{
       height: inherit;
       line-height: inherit;
     }
   </style>
   <body>
-    <%@ include file ="/WEB-INF/view/stock/header.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+    <div class="sticky-header-next-sec ec-breadcrumb section-space-mb">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-12">
+	        <div class="row ec_breadcrumb_inner">
+	          <div class="col-md-6 col-sm-12">
+	            <h2 class="ec-breadcrumb-title">${category}</h2>
+	          </div>
+	          <div class="col-md-6 col-sm-12">
+	            <!-- ec-breadcrumb-list start -->
+	            <ul class="ec-breadcrumb-list">
+	              <li class="ec-breadcrumb-item"><a href="/">메인</a></li>
+	              <li class="ec-breadcrumb-item active">${category}</li>
+	            </ul>
+	            <!-- ec-breadcrumb-list end -->
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- CONTENT WRAPPER -->
-    <div class="ec-content-wrapper container mb-5 advisorBoard">
+    <div class="ec-content-wrapper container mb-5 advisorBoard" id="advisorBoard">
       <div class="content">
         <div class="breadcrumb-wrapper">
           <div class="my-4">
@@ -231,7 +252,10 @@ uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="fn" uri="http://jav
       <!-- End Content -->
     </div>
     <!-- End Content Wrapper -->
-    <%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+    <%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
+    <!-- Main Js -->
+    <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/vendor/index.js"></script>
     <script src="/resources/js/custom/advisorBoard.js"></script>
   </body>
 </html>

@@ -6,7 +6,7 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="UTF-8">
-		<title>전문가 목록</title>
+		<title>Green Stock</title>
 		<link rel="icon" href="/resources/images/favicon/favicon.png" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/resources/images/favicon/favicon.png" />
 		<meta name="msapplication-TileImage" content="/resources/images/favicon/favicon.png" />
@@ -117,7 +117,28 @@
 		  </style>
 	</head>
 <body>
-<%@ include file ="/WEB-INF/view/stock/header.jsp" %>
+<%@ include file ="/WEB-INF/view/layout/header.jsp" %>
+<div class="sticky-header-next-sec ec-breadcrumb section-space-mb">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="row ec_breadcrumb_inner">
+          <div class="col-md-6 col-sm-12">
+            <h2 class="ec-breadcrumb-title">${category}</h2>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <!-- ec-breadcrumb-list start -->
+            <ul class="ec-breadcrumb-list">
+              <li class="ec-breadcrumb-item"><a href="/">메인</a></li>
+              <li class="ec-breadcrumb-item active">${category}</li>
+            </ul>
+            <!-- ec-breadcrumb-list end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
  <!-- CONTENT WRAPPER -->
  <div class="container mt-4 mb-4 advisorList">
 	<div class="row">
@@ -174,8 +195,12 @@
 		</div>
 	</div>
 </div>
-<%@ include file ="/WEB-INF/view/stock/footer.jsp" %>
+<%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="ecicon eci-arrow-up" aria-hidden="true"></i></a>
+    <!-- Main Js -->
+    <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/vendor/index.js"></script>
+    <script src="/resources/js/custom/advisorList.js"></script>
 </body>
-<script src="/resources/js/custom/advisorList.js"></script>
+
 </html>
