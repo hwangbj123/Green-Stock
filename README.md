@@ -362,19 +362,26 @@
 
 <table>
 <tr>
+  <td>유저 관리</td>
   <td>게시판 관리</td>
-  <td>채팅 메시지 관리</td>
 </tr>
 <tr>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/1e6cad2b-1652-49ef-a584-75a4577c95ba"></td>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/5aa8aa8b-49af-4c39-abb5-19fe707370f2"></td>
-  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/71a6169e-b43b-4a14-8692-ba3cb1a88574"></td>
+</tr>
+
+<tr>
+  <td>채팅 메시지 관리</td>
+  <td>공지사항 관리</td>
 </tr>
 <tr>
-  <td>공지사항 관리</td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/136680186/71a6169e-b43b-4a14-8692-ba3cb1a88574"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/76f40113-5e3e-44b7-8725-6b6ef116adca"></td>
+</tr>
+<tr>
   <td>전문가 신청/승인</td>
 </tr>
 <tr>
- <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/76f40113-5e3e-44b7-8725-6b6ef116adca"></td>
  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/abacc6d7-2b08-4ac7-a310-29715c9c2ede"></td>
 </tr>
 </table>
