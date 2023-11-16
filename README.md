@@ -267,6 +267,10 @@
 - 공지사항 상세보기
 <br>
 
+## 🎥 시연영상
+[![Video Label](http://img.youtube.com/vi/GfCIqaJ77ww/0.jpg)](https://youtu.be/GfCIqaJ77ww)
+
+
 <table>
 <tr>
   <td>메인 페이지</td>
