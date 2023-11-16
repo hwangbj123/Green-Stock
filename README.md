@@ -274,8 +274,9 @@
 </tr>
 <tr>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/215261cd-f97b-47d0-9b95-89e5984d15cc"></td>
-  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/7ac286e2-84bc-4abc-b12c-fe9b7458f4fa"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/542c7fd1-053a-4d8a-b54c-99ebcf223fb5"></td>
 </tr>
+
 <tr>
   <td>카카오 로그인</td>
   <td>네이버 로그인</td>
