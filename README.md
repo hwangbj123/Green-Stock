@@ -313,9 +313,10 @@
   <td>공지사항 상세보기/검색</td>
   <td>주식 정보 조회</td>
 </tr>
+
 <tr>
   <td><img src="https://github.com/hwangbj123/Green-Stock/assets/88834171/53a5c99d-3ae7-4817-a354-d584f6b11eaf"></td>
-  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/111404074/bdb8780c-fe42-4593-9885-fff52adf4c8e"></td>
+  <td><img src="https://github.com/hwangbj123/Green-Stock/assets/118721780/6d6721c8-c8ca-434c-aeb1-797c0dc679d3"></td>
 </tr>
 <tr>
   <td>전문가 상담게시판</td>
