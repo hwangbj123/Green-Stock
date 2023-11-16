@@ -17,6 +17,7 @@
 
 - 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 13일
 - 시연 영상 (유튜브) :
+  <br>
   [![Video Label](http://img.youtube.com/vi/GfCIqaJ77ww/0.jpg)](https://youtu.be/GfCIqaJ77ww)
 
 <br> 
