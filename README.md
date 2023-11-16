@@ -16,7 +16,8 @@
 |   Name   | 이승호(팀장) | 김지홍 | 김민환 | 양승리 | 황병준 |
 
 - 프로젝트 기간 : 2023년 10월 23일 ~ 2023년 11월 13일
-- 시연 영상 (유튜브) : [![Video Label](http://img.youtube.com/vi/GfCIqaJ77ww/0.jpg)](https://youtu.be/GfCIqaJ77ww)
+- 시연 영상 (유튜브) :
+  [![Video Label](http://img.youtube.com/vi/GfCIqaJ77ww/0.jpg)](https://youtu.be/GfCIqaJ77ww)
 
 <br> 
 
